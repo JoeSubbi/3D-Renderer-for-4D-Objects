@@ -14,37 +14,30 @@ public class DPolygon {
     }
 
     public void createPolygon(){
-
-        double[][] polygon = projectPolygon();
-        double[] newX = polygon[0];
-        double[] newY = polygon[1];
-
         poly = Screen.NumPolygons;
-        Screen.DrawablePolygons[poly] = new PolygonObject(newX,newY,c);
-        Screen.DrawablePolygons[poly].setAvgDist(getDist());
+        Screen.DrawablePolygons[poly] = new PolygonObject(new double[]{},new double[]{},c);
+        updatePolygon();
     }
 
     public void updatePolygon() {
+        int SCALE = 50;
 
-        double[][] polygon = projectPolygon();
-        double[] newX = polygon[0];
-        double[] newY = polygon[1];
+        double[] center = Calculator.Calculate(Screen.ViewFrom, Screen.ViewTo, Screen.ViewTo[0], Screen.ViewTo[1], Screen.ViewTo[2]);
+        double dx = -SCALE*center[0];
+        double dy = -SCALE*center[1];
 
-        Screen.DrawablePolygons[poly] = new PolygonObject(newX, newY, c);
-        Screen.DrawablePolygons[poly].setAvgDist(getDist());
-        Screen.NumPolygons --;
-    }
-
-    private double[][] projectPolygon(){
         double[] newX = new double[x.length];
         double[] newY = new double[x.length];
 
         for (int i = 0; i < x.length; i++) {
             double[] newPos = Calculator.Calculate(Screen.ViewFrom, Screen.ViewTo, x[i], y[i], z[i]);
-            newX[i] = 500+50* newPos[0];
-            newY[i] = 500+50* newPos[1];
+            newX[i] = dx + DDDTutorial.getScreenSize().getWidth()/2 + SCALE* newPos[0];
+            newY[i] = dy + DDDTutorial.getScreenSize().getHeight()/2 + SCALE* newPos[1];
         }
-        return new double[][]{newX, newY};
+
+        Screen.DrawablePolygons[poly] = new PolygonObject(newX, newY, c);
+        Screen.DrawablePolygons[poly].setAvgDist(getDist());
+        Screen.NumPolygons --;
     }
 
     private double getDist(){

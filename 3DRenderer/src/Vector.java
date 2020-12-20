@@ -1,7 +1,5 @@
 public class Vector {
-    double x = 0;
-    double y = 0;
-    double z = 0;
+    double x = 0, y = 0, z = 0;
 
     public Vector(double x, double y, double z){
         double length = Math.sqrt(x*x + y*y + z*z);

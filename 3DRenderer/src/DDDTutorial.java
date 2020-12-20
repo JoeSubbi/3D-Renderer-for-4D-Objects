@@ -1,4 +1,4 @@
-import java.awt.Toolkit;
+import java.awt.*;
 import javax.swing.JFrame;
 
 /*
@@ -8,16 +8,21 @@ https://www.youtube.com/watch?v=gnT6YC5Nf70&list=PLsRmsZm0xMNogPyRn6gNWq4OM5j22F
  */
 
 public class DDDTutorial extends JFrame{
-    static JFrame F = new DDDTutorial();
-    Screen ScreenObject = new Screen(); //get objects loaded in screen class
+    private final static Dimension ScreenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    private static JFrame F = new DDDTutorial();
+    private Screen ScreenObject = new Screen(); //get objects loaded in screen class
 
     public DDDTutorial(){
 
         add(ScreenObject); //draw objects to screen
 
         //setUndecorated(true); //remove button in top right
-        setSize(Toolkit.getDefaultToolkit().getScreenSize()); //set size of screen to fullscreen
+        setSize(ScreenSize); //set size of screen to fullscreen
         setVisible(true); //set window to visible
+    }
+
+    public static Dimension getScreenSize() {
+        return ScreenSize;
     }
 
     public static void main(String[] args){

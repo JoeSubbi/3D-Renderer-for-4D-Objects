@@ -10,7 +10,7 @@ public class Screen extends JPanel implements KeyListener {
 
     //view position
     public static double[] ViewFrom = new double[]{10,10,10};
-    public static double[] ViewTo = new double[]{1,0,0};
+    public static double[] ViewTo = new double[]{1,1,1};
 
     //2D representations of 3D objects (Shadows)
     static int NumPolygons = 0; //number of polygons
@@ -24,12 +24,30 @@ public class Screen extends JPanel implements KeyListener {
     // initialise key listener
     public Screen(){
         //cube
-        DPolygons[0] = new DPolygon(new double[] {0,2,2,0}, new double[] {0,0,2,2}, new double[]{0,0,0,0}, Color.BLUE); //bottom
-        DPolygons[1] = new DPolygon(new double[] {0,2,2,0}, new double[] {0,0,2,2}, new double[] {2,2,2,2}, Color.RED); //top
-        DPolygons[2] = new DPolygon(new double[] {2,2,2,2}, new double[] {0,2,2,0}, new double[] {0,0,2,2}, Color.GREEN); //north
-        DPolygons[3] = new DPolygon(new double[] {0,2,2,0}, new double[] {0,0,0,0}, new double[] {0,0,2,2}, Color.GRAY); //east
-        DPolygons[4] = new DPolygon(new double[] {0,0,0,0}, new double[] {0,2,2,0}, new double[] {0,0,2,2}, Color.YELLOW); //south
-        DPolygons[5] = new DPolygon(new double[] {0,2,2,0}, new double[] {2,2,2,2}, new double[] {0,0,2,2}, Color.ORANGE); //west
+
+        DPolygons[NumPolygons] = new DPolygon(new double[] {0,2,2,0}, new double[] {0,0,2,2}, new double[]{0,0,0,0}, Color.BLUE); //bottom
+        DPolygons[NumPolygons] = new DPolygon(new double[] {0,2,2,0}, new double[] {0,0,2,2}, new double[] {2,2,2,2}, Color.RED); //top
+        DPolygons[NumPolygons] = new DPolygon(new double[] {2,2,2,2}, new double[] {0,2,2,0}, new double[] {0,0,2,2}, Color.GREEN); //north
+        DPolygons[NumPolygons] = new DPolygon(new double[] {0,2,2,0}, new double[] {0,0,0,0}, new double[] {0,0,2,2}, Color.GRAY); //east
+        DPolygons[NumPolygons] = new DPolygon(new double[] {0,0,0,0}, new double[] {0,2,2,0}, new double[] {0,0,2,2}, Color.YELLOW); //south
+        DPolygons[NumPolygons] = new DPolygon(new double[] {0,2,2,0}, new double[] {2,2,2,2}, new double[] {0,0,2,2}, Color.ORANGE); //west
+
+        /*
+        DPolygons[NumPolygons] = new DPolygon(new double[] {0,0,0,0}, new double[] {0,2,2,0}, new double[]{0,0,2,2}, Color.BLUE); //south
+        DPolygons[NumPolygons] = new DPolygon(new double[] {0,0,2,2}, new double[] {2,2,2,2}, new double[] {0,2,2,0}, Color.RED); //top
+        DPolygons[NumPolygons] = new DPolygon(new double[] {2,2,2,2}, new double[] {0,0,2,2}, new double[] {0,2,2,0}, Color.GREEN); //north
+        DPolygons[NumPolygons] = new DPolygon(new double[] {0,2,2,0}, new double[] {0,0,2,2}, new double[] {0,0,0,0}, Color.GRAY); //east
+        DPolygons[NumPolygons] = new DPolygon(new double[] {0,2,2,0}, new double[] {0,0,0,0}, new double[] {0,0,2,2}, Color.YELLOW); //bottom
+        DPolygons[NumPolygons] = new DPolygon(new double[] {2,0,0,2}, new double[] {0,0,2,2}, new double[] {2,2,2,2}, Color.ORANGE); //west
+        */
+
+        //plane
+        for(int i=-3; i<5; i++)
+            for(int j=-3; j<5; j++)
+                DPolygons[NumPolygons] = new DPolygon(new double[]{i,i,i+1,i+1},
+                                            new double[] {j,j+1,j+1,j},
+                                            new double[]{0,0,0,0}, Color.GREEN);
+
 
         addKeyListener(this);
         setFocusable(true);
