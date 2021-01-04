@@ -100,6 +100,10 @@ public class ShapeGenerator {
         return new FourObject(coords, faces);
     }
 
+    public static double getMajorCoord(double size){
+        return size/2;
+    }
+
     public static void unit3Cube(){
         ThreeCube(-1,1,0,0,0);
     }
@@ -118,5 +122,11 @@ public class ShapeGenerator {
         // bottom corner is (-2,-2,-2,-2), top corner is (2,2,2,2)
         // with zw offset of 2 the bottom corner will be (-2,-2,0,0), top corner will be (2,2,4,4)
         FourCube(-2,2,0,0,2, 2);
+    }
+
+    public static void ThreeByThreePositive(){
+        double major = getMajorCoord(3);
+        double minor = -major;
+        ThreeCube(minor,major,major,major,major);
     }
 }
