@@ -52,8 +52,35 @@
                 return o;
             }
 
-            float DefineShape(){
-                
+            float sphereDist(float3 p){
+                //sphere
+                float d = length(p) - 0.4;
+                return d;
+            }
+
+            float torusDist(float3 p){
+                float ringRadius = 0.1;
+                float d;
+                d = length( float2(length(p.xy) - 0.4, p.z)) - ringRadius;
+                d = length( float2(length(p.zx) - 0.4, p.y)) - ringRadius;
+                return d;
+            }
+
+            float sdCylinder( float3 p, float3 a, float3 b, float r) {
+                float3 ab = b-a;
+                float3 ap = p-a;
+
+                float t = dot(ab, ap) / dot(ab, ab);
+                //t = clamp(t, 0., 1.);
+
+                float3 c = a + t*ab;
+
+                float x = length(p-c) - r;
+                float y = (abs(t-0.5)-0.5) * length(ab);
+                float e = length(max(float2(x, y), 0));
+                float i = min(max(x,y), 0);
+
+                return e+i;
             }
 
             //Get Distance
@@ -65,13 +92,14 @@
             float GetDist( float3 p ){
                 //Distance between origin and surface is distance between
                 //origin and center of object minux distance to the surface
-                // e.g 0.5 for a sphere of radius 0.5
-                float SCALE = 0.4;
-                //float d = length(p) - SCALE; //sphere
-                float ringRadius = SCALE/3;
-                //float d = length( float2(length(p.xy) - SCALE, p.z)) - ringRadius;
-                float d = length( float2(length(p.zx) - SCALE, p.y)) - ringRadius;
 
+                float SCALE = 0.4;
+                //float d = sphereDist( p );
+                //float d = torusDist( p );
+            
+                float d = sdCylinder( p, float3(-0.3,-0.3,-0.3), float3(0.3,0.3,0.3), .2);
+
+                //float3 plane = (0,0,0);
 
                 return d;
             }
@@ -114,12 +142,6 @@
             fixed4 frag (v2f i) : SV_Target
             {   
                 float2 uv = i.uv - 0.5;
-
-                //Get UV coordinates and transform them to the center of the object
-                //(Camera)
-                //float3 ro = float3(0, 0, -3); //Ray Origin
-                //float3 rd = normalize(float3(uv.x, uv.y, 1)); //Ray Direction
-
                 float3 ro = i.ro;
                 float3 rd = normalize(i.hitPos - ro);
 
@@ -138,7 +160,6 @@
                 else discard;
 
                 //col = lerp(col, tex, smoothstep(0.23, 0.23, m));
-
                 return col;
             }
             ENDCG

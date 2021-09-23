@@ -73,7 +73,7 @@ t = clamp(t, 0, 1)
 c = A + t*ab
 // the distance is the length from the camera to anywhere on 
 // line ab - the radius of the capsule
-d = length(p-c) - radius
+x = length(p-c) - radius
 
 // To view the side, similar to the box]
 // t goes from 0 to 1
@@ -81,9 +81,9 @@ d = length(p-c) - radius
 y = (abs)t-0.5)-0.5) * length(ab)
 //if looking directly at the edge
 //same as box
-e = length(max(vec2(d,y), 0))
+e = length(max(vec2(x,y), 0))
 //interior distance
-i = min(max(d,y),0)
+i = min(max(x,y),0)
 ```
 
 ![img](Shapes/cylinder.PNG)
