@@ -23,6 +23,12 @@ I may still build a render engine from scratch, but it seems like a wise idea to
 
 The purpose of this project will be to investigate different representations of 4D objects in 3D (in 2D) and therefore getting something working first is a priority.
 
+### Progress Report 25/09/2021
+Back with a 3D scene using ray marching containing a bunch of shapes. Also created a 4D sphere and cube.
+Implemented 3D and 4D rotation.
+
+Looking into SDF shapes described [here](https://iquilezles.org/www/articles/distfunctions/distfunctions.htm)
+
 ## 3DRenderer\
 Attempting a 3D render engine from scratch in Java.
 This portion of the project is following [this tutorial](https://www.youtube.com/watch?v=gnT6YC5Nf70&list=PLsRmsZm0xMNogPyRn6gNWq4OM5j22FkAU&index=1) 
