@@ -5,6 +5,7 @@ Shader "Unlit/Scene"
         _MainTex ("Texture", 2D) = "white" {}
         _Effect ("ShadingType", Int) = 2
         _Y ("Y Axis Cross Section", Range(-0.1,2)) = 0
+        _CS ("Cross Section", Int) = 1
     }
     SubShader
     {
@@ -48,7 +49,8 @@ Shader "Unlit/Scene"
                 // The following line declares the _BaseColor variable, so that you
                 // can use it in the fragment shader.
                 int _Effect;  
-                float _Y;          
+                float _Y;   
+                int _CS;       
             CBUFFER_END
 
             v2f vert (appdata v)
@@ -114,6 +116,19 @@ Shader "Unlit/Scene"
             }
 
             /**
+             * \brief   Shape distance function for a box
+             *
+             * \param   p   center point of object
+             * \param   s   float 3 of box shape
+             *              x, y, z -> width, height, depth
+             * \param   r   radius of the bevel
+             */
+            float sdRoundedBox(float3 p, float3 s, float r){
+                float d = length(max(abs(p)-s, 0)) - r;
+                return d;
+            }
+
+            /**
              * \brief   Shape distance function for a capsule
              *
              * \param   p   center point of object
@@ -121,7 +136,7 @@ Shader "Unlit/Scene"
              * \param   b   origin of second sphere cap
              * \param   r   radius of capsule
              */
-            float sdCapsule( float3 p, float3 a, float3 b, float r){
+            float sdCapsule(float3 p, float3 a, float3 b, float r){
                 float3 ab = b-a;
                 float3 ap = p-a;
 
@@ -142,7 +157,7 @@ Shader "Unlit/Scene"
              * \param   b   origin of second circle cap
              * \param   r   radius of cylinder
              */
-            float sdCylinder( float3 p, float3 a, float3 b, float r){
+            float sdCylinder(float3 p, float3 a, float3 b, float r){
                 float3 ab = b-a;
                 float3 ap = p-a;
 
@@ -158,10 +173,61 @@ Shader "Unlit/Scene"
                 return e+i;
             }
 
+            float sdHexagonalPrism(float3 p, float2 h){
+                const float3 k = float3(-0.8660254, 0.5, 0.57735);
+                p = abs(p);
+                p.xy -= 2.0*min(dot(k.xy, p.xy), 0.0)*k.xy;
+                float2 d = float2(
+                    length(p.xy-float2(clamp(p.x,-k.z*h.x,k.z*h.x), h.x))*sign(p.y-h.x),
+                    p.z-h.y );
+                return min(max(d.x,d.y),0.0) + length(max(d,0.0));
+            }
+
+            float sdTrianglarPrism(float3 p, float2 h ){
+                float3 q = abs(p);
+                return max(q.z-h.y,max(q.x*0.866025+p.y*0.5,-p.y)-h.x*0.5);
+            }
+
+            float sdOctohedron(){
+
+            }
+
+            float sdTetrahedron(){
+
+            }
+
+            float sdCone( float3 p, float2 c, float h ){
+                // c is the sin/cos of the angle, h is height
+                // Alternatively pass q instead of (c,h),
+                // which is the point at the base in 2D
+                float2 q = h*float2(c.x/c.y,-1.0);
+                    
+                float2 w = float2( length(p.xz), p.y );
+                float2 a = w - q*clamp( dot(w,q)/dot(q,q), 0.0, 1.0 );
+                float2 b = w - q*float2( clamp( w.x/q.x, 0.0, 1.0 ), 1.0 );
+                float k = sign( q.y );
+                float d = min(dot( a, a ),dot(b, b));
+                float s = max( k*(w.x*q.y-w.y*q.x),k*(w.y-q.y)  );
+                return sqrt(d)*sign(s);
+            }
+
             float4 Rotate(float a) {
                 float s = sin(a);
                 float c = cos(a);
-                return float4(c, -s, s ,c);
+                return float4(c, s, -s ,c);
+            }
+
+            /**
+             * \brief   Rotation Matrix Multiplication for 3D rotation
+             *
+             * \param   mat rotation matrix
+             * \param   a   axis of rotation
+             * \param   b   axis of rotation
+             */
+            float2 Rot3MatMul(float4 mat, float a, float b){
+                float2 rot = float2( a * mat[0] + b * mat[1],
+                                     a * mat[2] + b * mat[3] );
+                return rot;
             }
 
             float GetDist(float3 p){
@@ -173,9 +239,15 @@ Shader "Unlit/Scene"
                 float torus  = sdTorus(     p-float3(-0.2, 0.15, -0.5), 
                                             0.4, 0.15);
                 
-                float3 bp = p-float3(1, 0.5, -1);
-                //bp.xz *= Rotate(_Time);
-                //bp.yz *= Rot(_Time);
+                //translate box
+                float3 bp = p-float3(1, 0.8, -1);
+                //rotation matrix for continuous rotation
+                float4 mat = Rotate(_Time*10);
+
+                bp.xz = Rot3MatMul(mat, bp.x, bp.z);
+                bp.yz = Rot3MatMul(mat, bp.y, bp.z);
+                bp.xy = Rot3MatMul(mat, bp.x, bp.y);
+
                 
                 float box     = sdBox(      bp,
                                             float3(0.5,0.5,0.5));
@@ -197,7 +269,10 @@ Shader "Unlit/Scene"
 
                 //cross section
                 float slice = sdBox( p-float3(0, _Y, 0), float3(1.5,0.001,1.5));
-                d = max(slice, d);
+                if (_CS == 0)
+                    d = max(slice, d);
+                else
+                    d = min(slice, d);
 
                 return d;
             }

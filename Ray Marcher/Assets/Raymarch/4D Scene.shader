@@ -4,7 +4,7 @@
     {
         _MainTex ("Texture", 2D) = "white" {}
         _Effect ("ShadingType", Int) = 2
-        _W ("W Axis Cross Section", Range(-2,2)) = 0
+        _W ("W Axis Cross Section", Range(-3,3)) = 0
     }
     SubShader
     {
@@ -19,7 +19,7 @@
 
             #include "UnityCG.cginc"
 
-            #define MAX_STEPS 100
+            #define MAX_STEPS 200
             #define MAX_DIST  100
             #define SURF_DIST 0.001
 
@@ -68,6 +68,12 @@
                 return o;
             }
 
+            /**
+             * \brief   Shape distance function for a sphere
+             *
+             * \param   p   center point of object
+             * \param   r   radius of the sphere
+             */
             float sdSphere(float4 p, float r){
                 float d = length(p) - r;
                 return d;
@@ -81,24 +87,51 @@
              *              x, y, z -> width, height, depth
              */
             float sdBox(float4 p, float4 s){
-                float d = length(max(abs(p)-s, 0));
+                float d = length(max(abs(p) - s, 0));
                 return d;
             }
 
-            float4 Rotate3D(float a) {
+            float4 Rotate(float a) {
                 float s = sin(a);
                 float c = cos(a);
-                return float4(c, -s, s ,c);
+                return float4(c, s, -s ,c);
+            }
+
+            /**
+             * \brief   Rotation Matrix Multiplication
+             *
+             * \param   mat rotation matrix
+             * \param   a   axis to rotate from
+             * \param   b   axis to rotate towards
+             */
+            float2 RotMatMul(float4 mat, float a, float b){
+                float2 rot = float2( a * mat[0] + b * mat[1],
+                                     a * mat[2] + b * mat[3] );
+                return rot;
             }
 
             float GetDist(float4 p){
                 float sphere = sdSphere( p-float4(0,0,0,_W), 1);
-                float box = sdBox( p-float4(0, 0, 0, 0), float4(3,3,3,3));
-
-                float d = sphere;
                 
-                //cross section
-                //d = max(slice, d);
+                //Box 3D rotation
+
+                //translate box
+                float4 bp = p-float4(0,0,0, _W);
+                //rotation matrix for continuous rotation
+                float4 mat = Rotate(_Time*10);
+
+                //bp.xz = RotMatMul(mat, bp.x, bp.z);
+                //bp.yz = RotMatMul(mat, bp.y, bp.z);
+                //bp.xy = RotMatMul(mat, bp.x, bp.y);
+                
+                bp.wx = RotMatMul(mat, bp.w, bp.x);
+                bp.wy = RotMatMul(mat, bp.w, bp.y);
+                bp.wz = RotMatMul(mat, bp.w, bp.z);
+                
+                //Note: Giving shapes a slight bevel stops the wierd glitchy lines
+                //Giving the shape intieror distance made things worse
+                float box = sdBox( bp, float4(1,1,1,1)); - 0.05;
+                float d = box;
                 
                 return d;
             }
@@ -129,7 +162,7 @@
             }
 
             float GetLight(float4 p){
-                float4 lightPos = float4(0,2,0,0);
+                float4 lightPos = float4(2,2,2,0);
 
                 //angle dependant fall off
                 float4 lv = normalize(lightPos-p);
