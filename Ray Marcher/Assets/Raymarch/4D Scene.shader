@@ -91,6 +91,55 @@
                 return d;
             }
 
+            /**
+             * \brief   Shape distance function for an octohedron
+             *
+             * \param   p   center point of object
+             * \param   s   size of the object
+             */
+            float sdOctahedron( float4 p, float s){
+                float c = sqrt(4); //Square root of number of dimensions
+                return ((dot(abs(p), float4(1,1,1,1)) - s) / c);
+            }
+
+            /**
+             * \brief   Shape distance function for a tetrahedron
+             *
+             * \param   p   center point of object
+             * \param   s   scale of the object
+             */
+            float sdTetrahedron(float4 p, float s){
+                return (max(
+                            abs(max(
+                                abs(p.x+p.y)-p.z,
+                                abs(p.x-p.y)+p.z
+                                )-p.w),
+                            abs(max(
+                                abs(p.x+p.y)-p.z,
+                                abs(p.x-p.y)+p.z
+                                )+p.w)
+                            )-1*s
+                        )/sqrt(4);
+            }
+
+            /**
+             * \brief   Shape distance function for a torus
+             *
+             * \param   p   center point of object
+             * \param   r1  major radius - torus ring
+             * \param   r2  minor radius - torus thickness
+             * \param   r3  minor radius in the 4th dimension
+             */
+            float sdTorus(float4 p, float r1, float r2, float r3){
+                float d = length(
+                          float2(
+                                length( 
+                                float2(length(p.zx) - r1, p.y)
+                                        ) - r2, p.w
+                                )) - 0.2;
+                return d;
+            }
+
             float4 Rotate(float a) {
                 float s = sin(a);
                 float c = cos(a);
@@ -116,7 +165,7 @@
                 //Box 3D rotation
 
                 //translate box
-                float4 bp = p-float4(0,0,0, _W);
+                float4 bp = p-float4(0,0,0,_W);
                 //rotation matrix for continuous rotation
                 float4 mat = Rotate(_Time*10);
 
@@ -130,8 +179,11 @@
                 
                 //Note: Giving shapes a slight bevel stops the wierd glitchy lines
                 //Giving the shape intieror distance made things worse
-                float box = sdBox( bp, float4(1,1,1,1)); - 0.05;
-                float d = box;
+                //float d = sdBox( bp, float4(1,1,1,1)) - 0.05;
+                //float d = sdOctahedron(bp, 1) - 0.05;
+                //float d = sdTetrahedron(bp, 1) - 0.05;
+                
+                float d = sdTorus(bp, 1, 0.4, 0.1);
                 
                 return d;
             }

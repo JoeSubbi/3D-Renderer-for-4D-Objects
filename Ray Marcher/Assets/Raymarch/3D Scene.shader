@@ -173,42 +173,25 @@ Shader "Unlit/Scene"
                 return e+i;
             }
 
-            float sdHexagonalPrism(float3 p, float2 h){
-                const float3 k = float3(-0.8660254, 0.5, 0.57735);
-                p = abs(p);
-                p.xy -= 2.0*min(dot(k.xy, p.xy), 0.0)*k.xy;
-                float2 d = float2(
-                    length(p.xy-float2(clamp(p.x,-k.z*h.x,k.z*h.x), h.x))*sign(p.y-h.x),
-                    p.z-h.y );
-                return min(max(d.x,d.y),0.0) + length(max(d,0.0));
+            float sdOctahedron( float3 p, float s){
+                float c = sqrt(4); //Square root of number of dimensions
+                return ((dot(abs(p), float4(1,1,1,1)) - s) / c);
             }
 
-            float sdTrianglarPrism(float3 p, float2 h ){
-                float3 q = abs(p);
-                return max(q.z-h.y,max(q.x*0.866025+p.y*0.5,-p.y)-h.x*0.5);
+            float sdTetrahedron(float3 p, float s){
+                return (max(
+                            abs(p.x+p.y)-p.z,
+                            abs(p.x-p.y)+p.z
+                            )-1*s
+                        )/sqrt(3.) ;
             }
 
-            float sdOctohedron(){
-
-            }
-
-            float sdTetrahedron(){
-
-            }
-
-            float sdCone( float3 p, float2 c, float h ){
-                // c is the sin/cos of the angle, h is height
-                // Alternatively pass q instead of (c,h),
-                // which is the point at the base in 2D
-                float2 q = h*float2(c.x/c.y,-1.0);
-                    
-                float2 w = float2( length(p.xz), p.y );
-                float2 a = w - q*clamp( dot(w,q)/dot(q,q), 0.0, 1.0 );
-                float2 b = w - q*float2( clamp( w.x/q.x, 0.0, 1.0 ), 1.0 );
-                float k = sign( q.y );
-                float d = min(dot( a, a ),dot(b, b));
-                float s = max( k*(w.x*q.y-w.y*q.x),k*(w.y-q.y)  );
-                return sqrt(d)*sign(s);
+            // Cone - exact
+            float coneSDF( float3 p, float2 c, float h ) {
+                // c is the sin/cos of the angle
+                float q = length(p.xy);
+                float d = dot(c, float2(q,p.z));
+                return d;
             }
 
             float4 Rotate(float a) {
@@ -259,13 +242,21 @@ Shader "Unlit/Scene"
                                             float3(0, 0, 0.7), 
                                             float3(0, 0.3, 0.7), 
                                             0.3);
-                
+
+                float octahedron = sdOctahedron(p-float3(-0.9,0.7,0.9), 
+                                            0.5);
+
+                float tetrahedron = sdTetrahedron(p-float3(-0.9,0.7,-0.9),
+                                            0.2);
+
                 // Union all shapes
                 float d = min(sphere, torus);
                 d = min(d, box);
                 d = min(d, capsule);
                 d = min(d, cylinder);
                 d = min(d, plane);
+                d = min(d, octahedron);
+                d = min(d, tetrahedron);
 
                 //cross section
                 float slice = sdBox( p-float3(0, _Y, 0), float3(1.5,0.001,1.5));
