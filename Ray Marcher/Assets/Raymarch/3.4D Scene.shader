@@ -159,6 +159,23 @@
                 return rot;
             }
 
+            float4 GlobalRotation(float4 p){
+                //rotation matrix for continuous rotation
+                float4 mat = Rotate(_Time*10);
+                
+                //3D Rotation
+                //p.xy = RotMatMul(mat, p.x, p.y);
+                //p.xz = RotMatMul(mat, p.x, p.z);
+                //p.yz = RotMatMul(mat, p.y, p.z);
+                
+                //4D Rotation
+                p.wx = RotMatMul(mat, p.w, p.x);
+                p.wy = RotMatMul(mat, p.w, p.y);
+                p.wz = RotMatMul(mat, p.w, p.z);
+
+                return p;
+            }
+
             float GetDist(float4 p){
                 float sphere = sdSphere( p-float4(0,0,0,_W), 1);
                 
@@ -166,24 +183,15 @@
 
                 //translate box
                 float4 bp = p-float4(0,0,0,_W);
-                //rotation matrix for continuous rotation
-                float4 mat = Rotate(_Time*10);
 
-                //bp.xz = RotMatMul(mat, bp.x, bp.z);
-                //bp.yz = RotMatMul(mat, bp.y, bp.z);
-                //bp.xy = RotMatMul(mat, bp.x, bp.y);
-                
-                bp.wx = RotMatMul(mat, bp.w, bp.x);
-                bp.wy = RotMatMul(mat, bp.w, bp.y);
-                bp.wz = RotMatMul(mat, bp.w, bp.z);
+                bp = GlobalRotation(bp);
                 
                 //Note: Giving shapes a slight bevel stops the wierd glitchy lines
                 //Giving the shape intieror distance made things worse
                 //float d = sdBox( bp, float4(1,1,1,1)) - 0.05;
-                //float d = sdOctahedron(bp, 1) - 0.05;
+                float d = sdOctahedron(bp, 1) - 0.05;
                 //float d = sdTetrahedron(bp, 1) - 0.05;
-                
-                float d = sdTorus(bp, 1, 0.4, 0.1);
+                //float d = sdTorus(bp, 1, 0.4, 0.1);
                 
                 return d;
             }
@@ -234,7 +242,7 @@
             fixed4 frag (v2f i) : SV_Target
             {
                 float2 uv = i.uv; // UV coordinates - centered on object
-                float4 ro = float4(i.ro.x, i.ro.y, i.ro.z, 0);                     // Ray Origin - Camera
+                float4 ro = float4(i.ro.x, i.ro.y, i.ro.z, 0);           // Ray Origin - Camera
                 float4 rd = normalize(
                     float4(i.hitPos.x, i.hitPos.y, i.hitPos.z, 0) - ro); // Ray Direction
 
@@ -249,9 +257,9 @@
                 else {
                     float4 p = ro + rd * d;
                     
-                    float3 n = GetNormal(p);             // Normal
-                    float3 l = GetLight(p);              // Light
-                    float3 c = GetNormal(p)*GetLight(p); //Lit Normal
+                    float4 n = GlobalRotation(GetNormal(p));             // Normal
+                    float4 l = GetLight(p);              // Light
+                    float4 c = GlobalRotation(GetNormal(p))*GetLight(p); //Lit Normal
 
                     int effect = _Effect;
                     if (effect == 2) col.rgb = c;
