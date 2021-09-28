@@ -224,6 +224,8 @@ Shader "Unlit/Scene"
                 
                 //translate box
                 float3 bp = p-float3(1, 0.8, -1);
+                //Shadow
+                //bp *= float3(1,0,1);
                 //rotation matrix for continuous rotation
                 float4 mat = Rotate(_Time*10);
 
