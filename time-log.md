@@ -60,3 +60,9 @@
 
  - *1 hour* writing up time log.
  - *1 hour* writing up status report.
+
+### 29 Sep 2021
+
+ - *1 hour* created a new version of the 3D > 2D renderer using materials.
+ - *0.5 hours* tried an onion skin effect, but will have to try a different way.
+ - *2 hour* implemented materials for different objects.
