@@ -73,6 +73,10 @@
 
 ### 31 Sep 2021
 
- - *1 hour* collecting research papers to look through to understand the field better
+ - *2 hour* collecting research papers to look through to understand the field better
+   - read [Arcball Rotation Control](https://research.cs.wisc.edu/graphics/Courses/559-f2001/Examples/Gl3D/arcball-gems.pdf)
+     - potential for 'commutative' rotation?
+   - read [Rotating 3D shapes - Google Classroom](https://www.khanacademy.org/computing/computer-programming/programming-games-visualizations/programming-3d-shapes/a/rotating-3d-shapes)
+     - Potential a simple and intuitive rotation solution
 
 ## Week 3

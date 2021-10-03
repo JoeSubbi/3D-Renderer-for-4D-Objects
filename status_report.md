@@ -83,15 +83,15 @@ Implement a 3D perspective that in real time mimics the 4D object.
 
 Week 8: Create intuitive UI for users to manipulate shapes with.
 
-Week 9: Create a demo to "Identify the shape".
+Week 9:  
+Create a demo to "Identify the shape".  
+Add more shapes - 4D cylinder, cone, capsule.
 
-Week 10: Add more shapes - 4D cylinder, cone, capsule.
+Week 10:  
+Plan and script a walk through for users to play with shapes and attempt to identify them.  
+Set up a new demo for shape matching.
 
 Week 11:  
-Plan and script a walk through for users to play with shapes and attempt to identify them.  
-Set up a new demo for shape matching
-
-Week 12:  
 Tutorial videos that explain why shapes behave they do, and traits to identify what the shape is.  
 Polish the program to be a "final product".
 
