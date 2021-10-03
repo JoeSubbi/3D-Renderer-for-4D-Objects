@@ -7,7 +7,7 @@
 ### Motivation
 <!--[Clearly motivate the purpose of your project; why someone would care about what you are doing]-->
 
-4 Dimensional objects are something that cannot be created physically and cannot be visualised in their true state. By finding an intuitive way to represent hyper dimensional shapes, especially in a mathematical format, utilising ray marching, low file size, data visualisation.
+4 Dimensional objects are something that cannot be created physically and cannot be visualised in their true state. The motivation for the project is to further a persons understanding of high dimensional space and to test their understanding of geometry that cannot be wholely visualised.
 
 ### Aims
 <!--[Clearly state what the project is intended to do. This should be something which is measurable; it should be possible to tell if you succeeded]-->
@@ -70,17 +70,50 @@ This project focuses on the development of a wide range of 4 Dimensional shapes 
 ## Plan
 <!--[Time plan, in roughly weekly to monthly blocks, up until submission week]-->
 
-Discuss project with John to get an idea of the direction I am heading in...
+### Semester 1
 
-Implement and test onion skin interpretation of the 4th dimension.
+Take 2 weeks (Weeks 3 and 4) to research papers focused in the fields of geometrical representation and interaction.
+
+Week 5: attempt to implement an intuitive rotation mechanic using click and drag.
+Week 6: attempt to implement an intuitive rotation mechanic using an arc ball.
+
+Week 7:  
+Implement and test onion skin interpretation of the 4th dimension.  
 Implement a 3D perspective that in real time mimics the 4D object.
 
-Develop more intuitive rotation mechanics
+Week 8: Create intuitive UI for users to manipulate shapes with.
 
-Create intuitive rotation and UI for users to manipulate shapes with.
+Week 9: Create a demo to "Identify the shape".
+
+Week 10: Add more shapes - 4D cylinder, cone, capsule.
+
+Week 11:  
+Plan and script a walk through for users to play with shapes and attempt to identify them.  
+Set up a new demo for shape matching
+
+Week 12:  
+Tutorial videos that explain why shapes behave they do, and traits to identify what the shape is.  
+Polish the program to be a "final product".
+
+### Stuff I hope to make consistent progress on:
 
 Digitally Draw up polished diagrams of each shape implemented:
  - deriving the SDF.
  - Explaining how they are projected into the 4th dimension.
 
-Create an explanation video that will be shown to users of the system.
+Working on intuitive rotation mechanics
+
+Developing Demo programs to prepare for "final product"
+
+quality of life polish
+
+### Christmas
+
+Start planning for user experiments
+
+### Semester 2
+
+ - Create some automated data analysis based on plan for user interaction
+ - Run user tests
+ - Write up results
+ - Write dissertation

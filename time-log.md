@@ -66,3 +66,13 @@
  - *1 hour* created a new version of the 3D > 2D renderer using materials.
  - *0.5 hours* tried an onion skin effect, but will have to try a different way.
  - *2 hour* implemented materials for different objects.
+
+### 30 Sep 2021
+
+ - *0.5 hours* Weekly meeting - direction to head in
+
+### 31 Sep 2021
+
+ - *1 hour* collecting research papers to look through to understand the field better
+
+## Week 3
