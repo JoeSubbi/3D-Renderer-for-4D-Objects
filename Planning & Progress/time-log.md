@@ -100,3 +100,5 @@
        - Harder to get a cross section.
        - Cannot do curves well.
  - *1 hour* expanding the sources of relevant papers to find new material.
+
+### 6 Oct 2021
