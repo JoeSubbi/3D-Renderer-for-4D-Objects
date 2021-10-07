@@ -1,15 +1,5 @@
 
-@misc{noauthor_rotating_2021,
-	title = {Rotating {3D} shapes},
-	url = {https://www.khanacademy.org/computing/computer-programming/programming-games-visualizations/programming-3d-shapes/a/rotating-3d-shapes},
-	language = {English},
-	urldate = {2021-10-04},
-	journal = {Khan Academy},
-	month = oct,
-	year = {2021},
-}
-
-@phdthesis{shoemake_arcball_nodate,
+@phdthesis{shoemake_arcball_1994,
 	address = {Philadelphia},
 	title = {Arcball {Rotation} {Control}},
 	url = {https://research.cs.wisc.edu/graphics/Courses/559-f2001/Examples/Gl3D/arcball-gems.pdf},
@@ -17,6 +7,7 @@
 	urldate = {2021-10-04},
 	school = {University of Pennsylvania},
 	author = {Shoemake, Ken},
+	year = {1994},
 	annote = {Intuitive and "commutative" rotation},
 	annote = {Read - need to review the maths},
 }
@@ -57,22 +48,107 @@ that appear in mathematics and data sciences.},
  },
 }
 
-@phdthesis{reisman_screen-space_2009,
-	address = {New York},
-	type = {Research {Article}},
-	title = {A screen-space formulation for {2D} and {3D} direct manipulation},
-	url = {https://doi.org/10.1145/1622176.1622190},
-	abstract = {Rotate-Scale-Translate (RST) interactions have become the de facto standard when interacting with two-dimensional (2D) contexts in single-touch and multi-touch environments. Because the use of RST has thus far focused almost entirely on 2D, there are not yet standard techniques for extending these principles into three dimensions. In this paper we describe a screen-space method which fully captures the semantics of the traditional 2D RST multi-touch interaction, but also allows us to extend these same principles into three-dimensional (3D) interaction. Just like RST allows users to directly manipulate 2D contexts with two or more points, our method allows the user to directly manipulate 3D objects with three or more points. We show some novel interactions, which take perspective into account and are thus not available in orthographic environments. Furthermore, we identify key ambiguities and unexpected behaviors that arise when performing direct manipulation in 3D and offer solutions to mitigate the difficulties each presents. Finally, we show how to extend our method to meet application-specific control objectives, as well as show our method working in some example environments.},
+@article{mossel_3d_2013,
+	title = {{3D} {Touch} and {HOMER}-{S}: intuitive manipulation techniques for one-handed handeheld augmented reality},
+	url = {https://dl.acm.org/doi/10.1145/2466816.2466829},
+	doi = {https://doi.org/10.1145/2466816.2466829},
+	abstract = {Existing interaction techniques for mobile AR often use the multi-touch capabilities of the device's display for object selection and manipulation. To provide full 3D manipulation by touch in an integral way, existing approaches use complex multi finger and hand gestures. However, they are difficult or impossible to use in one-handed handheld AR scenarios and their usage requires prior knowledge. Furthermore, a handheld's touch screen offers only two dimensions for interaction and limits manipulation to physical screen size. To overcome these problems, we present two novel intuitive six degree-of-freedom (6DOF) manipulation techniques, 3DTouch and HOMER-S. While 3DTouch uses only simple touch gestures and decomposes the degrees of freedom, Homer-S provides full 6DOF and is decoupled from screen input to overcome physical limitations. In a comprehensive user study, we explore performance, usability and accuracy of both techniques. Therefore, we compare 3DTouch with HOMER-S in four different scenarios with varying transformation requirements. Our results reveal both techniques to be intuitive to translate and rotate objects. HOMER-S lacks accuracy compared to 3DTouch but achieves significant performance increases in terms of speed for transformations addressing all 6DOF.},
 	language = {English},
 	urldate = {2021-10-04},
-	author = {Reisman, Jason L. and Davidson, Philip L. and Han, Jefferson Y.},
-	month = oct,
-	year = {2009},
+	author = {Mossel, Annette and Venditti, Benjamin and Kaufmann, Hannes},
+	year = {2013},
+	pages = {1--10},
 }
 
-@phdthesis{murata_interactive_nodate,
-	title = {Interactive {Environment} for {Intuitive} {Understanding} of {4D} {Object} and {Space}},
-	url = {https://doi.org/10.1142/9789812791993_0024},
+@phdthesis{tianli_4d_2018,
+	title = {{4D} {Rendering}: {Projection} \& {Cross} {Section}},
+	url = {https://luicat.github.io/2018/05/23/4D-rendering.html},
+	abstract = {This report describes the design and details in implementation of a 4D rendering system based on Unity. The 4D rendering system provides two ways of viewing a 4D model in 3D object space, including projection and cross section, which can be normally shown on a 2D screen or other suitable devices. Supporting features including limited 4D rotation and translation are provided, which allows different viewing angle of a 4D model.},
+	school = {KTH Royal Institute of Technology},
+	author = {Tianli, Zhang},
+	month = may,
+	year = {2018},
+	annote = {Read - need to go more indepth},
+	annote = {Using verticies to create 4D objects
+Easier for not curved shapes. Limited},
+}
+
+@book{parker_things_2014,
+	title = {Things to make and do in the fourth dimension},
+	language = {English},
+	publisher = {Particular Books},
+	author = {Parker, Matt},
+	year = {2014},
+}
+
+@book{abbot_flatland_1998,
+	address = {USA},
+	title = {Flatland: {A} {Remance} of {Many} {Dimensions}},
+	publisher = {Penguin Group},
+	author = {Abbot, Edwin A.},
+	year = {1998},
+}
+
+@article{kageyama_visualization_2015,
+	title = {A visualization method of four-dimensional polytopes by oval display of parallel hyperplane slices},
+	url = {https://link.springer.com/article/10.1007%2Fs12650-015-0319-5},
+	abstract = {A method to visualize polytopes in a four-dimensional euclidian space (x, y, z, w) is proposed. A polytope is sliced by multiple hyperplanes that are parallel to each other and separated by uniform intervals. Since the hyperplanes are perpendicular to the w-axis, the resulting multiple slices appear in the three-dimensional (x, y, z) space and they are shown by the standard computer graphics. The polytope is rotated extrinsically in the four-dimensional space by means of a simple input method based on keyboard typings. The multiple slices are placed on a parabola curve in the three-dimensional world coordinates. The slices in a view window form an oval appearance. Both the simple and the double rotations in the four-dimensional space are applied to the polytope. All slices synchronously change their shapes when a rotation is applied to the polytope. The compact display in the oval of many slices with the help of quick rotations facilitate a grasp of the four-dimensional configuration of the polytope.},
+	number = {19},
+	author = {Kageyama, Akira},
+	month = nov,
+	year = {2015},
+	pages = {417--422},
+	annote = {multiple parallel w cross sections sections},
+}
+
+@inproceedings{hanson_visualising_1991,
+	title = {Visualising the fourth dimension using geometry and light},
+	url = {https://dl.acm.org/doi/10.5555/949607.949660},
+	doi = {doi/10.5555/949607.949660},
+	abstract = {We explore techniques for visualizing mathematical objects in four-dimensional space that exploit four-dimensional lighting effects. We analyze the geometry of image production, stereography, and shadows in 4D. We examine alternatives for smooth and specular shaded rendering of curves, surfaces, and solids in 4D, and propose a new approach that systematically converts curves or surfaces into uniquely renderable solids in four-dimensional space by attaching spheres or circles to each point. Analogs of 3D shading methods are used to produce volume renderings that distinguish objects whose 3D projections from 4D are identical. Analyzing the procedures needed to justify and evaluate a system such as ours for teaching humans to "see" in four dimensions leads us to propose a generally applicable four-step visualization paradigm.},
+	urldate = {2021-10-07},
+	booktitle = {{VIS} '91},
+	author = {Hanson, Andrew J. and Heng, Pheng A.},
+	month = oct,
+	year = {1991},
+	pages = {321--328},
+}
+
+@article{kageyama_keyboard-based_205,
+	title = {Keyboard-based control of four-dimensional rotations},
+	url = {https://link.springer.com/article/10.1007/s12650-015-0313-y#ref-CR4},
+	abstract = {Aiming at applications to the scientific visualization of three-dimensional simulation data of dynamical systems, a keyboard-based control method to specify rotations in four dimensions is proposed. It is known that four-dimensional rotations are generally the so-called double rotations, and a double rotation is a combination of simultaneously applied two simple rotations. The proposed method can specify both the simple and double rotations by single key typing of the keyboard. The method is tested in visualizations of a regular pentachoron in four-dimensional space by a hyperplane slicing.},
+	number = {19},
+	urldate = {2021-10-07},
+	journal = {Journal of Visualization},
+	author = {Kageyama, Akira},
+	month = sep,
+	year = {205},
+	pages = {319--326},
+}
+
+@inproceedings{reisman_screen-space_2009,
+	address = {Victoria, BC, Canada},
+	title = {A screen-space formulation for {2D} and {3D} direct manipulation},
+	isbn = {978-1-60558-745-5},
+	url = {http://portal.acm.org/citation.cfm?doid=1622176.1622190},
+	doi = {10.1145/1622176.1622190},
+	abstract = {Rotate-Scale-Translate (RST) interactions have become the de facto standard when interacting with two-dimensional (2D) contexts in single-touch and multi-touch environments. Because the use of RST has thus far focused almost entirely on 2D, there are not yet standard techniques for extending these principles into three dimensions. In this paper we describe a screen-space method which fully captures the semantics of the traditional 2D RST multi-touch interaction, but also allows us to extend these same principles into three-dimensional (3D) interaction. Just like RST allows users to directly manipulate 2D contexts with two or more points, our method allows the user to directly manipulate 3D objects with three or more points. We show some novel interactions, which take perspective into account and are thus not available in orthographic environments. Furthermore, we identify key ambiguities and unexpected behaviors that arise when performing direct manipulation in 3D and offer solutions to mitigate the difficulties each presents. Finally, we show how to extend our method to meet application-specific control objectives, as well as show our method working in some example environments.},
+	language = {en},
+	urldate = {2021-10-07},
+	booktitle = {Proceedings of the 22nd annual {ACM} symposium on {User} interface software and technology - {UIST} '09},
+	publisher = {ACM Press},
+	author = {Reisman, Jason L. and Davidson, Philip L. and Han, Jefferson Y.},
+	year = {2009},
+	pages = {69},
+}
+
+@inproceedings{murata_interactive_2000,
+	address = {Nagano, Japan},
+	title = {{INTERACTIVE} {ENVIRONMENT} {FOR} {INTUITIVE} {UNDERSTANDING} {OF} {4D} {OBJECT} {AND} {SPACE}},
+	isbn = {978-981-02-4489-7 978-981-279-199-3},
+	url = {http://www.worldscientific.com/doi/abs/10.1142/9789812791993_0024},
+	doi = {10.1142/9789812791993_0024},
 	abstract = {We present a new virtual reality system to assist intuitive understanding of 4D data. The system is composed of a motion capture device, a large screen, a stereo viewing system and a graphics workstation. In this environment, a user can go around the 4D world freely and interact with 4D data.
 
 The system can display four types of 4D data including 4D solid objects, 3D scalar potential fields, the profile of the complex function and 3D time-series data. Two mapping methods are employed to generate corresponding 3D images: They are the projection from 4D space to 3D space and the 3D section of 4D data.
@@ -80,31 +156,48 @@ The system can display four types of 4D data including 4D solid objects, 3D scal
 The user can observe the 4D object from an arbitrary 4D viewpoint and slice it from an arbitrary 4D direction by matching his 3D position to the point which lies on the surface of the 4D sphere surrounding the object. Moreover, using stereo glasses and position sensors attached to each hand, the user can easily rotate the 3D shape mapped from 4D space.
 
 As a result of evaluation, it was proved that the interaction with 4D data is effective for intuitive understanding of 4D.},
+	language = {en},
+	urldate = {2021-10-07},
+	booktitle = {Multimedia {Modeling}},
+	publisher = {WORLD SCIENTIFIC},
 	author = {Murata, Makoto and Hashimoto, Shuji},
+	month = oct,
+	year = {2000},
+	pages = {383--401},
 }
 
-@phdthesis{mossel_3d_2013,
-	type = {Research {Article}},
-	title = {{3D} {Touch} and {HOMER}-{S}: intuitive manipulation techniques for one-handed handeheld augmented reality},
-	url = {https://doi.org/10.1145/2466816.2466829},
-	abstract = {Existing interaction techniques for mobile AR often use the multi-touch capabilities of the device's display for object selection and manipulation. To provide full 3D manipulation by touch in an integral way, existing approaches use complex multi finger and hand gestures. However, they are difficult or impossible to use in one-handed handheld AR scenarios and their usage requires prior knowledge. Furthermore, a handheld's touch screen offers only two dimensions for interaction and limits manipulation to physical screen size. To overcome these problems, we present two novel intuitive six degree-of-freedom (6DOF) manipulation techniques, 3DTouch and HOMER-S. While 3DTouch uses only simple touch gestures and decomposes the degrees of freedom, Homer-S provides full 6DOF and is decoupled from screen input to overcome physical limitations. In a comprehensive user study, we explore performance, usability and accuracy of both techniques. Therefore, we compare 3DTouch with HOMER-S in four different scenarios with varying transformation requirements. Our results reveal both techniques to be intuitive to translate and rotate objects. HOMER-S lacks accuracy compared to 3DTouch but achieves significant performance increases in terms of speed for transformations addressing all 6DOF.},
-	language = {English},
-	urldate = {2021-10-04},
-	author = {Mossel, Annette and Venditti, Benjamin and Kaufmann, Hannes},
-	year = {2013},
-}
-
-@phdthesis{bosch_n-dimensional_2020,
-	type = {Research {Article}},
-	title = {N-{Dimensional} rigid body dynamics},
-	url = {https://doi.org/10.1145/3386569.3392483},
+@article{bosch_n-dimensional_2020,
+	title = {N-dimensional rigid body dynamics},
+	volume = {39},
+	issn = {0730-0301, 1557-7368},
+	url = {https://dl.acm.org/doi/10.1145/3386569.3392483},
+	doi = {10.1145/3386569.3392483},
 	abstract = {I present a formulation for Rigid Body Dynamics that is independent of the dimension of the space. I describe the state and equations of motion of rigid bodies using geometric algebra. Using collision detection algorithms extended to nD I resolve collisions and contact between bodies. My implementation is 4D, but the techniques described here apply to any number of dimensions. I display these four-dimensional rigid bodies by taking a three-dimensional slice through them. I allow the user to manipulate these bodies in real-time.},
-	urldate = {2021-10-05},
+	language = {en},
+	number = {4},
+	urldate = {2021-10-07},
+	journal = {ACM Transactions on Graphics},
 	author = {Bosch, Marc Ten},
 	month = jul,
 	year = {2020},
 	annote = {https://marctenbosch.com/ndphysics/},
 	annote = {Marc Ten Bosch},
+}
+
+@article{yan_multitouching_2012,
+	title = {Multitouching the {Fourth} {Dimension}},
+	volume = {45},
+	issn = {0018-9162},
+	url = {http://ieeexplore.ieee.org/document/6165243/},
+	doi = {10.1109/MC.2012.77},
+	abstract = {The increased degrees of freedom in a multitouch interface help users control 4D worlds with intuitive gestures. Relative to a specialized mouse-based interface, a multitouch interface is easier to learn, and 4D object manipulation is up to 1.5 times faster.},
+	number = {9},
+	urldate = {2021-10-07},
+	journal = {Computer},
+	author = {Yan, Xiaoqi and Fu, Chi-Wing and Hanson, Andrew J.},
+	month = sep,
+	year = {2012},
+	pages = {80--88},
 }
 
 @misc{noauthor_ray_2018,
@@ -143,23 +236,10 @@ As a result of evaluation, it was proved that the interaction with 4D data is ef
 	year = {2019},
 }
 
-@phdthesis{tianli_4d_2018,
-	title = {{4D} {Rendering}: {Projection} \& {Cross} {Section}},
-	url = {https://luicat.github.io/2018/05/23/4D-rendering.html},
-	abstract = {This report describes the design and details in implementation of a 4D rendering system based on Unity. The 4D rendering system provides two ways of viewing a 4D model in 3D object space, including projection and cross section, which can be normally shown on a 2D screen or other suitable devices. Supporting features including limited 4D rotation and translation are provided, which allows different viewing angle of a 4D model.},
-	school = {KTH Royal Institute of Technology},
-	author = {Tianli, Zhang},
-	month = may,
-	year = {2018},
-	annote = {Read - need to go more indepth},
-	annote = {Using verticies to create 4D objects
-Easier for not curved shapes. Limited},
-}
-
 @misc{noauthor_pentachoron_nodate,
 	title = {Pentachoron},
 	url = {https://math.wikia.org/wiki/Pentachoron},
-	abstract = {In geometry, the Pentachoron or 5-cell is a four-dimensional object bounded by 5 tetrahedral cells. It is also known as the tetrahedral hyperpyramid or 4-Simplex. It is a 4-simplex, the simplest possible convex regular 4-polytope (four-dimensional analogue of a polyhedron), and is analogous to the tetrahedron in three dimensions and the triangle  in two dimensions. The regular polychoron has 5 vertices, 10 edges, 10 faces, and 5 cells. With s being the length of each side, it has an edge length of 10s, a surface area of 5√3s{\textasciicircum}2/2, a surcell volume of 5s{\textasciicircum}3/6/√2, and a surteron bulk of √5s{\textasciicircum}4/96},
+	abstract = {In geometry, the Pentachoron or 5-cell is a four-dimensional object bounded by 5 tetrahedral cells. It is also known as the tetrahedral hyperpyramid or 4-Simplex. It is a 4-simplex, the simplest possible convex regular 4-polytope (four-dimensional analogue of a polyhedron), and is analogous to the tetrahedron in three dimensions and the triangle in two dimensions. The regular polychoron has 5 vertices, 10 edges, 10 faces, and 5 cells. With s being the length of each side, it has an edge length of 10s, a surface area of 5√3sˆ2/2, a surcell volume of 5sˆ3/6/√2, and a surteron bulk of √5sˆ4/96},
 	annote = {"analogous to the tetrahedron"},
 }
 
@@ -179,15 +259,17 @@ Easier for not curved shapes. Limited},
 	url = {https://www.collinsdictionary.com/dictionary/english/gon_1},
 }
 
-@book{parker_things_2014,
-	title = {Things to make and do in the fourth dimension},
-	language = {English},
-	publisher = {Particular Books},
-	author = {Parker, Matt},
-	year = {2014},
-}
-
 @misc{noauthor_-choron_nodate,
 	title = {-choron},
 	url = {https://en.wiktionary.org/wiki/-choron},
+}
+
+@misc{noauthor_rotating_2021,
+	title = {Rotating {3D} shapes},
+	url = {https://www.khanacademy.org/computing/computer-programming/programming-games-visualizations/programming-3d-shapes/a/rotating-3d-shapes},
+	language = {English},
+	urldate = {2021-10-04},
+	month = oct,
+	year = {2021},
+	note = {Publication Title: Khan Academy},
 }
