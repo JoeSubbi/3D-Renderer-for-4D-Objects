@@ -136,8 +136,28 @@
                                 length( 
                                 float2(length(p.zx) - r1, p.y)
                                         ) - r2, p.w
-                                )) - 0.2;
+                                )) - r3;
                 return d;
+            }
+
+            /**
+             * \brief   Shape distance function for a capsule
+             *
+             * \param   p   center point of object
+             * \param   a   origin of first sphere cap
+             * \param   b   origin of second sphere cap
+             * \param   r   radius of capsule
+             */
+            float sdCapsule( float4 p, float4 a, float4 b, float r )
+            {
+                float4 pa = p - a, ba = b - a;
+                float h = clamp( dot(pa,ba)/dot(ba,ba), 0.0, 1.0 );
+                return length( pa - ba*h ) - r;
+            }
+
+            //Extrude
+            float4 Extrude(float4 p, float4 h){
+                return float4( p-clamp(p,-h,h) );
             }
 
             float4 Rotate(float a) {
@@ -189,9 +209,10 @@
                 //Note: Giving shapes a slight bevel stops the wierd glitchy lines
                 //Giving the shape intieror distance made things worse
                 //float d = sdBox( bp, float4(1,1,1,1)) - 0.05;
-                float d = sdOctahedron(bp, 1) - 0.05;
+                //float d = sdOctahedron(bp, 1) - 0.05;
                 //float d = sdTetrahedron(bp, 1) - 0.05;
                 //float d = sdTorus(bp, 1, 0.4, 0.1);
+                float d = sdCapsule(bp, float4(0,0,0, -0.5), float4(0,0,-0, 0.5), 0.2);
                 
                 return d;
             }
