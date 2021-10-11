@@ -1,4 +1,4 @@
-﻿Shader "Unlit/Scene"
+Shader "Unlit/Scene"
 {
     Properties
     {
@@ -155,9 +155,30 @@
                 return length( pa - ba*h ) - r;
             }
 
-            //Extrude
-            float4 Extrude(float4 p, float4 h){
-                return float4( p-clamp(p,-h,h) );
+            /**
+             * \brief   Shape distance function for a cone
+             *
+             * \param   r   radius at base of cone
+             * \param   h   height of cone
+             */
+            float sdCone(float4 p, float r, float h) {
+                float2 q = float2(length(p.xyz), p.w);
+                float2 tip = q - float2(0, h);
+                float2 mantleDir = normalize(float2(h, r));
+                float mantle = dot(tip, mantleDir);
+                float d = max(mantle, -q.y);
+                float projected = dot(tip, float2(mantleDir.y, -mantleDir.x));
+                
+                // distance to tip
+                if ((q.y > h) && (projected < 0)) {
+                    d = max(d, length(tip));
+                }
+                
+                // distance to base ring
+                if ((q.x > r) && (projected > length(float2(h, r)))) {
+                    d = max(d, length(q - float2(r, 0)));
+                }
+                return d;
             }
 
             float4 Rotate(float a) {
@@ -212,7 +233,10 @@
                 //float d = sdOctahedron(bp, 1) - 0.05;
                 //float d = sdTetrahedron(bp, 1) - 0.05;
                 //float d = sdTorus(bp, 1, 0.4, 0.1);
-                float d = sdCapsule(bp, float4(0,0,0, -0.5), float4(0,0,-0, 0.5), 0.2);
+                //float d = sdCapsule(bp, float4(0,0,0, -0.5), float4(0,0,-0, 0.5), 0.2);
+                
+                //float d = sdETorus(bp,1,0.4, 0.1);
+                float d = sdCone(bp-float4(0,0,0,-0.5), 0.5, 1);
                 
                 return d;
             }

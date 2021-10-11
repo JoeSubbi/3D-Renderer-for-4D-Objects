@@ -186,11 +186,23 @@ Shader "Unlit/Scene"
                         )/sqrt(3.) ;
             }
 
-            // Cone - exact
-            float coneSDF( float3 p, float2 c, float h ) {
-                // c is the sin/cos of the angle
-                float q = length(p.xy);
-                float d = dot(c, float2(q,p.z));
+            float sdCone(float3 p, float radius, float height) {
+                float2 q = float2(length(p.xz), p.y);
+                float2 tip = q - float2(0, height);
+                float2 mantleDir = normalize(float2(height, radius));
+                float mantle = dot(tip, mantleDir);
+                float d = max(mantle, -q.y);
+                float projected = dot(tip, float2(mantleDir.y, -mantleDir.x));
+                
+                // distance to tip
+                if ((q.y > height) && (projected < 0)) {
+                    d = max(d, length(tip));
+                }
+                
+                // distance to base ring
+                if ((q.x > radius) && (projected > length(float2(height, radius)))) {
+                    d = max(d, length(q - float2(radius, 0)));
+                }
                 return d;
             }
 
@@ -215,12 +227,12 @@ Shader "Unlit/Scene"
 
             float GetDist(float3 p){
                 //Define shapes
-                float plane = sdBox( p-float3(0, -0.05, 0), float3(1.5,0.1,1.5));
+                float plane = sdBox( p-float3(0, -0.1, 0), float3(1.5,0.1,1.5));
 
                 float sphere = sdSphere(    p-float3(0.9, 0.4, 0.5), 
                                             0.4);
                 float torus  = sdTorus(     p-float3(-0.2, 0.15, -0.5), 
-                                            0.4, 0.15);
+                                            0.4, 0.15);                
                 
                 //translate box
                 float3 bp = p-float3(1, 0.8, -1);
@@ -235,7 +247,7 @@ Shader "Unlit/Scene"
 
                 
                 float box     = sdBox(      bp,
-                                            float3(0.5,0.5,0.5));
+                                            float3(0.5,0.5,0.5))-0.01;
                 float capsule = sdCapsule(  p, 
                                             float3(-0.6, 0.1, 0.4), 
                                             float3(-1.1, 0.1, -0.1), 
@@ -250,6 +262,8 @@ Shader "Unlit/Scene"
 
                 float tetrahedron = sdTetrahedron(p-float3(-0.9,0.7,-0.9),
                                             0.2);
+                float cone =        sdCone(p-float3(-0.95,0,-0.95),
+                                            0.3, 0.6);
 
                 // Union all shapes
                 float d = min(sphere, torus);
@@ -258,7 +272,8 @@ Shader "Unlit/Scene"
                 d = min(d, cylinder);
                 d = min(d, plane);
                 d = min(d, octahedron);
-                d = min(d, tetrahedron);
+                //d = min(d, tetrahedron);
+                d = min(d, cone);
 
                 //cross section
                 float slice = sdBox( p-float3(0, _Y, 0), float3(1.5,0.001,1.5));
