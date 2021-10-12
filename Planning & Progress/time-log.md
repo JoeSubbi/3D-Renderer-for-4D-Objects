@@ -90,6 +90,7 @@
  - *1 hour* Making a plan for tasks, representations and the shapes I intend to create for the user experiments.
 
 ### 5 Oct 2021
+
  - *2 hour*
    - read [3D Scene manipulation with 2D Devices and Constraints](https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.26.5800&rep=rep1&type=pdf)
      - Less relevant than I thought it would be.
@@ -102,3 +103,31 @@
  - *1 hour* expanding the sources of relevant papers to find new material.
 
 ### 6 Oct 2021
+
+ - *1 hour* Read [A visualization method of four-dimensional polytopes by oval display of parallel hyperplane slices](https://link.springer.com/article/10.1007%2Fs12650-015-0319-5)
+   - very similar to my idea of a 4d cross section timeline and 4d layered cross sections.
+ - *0.5 hours* Looked up shape name conventions.
+ - *0.5 hours* organising *Zotero* with colour coding, to keep track of what I have read, need to read and favourites.
+
+### 7 Oct 2021
+
+ - *0.5 hours* Weekly meeting - How to improve finding research papers - what to look for, and advice.
+   - take a look at psychology of understanding/teaching geometry.
+ - Reread relevant chapters in *Things to make and do in the fourth dimension*.
+   - may be good for explaining basic concepts?
+
+### 8 Oct 2021
+
+ - *2 hours* Read multiple articles by [Inigo Quilez](https://www.iquilezles.org/)
+   - good for getting to grips with ray marching.
+ - *0.5 hours* Read [The van Hiele Model of Geometric Thinking](https://www.mff.cuni.cz/veda/konference/wds/proc/pdf12/WDS12_112_m8_Vojkuvkova.pdf)
+   - will be great dissertation material.
+ - *1 hours* Read [Keyboard-based control of four-dimensional rotations](https://link.springer.com/article/10.1007/s12650-015-0313-y#ref-CR4)
+   - not super helpful, was hoping for something more interesting - rotates around 4th dimension $\pi/16$ rad with key presses, not very precise.
+
+## Week 4
+
+### 11 Oct 2021
+
+ - *1 hour* Writing C# script to control rotation of an object outside of the shader code.
+ - *3 hours* Researching how to control  the shapes without gimbal lock.
