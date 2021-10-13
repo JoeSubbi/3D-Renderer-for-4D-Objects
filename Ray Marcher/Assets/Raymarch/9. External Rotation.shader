@@ -153,43 +153,38 @@
                 return d;
             }
 
-            float4 RotationMatrix(float a) {
-                float s = sin(a);
-                float c = cos(a);
-                return float4(c, s, -s ,c);
+            //Pitch
+            float3x3 RotMatZ(float a){
+                float3x3 mat = float3x3( cos(a),     0., sin(a),
+                                             0.,     1.,     0.,
+                                        -sin(a),     0., cos(a));
+                return mat;
+            }
+            //Yaw
+            float3x3 RotMatY(float a){
+                float3x3 mat = float3x3( cos(a),-sin(a),     0.,
+                                         sin(a), cos(a),     0.,
+                                             0.,     0.,     1.);
+                return mat;
+            }
+            //Roll
+            float3x3 RotMatX(float a){
+                float3x3 mat = float3x3(     1.,     0.,     0.,
+                                             0., cos(a),-sin(a),
+                                             0., sin(a), cos(a));
+                return mat;
             }
 
-            /**
-             * \brief   Rotation Matrix Multiplication
-             *
-             * \param   mat rotation matrix
-             * \param   a   axis to rotate from
-             * \param   b   axis to rotate towards
-             */
-            float2 RotMatMul(float4 mat, float a, float b){
-                float2 rot = float2( a * mat[0] + b * mat[1],
-                                     a * mat[2] + b * mat[3] );
-                return rot;
+            float3x3 CombineRot(float pitch, float yaw, float roll){
+                float3x3 mat = mul( RotMatZ(pitch), mul(RotMatY(yaw), RotMatX(roll)) );
+                return mat;
             }
 
             float4 Rotate(float4 p){
-                float4 zx = RotationMatrix(_ZX);
-                float4 xy = RotationMatrix(_XY);
-                float4 yz = RotationMatrix(_YZ);
-
-                p.zx = RotMatMul(zx, p.z, p.x);
-                p.yz = RotMatMul(yz, p.y, p.z);
-                p.xy = RotMatMul(xy, p.x, p.y);
-                
-                float4 wx = RotationMatrix(_WX);
-                float4 wy = RotationMatrix(_WY);
-                float4 wz = RotationMatrix(_WZ);
-                
-                p.wx = RotMatMul(wx, p.w, p.x);
-                p.wy = RotMatMul(wy, p.w, p.y);
-                p.wz = RotMatMul(wz, p.w, p.z);
-
+                float3x3 mat = CombineRot(_XY, _ZX, _YZ);
+                p.xyz = mul(mat, p.xyz);
                 return p;
+
             }
 
             float GetDist(float4 p){
