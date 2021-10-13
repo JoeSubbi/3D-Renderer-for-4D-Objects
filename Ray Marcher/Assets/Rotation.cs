@@ -55,10 +55,11 @@ public class Rotation : MonoBehaviour
         Event e = Event.current;
         if (e.isMouse)
         {
-            Debug.Log(e.delta);
-            int speed = 50;
-            rot3.x += e.delta.y/speed;
+            //Debug.Log(e.delta);
+            int speed = 100;
+            rot3.x -= e.delta.y/speed;
             rot3.y -= e.delta.x/speed;
+            Debug.Log(rot3);
         }
     }
 
