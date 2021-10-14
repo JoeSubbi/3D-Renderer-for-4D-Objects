@@ -75,15 +75,15 @@ Material:
     - _SrcBlend: 1
     - _UVSec: 0
     - _W: 0
-    - _WX: 1
-    - _WY: 1
-    - _WZ: 1
-    - _XY: 1
-    - _XZ: 1
+    - _WX: 0
+    - _WY: 0
+    - _WZ: 0
+    - _XY: 0
+    - _XZ: -0.05
     - _Y: 0
-    - _YZ: 1
+    - _YZ: 0
     - _ZWrite: 1
-    - _ZX: 1
+    - _ZX: 0
     m_Colors:
     - _Color: {r: 0.7664647, g: 0, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}

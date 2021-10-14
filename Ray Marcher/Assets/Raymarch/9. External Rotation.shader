@@ -154,37 +154,73 @@
             }
 
             //Pitch
-            float3x3 RotMatZ(float a){
-                float3x3 mat = float3x3( cos(a),     0., sin(a),
-                                             0.,     1.,     0.,
-                                        -sin(a),     0., cos(a));
+            float4x4 RotMatZ(float a){
+                float4x4 mat = float4x4( cos(a),-sin(a),     0.,     0.,
+                                         sin(a), cos(a),     0.,     0.,
+                                             0.,     0.,     1.,     0.,
+                                             0.,     0.,     0.,     1.     
+                                        );
                 return mat;
             }
             //Yaw
-            float3x3 RotMatY(float a){
-                float3x3 mat = float3x3( cos(a),-sin(a),     0.,
-                                         sin(a), cos(a),     0.,
-                                             0.,     0.,     1.);
+            float4x4 RotMatY(float a){
+                float4x4 mat = float4x4( cos(a),     0., sin(a),     0.,
+                                             0.,     1.,     0.,     0.,
+                                        -sin(a),     0., cos(a),     0.,
+                                             0.,     0.,     0.,     1.
+                                        );
                 return mat;
             }
             //Roll
-            float3x3 RotMatX(float a){
-                float3x3 mat = float3x3(     1.,     0.,     0.,
-                                             0., cos(a),-sin(a),
-                                             0., sin(a), cos(a));
+            float4x4 RotMatX(float a){
+                float4x4 mat = float4x4(     1.,     0.,     0.,     0.,
+                                             0., cos(a),-sin(a),     0.,
+                                             0., sin(a), cos(a),     0.,
+                                             0.,     0.,     0.,     1.
+                                        );
+                return mat;
+            }
+            float4x4 RotMatWX(float a){
+                float4x4 mat = float4x4( cos(a),     0.,     0.,-sin(a),
+                                             0.,     1.,     0.,     0.,
+                                             0.,     0.,     1.,     0.,
+                                         sin(a),     0.,     0., cos(a)
+                                        );
+                return mat;
+            }
+            float4x4 RotMatWY(float a){
+                float4x4 mat = float4x4(     1.,     0.,     0.,     0.,
+                                             0., cos(a),     0.,-sin(a),
+                                             0.,     0.,     1.,     0.,
+                                             1., sin(a),     0., cos(a)
+                                        );
+                return mat;
+            }
+            float4x4 RotMatWZ(float a){
+                float4x4 mat = float4x4(     1.,     0.,     0.,     0.,
+                                             0.,     1.,     0.,     0.,
+                                             0.,     0., cos(a),-sin(a),
+                                             0.,     0., sin(a), cos(a)
+                                        );
                 return mat;
             }
 
-            float3x3 CombineRot(float pitch, float yaw, float roll){
-                float3x3 mat = mul( RotMatZ(pitch), mul(RotMatY(yaw), RotMatX(roll)) );
+            //z y x
+            float4x4 CombineRot3(float pitch, float yaw, float roll){
+                float4x4 mat = mul(RotMatZ(pitch), mul(RotMatY(yaw), RotMatX(roll)) );
+                return mat;
+            }
+            float4x4 CombineRot4(float pitch, float yaw, float roll){
+                float4x4 mat = mul(RotMatWX(roll), mul(RotMatWY(yaw), RotMatWZ(pitch)) );
                 return mat;
             }
 
             float4 Rotate(float4 p){
-                float3x3 mat = CombineRot(_XY, _ZX, _YZ);
-                p.xyz = mul(mat, p.xyz);
+                
+                float4x4 mat = mul(CombineRot3(_XY, _ZX, _YZ),
+                                   CombineRot4(_WZ, _WY, _WX));
+                p = mul(p, mat);
                 return p;
-
             }
 
             float GetDist(float4 p){
@@ -197,8 +233,8 @@
                 //Rotate box according to shader parameters
                 bp = Rotate(bp);
                 
-                //float d = sdBox( bp, float4(1,1,1,1)) - 0.05;
-                float d = sdOctahedron(bp, 1) - 0.001;
+                float d = sdBox( bp, float4(1,1,1,1)) - 0.05;
+                //float d = sdOctahedron(bp, 1) - 0.001;
                 //float d = sdTetrahedron(bp, 1) - 0.05;
                 //float d = sdTorus(bp, 1, 0.4, 0.1);
                 
