@@ -6,12 +6,10 @@
         _Effect ("ShadingType", Int) = 2
         _W ("W Axis Cross Section", Range(-3,3)) = 0
         
-        _ZX ("Z to X Rotation", Float) = 0
-        _XY ("X to Y Rotation", Float) = 0
-        _YZ ("Y to Z Rotation", Float) = 0
-        _WX ("W to X Rotation", Float) = 0
-        _WY ("W to Y Rotation", Float) = 0
-        _WZ ("W to Z Rotation", Float) = 0
+        _Q3 ("Quartonion W for 3D", Float) = 0
+        _X ("Y to Z Rotation", Float) = 0
+        _Y ("Z to X Rotation", Float) = 0
+        _Z ("X to Y Rotation", Float) = 0
     }
     SubShader
     {
@@ -55,13 +53,13 @@
                 // The following line declares the _BaseColor variable, so that you
                 // can use it in the fragment shader.
                 int _Effect;  
-                float _W;     
-                float _ZX;
-                float _XY;
-                float _YZ;
-                float _WX;
-                float _WY;
-                float _WZ;  
+                float _W;   
+
+                float _Q3;
+                float _X;
+                float _Y;
+                float _Z;
+
             CBUFFER_END
 
             v2f vert (appdata v)
@@ -153,73 +151,21 @@
                 return d;
             }
 
-            //Pitch
-            float4x4 RotMatZ(float a){
-                float4x4 mat = float4x4( cos(a),-sin(a),     0.,     0.,
-                                         sin(a), cos(a),     0.,     0.,
-                                             0.,     0.,     1.,     0.,
-                                             0.,     0.,     0.,     1.     
-                                        );
-                return mat;
-            }
-            //Yaw
-            float4x4 RotMatY(float a){
-                float4x4 mat = float4x4( cos(a),     0., sin(a),     0.,
-                                             0.,     1.,     0.,     0.,
-                                        -sin(a),     0., cos(a),     0.,
-                                             0.,     0.,     0.,     1.
-                                        );
-                return mat;
-            }
-            //Roll
-            float4x4 RotMatX(float a){
-                float4x4 mat = float4x4(     1.,     0.,     0.,     0.,
-                                             0., cos(a),-sin(a),     0.,
-                                             0., sin(a), cos(a),     0.,
-                                             0.,     0.,     0.,     1.
-                                        );
-                return mat;
-            }
-            float4x4 RotMatWX(float a){
-                float4x4 mat = float4x4( cos(a),     0.,     0.,-sin(a),
-                                             0.,     1.,     0.,     0.,
-                                             0.,     0.,     1.,     0.,
-                                         sin(a),     0.,     0., cos(a)
-                                        );
-                return mat;
-            }
-            float4x4 RotMatWY(float a){
-                float4x4 mat = float4x4(     1.,     0.,     0.,     0.,
-                                             0., cos(a),     0.,-sin(a),
-                                             0.,     0.,     1.,     0.,
-                                             1., sin(a),     0., cos(a)
-                                        );
-                return mat;
-            }
-            float4x4 RotMatWZ(float a){
-                float4x4 mat = float4x4(     1.,     0.,     0.,     0.,
-                                             0.,     1.,     0.,     0.,
-                                             0.,     0., cos(a),-sin(a),
-                                             0.,     0., sin(a), cos(a)
-                                        );
-                return mat;
-            }
-
-            //z y x
-            float4x4 CombineRot3(float pitch, float yaw, float roll){
-                float4x4 mat = mul(RotMatZ(pitch), mul(RotMatY(yaw), RotMatX(roll)) );
-                return mat;
-            }
-            float4x4 CombineRot4(float pitch, float yaw, float roll){
-                float4x4 mat = mul(RotMatWX(roll), mul(RotMatWY(yaw), RotMatWZ(pitch)) );
-                return mat;
+            float4x4 mat(float x, float y, float z, float q){
+                return float4x4(
+                    1 - 2 * y*y - 2 * z*z,      2 * x * y - 2 * q * z,       2 * x * z + 2 * q * y,  0,
+                    
+                    2 * x * y + 2 * q * z,      1 - 2 * x*x - 2 * z*z,       2 * y * z - 2 * q * x,  0,
+                    
+                    2 * x * z - 2 * q * y,      2 * y * z + 2 * q * x,       1 - 2 * x*x - 2 * y*y,  0,
+                    
+                    0,                          0,                           0,                      1
+                );
             }
 
             float4 Rotate(float4 p){
-                
-                float4x4 mat = mul(CombineRot3(_XY, _ZX, _YZ),
-                                   CombineRot4(_WZ, _WY, _WX));
-                p = mul(p, mat);
+                //xyz rotation
+                p = mul(p, mat(_X, _Y, _Z, _Q3));
                 return p;
             }
 
@@ -268,12 +214,12 @@
 
             float4 RotatedNormals(float4 p){
                 float4 n = GetNormal(p);
-                n = Rotate(n);
+                n = abs(Rotate(n));
                 return n;
             }
 
             float GetLight(float4 p){
-                float4 lightPos = float4(2,2,2,0);
+                float4 lightPos = float4(1,1,4,0);
 
                 //angle dependant fall off
                 float4 lv = normalize(lightPos-p);

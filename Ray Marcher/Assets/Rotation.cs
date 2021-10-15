@@ -2,41 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
-
 public class Rotation : MonoBehaviour
 {
-    public float PI = 3.141592653589793f;//23846264338327950
-
-    public Vector3 rot3 = new Vector3(.0f, .0f, .0f);
-    public Vector3 rot4 = new Vector3(.0f, .0f, .0f);
     private Renderer rend;
-    public Vector3 prevRot = new Vector3(.0f, .0f, .0f);
+    private Quaternion total3 = new Quaternion(0, 0, 0, 1);
+    private Quaternion total4 = new Quaternion(0, 0, 0, 1);
+
+    //extra controls
     private bool fdr = false;
     private bool roll = false;
-    
+
     // Start is called before the first frame update
     void Start()
     {
         rend = GetComponent<Renderer>();
-        rot3.x = 0;
-        rot3.y = 0;
-        rot3.z = 0;
-
-        rot4.x = 0;
-        rot4.y = 0;
-        rot4.z = 0;
-    }
-
-    void NormaliseRotation()
-    {
-        rot3.x = rot3.x % (2 * PI);
-        rot3.y = rot3.y % (2 * PI);
-        rot3.z = rot3.z % (2 * PI);
-
-        rot4.x = rot4.x % (2 * PI);
-        rot4.y = rot4.y % (2 * PI);
-        rot4.z = rot4.z % (2 * PI);
     }
 
     // Update is called once per frame
@@ -52,15 +31,18 @@ public class Rotation : MonoBehaviour
             roll = true;
         else
             roll = false;
-        NormaliseRotation();
 
-        rend.material.SetFloat("_XY", rot3.z);
-        rend.material.SetFloat("_ZX", rot3.y);
-        rend.material.SetFloat("_YZ", rot3.x);
+        rend.material.SetFloat("_X",  total3.x);
+        rend.material.SetFloat("_Y",  total3.y);
+        rend.material.SetFloat("_Z",  total3.z);
+        rend.material.SetFloat("_Q3", total3.w);
 
-        rend.material.SetFloat("_WX", rot4.x);
-        rend.material.SetFloat("_WY", rot4.y);
-        rend.material.SetFloat("_WZ", rot4.z);
+        rend.material.SetFloat("_WX", total4.x);
+        rend.material.SetFloat("_WY", total4.y);
+        rend.material.SetFloat("_WZ", total4.z);
+        rend.material.SetFloat("_Q4", total4.w);
+
+        total3.Normalize();
 
     }
 
@@ -72,7 +54,7 @@ public class Rotation : MonoBehaviour
             float x = Mathf.Round(e.delta.x * 100) / 100;
             float y = Mathf.Round(e.delta.y * 100) / 100;
 
-            int speed = 100;
+            int speed = 2;
             if (roll)
             {
 
@@ -81,31 +63,30 @@ public class Rotation : MonoBehaviour
                 if (mousePos.y < Screen.height / 2) x *= -1;
                 if (fdr)
                 {
-                    rot4.z -= x / speed;
-                    rot4.z += y / speed;
+                    float z = -x + y;
+                    total4 *= Quaternion.AngleAxis(z / speed, new Vector3(0, 0, 1));
                 }
                 else
                 {
-                    rot3.z -= x / speed;
-                    rot3.z += y / speed;
+                    float z = -x + y;
+                    total3 *= Quaternion.AngleAxis( z/speed, new Vector3(0,0,1));
                 }
             }
             else
             {
                 if (fdr)
                 {
-                    rot4.x += y / speed;
-                    rot4.y -= x / speed;
-                    Debug.Log("w" + rot4);
+                    total4 *= Quaternion.AngleAxis(-x / speed, new Vector3(0, 1, 0));
+                    total4 *= Quaternion.AngleAxis(y / speed, new Vector3(1, 0, 0));
                 }
                 else
                 {
-                    rot3.x += y / speed;
-                    rot3.y -= x / speed;
+
+                    total3 *= Quaternion.AngleAxis(-x/speed, new Vector3(0,1,0));
+                    total3 *= Quaternion.AngleAxis( y/speed, new Vector3(1,0,0));
+
                 }
             }
-            Debug.Log("3D Rotation:" + rot3);
-            Debug.Log("4D Rotation:" + rot4);
         }
     }
 
