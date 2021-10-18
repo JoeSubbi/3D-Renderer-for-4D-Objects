@@ -131,3 +131,43 @@
 
  - *1 hour* Writing C# script to control rotation of an object outside of the shader code.
  - *3 hours* Researching how to control  the shapes without gimbal lock.
+
+### 12 Oct 2021
+
+ - *2 hours* implemented 3D rotation by multiplying rotation matrices. axis don't mis-align, but gimbal lock is still a problem
+
+### 13 Oct 2021
+
+ - *2 hours* *attempted* implemented 4D rotation by multiplying matrices. It was very messy and does not work very well...
+
+### 14 Oct 2021
+
+ - *0.5 hours* weekly meeting - look into exp/log map rotation
+   - http://15462.courses.cs.cmu.edu/fall2021content/exercises/Solutions06.pdf
+ - *3 hours* *attempted* to implement a quaternion rotation system. wen't well until I tried it... going to need to work on that
+
+### 15 Oct 2021
+
+ - *2 hours* implemented quaternion rotation. Very stable in 3D. Could not extend to 4D.
+ - *0.5 hours* Reading about [Marc ten Bosch's solution to 4D rotations](https://marctenbosch.com/quaternions/)
+ - *1.5 hours* studying and digesting [Geometric Algebra Rotors](https://marctenbosch.com/news/2011/05/4d-rotations-and-the-4d-equivalent-of-quaternions/)
+ - *2 hours* studying to learn about rotors - [Geometric Algebra](https://www.youtube.com/playlist?list=PLpzmRsG7u_gqaTo_vEseQ7U8KFvtiJY4K)
+
+### 16 Oct 2021
+
+ - *6 hours* continuing studies on geometric algebra [Geometric Algebra](https://www.youtube.com/playlist?list=PLpzmRsG7u_gqaTo_vEseQ7U8KFvtiJY4K)
+
+### 17 Oct 2021
+
+ - *2 hours* begin implementation of a rotor class
+   - very slow process. I am struggling to translate mathematical concepts to code
+
+## Week 5
+
+### 18 Oct 2021
+
+ - *1 hour* make some developments on the rotor class
+   - I think I am heading in the right direction - each bivector - e.g $B_xy$ is assigned the projected area of the parallelogram defined by the wedge product of 2 vectors.
+   - the rotor produced from the geometric product $ab = ab + a\wedge b$ can be built from the projected areas to define its orientation in space
+   - still not sure how to produce the rotor
+   - not sure how to rotate about that rotor

@@ -18,3 +18,7 @@ https://www.iquilezles.org/index.html
 try get most done by week 7 as assessed exercises will reduce time to work on project
 
 ## 14/10/2021
+
+how do you prove that someone has understood the geometry?
+
+look into exp/log map rotation - expandable to multiple dimensions

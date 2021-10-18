@@ -39,8 +39,11 @@ This project focuses on the development of a wide range of 4 Dimensional shapes 
    - Rotate the objects in 3D
  - Develop 4D rotation around the 3 axis of rotation.
  - Created a super basic demo/concept program I am considering for testing uses ability to manipulate 4D shapes. On thr right hand side is a randomly oriented 4D shape in all 6 degrees of rotation, on the left hand side is an un-rotated version of the same shape. The users goal is to orient the shape to match the right hand side using some rotation sliders. (There were issues)
+ - have face colours "stick" to the faces
  - Developed function to map separate materials to different object.
  - Created a reflective material
+ - Implemented rotation using matrix multiplication so axis don't mis-align - still has gimbal lock problem
+ - Implemented rotation in 3D using quaternions - cannot be extended to 4D
 
 ## Problems and risks
 ### Problems
@@ -58,13 +61,20 @@ This project focuses on the development of a wide range of 4 Dimensional shapes 
    - Having these coordinates translated/oriented exactly how the objects are allows the faces to consistantly maintain their colouration.
  - The onion skin effect I intended to do is harder than I expected. 
    - I thought I could intersect the same object and move the cross section inline with all other cross sections afterwards. This is not the case, I will have to create another object, offset by the same amount and then take the cross section such that the cross section will be in the desired position. This should not hold up the project.
+ - Implementing the rotation has been much harder than expected
+   - I have implemented euler matrices/matrix multiplication in order to prevent axis from skewing unexpectedly - had gimbal lock
+   - I implemented 3D quaternion but it cannot be extended to 4D
+   - *Attempting* to implement a geometric algebra "rotor". they have held up the project only a little so far. I was hoping to be experimenting on user interaction, however I am still playing around with the implementation of 4D rotation.
 
 ### Risks
 <!--[What problems do you foresee in the future and how will you mitigate them?]-->
 
  - Developing intuitive rotation may be a problem. The order of rotation matters.
    - originally I was intending to just have a slider from $-\pi$ to $\pi$ (-180deg to 180deg), however if you adjust one slider and then another slider it can behave unexpectedly and unintuitively.
-   - The new plan is to have 2D rotation mechanics where the user can slide up or down or left to right and that will change the pose of the object relative to the users perspective. This may create some challenges for the 3 degrees of 4D rotation.
+   - ~~The new plan is to have 2D rotation mechanics where the user can slide up or down or left to right and that will change the pose of the object relative to the users perspective. This may create some challenges for the 3 degrees of 4D rotation.~~
+   - I intend to implement 2 forms of user interaction based rotation
+     1. screen based gestures to push and slide the object in an expected way
+     2. an arc/grab ball to slide single axis constrained disks for very controlled rotation
    - This will be time consuming, but I will mitigate it by doing several basic test programs in 3D before trying anything in 4D.
 
 ## Plan
@@ -75,7 +85,7 @@ This project focuses on the development of a wide range of 4 Dimensional shapes 
 Take 2 weeks (Weeks 3 and 4) to research papers focused in the fields of geometrical representation and interaction.
 
 Week 5: attempt to implement an intuitive rotation mechanic using click and drag.
-Week 6: attempt to implement an intuitive rotation mechanic using an arc ball.
+Week 6: attempt to implement an intuitive rotation mechanic using an arc/grab ball.
 
 Week 7:  
 Implement and test onion skin interpretation of the 4th dimension.  
