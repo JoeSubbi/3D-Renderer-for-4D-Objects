@@ -5,8 +5,7 @@ using UnityEngine;
 public class Rotation : MonoBehaviour
 {
     private Renderer rend;
-    private Quaternion total3 = new Quaternion(0, 0, 0, 1);
-    private Quaternion total4 = new Quaternion(0, 0, 0, 1);
+    public Rotor4 total = new Rotor4();
 
     //extra controls
     private bool fdr = false;
@@ -32,17 +31,13 @@ public class Rotation : MonoBehaviour
         else
             roll = false;
 
-        rend.material.SetFloat("_X",  total3.x);
-        rend.material.SetFloat("_Y",  total3.y);
-        rend.material.SetFloat("_Z",  total3.z);
-        rend.material.SetFloat("_Q3", total3.w);
-
-        rend.material.SetFloat("_WX", total4.x);
-        rend.material.SetFloat("_WY", total4.y);
-        rend.material.SetFloat("_WZ", total4.z);
-        rend.material.SetFloat("_Q4", total4.w);
-
-        total3.Normalize();
+        /*
+        rend.material.SetFloat("_X",  total.x);
+        rend.material.SetFloat("_Y",  total.y);
+        rend.material.SetFloat("_Z",  total.z);
+        rend.material.SetFloat("_Q3", total.w);
+        */
+        //total.Normalise();
 
     }
 
@@ -54,7 +49,7 @@ public class Rotation : MonoBehaviour
             float x = Mathf.Round(e.delta.x * 100) / 100;
             float y = Mathf.Round(e.delta.y * 100) / 100;
 
-            int speed = 2;
+            //int speed = 2;
             if (roll)
             {
 
@@ -64,26 +59,26 @@ public class Rotation : MonoBehaviour
                 if (fdr)
                 {
                     float z = -x + y;
-                    total4 *= Quaternion.AngleAxis(z / speed, new Vector3(0, 0, 1));
+                    //total *= Quaternion.AngleAxis(z / speed, new Vector3(0, 0, 1));
                 }
                 else
                 {
                     float z = -x + y;
-                    total3 *= Quaternion.AngleAxis( z/speed, new Vector3(0,0,1));
+                    //total *= Quaternion.AngleAxis( z/speed, new Vector3(0,0,1));
                 }
             }
             else
             {
                 if (fdr)
                 {
-                    total4 *= Quaternion.AngleAxis(-x / speed, new Vector3(0, 1, 0));
-                    total4 *= Quaternion.AngleAxis(y / speed, new Vector3(1, 0, 0));
+                    //total *= Quaternion.AngleAxis(-x / speed, new Vector3(0, 1, 0));
+                    //total *= Quaternion.AngleAxis(y / speed, new Vector3(1, 0, 0));
                 }
                 else
                 {
 
-                    total3 *= Quaternion.AngleAxis(-x/speed, new Vector3(0,1,0));
-                    total3 *= Quaternion.AngleAxis( y/speed, new Vector3(1,0,0));
+                    //total *= Quaternion.AngleAxis(-x/speed, new Vector3(0,1,0));
+                    //total *= Quaternion.AngleAxis( y/speed, new Vector3(1,0,0));
 
                 }
             }
