@@ -171,3 +171,13 @@
    - the rotor produced from the geometric product $ab = ab + a\wedge b$ can be built from the projected areas to define its orientation in space
    - still not sure how to produce the rotor
    - not sure how to rotate about that rotor
+
+### 19 Oct 2021
+
+ - *4 hours* Implement a quaternion based arc/grab ball to rotate shapes based on 3 circles
+   - works well, but need to implement a more fluid experience. The direction of rotation reverses if the object rotates 180deg in another direction.
+   - currently scrub left or right on screen to rotate whilst touching a circle with the mouse
+
+### 20 Oct 2021
+
+ - research how you determine confidence/development in understanding shapes
