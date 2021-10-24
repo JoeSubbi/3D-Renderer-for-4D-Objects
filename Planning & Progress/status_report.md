@@ -82,28 +82,35 @@ This project focuses on the development of a wide range of 4 Dimensional shapes 
 
 ### Semester 1
 
-Take 2 weeks (Weeks 3 and 4) to research papers focused in the fields of geometrical representation and interaction.
+ - [x] Take 2 weeks (Weeks 3 and 4) to research papers focused in the fields of geometrical representation and interaction.
 
-Week 5: attempt to implement an intuitive rotation mechanic using click and drag.
-Week 6: attempt to implement an intuitive rotation mechanic using an arc/grab ball.
+ - [ ] ~~Week 5: attempt to implement an intuitive rotation mechanic using click and drag.~~
+ - [ ] ~~Week 6: attempt to implement an intuitive rotation mechanic using an arc/grab ball.~~
+ - [x] Week 4: implement basic click and drag rotation mechanic
+ - [x] Week 5: implement basic arc/grab ball rotation mechanic
+ - [ ] Week 6: Refine the rotation mechanics - keep attempting to implement Rotors.
 
 Week 7:  
-Implement and test onion skin interpretation of the 4th dimension.  
-Implement a 3D perspective that in real time mimics the 4D object.
+ - [ ] Implement and test "onion skin" and cross section "timeline" interpretation of the 4th dimension.  
+ - [ ] Implement a 3D perspective that in real time mimics the 4D object.
 
-Week 8: Create intuitive UI for users to manipulate shapes with.
+Week 8:
+ - [ ] Create intuitive UI for users to manipulate shapes with.
 
 Week 9:  
-Create a demo to "Identify the shape".  
-Add more shapes - 4D cylinder, cone, capsule.
+ - [ ] Create an "Identify the shape" mode. 
+ - [ ] Add more shapes - 4D cylinder, ~~cone, capsule~~ pentachoron.
 
 Week 10:  
-Plan and script a walk through for users to play with shapes and attempt to identify them.  
-Set up a new demo for shape matching.
+ - [ ] Plan and script a walk through for users to play with shapes and attempt to identify them.  
+ - [ ] Set up a new mode for shape matching.
 
 Week 11:  
-Tutorial videos that explain why shapes behave they do, and traits to identify what the shape is.  
-Polish the program to be a "final product".
+ - [ ] Tutorial videos that explain why shapes behave they do, and traits to identify what the shape is.  
+ - [ ] Polish the program to be a "final product".
+
+Week 12:
+ - [ ] Finishing polishing "final product"
 
 ### Stuff I hope to make consistent progress on:
 

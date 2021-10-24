@@ -180,4 +180,19 @@
 
 ### 20 Oct 2021
 
- - research how you determine confidence/development in understanding shapes
+ - *3 hours* research how you determine confidence/understanding in a learning environment
+   - definition of understanding
+   - visual aid helps rather than just words - i should do demos (already planned)
+   - 121 discussion is usually good, but maybe not feasible
+
+### 21 Oct 2021
+
+ - *3 hours* working on rotors
+
+### 22 Oct 2021
+
+ - *0.5 hours* weekly meeting
+   - discussion of how to implement rotors - need to implement a sense of direction
+ - *2 hours* further attempts at implementing rotors - the shape does change, but very very weirdly
+
+## Week 6

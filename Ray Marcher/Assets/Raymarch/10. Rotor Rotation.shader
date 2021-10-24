@@ -5,6 +5,14 @@
         _MainTex ("Texture", 2D) = "white" {}
         _Effect ("ShadingType", Int) = 2
         _W ("W Axis Cross Section", Range(-3,3)) = 0
+        
+        _S ("Quartonion W for 3D", Float) = 0
+        _ZY ("Z to Y Rotation", Float) = 0
+        _XZ ("Z to X Rotation", Float) = 0
+        _XY ("X to Y Rotation", Float) = 0
+        _XW ("X to W Rotation", Float) = 0
+        _YW ("Y to W Rotation", Float) = 0
+        _ZW ("Z to W Rotation", Float) = 0
     }
     SubShader
     {
@@ -48,7 +56,16 @@
                 // The following line declares the _BaseColor variable, so that you
                 // can use it in the fragment shader.
                 int _Effect;  
-                float _W;          
+                float _W;   
+
+                float _S;
+                float _ZY;
+                float _XZ;
+                float _XY;
+                float _XW;
+                float _YW;
+                float _ZW;
+
             CBUFFER_END
 
             v2f vert (appdata v)
@@ -136,122 +153,47 @@
                                 length( 
                                 float2(length(p.zx) - r1, p.y)
                                         ) - r2, p.w
-                                )) - r3;
+                                )) - 0.2;
                 return d;
             }
 
-            float opExtrussion( float4 p, float sdf, float h )
-            {
-                float2 w = float2( sdf, abs(p.w) - h );
-                return min(max(w.x,w.y),0.0) + length(max(w,0.0));
+            
+            float4 R(float b, float4 v){
+                return cos(_S)*v + sin(_S)*v*b;
+            }
+            float4 R_(float b, float4 v){
+                return cos(_S)*v - sin(_S)*v*b;
             }
 
-            float sdETorus(float4 p, float r1, float r2, float e){
-                float d = length( 
-                                float2(length(p.zx) - r1, p.y)
-                                        ) - r2;
-
-                d = opExtrussion(p, d, e);
-                return d;
-            }
-
-            /**
-             * \brief   Shape distance function for a capsule
-             *
-             * \param   p   center point of object
-             * \param   a   origin of first sphere cap
-             * \param   b   origin of second sphere cap
-             * \param   r   radius of capsule
-             */
-            float sdCapsule( float4 p, float4 a, float4 b, float r )
-            {
-                float4 pa = p - a, ba = b - a;
-                float h = clamp( dot(pa,ba)/dot(ba,ba), 0.0, 1.0 );
-                return length( pa - ba*h ) - r;
-            }
-
-            /**
-             * \brief   Shape distance function for a cone
-             *
-             * \param   r   radius at base of cone
-             * \param   h   height of cone
-             */
-            float sdCone(float4 p, float r, float h) {
-                float2 q = float2(length(p.xyz), p.w);
-                float2 tip = q - float2(0, h);
-                float2 mantleDir = normalize(float2(h, r));
-                float mantle = dot(tip, mantleDir);
-                float d = max(mantle, -q.y);
-                float projected = dot(tip, float2(mantleDir.y, -mantleDir.x));
-                
-                // distance to tip
-                if ((q.y > h) && (projected < 0)) {
-                    d = max(d, length(tip));
-                }
-                
-                // distance to base ring
-                if ((q.x > r) && (projected > length(float2(h, r)))) {
-                    d = max(d, length(q - float2(r, 0)));
-                }
-                return d;
-            }
-
-            float4 Rotate(float a) {
-                float s = sin(a);
-                float c = cos(a);
-                return float4(c, s, -s ,c);
-            }
-
-            /**
-             * \brief   Rotation Matrix Multiplication
-             *
-             * \param   mat rotation matrix
-             * \param   a   axis to rotate from
-             * \param   b   axis to rotate towards
-             */
-            float2 RotMatMul(float4 mat, float a, float b){
-                float2 rot = float2( a * mat[0] + b * mat[1],
-                                     a * mat[2] + b * mat[3] );
-                return rot;
-            }
-
-            float4 GlobalRotation(float4 p){
-                //rotation matrix for continuous rotation
-                float4 mat = Rotate(_Time*10);
-                
-                //3D Rotation
-                //p.xy = RotMatMul(mat, p.x, p.y);
-                //p.xz = RotMatMul(mat, p.x, p.z);
-                //p.yz = RotMatMul(mat, p.y, p.z);
-                
-                //4D Rotation
-                p.wx = RotMatMul(mat, p.w, p.x);
-                p.wy = RotMatMul(mat, p.w, p.y);
-                p.wz = RotMatMul(mat, p.w, p.z);
-
+            float4 Rotate(float4 p){
+                /*
+                p = R(_ZW, float4(0,0,1,1)) *R(_YW, float4(0,1,0,1)) *R(_XW, float4(1,0,0,1)) *
+                    R(_XZ, float4(1,0,1,0)) *R(_XY, float4(1,1,0,0)) *R(_ZY, float4(0,1,1,0)) * 
+                    p * 
+                    R_(_ZY, float4(0,1,1,0))*R_(_XY, float4(1,1,0,0))*R_(_XZ, float4(1,0,1,0))*
+                    R_(_XW, float4(1,0,0,1))*R_(_YW, float4(0,1,0,1))*R_(_ZW, float4(0,0,1,1));
+                */
+                float4 qzy = float4(1, p.y, p.z, 1);
+                p = (cos(_ZY) + sin(_ZY)*qzy) *
+                    p *
+                    (cos(_ZY) - sin(_ZY)*qzy);
                 return p;
             }
 
             float GetDist(float4 p){
-                float sphere = sdSphere( p-float4(0,0,0,_W), 1);
                 
                 //Box 3D rotation
 
-                //translate box
+                //Translate box
                 float4 bp = p-float4(0,0,0,_W);
-
-                bp = GlobalRotation(bp);
+                //Rotate box according to shader parameters
+                bp = Rotate(bp);
                 
-                //Note: Giving shapes a slight bevel stops the wierd glitchy lines
-                //Giving the shape intieror distance made things worse
-                //float d = sdBox( bp, float4(1,1,1,1)) - 0.05;
-                //float d = sdOctahedron(bp, 1) - 0.05;
+                //float d = sdSphere( p-float4(0,0,0,_W), 1);
+                float d = sdBox( bp, float4(1,1,1,1)) - 0.05;
+                //float d = sdOctahedron(bp, 1) - 0.001;
                 //float d = sdTetrahedron(bp, 1) - 0.05;
                 //float d = sdTorus(bp, 1, 0.4, 0.1);
-                //float d = sdCapsule(bp, float4(0,0,0, -0.5), float4(0,0,-0, 0.5), 0.2);
-                
-                //float d = sdETorus(bp,1,0.4, 0.1);
-                float d = sdCone(bp-float4(0,0,0,-0.5), 0.5, 1);
                 
                 return d;
             }
@@ -281,8 +223,14 @@
                 return normalize(n);
             }
 
+            float4 RotatedNormals(float4 p){
+                float4 n = GetNormal(p);
+                n = abs(Rotate(n));
+                return n;
+            }
+
             float GetLight(float4 p){
-                float4 lightPos = float4(2,2,2,0);
+                float4 lightPos = float4(1,1,4,0);
 
                 //angle dependant fall off
                 float4 lv = normalize(lightPos-p);
@@ -302,7 +250,7 @@
             fixed4 frag (v2f i) : SV_Target
             {
                 float2 uv = i.uv; // UV coordinates - centered on object
-                float4 ro = float4(i.ro.x, i.ro.y, i.ro.z, 0);           // Ray Origin - Camera
+                float4 ro = float4(i.ro.x, i.ro.y, i.ro.z, 0);                     // Ray Origin - Camera
                 float4 rd = normalize(
                     float4(i.hitPos.x, i.hitPos.y, i.hitPos.z, 0) - ro); // Ray Direction
 
@@ -317,9 +265,9 @@
                 else {
                     float4 p = ro + rd * d;
                     
-                    float4 n = GlobalRotation(GetNormal(p));             // Normal
-                    float4 l = GetLight(p);              // Light
-                    float4 c = GlobalRotation(GetNormal(p))*GetLight(p); //Lit Normal
+                    float3 n = RotatedNormals(p);             // Normal
+                    float3 l = GetLight(p);              // Light
+                    float3 c = RotatedNormals(p)*GetLight(p); //Lit Normal
 
                     int effect = _Effect;
                     if (effect == 2) col.rgb = c;

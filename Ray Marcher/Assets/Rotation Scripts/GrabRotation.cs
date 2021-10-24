@@ -33,7 +33,7 @@ public class GrabRotation : MonoBehaviour
         {
             float x = Mathf.Round(e.delta.x * 100) / 100;
             float y = Mathf.Round(e.delta.y * 100) / 100;
-            int speed = 3;
+            int speed = 1;
 
             if (plane.magnitude == 0 && Input.GetMouseButtonDown(0))
             {

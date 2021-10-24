@@ -3,9 +3,8 @@ Shader "Unlit/Scene"
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
-        _Effect ("ShadingType", Int) = 2
-        _Y ("Y Axis Cross Section", Range(-0.1,2)) = 0
-        _CS ("Cross Section", Int) = 1
+        _Color ("Color", Color) = (1,1,1,1)
+        _R ("Reflectivity", Range(0, 1)) = 1
     }
     SubShader
     {
@@ -22,7 +21,7 @@ Shader "Unlit/Scene"
 
             #define MAX_STEPS 100
             #define MAX_DIST  100
-            #define SURF_DIST 0.001
+            #define SURF_DIST 0.0001
 
             struct appdata
             {
@@ -48,9 +47,8 @@ Shader "Unlit/Scene"
             CBUFFER_START(UnityPerMaterial)
                 // The following line declares the _BaseColor variable, so that you
                 // can use it in the fragment shader.
-                int _Effect;  
-                float _Y;   
-                int _CS;       
+                fixed4 _Color;
+                float _R;
             CBUFFER_END
 
             v2f vert (appdata v)
@@ -60,12 +58,12 @@ Shader "Unlit/Scene"
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
 
                 // object space
-                //o.ro = mul(unity_WorldToObject, float4(_WorldSpaceCameraPos, 1));
-                //o.hitPos = v.vertex; 
+                o.ro = mul(unity_WorldToObject, float4(_WorldSpaceCameraPos, 1));
+                o.hitPos = v.vertex; 
                 
                 //world space
-                o.ro = _WorldSpaceCameraPos;
-                o.hitPos = mul(unity_ObjectToWorld, v.vertex);
+                //o.ro = _WorldSpaceCameraPos;
+                //o.hitPos = mul(unity_ObjectToWorld, v.vertex);
 
                 return o;
             }
@@ -173,69 +171,7 @@ Shader "Unlit/Scene"
                 return e+i;
             }
 
-            float sdOctahedron( float3 p, float s){
-                float c = sqrt(4); //Square root of number of dimensions
-                return ((dot(abs(p), float4(1,1,1,1)) - s) / c);
-            }
-
-            float sdTetrahedron(float3 p, float s){
-                return (max(
-                            abs(p.x+p.y)-p.z,
-                            abs(p.x-p.y)+p.z
-                            )-1*s
-                        )/sqrt(3.) ;
-            }
-
-            float sdCone(float3 p, float radius, float height) {
-                float2 q = float2(length(p.xz), p.y);
-                float2 tip = q - float2(0, height);
-                float2 mantleDir = normalize(float2(height, radius));
-                float mantle = dot(tip, mantleDir);
-                float d = max(mantle, -q.y);
-                float projected = dot(tip, float2(mantleDir.y, -mantleDir.x));
-                
-                // distance to tip
-                if ((q.y > height) && (projected < 0)) {
-                    d = max(d, length(tip));
-                }
-                
-                // distance to base ring
-                if ((q.x > radius) && (projected > length(float2(height, radius)))) {
-                    d = max(d, length(q - float2(radius, 0)));
-                }
-                return d;
-            }
-
-            float dot2( float3 v ) { return dot(v,v); }
-            float udTriangle(float p, float a)
-            {
-
-                //float3 v1 = p-float3((-a/2),(-a/(2*sqrt(3))),(-a/(2*sqrt(6))) );
-                //float3 v2 = p-float3(( a/2),(-a/(2*sqrt(3))),(-a/(2*sqrt(6))) );
-                //float3 v3 = p-float3(   0  ,(-a/(  sqrt(3))),(-a/(2*sqrt(6))) );
-
-                float3 v1 = p-float3(-0.1, 0  , 0.1);
-                float3 v2 = p-float3( 0.1, 0  , 0.1);
-                float3 v3 = p-float3( 0  , 0.1, 0.1);
-
-                float3 v21 = v2 - v1; float3 p1 = p - v1;
-                float3 v32 = v3 - v2; float3 p2 = p - v2;
-                float3 v13 = v1 - v3; float3 p3 = p - v3;
-                float3 nor = cross( v21, v13 );
-
-                return sqrt( (sign(dot(cross(v21,nor),p1)) + 
-                            sign(dot(cross(v32,nor),p2)) + 
-                            sign(dot(cross(v13,nor),p3))<2.0) 
-                            ?
-                            min( min( 
-                            dot2(v21*clamp(dot(v21,p1)/dot2(v21),0.0,1.0)-p1), 
-                            dot2(v32*clamp(dot(v32,p2)/dot2(v32),0.0,1.0)-p2) ), 
-                            dot2(v13*clamp(dot(v13,p3)/dot2(v13),0.0,1.0)-p3) )
-                            :
-                            dot(nor,p1)*dot(nor,p1)/dot2(nor) );
-            }
-
-            float4 Rotate(float a) {
+            float4 RotationMatrix(float a) {
                 float s = sin(a);
                 float c = cos(a);
                 return float4(c, s, -s ,c);
@@ -248,70 +184,104 @@ Shader "Unlit/Scene"
              * \param   a   axis of rotation
              * \param   b   axis of rotation
              */
-            float2 Rot3MatMul(float4 mat, float a, float b){
+            float2 RotMatMul(float4 mat, float a, float b){
                 float2 rot = float2( a * mat[0] + b * mat[1],
                                      a * mat[2] + b * mat[3] );
                 return rot;
             }
 
             float GetDist(float3 p){
-                //Define shapes
-                float plane = sdBox( p-float3(0, -0.1, 0), float3(1.5,0.1,1.5));
-
-                float sphere = sdSphere(    p-float3(0.9, 0.4, 0.5), 
-                                            0.4);
-                float torus  = sdTorus(     p-float3(-0.2, 0.15, -0.5), 
-                                            0.4, 0.15);                
                 
-                //translate box
-                float3 bp = p-float3(1, 0.8, -1);
-                //Shadow
-                //bp *= float3(1,0,1);
-                //rotation matrix for continuous rotation
-                float4 mat = Rotate(_Time*10);
+                // Front Wheel
+                float3 fwp = p-float3(0.25,0,0);
+                float fwheel = sdSphere(fwp, 0.1);
+                fwheel = max(fwheel, -sdSphere(fwp-float3(0,0,0.1), 0.07));
+                fwheel = max(fwheel, -sdSphere(fwp-float3(0,0,-0.1), 0.07));
 
-                bp.xz = Rot3MatMul(mat, bp.x, bp.z);
-                bp.yz = Rot3MatMul(mat, bp.y, bp.z);
-                bp.xy = Rot3MatMul(mat, bp.x, bp.y);
-
+                fwheel = min(fwheel, sdCylinder(p,
+                                                float3(0.25,0,-0.055),
+                                                float3(0.25,0,0.055), 0.06));
+                float cap = min(
+                    sdSphere(fwp-float3(0,0,0.05), 0.02),
+                    sdSphere(fwp-float3(0,0,-0.05), 0.02)
+                );
+                fwheel = min(fwheel, cap);
                 
-                float box     = sdBox(      bp,
-                                            float3(0.5,0.5,0.5))-0.01;
-                float capsule = sdCapsule(  p, 
-                                            float3(-0.6, 0.1, 0.4), 
-                                            float3(-1.1, 0.1, -0.1), 
-                                            0.1);
-                float cylinder = sdCylinder(p, 
-                                            float3(0, 0, 0.7), 
-                                            float3(0, 0.3, 0.7), 
-                                            0.3);
-                float octahedron = sdOctahedron(p-float3(-0.9,0.7,0.9), 
-                                            0.5);
-                float tetrahedron = sdTetrahedron(p-float3(-0.9,0.7,-0.9),
-                                            0.2);
-                float cone =        sdCone(p-float3(-0.95,0,-0.95),
-                                            0.3, 0.6);
-                float tetrahedron2 = udTriangle(p-float3(-0.9, 0.7, 0.9), 1);
+                // Back Wheel
+                float3 bwp = p-float3(-0.25,0,0);
+                float bwheel = sdCylinder(p, 
+                                          float3(-0.25,0,-0.005), 
+                                          float3(-0.25,0,0.005), 0.09)-0.01;
+                bwheel = max(bwheel, -sdCylinder(p,
+                                                float3(-0.25,0,-0.03),
+                                                float3(-0.25,0,0.03), 0.06));
 
-                // Union all shapes
-                float d = min(sphere, torus);
-                d = min(d, box);
-                d = min(d, capsule);
-                d = min(d, cylinder);
-                d = min(d, plane);
-                //d = min(d, octahedron);
-                //d = min(d, tetrahedron);
-                d = min(d, cone);
-                //d = min(d, tetrahedron2);
+                bwheel = min(bwheel, sdCylinder(p,
+                                                float3(-0.25,0,-0.009),
+                                                float3(-0.25,0,0.009), 0.06));
+                cap = min(
+                    sdSphere(bwp-float3(0,0,0.01), 0.02),
+                    sdSphere(bwp-float3(0,0,-0.01), 0.02)
+                );
+                bwheel = min(bwheel, cap);
 
-                //cross section
-                float slice = sdBox( p-float3(0, _Y, 0), float3(1.5,0.001,1.5));
-                if (_CS == 0)
-                    d = max(slice, d);
-                else
-                    d = min(slice, d);
+                // Engine
 
+                float d = min(fwheel, bwheel);
+                //d = min(d, stear);
+                
                 return d;
+            }
+
+            int GetMat(float3 p){
+                int mat = 1;
+
+                // Front Wheel
+                float3 fwp = p-float3(0.25,0,0);
+                float fwheel = sdSphere(fwp, 0.1);
+                fwheel = max(fwheel, -sdSphere(fwp-float3(0,0,0.1), 0.07));
+                fwheel = max(fwheel, -sdSphere(fwp-float3(0,0,-0.1), 0.07));
+
+                float ball = fwheel;
+
+                float hub = sdCylinder(p,
+                                        float3(0.25,0,-0.058),
+                                        float3(0.25,0,0.058), 0.06);
+                fwheel = min(fwheel, hub);
+
+                float cap = min(
+                    sdSphere(p-float3(0.25,0,0.05), 0.02),
+                    sdSphere(p-float3(0.25,0,-0.05), 0.02)
+                );
+                fwheel = min(fwheel, cap);
+
+                // Back Wheel
+                float bwheel = sdCylinder(p, 
+                                          float3(-0.25,0,-0.005), 
+                                          float3(-0.25,0,0.005), 0.09)-0.01;
+                bwheel = max(bwheel, -sdCylinder(p,
+                                                float3(-0.25,0,-0.03),
+                                                float3(-0.25,0,0.03), 0.06));
+                float bball = bwheel;
+
+                float bhub = sdCylinder(p,
+                                float3(-0.25,0,-0.009),
+                                float3(-0.25,0,0.009), 0.06);
+                bwheel = min(bwheel, bhub);
+
+                float bcap = min(
+                    sdSphere(p-float3(-0.25,0,0.01), 0.02),
+                    sdSphere(p-float3(-0.25,0,-0.01), 0.02)
+                );
+                bwheel = min(bwheel, bcap);
+
+                float d = min(fwheel, bwheel);
+
+                if(d == ball || d == bball) mat = 1;
+                else if(d == hub || d == bhub) mat = 2;
+                else if(d == cap || d == bcap) mat = 3;
+
+                return mat;
             }
 
             float Raymarch(float3 ro, float3 rd){
@@ -338,8 +308,13 @@ Shader "Unlit/Scene"
                 return normalize(n);
             }
 
+            float3 RotatedNormals(float3 p){
+                float3 n = GetNormal(p);
+                return n;
+            }
+
             float GetLight(float3 p){
-                float3 lightPos = float3(0,2,0);
+                float3 lightPos = float3(3,2,2);
 
                 //angle dependant fall off
                 float3 lv = normalize(lightPos-p);
@@ -372,16 +347,20 @@ Shader "Unlit/Scene"
                     discard;
                 else {
                     float3 p = ro + rd * d;
-                    
-                    float3 n = GetNormal(p);             // Normal
-                    float3 l = GetLight(p);              // Light
-                    float3 c = GetNormal(p)*GetLight(p); //Lit Normal
+                    float3 n = GetNormal(p);
 
-                    int effect = _Effect;
-                    if (effect == 2) col.rgb = c;
-                    else if (effect > 2) col.rgb = l;
-                    else if (effect < 2) col.rgb = n;
-                    //col.rgb = l;
+                    //Reflective surface
+                    float3 r = reflect(rd, n);
+                    float3 ref = tex2D(_MainTex, r).rgb;
+
+                    //Global illumination - nicer than 1 diffuse light
+                    float dif = dot(n, normalize(float3(1,2,3))) * .5 +.5;
+                    col.rgb = float3(dif,dif,dif);
+                    
+                    int mat = GetMat(p);
+                    if (mat==1) col.rgb *= _Color*(((ref*_R)/3)+0.6);
+                    else if (mat==2) col.rgb *= ((ref*_R)/6)+(0.1);
+                    else if (mat==3) col.rgb *= ((ref*_R)/1)+(0.4);;
                 }
 
                 return col;

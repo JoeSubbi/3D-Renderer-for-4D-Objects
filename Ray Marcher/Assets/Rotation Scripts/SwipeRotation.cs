@@ -2,14 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Rotation : MonoBehaviour
+public class SwipeRotation : MonoBehaviour
 {
     private Renderer rend;
     public Rotor4 total = new Rotor4();
-
-    //extra controls
-    private bool fdr = false;
-    private bool roll = false;
 
     // Start is called before the first frame update
     void Start()
@@ -19,25 +15,18 @@ public class Rotation : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-        //4D Rotation
-        if (Input.GetMouseButton(1) || Input.GetKey("w"))
-            fdr = true;
-        else
-            fdr = false;
-        //Rolling along Z
-        if (Input.GetKey("z"))
-            roll = true;
-        else
-            roll = false;
+    {        
+        rend.material.SetFloat("_S",  total.s);
 
-        /*
-        rend.material.SetFloat("_X",  total.x);
-        rend.material.SetFloat("_Y",  total.y);
-        rend.material.SetFloat("_Z",  total.z);
-        rend.material.SetFloat("_Q3", total.w);
-        */
-        //total.Normalise();
+        rend.material.SetFloat("_ZY", total.bzy);
+        rend.material.SetFloat("_XZ", total.bxz);
+        rend.material.SetFloat("_XY", total.bxy);
+
+        rend.material.SetFloat("_XW", total.bxw);
+        rend.material.SetFloat("_YW", total.byw);
+        rend.material.SetFloat("_ZW", total.bzw);
+        
+        total.Normalise();
 
     }
 
@@ -46,43 +35,16 @@ public class Rotation : MonoBehaviour
         Event e = Event.current;
         if (e.isMouse)
         {
-            float x = Mathf.Round(e.delta.x * 100) / 100;
-            float y = Mathf.Round(e.delta.y * 100) / 100;
-
-            //int speed = 2;
-            if (roll)
+            if (Input.GetMouseButton(0))
             {
+                Rotor4 local = new Rotor4();
+                //x to y rotation
+                local = Rotor4.GeometricProduct(new Vector4(1, 0, 0, 0), new Vector4(0, 1, 0, 0));
+                total *= local; 
 
-                Vector2 mousePos = Input.mousePosition;
-                if (mousePos.x > Screen.width / 2) y *= -1;
-                if (mousePos.y < Screen.height / 2) x *= -1;
-                if (fdr)
-                {
-                    float z = -x + y;
-                    //total *= Quaternion.AngleAxis(z / speed, new Vector3(0, 0, 1));
-                }
-                else
-                {
-                    float z = -x + y;
-                    //total *= Quaternion.AngleAxis( z/speed, new Vector3(0,0,1));
-                }
-            }
-            else
-            {
-                if (fdr)
-                {
-                    //total *= Quaternion.AngleAxis(-x / speed, new Vector3(0, 1, 0));
-                    //total *= Quaternion.AngleAxis(y / speed, new Vector3(1, 0, 0));
-                }
-                else
-                {
-
-                    //total *= Quaternion.AngleAxis(-x/speed, new Vector3(0,1,0));
-                    //total *= Quaternion.AngleAxis( y/speed, new Vector3(1,0,0));
-
-                }
+                Debug.Log("local: "+local.ToString());
+                Debug.Log("total: "+total.ToString());
             }
         }
     }
-
 }

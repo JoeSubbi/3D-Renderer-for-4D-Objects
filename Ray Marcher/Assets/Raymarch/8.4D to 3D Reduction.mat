@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: 8
+  m_Name: 8.4D to 3D Reduction
   m_Shader: {fileID: 4800000, guid: e3cfb75c94ad87b4b91bfccf0e5ea978, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -74,8 +74,8 @@ Material:
     - _SrcBlend: 1
     - _UVSec: 0
     - _W: 0
-    - _XY: 2.4
-    - _XZ: -0
+    - _XY: 0.23
+    - _XZ: -0.59
     - _Y: 0.042
     - _YZ: 2.5
     - _ZWrite: 1
