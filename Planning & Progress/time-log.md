@@ -196,3 +196,20 @@
  - *2 hours* further attempts at implementing rotors - the shape does change, but very very weirdly
 
 ## Week 6
+
+## 25 Oct 2021
+
+ - *1.5 hours* Creating a new unity project for final program
+   - Create a 3D and 2D shader side by side
+ - *2 hours* Create a separate 2D shader and overlay it on the UI
+
+## 26 Oct 2021
+
+ - *2 hours* Implement a script to control the cross section/object position
+ - *1 hours* Creating a scalable UI
+ - *2 hours* Create a 2 Layer transparency effect for the plane cross section
+
+## 27 Oct 2021
+
+ - *1 hour* tidy up the UI and add a UI slider to control the object position
+ - *0.5 hours* add other shapes and control them a slider
