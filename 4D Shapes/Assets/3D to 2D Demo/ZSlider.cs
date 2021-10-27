@@ -12,6 +12,8 @@ public class ZSlider : MonoBehaviour
     private Slider s1;
     private Slider s2;
 
+    private Toggle[] b;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,6 +21,12 @@ public class ZSlider : MonoBehaviour
         im2 = GameObject.Find("2D").GetComponent<Image>();
         s1 = GameObject.Find("Slider").GetComponent<Slider>();
         s2 = GameObject.Find("Shape").GetComponent<Slider>();
+
+        b = new Toggle[]{ 
+                GameObject.Find("X Rotation").GetComponent<Toggle>(),
+                GameObject.Find("Y Rotation").GetComponent<Toggle>(),
+                GameObject.Find("Z Rotation").GetComponent<Toggle>()
+            };
     }
 
     // Update is called once per frame
@@ -29,9 +37,45 @@ public class ZSlider : MonoBehaviour
         rend3.material.SetFloat("_Z", z);
         im2.material.SetFloat("_Z", z);
 
+        //Shape to display
         shape = (int)s2.value;
         rend3.material.SetFloat("_Shape", shape);
         im2.material.SetFloat("_Shape", shape);
+
+        //Rotation of the shapes
+        //X
+        if (b[0].isOn)
+        {
+            rend3.material.SetFloat("_ZY", Time.time);
+            im2.material.SetFloat("_ZY", Time.time);
+        }
+        else
+        {
+            rend3.material.SetFloat("_ZY", 0);
+            im2.material.SetFloat("_ZY", 0);
+        }
+        //Y
+        if (b[1].isOn)
+        {
+            rend3.material.SetFloat("_XZ", Time.time);
+            im2.material.SetFloat("_XZ", Time.time);
+        }
+        else
+        {
+            rend3.material.SetFloat("_XZ", 0);
+            im2.material.SetFloat("_XZ", 0);
+        }
+        //Z
+        if (b[2].isOn)
+        {
+            rend3.material.SetFloat("_XY", Time.time);
+            im2.material.SetFloat("_XY", Time.time);
+        }
+        else
+        {
+            rend3.material.SetFloat("_XY", 0);
+            im2.material.SetFloat("_XY", 0);
+        }
 
         //Position 2D Object according to screen
         Vector2 canvasSize = GameObject.Find("Canvas").GetComponent<RectTransform>().sizeDelta;

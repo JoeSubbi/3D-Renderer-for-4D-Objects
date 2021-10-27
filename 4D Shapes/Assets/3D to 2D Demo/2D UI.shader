@@ -6,6 +6,10 @@
         _X ("X Canvas Position", Float) = -5.8
         _Y ("Y Canvas Position", Float) = -2.2
 
+        _ZY ("X Rotation", Float) = 0
+        _XZ ("Y Rotation", Float) = 0
+        _XY ("Z Rotation", Float) = 0
+
         _Shape ("Shape", Int) = 0
     }
     SubShader
@@ -51,6 +55,10 @@
                 float _Y;
 
                 int _Shape;
+
+                float _XZ;
+                float _ZY;
+                float _XY;
             CBUFFER_END
 
             v2f vert (appdata v)
@@ -60,7 +68,7 @@
                 o.uv = v.uv;
 
                 // object space
-                o.ro = mul(unity_WorldToObject, float4(_WorldSpaceCameraPos, 1));
+                o.ro = mul(unity_WorldToObject, float3(0,0,3));
                 o.hitPos = v.vertex;
                 return o;
             }
@@ -140,18 +148,37 @@
                 return d;
             }
 
+            float3 Rotate(float3 p){
+                float a = _XZ;
+                float b = _ZY;
+                float c = _XY;
+                p.xz = mul(p.xz, float2x2(cos(a), sin(a), -sin(a), cos(a)));
+                p.zy = mul(p.zy, float2x2(cos(b), sin(b), -sin(b), cos(b)));
+                p.xy = mul(p.xy, float2x2(cos(c), sin(c), -sin(c), cos(c)));
+                return p;
+            }
+
             // Pick a shape based on the integer property
-            float Shape(float3 p){   
+            float Shape(float3 p){
                 if (_Shape == 1){
-                    return sdBox(p-float3(0,0,_Z), float3(1,1,1));
+                    p -= float3(0,0.4,_Z);
+                    p = Rotate(p);
+                    return sdBox(p, float3(0.9,0.9,0.9))-0.005;
                 }
                 if (_Shape == 2){
-                    return sdTorus(p-float3(0,-0.5,_Z), 1, 0.5);
+                    p -= float3(0,0.5,_Z);
+                    p = Rotate(p);
+                    return sdTorus(p, 1, 0.5);
                 }
                 if (_Shape == 3){
-                    return sdCone(p-float3(0,-1,_Z), 1, 2);
+                    p -= float3(0,0.4,_Z);
+                    p = Rotate(p);
+                    p -= float3(0,-1,0);
+                    return sdCone(p, 1, 2);
                 }
-                return sdSphere(p-float3(0,0,_Z), 1);
+                p -= float3(0,0,_Z);
+                p = Rotate(p);
+                return sdSphere(p, 1);
             }
 
             // Distance to point p from the camera
