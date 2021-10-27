@@ -77,6 +77,10 @@ This project focuses on the development of a wide range of 4 Dimensional shapes 
      2. an arc/grab ball to slide single axis constrained disks for very controlled rotation
    - This will be time consuming, but I will mitigate it by doing several basic test programs in 3D before trying anything in 4D.
 
+ - Developing stable rotation. Matrix multiplication has gimbal lock. Quaternions don't extend to 4D
+   - Attempting to implement Rotors but is proving hard to translate the abstract maths to code
+   - I will attempt to mitigate the impact on my schedule by completing other tasks at the same time, so I am not making no progress on the project. 
+
 ## Plan
 <!--[Time plan, in roughly weekly to monthly blocks, up until submission week]-->
 
@@ -88,7 +92,11 @@ This project focuses on the development of a wide range of 4 Dimensional shapes 
  - [ ] ~~Week 6: attempt to implement an intuitive rotation mechanic using an arc/grab ball.~~
  - [x] Week 4: implement basic click and drag rotation mechanic
  - [x] Week 5: implement basic arc/grab ball rotation mechanic
- - [ ] Week 6: Refine the rotation mechanics - keep attempting to implement Rotors.
+ - [ ] ~~Week 6: Refine the rotation mechanics - keep attempting to implement Rotors.~~
+
+Week 6:
+ - [x] Create UI to manipulate 3D shapes with 2D cross sections
+ - [x] Keep attempting to implement Rotors.
 
 Week 7:  
  - [ ] Implement and test "onion skin" and cross section "timeline" interpretation of the 4th dimension.  

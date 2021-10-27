@@ -213,3 +213,4 @@
 
  - *1 hour* tidy up the UI and add a UI slider to control the object position
  - *0.5 hours* add other shapes and control them a slider
+ - *2 hours* refining the 3D to 2D app and finishing it
