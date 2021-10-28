@@ -161,15 +161,23 @@
                     return sdBox(p, float3(0.9,0.9,0.9))-0.005;
                 }
                 if (_Shape == 2){
-                    p -= float3(0,0.5,_Z);
+                    p -= float3(0,0.4,_Z);
+                    float a = 3.14159/2;
+                    p.zy = mul(p.zy, float2x2(cos(a), sin(a), -sin(a), cos(a)));
                     p = Rotate(p);
-                    return sdTorus(p, 1, 0.5);
+                    p -= float3(0,-1,0);
+                    return sdCone(p, 1, 2);
                 }
                 if (_Shape == 3){
                     p -= float3(0,0.4,_Z);
                     p = Rotate(p);
                     p -= float3(0,-1,0);
                     return sdCone(p, 1, 2);
+                }
+                if (_Shape == 4){
+                    p -= float3(0,0.5,_Z);
+                    p = Rotate(p);
+                    return sdTorus(p, 1, 0.5);
                 }
                 p -= float3(0,0,_Z);
                 p = Rotate(p);
