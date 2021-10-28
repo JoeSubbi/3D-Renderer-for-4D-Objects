@@ -68,7 +68,7 @@
                 o.uv = v.uv;
 
                 // object space
-                o.ro = mul(unity_WorldToObject, float3(0,0,3));
+                o.ro = mul(unity_WorldToObject, float3(0,0,1));
                 o.hitPos = v.vertex;
                 return o;
             }
@@ -184,6 +184,7 @@
             // Distance to point p from the camera
             float GetDist(float3 p){
                 p = p-float3(_X,_Y,0);
+                p.x *= -1;
                 
                 // 3D COMPONENT
                 float polyhedron = Shape(p);
@@ -204,6 +205,7 @@
             // Assign materials based on the distance
             int GetMat(float3 p){
                 p = p-float3(_X,_Y,0);
+                p.x *= -1;
                 
                 // 3D COMPONENT
                 float polyhedron = Shape(p);
