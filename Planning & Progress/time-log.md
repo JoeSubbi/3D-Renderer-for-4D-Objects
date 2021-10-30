@@ -214,3 +214,17 @@
  - *1 hour* tidy up the UI and add a UI slider to control the object position
  - *0.5 hours* add other shapes and control them a slider
  - *2 hours* refining the 3D to 2D app and finishing it
+
+## 28 Oct 2021
+
+ - *0.5 hours* weekly meeting
+   - discussion of Rotors, potentially use exponential and log addition of matricies for rotation
+   - linked to marc ten bosch Rotor3 implementation!
+ - *1.5 hours* improvements to 2D to 3D demonstration
+
+## 29 Oct 2021
+
+ - *4 hours* implementing 3D rotor using swipe gestures - still maintains axis during rotation so not intuitive
+   - for swipe rotation - each gesture will have to be a new rotor. I will have to create a new rotor each time, and add it to the rotor, without continuing rotation
+
+## Week 7
