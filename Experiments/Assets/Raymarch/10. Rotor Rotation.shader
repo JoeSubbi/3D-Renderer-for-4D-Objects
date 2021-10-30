@@ -6,13 +6,13 @@
         _Effect ("ShadingType", Int) = 2
         _W ("W Axis Cross Section", Range(-3,3)) = 0
         
-        _S ("Quartonion W for 3D", Float) = 0
-        _ZY ("Z to Y Rotation", Float) = 0
+        _A ("A", Float) = 0
+        _YZ ("Y to Z Rotation", Float) = 0
         _XZ ("Z to X Rotation", Float) = 0
         _XY ("X to Y Rotation", Float) = 0
-        _XW ("X to W Rotation", Float) = 0
-        _YW ("Y to W Rotation", Float) = 0
-        _ZW ("Z to W Rotation", Float) = 0
+        //_XW ("X to W Rotation", Float) = 0
+        //_YW ("Y to W Rotation", Float) = 0
+        //_ZW ("Z to W Rotation", Float) = 0
     }
     SubShader
     {
@@ -58,13 +58,13 @@
                 int _Effect;  
                 float _W;   
 
-                float _S;
-                float _ZY;
+                float _A;
+                float _YZ;
                 float _XZ;
                 float _XY;
-                float _XW;
-                float _YW;
-                float _ZW;
+                //float _XW;
+                //float _YW;
+                //float _ZW;
 
             CBUFFER_END
 
@@ -157,27 +157,23 @@
                 return d;
             }
 
-            
-            float4 R(float b, float4 v){
-                return cos(_S)*v + sin(_S)*v*b;
-            }
-            float4 R_(float b, float4 v){
-                return cos(_S)*v - sin(_S)*v*b;
-            }
+            float4 Rotate(float4 u){
+                // q = Px
 
-            float4 Rotate(float4 p){
-                /*
-                p = R(_ZW, float4(0,0,1,1)) *R(_YW, float4(0,1,0,1)) *R(_XW, float4(1,0,0,1)) *
-                    R(_XZ, float4(1,0,1,0)) *R(_XY, float4(1,1,0,0)) *R(_ZY, float4(0,1,1,0)) * 
-                    p * 
-                    R_(_ZY, float4(0,1,1,0))*R_(_XY, float4(1,1,0,0))*R_(_XZ, float4(1,0,1,0))*
-                    R_(_XW, float4(1,0,0,1))*R_(_YW, float4(0,1,0,1))*R_(_ZW, float4(0,0,1,1));
-                */
-                float4 qzy = float4(1, p.y, p.z, 1);
-                p = (cos(_ZY) + sin(_ZY)*qzy) *
-                    p *
-                    (cos(_ZY) - sin(_ZY)*qzy);
-                return p;
+                float3 q;
+                q.x = _A * u.x + u.y * _XY + u.z * _XZ;
+                q.y = _A * u.y - u.x * _XY + u.z * _YZ;
+                q.z = _A * u.z - u.x * _XZ - u.y * _YZ;
+
+                float XYZ = u.x * _YZ - u.y * _XZ + u.z * _XY;
+
+                // r = qP*
+                float3 r;
+                r.x = _A * q.x + q.y * _XY + q.z * _XZ + XYZ * _YZ;
+                r.y = _A * q.y - q.x * _XY - XYZ * _XZ + q.z * _YZ;
+                r.z = _A * q.z + XYZ * _XY - q.x * _XZ - q.y * _YZ;
+
+                return float4(r, u.w);
             }
 
             float GetDist(float4 p){

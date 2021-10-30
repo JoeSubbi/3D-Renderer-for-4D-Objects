@@ -155,9 +155,4 @@ public class Rotor4
 
         this.bxyzw /= this.Magnitude();
     }
-
-    public string ToString()
-    {
-        return s.ToString() +" "+ bzy.ToString() + " " + bxz.ToString() + " " + bxy.ToString() + " " + bxw.ToString() + " " + byw.ToString() + " " + bzw.ToString();
-    }
 }
