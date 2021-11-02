@@ -316,33 +316,33 @@
                 float3 ro = i.ro;                     // Ray Origin - Camera
                 float3 rd = normalize(i.hitPos - ro); // Ray Direction
 
-                float d = Raymarch(ro, rd);           // Distance to a surface
+                float d1 = Raymarch(ro, rd);           // Distance to a surface
                 float d2 = Raymarch2(ro, rd);         // Distance to a surface
 
                 // Shading
                 fixed4 col = 0;
                 // Use the distance to colour the shader. 
                 // If the ray didn't hit anything discard the pixel.
-                if (d > MAX_DIST)
+                if (d1 > MAX_DIST && d2 > MAX_DIST)
                     discard;
                 else {
-                    float3 p = ro + rd * d;
+                    float3 p1 = ro + rd * d1;
                     float3 p2 = ro + rd * d2;
-                    float3 n = GetNormal(p);
+                    float3 n = GetNormal(p1);
 
                     // LIGHTING
                     float dif = dot(n, normalize(float3(1,2,3))) * .5 +.5;
                     col.rgb = float3(dif,dif,dif);
 
                     // MATERIALS
-                    int mat = GetMat(p);
+                    int mat1 = GetMat(p1);
                     int mat2 = GetMat(p2);
-                    if (mat == 1) col.rgb *= float3(0.8,0.2,0.2);
-                    if (mat == 1 && mat2 == 3) col.rgb += 0.2;
-                    if (mat == 2 && mat2 == 2) col.rgb  = (GetLight(p)/5)+0.5;
-                    if (mat == 2 && mat2 == 3) col.rgb  = (GetLight(p)/5)+0.7;
-                    if (mat == 4 && mat2 == 4) col.rgb  = (GetLight(p)/5)+0.6;
-                    if (mat == 4 && mat2 == 3) col.rgb  = (GetLight(p)/5)+0.8;
+                    if (mat1 == 1) col.rgb *= float3(0.8,0.2,0.2);
+                    if (mat1 == 1 && mat2 == 3) col.rgb += 0.2;
+                    if (mat1 == 2 && mat2 == 2) col.rgb  = (GetLight(p1) / 5) + 0.5;
+                    if (mat1 == 2 && mat2 == 3) col.rgb  = (GetLight(p1) / 5) + 0.7;
+                    if (mat1 == 4 && mat2 == 4) col.rgb  = (GetLight(p1) / 5) + 0.6;
+                    if (mat1 == 4 && mat2 == 3) col.rgb  = (GetLight(p1) / 5) + 0.8;
                 }
                 return col;
             }
