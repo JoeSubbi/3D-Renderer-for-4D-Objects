@@ -148,6 +148,33 @@
                 return d;
             }
 
+            /**
+             * \brief Shape distance function for a cone
+             * 
+             * \param   p        center point of object
+             * \param   radius   radius of the base of the cone
+             * \param   height   height of the cone
+             */
+            float sdCone2(float3 p, float radius, float height) {
+                float2 q = float2(length(p.xz), p.y);
+                float2 tip = q - float2(0, height);
+                float2 mantleDir = normalize(float2(height, radius));
+                float mantle = dot(tip, mantleDir);
+                float d = max(mantle, -q.y);
+                float projected = dot(tip, float2(mantleDir.y, -mantleDir.x));
+                
+                // distance to tip
+                if ((q.y > height) && (projected < 0)) {
+                    d = max(d, length(tip));
+                }
+                
+                // distance to base ring
+                if ((q.x > radius) && (projected > length(float2(height, radius)))) {
+                    d = max(d, length(q - float2(radius, 0)));
+                }
+                return d;
+            }
+
             float3 Rotate(float3 p){
                 float a = _XZ;
                 float b = _ZY;
@@ -172,6 +199,12 @@
                     return sdCone(p, 1, 2);
                 }
                 if (_Shape == 3){
+                    p -= float3(0,0.4,0);
+                    p = Rotate(p);
+                    p -= float3(0,-1,0);
+                    return sdCone2(p, 1, 2);
+                }
+                if (_Shape == 4){
                     p -= float3(0,0.5,0);
                     p = Rotate(p);
                     return sdTorus(p, 1, 0.5);
@@ -184,7 +217,7 @@
             // Distance to point p from the camera
             float GetDist(float3 p){
                 p = p-float3(_X,_Y,_Z);
-                //p.x *= -1;
+                p.x *= -1;
                 
                 // 3D COMPONENT
                 float shape = Shape(p);
@@ -201,7 +234,7 @@
             // Assign materials based on the distance
             int GetMat(float3 p){
                 p = p-float3(_X,_Y,_Z);
-                //p.x *= -1;
+                p.x *= -1;
                 
                 // 3D COMPONENT
                 float shape = Shape(p);

@@ -153,6 +153,32 @@
                 return d;
             }
 
+            /**
+             * \brief   Shape distance function for a cone
+             *
+             * \param   r   radius at base of cone
+             * \param   h   height of cone
+             */
+            float sdCone2(float4 p, float r, float h) {
+                float2 q = float2(length(p.xwz), p.y);
+                float2 tip = q - float2(0, h);
+                float2 mantleDir = normalize(float2(h, r));
+                float mantle = dot(tip, mantleDir);
+                float d = max(mantle, -q.y);
+                float projected = dot(tip, float2(mantleDir.y, -mantleDir.x));
+                
+                // distance to tip
+                if ((q.y > h) && (projected < 0)) {
+                    d = max(d, length(tip));
+                }
+                
+                // distance to base ring
+                if ((q.x > r) && (projected > length(float2(h, r)))) {
+                    d = max(d, length(q - float2(r, 0)));
+                }
+                return d;
+            }
+
             float4 Rotate(float4 p){
                 float a = _XZ;
                 float b = _ZY;
@@ -181,6 +207,11 @@
                     return sdCone(p, 1, 2)-0.01;
                 }
                 if (_Shape == 3){
+                    p.y += 1;
+                    p = Rotate(p);
+                    return sdCone2(p, 1, 2)-0.01;
+                }
+                if (_Shape == 4){
                     p = Rotate(p);
                     return sdTorus(p, 1, 0.5, 0.2);
                 }
