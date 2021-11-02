@@ -22,7 +22,7 @@ public class ZSlider : MonoBehaviour
         s1 = GameObject.Find("Slider").GetComponent<Slider>();
         s2 = GameObject.Find("Shape").GetComponent<Slider>();
 
-        b = new Toggle[]{ 
+        b = new Toggle[]{
                 GameObject.Find("X Rotation").GetComponent<Toggle>(),
                 GameObject.Find("Y Rotation").GetComponent<Toggle>(),
                 GameObject.Find("Z Rotation").GetComponent<Toggle>()
@@ -79,9 +79,9 @@ public class ZSlider : MonoBehaviour
 
         //Position 2D Object according to screen
         Vector2 canvasSize = GameObject.Find("Canvas").GetComponent<RectTransform>().sizeDelta;
-        s1.GetComponent<RectTransform>().sizeDelta = new Vector2(20, canvasSize.y*20 - 20);
+        s1.GetComponent<RectTransform>().sizeDelta = new Vector2(20, canvasSize.y * 20 - 20);
         s2.GetComponent<RectTransform>().sizeDelta = new Vector2(20, canvasSize.y * 20 - 20);
-        GameObject.Find("2D").GetComponent<RectTransform>().sizeDelta = new Vector2(canvasSize.x/3, (float)(canvasSize.y / 2.4));
+        GameObject.Find("2D").GetComponent<RectTransform>().sizeDelta = new Vector2(canvasSize.x / 3, (float)(canvasSize.y / 2.4));
 
         float x = (float)((-canvasSize.x / 3) + 0.3);
         float y = (float)((-canvasSize.y / 3) + 0.4);

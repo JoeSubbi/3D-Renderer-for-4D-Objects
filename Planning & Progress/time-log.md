@@ -197,34 +197,45 @@
 
 ## Week 6
 
-## 25 Oct 2021
+### 25 Oct 2021
 
  - *1.5 hours* Creating a new unity project for final program
    - Create a 3D and 2D shader side by side
  - *2 hours* Create a separate 2D shader and overlay it on the UI
 
-## 26 Oct 2021
+### 26 Oct 2021
 
  - *2 hours* Implement a script to control the cross section/object position
  - *1 hours* Creating a scalable UI
  - *2 hours* Create a 2 Layer transparency effect for the plane cross section
 
-## 27 Oct 2021
+### 27 Oct 2021
 
  - *1 hour* tidy up the UI and add a UI slider to control the object position
  - *0.5 hours* add other shapes and control them a slider
  - *2 hours* refining the 3D to 2D app and finishing it
 
-## 28 Oct 2021
+### 28 Oct 2021
 
  - *0.5 hours* weekly meeting
    - discussion of Rotors, potentially use exponential and log addition of matricies for rotation
    - linked to marc ten bosch Rotor3 implementation!
  - *1.5 hours* improvements to 2D to 3D demonstration
 
-## 29 Oct 2021
+### 29 Oct 2021
 
  - *4 hours* implementing 3D rotor using swipe gestures - still maintains axis during rotation so not intuitive
    - for swipe rotation - each gesture will have to be a new rotor. I will have to create a new rotor each time, and add it to the rotor, without continuing rotation
 
+### 30 Oct 2021
+
+ - *1 hours* implement 4D rotor (besides rotor * rotor product, and rotation of a vector by a rotor)
+ - *2 hours* attempting to derive rotor * rotor product
+
 ## Week 7
+
+### 1 Nov 2021
+
+ - *2 hours* trying to derive rotor * rotor product using the geometric product
+   - 3D rotation works, but cannot prove it works in 4D until 4D rotation function works - which i have not derived yet.
+ - *3 hours* building a 4D to 3D demo, where the 3D object rotates to mimic the XW YW and ZW rotations.
