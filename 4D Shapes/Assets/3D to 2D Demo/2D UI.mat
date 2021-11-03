@@ -72,11 +72,11 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
-    - _X: -5.0515275
+    - _X: -6.6709714
     - _XY: 0
     - _XZ: 0
-    - _Y: -2.6695833
-    - _Z: 0
+    - _Y: -3.0891666
+    - _Z: 0.24776101
     - _ZWrite: 1
     - _ZY: 0
     m_Colors:

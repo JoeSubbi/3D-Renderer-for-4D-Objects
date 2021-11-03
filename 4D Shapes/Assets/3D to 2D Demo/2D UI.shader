@@ -25,8 +25,8 @@
 
             #include "UnityCG.cginc"
 
-            #define MAX_STEPS 1000
-            #define MAX_DIST  1000
+            #define MAX_STEPS 200
+            #define MAX_DIST  100
             #define SURF_DIST 0.001
 
             struct appdata
