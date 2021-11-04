@@ -10,11 +10,15 @@ The goal of the project is to improve peoples understanding of a 4th spacial dim
 
 A series of markdown documents detailing the time spent and progress made on the project.
 
-## `Ray Marcher/`
+## `Experiments/`
 
-A unity project that will eventual showcase a series of tasks and videos to teach and test a user on their understanding of 4 Dimensional Geometry.
+A unity project focusing on experimenting with 4D shapes, rotation mechanics and user interaction
 
-Currently There are a series of shaders that utilising ray marching to visualise cross sections of 3D and 4D shapes.
+## `4D Shapes/`
+
+A unity project containing polished interfaces and representations that will build the final application for users to interact with.
+
+The project will eventual showcase a series of tasks and videos to teach and test a user on their understanding of 4 Dimensional Geometry.
 
 ## `Shape Descriptions and Derivations`
 
