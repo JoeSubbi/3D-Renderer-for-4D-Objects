@@ -1,4 +1,4 @@
-﻿Shader "Unlit/Timeline"
+﻿Shader "Unlit/Background"
 {
     Properties
     {
@@ -6,15 +6,6 @@
         _X ("X Canvas Position", Float) = 0
         _Y ("Y Canvas Position", Float) = 0
         _Z ("Z Canvas Position", Float) = 0
-
-        _ZY ("X Rotation", Float) = 0
-        _XZ ("Y Rotation", Float) = 0
-        _XY ("Z Rotation", Float) = 0
-        _XW ("XW Rotation", Float) = 0
-        _YW ("YW Rotation", Float) = 0
-        _ZW ("ZW Rotation", Float) = 0
-
-        _Shape ("Shape", Int) = 0
     }
     SubShader
     {
@@ -29,7 +20,7 @@
 
             #include "UnityCG.cginc"
 
-            #define MAX_STEPS 200
+            #define MAX_STEPS 100
             #define MAX_DIST  100
             #define SURF_DIST 0.001
 
@@ -60,16 +51,7 @@
                 float _W;     
                 float _Z;
                 float _X;
-                float _Y;
-
-                int _Shape;
-
-                float _XZ;
-                float _ZY;
-                float _XY;  
-                float _XW;
-                float _YW;
-                float _ZW;   
+                float _Y; 
             CBUFFER_END
 
             v2f vert (appdata v)
@@ -151,104 +133,138 @@
                 return d;
             }
 
-            float4 RotateXYZ(float4 p){
-                float a = _XZ;
-                float b = _ZY;
-                float c = _XY;
-                p.xz = mul(p.xz, float2x2(cos(a), sin(a), -sin(a), cos(a)));
-                p.zy = mul(p.zy, float2x2(cos(b), sin(b), -sin(b), cos(b)));
-                p.xy = mul(p.xy, float2x2(cos(c), sin(c), -sin(c), cos(c)));
-                return p;
-            }
-
-            float4 RotateW(float4 p){
-                float a = _XW;
-                float b = _YW;
-                float c = _ZW;
-                p.xw = mul(p.xw, float2x2(cos(a), sin(a), -sin(a), cos(a)));
-                p.yw = mul(p.yw, float2x2(cos(b), sin(b), -sin(b), cos(b)));
-                p.zw = mul(p.zw, float2x2(cos(c), sin(c), -sin(c), cos(c)));
-                return p;
-            }
-
-            // Pick a shape based on the integer property
-            float Shape(float4 p){
-                if (_Shape == 1){
-                    p = RotateW(p);
-                    return sdBox(p, float4(0.9,0.9,0.9,0.9))-0.01;
-                }
-                if (_Shape == 2){
-                    p.w += 1;
-                    p = RotateW(p);
-                    return sdCone(p, 1, 2)-0.01;
-                }
-                if (_Shape == 3){
-                    p = RotateW(p);
-                    return sdTorus(p, 1, 0.5, 0.2);
-                }
-                p = RotateW(p);
-                return sdSphere(p, 1);
+            /**
+             * \breif   Rotate a a plane by a degrees
+             * 
+             * \param   p   plane to be rotated
+             * \param   a   angle to rotate by
+             */
+            float2 Rotate(float2 p, float a){
+                return mul(p, float2x2(cos(a), sin(a), -sin(a), cos(a)));
             }
 
             float GetDist(float4 p){
                 p -= float4(_X,_Y,_Z,_W);
-                p = RotateXYZ(p);
+                p.yz = Rotate(p.yz, -3.14159/5);
+                float4 rp = p;
                 
-                // 3D COMPONENT
-                float shape = Shape(p);
+                float plane   = p.y + 0.5;
+                //W=0 OBJECTS
+                float sphere1 = sdSphere(p-float4(-5,0,-4,0), 0.5);
+                float torus1  = sdTorus(p-float4(6,-0.1,-3,0), 0.5, 0.1, 0.3);
+                rp = p-float4(4,-0.5,-5,0);
+                rp.yw = Rotate(rp.yw, 3.14159/2);
+                float cone1   = sdCone(rp, 1, 2);
+                rp = p-float4(9,0,-7,-0.5);
+                rp.xw = Rotate(rp.xw,-3.14159/3);
+                float cube1   = sdBox(rp, float4(0.5,0.5,0.5,0.5));
 
-                // Foward
-                float shape_f1 = Shape(p-float4(-3,0,0,-0.3));
-                float shape_f2 = Shape(p-float4(-6,0,0,-0.6));                
-                float shape_f3 = Shape(p-float4(-9,0,0,-0.9));
+                //W=1 OBJECTS
+                float sphere2 = sdSphere(p-float4(3,0.4,2,0.7), 0.8);
+                float cube2   = sdBox(p-float4(-6,0,-3,0.8), float4(0.2,2,0.5,2));
+                rp = p-float4(0,-0.1,0,1);
+                rp.xy = Rotate(rp.xy, 3.14159/2);
+                rp.yz = Rotate(rp.yz,-3.14159/4);
+                rp.xw = Rotate(rp.xw, 3.14159/2);
+                float torus2  = sdTorus(rp, 1, 0.4, 0.2);
+                rp = p-float4(-3,0.1,2,-0.8);
+                rp.xw = Rotate(rp.xw, 3.14159/3);
+                rp.zw = Rotate(rp.zw, 3.14159/9);
+                float cube22  = sdBox(rp, float4(0.6,0.6,0.6,0.6));
+                rp = p-float4(-2,0.5,-4,2);
+                rp.yw = Rotate(rp.yw, 3.14159);
+                float cone2   = sdCone(rp, 1, 2);
 
-                // Backward
-                float shape_b1 = Shape(p-float4( 3,0,0, 0.3));
-                float shape_b2 = Shape(p-float4( 6,0,0, 0.6));
-                float shape_b3 = Shape(p-float4( 9,0,0, 0.9));
-                
-                // BUILD SCENE
-                float d = shape;
-                      d = min(d, shape_f1);
-                      d = min(d, shape_f2);
-                      d = min(d, shape_f3);
-                      d = min(d, shape_b1);
-                      d = min(d, shape_b2);
-                      d = min(d, shape_b3);
+                // W=-1 Objects
+                float sphere3 = sdSphere(p-float4(-1,0.4,-1,-1.2), 0.8);
+                rp = p-float4(-3,0,1,1.7);
+                rp.xz = Rotate(rp.xz, 3.14159/0.5);
+                rp.xw = Rotate(rp.xw, 3.14159/4);
+                rp.zw = Rotate(rp.zw, 3.14159/3);
+                float cube3   = sdBox(rp, float4(0.6,0.5,0.6,0.5));
+                rp = p-float4(4,-0.2,1,-0.6);
+                rp.yw = Rotate(rp.yw, 3.14159/4);
+                float torus3 = sdTorus(rp, 0.6, 0.2, 0.1);
+
+                float d = plane;
+                      d = min(d, sphere1);
+                      d = min(d, cube1);
+                      d = min(d, torus1);
+                      d = min(d, cone1);
+
+                      d = min(d, sphere2);
+                      d = min(d, cube2);
+                      d = min(d, torus2);
+                      d = min(d, cube22);
+                      d = min(d, cone2);
+
+                      d = min(d, sphere3);
+                      d = min(d, cube3);
+                      d = min(d, torus3);
                 
                 return d;
             }
 
             int GetMat(float4 p){
                 p -= float4(_X,_Y,_Z,_W);
-                p = RotateXYZ(p);
+                p.yz = Rotate(p.yz, -3.14159/5);
+                float4 rp = p;
                 
-                // 3D COMPONENT
-                float shape = Shape(p);
+                float plane   = p.y + 0.5;
+                //W=0 OBJECTS
+                float sphere1 = sdSphere(p-float4(-5,0,-4,0), 0.5);
+                float torus1  = sdTorus(p-float4(6,-0.1,-3,0), 0.5, 0.1, 0.3);
+                rp = p-float4(4,-0.5,-5,0);
+                rp.yw = Rotate(rp.yw, 3.14159/2);
+                float cone1   = sdCone(rp, 1, 2);
+                rp = p-float4(9,0,-7,-0.5);
+                rp.xw = Rotate(rp.xw,-3.14159/3);
+                float cube1   = sdBox(rp, float4(0.5,0.5,0.5,0.5));
 
-                // Foward
-                float shape_f1 = Shape(p-float4(-3,0,0,-0.3));
-                float shape_f2 = Shape(p-float4(-6,0,0,-0.6));                
-                float shape_f3 = Shape(p-float4(-9,0,0,-0.9));
+                //W=1 OBJECTS
+                float sphere2 = sdSphere(p-float4(3,0.4,2,0.7), 0.8);
+                float cube2   = sdBox(p-float4(-6,0,-3,0.8), float4(0.2,2,0.5,2));
+                rp = p-float4(0,-0.1,0,1);
+                rp.xy = Rotate(rp.xy, 3.14159/2);
+                rp.yz = Rotate(rp.yz,-3.14159/4);
+                rp.xw = Rotate(rp.xw, 3.14159/2);
+                float torus2  = sdTorus(rp, 1, 0.4, 0.2);
+                rp = p-float4(-3,0.1,2,-0.8);
+                rp.xw = Rotate(rp.xw, 3.14159/3);
+                rp.zw = Rotate(rp.zw, 3.14159/9);
+                float cube22  = sdBox(rp, float4(0.6,0.6,0.6,0.6));
+                rp = p-float4(-2,0.5,-4,2);
+                rp.yw = Rotate(rp.yw, 3.14159);
+                float cone2   = sdCone(rp, 1, 2);
 
-                // Backward
-                float shape_b1 = Shape(p-float4( 3,0,0, 0.3));
-                float shape_b2 = Shape(p-float4( 6,0,0, 0.6));
-                float shape_b3 = Shape(p-float4( 9,0,0, 0.9));
-                
-                // BUILD SCENE
-                float d = shape;
-                      d = min(d, shape_f1);
-                      d = min(d, shape_f2);
-                      d = min(d, shape_f3);
-                      d = min(d, shape_b1);
-                      d = min(d, shape_b2);
-                      d = min(d, shape_b3);
+                // W=-1 Objects
+                float sphere3 = sdSphere(p-float4(-1,0.4,-1,-1.2), 0.8);
+                rp = p-float4(-3,0,1,1.7);
+                rp.xz = Rotate(rp.xz, 3.14159/0.5);
+                rp.xw = Rotate(rp.xw, 3.14159/4);
+                rp.zw = Rotate(rp.zw, 3.14159/3);
+                float cube3   = sdBox(rp, float4(0.6,0.5,0.6,0.5));
+                rp = p-float4(4,-0.2,1,-0.6);
+                rp.yw = Rotate(rp.yw, 3.14159/4);
+                float torus3 = sdTorus(rp, 0.6, 0.2, 0.1);
+
+                float d = plane;
+                      d = min(d, sphere1);
+                      d = min(d, cube1);
+                      d = min(d, torus1);
+                      d = min(d, cone1);
+
+                      d = min(d, sphere2);
+                      d = min(d, cube2);
+                      d = min(d, torus2);
+                      d = min(d, cube22);
+                      d = min(d, cone2);
+
+                      d = min(d, sphere3);
+                      d = min(d, cube3);
+                      d = min(d, torus3);
 
                 int mat=0;
-                if (d == shape) mat=0;
-                if (d == shape_f1 || d == shape_f2 || d == shape_f3) mat = 1;
-                if (d == shape_b1 || d == shape_b2 || d == shape_b3) mat = 2;
                 return mat;
             }
 
@@ -277,6 +293,24 @@
                 return normalize(n);
             }
 
+            // light and shadow of objects
+            float GetLight(float4 p){
+                float4 lightPos = float4(0,8,4,0);
+
+                //angle dependant fall off
+                float4 lv = normalize(lightPos-p);
+                float4 n  = GetNormal(p);
+                float  light  = clamp(dot(n,lv), 0., 1.);
+
+                //shadow
+                float4 so = p + n * SURF_DIST * 2.; //shadow origin
+                float4 sd = normalize(lightPos-so); //light direction
+                float d = Raymarch(so, sd);
+                if( d<length(lightPos-p) ) light *= 0.1;
+
+                return light;
+            }            
+
             fixed4 frag (v2f i) : SV_Target
             {
                 float2 uv = i.uv;              // UV coordinates - centered on object
@@ -294,14 +328,15 @@
                     col.rgb = 0.28;
                 else {
                     float4 p = ro + rd * d;
+                    /*
                     float4 n = GetNormal(p);
                     float dif = dot(n, normalize(float3(1,2,3))) * .5 +.5;
                     col.rgb = dif;
+                    */
+
+                    col.rgb = GetLight(p)/1.2 +0.2;
 
                     int mat = GetMat(p);
-                    if (mat == 0) col.rgb *= float3(1,1,1);
-                    if (mat == 1) col.rgb *= float3(1,0,0);
-                    if (mat == 2) col.rgb *= float3(0,0,1);
                 }
 
                 return col;

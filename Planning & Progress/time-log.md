@@ -239,3 +239,20 @@
  - *2 hours* trying to derive rotor * rotor product using the geometric product
    - 3D rotation works, but cannot prove it works in 4D until 4D rotation function works - which i have not derived yet.
  - *3 hours* building a 4D to 3D demo, where the 3D object rotates to mimic the XW YW and ZW rotations.
+
+### 2 Nov 2021
+
+ - *2.5 hours* implementing onion skin shader
+   - not as intuitive as I hoped for
+ - *1.5 hours* implementing timeline shader
+   - x y z rotation - I can have the entire timeline rotate, or I can have each object rotate - not sure whats better
+
+### 3 Nov 2021
+
+ - *3 hours* developing a menu system
+   - partially just to chill out, but also to learn more about UI and scene loading which will be important later for navigating the tests for users
+
+### 4 Nov 2021
+
+ - *3 hours* completing the menu system
+   - not as refined as a final product but the menu navigation and carousel is working

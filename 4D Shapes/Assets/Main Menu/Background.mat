@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: 2D UI
-  m_Shader: {fileID: 4800000, guid: a36be84845aa8eb46a9e9e0588406c85, type: 3}
+  m_Name: Background
+  m_Shader: {fileID: 4800000, guid: ae07aa3c67e33d749a9c9c96c451e847, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -67,18 +67,15 @@ Material:
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _Shape: 1
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
-    - _X: -6.0820827
-    - _XY: 0
-    - _XZ: 0
-    - _Y: -3.0891666
+    - _W: 0.47
+    - _X: -0.07
+    - _Y: 0
     - _Z: 0
     - _ZWrite: 1
-    - _ZY: 0
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}

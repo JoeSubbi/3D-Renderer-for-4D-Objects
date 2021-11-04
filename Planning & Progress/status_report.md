@@ -44,6 +44,11 @@ This project focuses on the development of a wide range of 4 Dimensional shapes 
  - Created a reflective material
  - Implemented rotation using matrix multiplication so axis don't mis-align - still has gimbal lock problem
  - Implemented rotation in 3D using quaternions - cannot be extended to 4D
+ - Implement 3D rotation using a rotor
+ - Attempted to extend Rotor4 - extending Rotor4 * Rotor4 product and rotating a vector by a rotor is proving difficult
+ - Implemented w axis "timeline"
+ - Implemented "onion skin" shader
+ - Implement scene navigation
 
 ## Problems and risks
 ### Problems

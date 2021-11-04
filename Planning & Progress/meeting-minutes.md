@@ -5,6 +5,7 @@
   - [07/10/2021](#07102021)
   - [14/10/2021](#14102021)
   - [22/10/2021](#22102021)
+  - [04/10/2021](#04102021)
 
 # Semester 1
 ## 07/10/2021
@@ -27,3 +28,14 @@ look into exp/log map rotation - expandable to multiple dimensions
 ## 22/10/2021
 
 Give Rotors sense of direction by multiplying with a vector
+
+## 04/10/2021
+
+How to decide whether to use certain representations
+ - 10 different ideas - informal trial  
+ - 3 winners and more in-depth study  
+   - even if just asking some friends
+
+User interaction
+ - geodesic - representation of the surface by shortest path
+ - project touch onto a sphere to rotate between pos1 and pos2 vectors

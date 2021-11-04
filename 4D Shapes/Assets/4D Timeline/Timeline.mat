@@ -72,15 +72,15 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
-    - _W: 0
+    - _W: -0.05
     - _X: 0
-    - _XW: 0
+    - _XW: 0.51
     - _XY: 0
     - _XZ: 0
     - _Y: -3.5
-    - _YW: 0
+    - _YW: -0.17
     - _Z: -7.17
-    - _ZW: 0
+    - _ZW: 1.17
     - _ZWrite: 1
     - _ZY: 0
     m_Colors:
