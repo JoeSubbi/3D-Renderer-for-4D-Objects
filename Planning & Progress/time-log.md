@@ -256,3 +256,15 @@
 
  - *3 hours* completing the menu system
    - not as refined as a final product but the menu navigation and carousel is working
+
+### 5 Nov 2021
+
+ - *1.5 hours* transferring common code from shaders to an include file `.cginc`
+   - cannot transfer ray march functions unfortunately because GLSL does not use function pointers as it does not have a stack
+
+### 7 Nov 2021
+
+ - *1 hour* implementing rotors to the grab ball
+   - Cannot transform rotors to unity `Transform.Rotate`, so have to rotate the actual arc ball with quaternions
+ - *2 hours* converting swipe rotation to use the global axis for intuitive rotation
+   - Realised I have to swap bxy and bxz or the rotation equation to use the local axes. This may have reprocusions for 4D

@@ -49,6 +49,7 @@ This project focuses on the development of a wide range of 4 Dimensional shapes 
  - Implemented w axis "timeline"
  - Implemented "onion skin" shader
  - Implement scene navigation
+ - Implement intuitive swipe rotation
 
 ## Problems and risks
 ### Problems
@@ -86,6 +87,10 @@ This project focuses on the development of a wide range of 4 Dimensional shapes 
    - Attempting to implement Rotors but is proving hard to translate the abstract maths to code
    - I will attempt to mitigate the impact on my schedule by completing other tasks at the same time, so I am not making no progress on the project. 
 
+ - Developing Intuitive rotation.
+   - when someone rotates an object, if coded to the direction of rotation will flip for the user. I will need to develop a system that rotates as you expect
+   - To keep an object rotating on its local axis, the equation has to be changed slightly. I do not fully understand this yet so will do research before extending this to 4D to avoid having unpredicted results in the future
+
 ## Plan
 <!--[Time plan, in roughly weekly to monthly blocks, up until submission week]-->
 
@@ -104,11 +109,12 @@ Week 6:
  - [x] Keep attempting to implement Rotors.
 
 Week 7:  
- - [ ] Implement and test "onion skin" and cross section "timeline" interpretation of the 4th dimension.  
- - [ ] Implement a 3D perspective that in real time mimics the 4D object.
+ - [x] Implement and test "onion skin" and cross section "timeline" interpretation of the 4th dimension.  
+ - [x] Implement a 3D perspective that in real time mimics the 4D object.
 
-Week 8:
- - [ ] Create intuitive UI for users to manipulate shapes with.
+Week 8: Create intuitive UI for users to manipulate shapes with.
+ - [x] Swipe Rotation. *Extendable to 4D*
+ - [ ] Arc/Grab Ball Rotation. *Extendable to 4D*
 
 Week 9:  
  - [ ] Create an "Identify the shape" mode. 
