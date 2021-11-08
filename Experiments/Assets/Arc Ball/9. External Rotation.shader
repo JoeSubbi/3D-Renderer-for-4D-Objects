@@ -6,10 +6,10 @@
         _Effect ("ShadingType", Int) = 2
         _W ("W Axis Cross Section", Range(-3,3)) = 0
         
-        _Q3 ("Quartonion W for 3D", Float) = 1
-        _X ("Y to Z Rotation", Float) = 0
-        _Y ("Z to X Rotation", Float) = 0
-        _Z ("X to Y Rotation", Float) = 0
+        _A ("A Scalar", Float) = 1
+        _YZ ("Y to Z Rotation", Float) = 0
+        _XZ ("Z to X Rotation", Float) = 0
+        _XY ("X to Y Rotation", Float) = 0
     }
     SubShader
     {
@@ -55,10 +55,10 @@
                 int _Effect;  
                 float _W;   
 
-                float _Q3;
-                float _X;
-                float _Y;
-                float _Z;
+                float _A;
+                float _XY;
+                float _YZ;
+                float _XZ;
 
             CBUFFER_END
 
@@ -151,22 +151,23 @@
                 return d;
             }
 
-            float4x4 mat(float x, float y, float z, float q){
-                return float4x4(
-                    1 - 2 * y*y - 2 * z*z,      2 * x * y - 2 * q * z,       2 * x * z + 2 * q * y,  0,
-                    
-                    2 * x * y + 2 * q * z,      1 - 2 * x*x - 2 * z*z,       2 * y * z - 2 * q * x,  0,
-                    
-                    2 * x * z - 2 * q * y,      2 * y * z + 2 * q * x,       1 - 2 * x*x - 2 * y*y,  0,
-                    
-                    0,                          0,                           0,                      1
-                );
-            }
+            float4 Rotate(float4 u){
+                // q = Px
 
-            float4 Rotate(float4 p){
-                //xyz rotation
-                p = mul(p, mat(_X, _Y, _Z, _Q3));
-                return p;
+                float3 q;
+                q.x = _A * u.x + u.y * _XY + u.z * _XZ;
+                q.y = _A * u.y - u.x * _XY + u.z * _YZ;
+                q.z = _A * u.z - u.x * _XZ - u.y * _YZ;
+
+                float XYZ = u.x * _YZ - u.y * _XZ + u.z * _XY;
+
+                // r = qP*
+                float3 r;
+                r.x = _A * q.x + q.y * _XY + q.z * _XZ + XYZ * _YZ;
+                r.y = _A * q.y - q.x * _XY - XYZ * _XZ + q.z * _YZ;
+                r.z = _A * q.z + XYZ * _XY - q.x * _XZ - q.y * _YZ;
+
+                return float4(r, u.w);
             }
 
             float GetDist(float4 p){

@@ -4,9 +4,14 @@ using UnityEngine;
 
 public class GrabRotation : MonoBehaviour
 {
+    private Vector3 e1 = new Vector3(0, 0, 0);
+    private Vector3 e2 = new Vector3(0, 0, 0);
+    public Rotor3 total = new Rotor3(1, 0, 0, 0);
+
     private Vector3 plane = new Vector3(0, 0, 0);
+    private Quaternion qTotal;
+
     private Vector3 normal = new Vector3(0, 0, 0);
-    public Quaternion total;
     private Renderer image;
 
     // Start is called before the first frame update
@@ -18,28 +23,32 @@ public class GrabRotation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        image.material.SetFloat("_X",  total.x);
-        image.material.SetFloat("_Y",  total.y);
-        image.material.SetFloat("_Z",  total.z);
-        image.material.SetFloat("_Q3", total.w);
+
+        image.material.SetFloat("_A",  total.a);
+        image.material.SetFloat("_XY", total.b02);
+        image.material.SetFloat("_XZ", total.b01);
+        image.material.SetFloat("_YZ", total.b12);
         
-        total.Normalize();
+        total.Normalise();
+        qTotal.Normalize();
     }
 
+    
     void OnGUI()
     {
         Event e = Event.current;
         if (e.isMouse)
         {
-            float x = Mathf.Round(e.delta.x * 100) / 100;
-            float y = Mathf.Round(e.delta.y * 100) / 100;
-            int speed = 1;
 
-            if (plane.magnitude == 0 && Input.GetMouseButtonDown(0))
+            int speed = 50;
+            float x = e.delta.x / speed; //Mathf.Round(e.delta.x * 100) / 100;
+            //float y = //Mathf.Round(e.delta.y * 100) / 100;
+
+            if (e1 == e2 && Input.GetMouseButtonDown(0))
             {
                 CheckHit();
             }
-            else if (plane.magnitude != 0)
+            else if (e1 != e2)
             {
                 /*
                 Vector3 t1 = ( Vector3.Cross(normal, Vector3.forward).magnitude > Vector3.Cross(normal, Vector3.up).magnitude ) ? Vector3.Cross(normal, Vector3.forward) : Vector3.Cross(normal, Vector3.up);
@@ -60,19 +69,72 @@ public class GrabRotation : MonoBehaviour
                     x *= t1.z;
                     y *= t1.y;
                 }*/
-                total *= Quaternion.AngleAxis(-x * speed, plane);
-                //total *= Quaternion.AngleAxis(-y * speed, plane);
-                transform.rotation = total;
+    
+                Bivector3 bv = Bivector3.Wedge(e1, e2);
+                Rotor3 r = new Rotor3(bv, x);
+                total *= r;
+
+                qTotal *= Quaternion.AngleAxis(-RadToDeg(x), plane);
+                transform.rotation = qTotal;
             }
             if (Input.GetMouseButtonUp(0))
             {
-                plane.x = 0;
-                plane.y = 0;
-                plane.z = 0;
+                e1 = new Vector3(0, 0, 0);
+                e2 = new Vector3(0, 0, 0);
+
+                plane = new Vector3(0, 0, 0);
             }
         }
     }
-    
+
+    /*
+    void OnGUI()
+    {
+        Event e = Event.current;
+        if (e.isMouse)
+        {
+            int speed = 50;
+            float x = -e.delta.x / speed;
+            float y = -e.delta.y / speed;
+
+            if (Input.GetMouseButton(0))
+            {
+
+                if (Input.GetKey(KeyCode.LeftShift))
+                {
+                    e1 = new Vector3(0, 1, 0);
+                    e2 = new Vector3(0, 0, 1);
+                    Bivector3 bv = Bivector3.Wedge(e1, e2);
+                    Rotor3 r = new Rotor3(bv, x + y);
+                    total *= r;
+                }
+                else
+                {
+                    //xy rotation
+                    if (Mathf.Abs(x) > Mathf.Abs(2 * y))
+                    {
+                        e1 = new Vector3(1, 0, 0);
+                        e2 = new Vector3(0, 1, 0);
+                        Bivector3 bv = Bivector3.Wedge(e1, e2);
+                        Rotor3 r = new Rotor3(bv, x);
+                        total *= r;
+                    }
+
+                    //xz rotation
+                    if (Mathf.Abs(y) > Mathf.Abs(2 * x))
+                    {
+                        e1 = new Vector3(1, 0, 0);
+                        e2 = new Vector3(0, 0, 1);
+                        Bivector3 bv = Bivector3.Wedge(e1, e2);
+                        Rotor3 r = new Rotor3(bv, y);
+                        total *= r;
+                    }
+                }
+            }
+        }
+    }
+    */
+
     private void CheckHit()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -82,24 +144,36 @@ public class GrabRotation : MonoBehaviour
             switch (hit.collider.name)
             {
                 case "arc xy":
-                    plane.z = 1;
-                    Debug.Log("XY");
+                    e1 = new Vector3(1, 0, 0);
+                    e2 = new Vector3(0, 0, 1);
+
+                    plane = new Vector3(0, 0, 1);
                     break;
                 case "arc zx":
-                    plane.y = 1;
-                    Debug.Log("ZX");
+                    e1 = new Vector3(-1, 0, 0);
+                    e2 = new Vector3( 0, 1, 0);
+
+                    plane = new Vector3(0, 1, 0);
                     break;
                 case "arc yz":
-                    plane.x = 1;
-                    Debug.Log("YZ");
+                    e1 = new Vector3(0, 1, 0);
+                    e2 = new Vector3(0, 0, 1);
+
+                    plane = new Vector3(1, 0, 0);
                     break;
                 default:
-                    plane.x = 0;
-                    plane.y = 0;
-                    plane.z = 0;
+                    e1 = new Vector3(0, 0, 0);
+                    e2 = new Vector3(0, 0, 0);
+
+                    plane = new Vector3(0, 0, 0);
                     break;
             }
         }
         normal = hit.normal;
+    }
+
+    private static float RadToDeg(float a)
+    {
+        return (a / (2 * 3.14159f)) * 360;
     }
 }

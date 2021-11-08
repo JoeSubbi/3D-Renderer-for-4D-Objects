@@ -4,9 +4,14 @@ using UnityEngine;
 
 public class SwipeRotation : MonoBehaviour
 {
+    private Vector4 e1 = new Vector4(0, 0, 0, 0);
+    private Vector4 e2 = new Vector4(0, 0, 0, 0);
+    //public Rotor3 total = new Rotor3(1, 0, 0, 0);
+    public Rotor4 total = new Rotor4(1, 0, 0, 0, 0, 0, 0);
+
     private Renderer rend;
-    public Rotor3 total = new Rotor3(1, 0, 0, 0);
     public float speed = 50;
+
 
     // Start is called before the first frame update
     void Start()
@@ -19,10 +24,17 @@ public class SwipeRotation : MonoBehaviour
     {        
         rend.material.SetFloat("_A",  total.a);
 
-        rend.material.SetFloat("_YZ", total.b12);
-        rend.material.SetFloat("_XZ", total.b01);
-        rend.material.SetFloat("_XY", total.b02);
-        
+        //rend.material.SetFloat("_YZ", total.b12);
+        //rend.material.SetFloat("_XZ", total.b02);
+        //rend.material.SetFloat("_XY", total.b01);
+
+        rend.material.SetFloat("_YZ", total.byz);
+        rend.material.SetFloat("_XZ", total.bxz);
+        rend.material.SetFloat("_XY", total.bxy);
+        rend.material.SetFloat("_XW", total.bxw);
+        rend.material.SetFloat("_YW", total.byw);
+        rend.material.SetFloat("_ZW", total.bzw);
+
         total.Normalise();
     }
 
@@ -36,20 +48,38 @@ public class SwipeRotation : MonoBehaviour
 
             if (Input.GetMouseButton(0))
             {
-                //xy rotation
-                if (Mathf.Abs(x) > Mathf.Abs(2 * y))
+                
+                if (Input.GetKey(KeyCode.LeftShift))
                 {
-                    Bivector3 bv = Bivector3.Wedge(new Vector3(1, 0, 0), new Vector3(0, 1, 0));
-                    Rotor3 r = new Rotor3(bv, x);
+
+                    e1 = new Vector4(1, 0, 0, 0);
+                    e2 = new Vector4(0, 1, 0, 0);
+                    Bivector4 bv = Bivector4.Wedge(e1, e2);
+                    Rotor4 r = new Rotor4(bv, x+y);
                     total *= r;
                 }
-
-                //xz rotation
-                if (Mathf.Abs(y) > Mathf.Abs(2 * x))
+                else
                 {
-                    Bivector3 bv = Bivector3.Wedge(new Vector3(1, 0, 0), new Vector3(0, 0, 1));
-                    Rotor3 r = new Rotor3(bv, y);
-                    total *= r;
+                    //xy rotation
+                    if (Mathf.Abs(y) > Mathf.Abs(2 * x))
+                    {
+
+                        e1 = new Vector4(0, 1, 0, 0);
+                        e2 = new Vector4(0, 0, 1, 0);
+                        Bivector4 bv = Bivector4.Wedge(e1, e2);
+                        Rotor4 r = new Rotor4(bv, y);
+                        total *= r;
+                    }
+
+                    //xz rotation
+                    if (Mathf.Abs(x) > Mathf.Abs(2 * y))
+                    {
+                        e1 = new Vector4(1, 0, 0, 0);
+                        e2 = new Vector4(0, 0, 1, 0);
+                        Bivector4 bv = Bivector4.Wedge(e1, e2);
+                        Rotor4 r = new Rotor4(bv, x);
+                        total *= r;
+                    }
                 }
             }
         }
