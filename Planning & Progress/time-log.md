@@ -275,3 +275,5 @@
 
  - *2 hours* begin script plans for how to teach users
  - *2.5 hours* polishing grab ball to correctly use the tangent and to highlight the trajectory to move the mouse for users
+ - *2 hours* create multi-rotation view of 4D (inspired by poly-vision), showing default view, xw, yw and zw. Used Cone and torus as example.
+   - also solved why cone was being unpredictable, but yet to implement in the main build.
