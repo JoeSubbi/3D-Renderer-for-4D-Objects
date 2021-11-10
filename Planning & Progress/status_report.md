@@ -50,6 +50,7 @@ This project focuses on the development of a wide range of 4 Dimensional shapes 
  - Implemented "onion skin" shader
  - Implement scene navigation
  - Implement intuitive swipe rotation
+ - Implement intuitive grab ball rotation
 
 ## Problems and risks
 ### Problems
