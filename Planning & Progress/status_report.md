@@ -114,7 +114,7 @@ Week 7:
 
 Week 8: Create intuitive UI for users to manipulate shapes with.
  - [x] Swipe Rotation. *Extendable to 4D*
- - [ ] Arc/Grab Ball Rotation. *Extendable to 4D*
+ - [x] Arc/Grab Ball Rotation. *Extendable to 4D*
 
 Week 9:  
  - [ ] Create an "Identify the shape" mode. 

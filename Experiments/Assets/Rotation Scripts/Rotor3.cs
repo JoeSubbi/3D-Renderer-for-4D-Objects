@@ -110,7 +110,7 @@ public class Rotor3
     }
 
     // Geometric Product
-    public Rotor3 GeoProd( Vector3 a, Vector3 b)
+    public static Rotor3 GeoProd( Vector3 a, Vector3 b)
     {
         Bivector3 bv = Bivector3.Wedge(a, b);
         return new Rotor3(Vector3.Dot(a, b), bv.b01, bv.b02, bv.b12);

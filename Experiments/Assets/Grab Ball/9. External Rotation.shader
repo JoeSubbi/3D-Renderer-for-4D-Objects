@@ -6,13 +6,10 @@
         _Effect ("ShadingType", Int) = 2
         _W ("W Axis Cross Section", Range(-3,3)) = 0
         
-        _A ("A", Float) = 0
+        _A ("A Scalar", Float) = 1
         _YZ ("Y to Z Rotation", Float) = 0
         _XZ ("Z to X Rotation", Float) = 0
         _XY ("X to Y Rotation", Float) = 0
-        _XW ("X to W Rotation", Float) = 0
-        _YW ("Y to W Rotation", Float) = 0
-        _ZW ("Z to W Rotation", Float) = 0
     }
     SubShader
     {
@@ -59,12 +56,9 @@
                 float _W;   
 
                 float _A;
+                float _XY;
                 float _YZ;
                 float _XZ;
-                float _XY;
-                float _XW;
-                float _YW;
-                float _ZW;
 
             CBUFFER_END
 
@@ -175,29 +169,9 @@
 
                 return float4(r, u.w);
             }
-            
-            /*
-            float4 Rotate(float4 u){
-                // q = Px
-                float4 q;
-                q.x = _A * u.x + u.y * _XY + u.z * _XZ + u.w * _XW;
-                q.y = _A * u.y - u.x * _XY + u.z * _YZ + u.w * _YW;
-                q.z = _A * u.z - u.x * _XZ - u.y * _YZ + u.w * _ZW;
-                q.w = _A * u.w - u.x * _XW - u.y * _ZW + u.w * _YW;
-
-                float qxyz = u.x * _YZ - u.y * _XZ + u.z * _XY;
-                float bxyzw = u.x * _XW - u.y * _YW + u.z * _ZW + u.w * qxyz;
-
-                // r = qP*
-                float4 r;
-                r.x = _A * u.x + q.y  * _XY + q.z  * _XZ + qxyz * _YZ + q.w * _XW;
-                r.y = _A * u.y - q.x  * _XY - qxyz * _XZ + q.z  * _YZ + q.w * _YW;
-                r.z = _A * u.z + qxyz * _XY - q.x  * _XZ - q.y  * _YZ + q.w * _ZW;
-                r.w = _A * u.w + bxyzw * _XW + bxyzw * _YW + bxyzw * _ZW + bxyzw * qxyz;
-                return r;
-            }*/
 
             float GetDist(float4 p){
+                float sphere = sdSphere( p-float4(0,0,0,_W), 1);
                 
                 //Box 3D rotation
 
@@ -206,7 +180,6 @@
                 //Rotate box according to shader parameters
                 bp = Rotate(bp);
                 
-                //float d = sdSphere( p-float4(0,0,0,_W), 1);
                 float d = sdBox( bp, float4(1,1,1,1)) - 0.05;
                 //float d = sdOctahedron(bp, 1) - 0.001;
                 //float d = sdTetrahedron(bp, 1) - 0.05;

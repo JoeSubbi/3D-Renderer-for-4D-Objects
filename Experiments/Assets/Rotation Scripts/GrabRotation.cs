@@ -9,15 +9,26 @@ public class GrabRotation : MonoBehaviour
     public Rotor3 total = new Rotor3(1, 0, 0, 0);
 
     private Vector3 plane = new Vector3(0, 0, 0);
-    private Quaternion qTotal;
-
-    private Vector3 normal = new Vector3(0, 0, 0);
+    private Quaternion qTotal = new Quaternion(1, 0, 0, 0);
+    private LineRenderer line;
     private Renderer image;
+
+
+    public bool wRotation = false;
+    private Vector3 normal = new Vector3(0, 0, 0);
+    private Vector3 point = new Vector3(0, 0, 0);
 
     // Start is called before the first frame update
     void Start()
     {
         image = GameObject.Find("Plane").GetComponent<Renderer>();
+
+        line = gameObject.AddComponent<LineRenderer>();
+        Vector3[] initLinePos = new Vector3[2] { Vector3.zero, Vector3.zero };
+        line.SetPositions(initLinePos);
+        line.startWidth = 0.01f;
+        line.endWidth = 0.01f;
+
     }
 
     // Update is called once per frame
@@ -31,8 +42,21 @@ public class GrabRotation : MonoBehaviour
         
         total.Normalise();
         qTotal.Normalize();
-    }
 
+        // Colour the grab ball for 3D or 4D rotation
+        if (!wRotation)
+        {
+            GameObject.Find("arc xy").GetComponent<Renderer>().material.SetColor("_Colour", new Vector4(0.2f, 0.44f, 1f, 1f));
+            GameObject.Find("arc yz").GetComponent<Renderer>().material.SetColor("_Colour", new Vector4(1f, 0.4f, 0.4f, 1f));
+            GameObject.Find("arc zx").GetComponent<Renderer>().material.SetColor("_Colour", new Vector4(0.5f, 1f, 0.5f, 1f));
+        }
+        else
+        {
+            GameObject.Find("arc xy").GetComponent<Renderer>().material.SetColor("_Colour", new Vector4(0.2f, 1f, 0.95f, 1f));
+            GameObject.Find("arc yz").GetComponent<Renderer>().material.SetColor("_Colour", new Vector4(1f, 0.4f, 0.9f, 1f));
+            GameObject.Find("arc zx").GetComponent<Renderer>().material.SetColor("_Colour", new Vector4(1f, 0.95f, 0.5f, 1f));
+        }
+    }
     
     void OnGUI()
     {
@@ -41,8 +65,8 @@ public class GrabRotation : MonoBehaviour
         {
 
             int speed = 50;
-            float x = e.delta.x / speed; //Mathf.Round(e.delta.x * 100) / 100;
-            //float y = //Mathf.Round(e.delta.y * 100) / 100;
+            float x = e.delta.x / speed;
+            float y = e.delta.y / speed;
 
             if (e1 == e2 && Input.GetMouseButtonDown(0))
             {
@@ -50,31 +74,32 @@ public class GrabRotation : MonoBehaviour
             }
             else if (e1 != e2)
             {
-                /*
-                Vector3 t1 = ( Vector3.Cross(normal, Vector3.forward).magnitude > Vector3.Cross(normal, Vector3.up).magnitude ) ? Vector3.Cross(normal, Vector3.forward) : Vector3.Cross(normal, Vector3.up);
-                Vector2 mp = Input.mousePosition;
+                // Define direction for intuitive rotation
+                Vector3 perp = qTotal * plane;
+                if (perp.x == 1) normal.x = 0;
+                if (perp.y == 1) normal.z = 0;
+                if (perp.z == 1) normal.y = 0;
+                normal.Normalize();
 
-                if (plane.z == 1)
-                {
-                    x *= t1.x;
-                    y *= t1.y;
-                }
-                else if (plane.y == 1)
-                {
-                    x *= t1.z;
-                    y *= t1.x;
-                }
-                else if (plane.x == 1)
-                {
-                    x *= t1.z;
-                    y *= t1.y;
-                }*/
-    
+                Vector3 tangent = Vector3.Cross(perp, normal);
+                if (tangent.magnitude * perp.magnitude == Vector3.Dot(tangent, perp)) tangent = Quaternion.AngleAxis(90, normal) * tangent;
+
+                tangent.Normalize();
+                x *= -tangent.x;
+                y *= -tangent.y;
+
+                // Guide Line
+                line.enabled = true;
+
+                line.SetPosition(0, point-tangent*5);
+                line.SetPosition(1, point+tangent*5);
+
+                //Rotate
                 Bivector3 bv = Bivector3.Wedge(e1, e2);
-                Rotor3 r = new Rotor3(bv, x);
+                Rotor3 r = new Rotor3(bv, x+y);
                 total *= r;
 
-                qTotal *= Quaternion.AngleAxis(-RadToDeg(x), plane);
+                qTotal *= Quaternion.AngleAxis(RadToDeg(x+y), plane);
                 transform.rotation = qTotal;
             }
             if (Input.GetMouseButtonUp(0))
@@ -83,57 +108,11 @@ public class GrabRotation : MonoBehaviour
                 e2 = new Vector3(0, 0, 0);
 
                 plane = new Vector3(0, 0, 0);
+
+                line.enabled = false;
             }
         }
     }
-
-    /*
-    void OnGUI()
-    {
-        Event e = Event.current;
-        if (e.isMouse)
-        {
-            int speed = 50;
-            float x = -e.delta.x / speed;
-            float y = -e.delta.y / speed;
-
-            if (Input.GetMouseButton(0))
-            {
-
-                if (Input.GetKey(KeyCode.LeftShift))
-                {
-                    e1 = new Vector3(0, 1, 0);
-                    e2 = new Vector3(0, 0, 1);
-                    Bivector3 bv = Bivector3.Wedge(e1, e2);
-                    Rotor3 r = new Rotor3(bv, x + y);
-                    total *= r;
-                }
-                else
-                {
-                    //xy rotation
-                    if (Mathf.Abs(x) > Mathf.Abs(2 * y))
-                    {
-                        e1 = new Vector3(1, 0, 0);
-                        e2 = new Vector3(0, 1, 0);
-                        Bivector3 bv = Bivector3.Wedge(e1, e2);
-                        Rotor3 r = new Rotor3(bv, x);
-                        total *= r;
-                    }
-
-                    //xz rotation
-                    if (Mathf.Abs(y) > Mathf.Abs(2 * x))
-                    {
-                        e1 = new Vector3(1, 0, 0);
-                        e2 = new Vector3(0, 0, 1);
-                        Bivector3 bv = Bivector3.Wedge(e1, e2);
-                        Rotor3 r = new Rotor3(bv, y);
-                        total *= r;
-                    }
-                }
-            }
-        }
-    }
-    */
 
     private void CheckHit()
     {
@@ -148,18 +127,21 @@ public class GrabRotation : MonoBehaviour
                     e2 = new Vector3(0, 0, 1);
 
                     plane = new Vector3(0, 0, 1);
+                    line.material = GameObject.Find("arc xy").GetComponent<Renderer>().material;
                     break;
                 case "arc zx":
                     e1 = new Vector3(-1, 0, 0);
                     e2 = new Vector3( 0, 1, 0);
 
                     plane = new Vector3(0, 1, 0);
+                    line.material = GameObject.Find("arc zx").GetComponent<Renderer>().material;
                     break;
                 case "arc yz":
                     e1 = new Vector3(0, 1, 0);
                     e2 = new Vector3(0, 0, 1);
 
-                    plane = new Vector3(1, 0, 0);
+                    plane = new Vector3(-1, 0, 0);
+                    line.material = GameObject.Find("arc yz").GetComponent<Renderer>().material;
                     break;
                 default:
                     e1 = new Vector3(0, 0, 0);
@@ -170,6 +152,7 @@ public class GrabRotation : MonoBehaviour
             }
         }
         normal = hit.normal;
+        point = hit.point;
     }
 
     private static float RadToDeg(float a)

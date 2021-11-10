@@ -4,155 +4,167 @@ using UnityEngine;
 
 public class Rotor4
 {
-    // Scalar
-    // The rotation induced by the rotor = e**(theta)
-    public float s;
+    // scalar part
+    public float a = 1;
 
-    // Bivectors
-    // Area of the Rotor bivector, projected onto each euclidian plane
-    public float bzy;
-    public float bxz;
-    public float bxy;
-    public float bxw;
-    public float byw;
-    public float bzw;
+    // bivector part
+    public float bxy = 0;
+    public float bxz = 0;
+    public float byz = 0;
+    public float bxw = 0;
+    public float byw = 0;
+    public float bzw = 0;
 
-    // Quad-vector
-    private float bxyzw;
+    // quadvector part
+    public float bxyzw = 0;
 
-    // Default Constructor
-    public Rotor4()
+    // CONSTRUCTORS
+    public Rotor4(float a, float bxy, float bxz, float byz,
+                           float bxw, float byw, float bzw)
     {
-        this.s = 1;
-
-        this.bzy = 0;
-        this.bxz = 0;
-        this.bxy = 0;
-        this.bxw = 0;
-        this.byw = 0;
-        this.bzw = 0;
-
-        this.bxyzw = 0;
+        this.a = a;
+        this.bxy = bxy;
+        this.bxz = bxz;
+        this.byz = byz;
+        this.bxw = bxw;
+        this.byw = byw;
+        this.bzw = bzw;
     }
 
-    // The wedge product of vectors a and b
-    // returns an array of "areas" of the bivector, projected onto each euclidian plane
-    private static float[] WedgeProduct(Vector4 a, Vector4 b)
+    public Rotor4(Bivector4 bv, float angle)
     {
-        //return s + (a.x * b.y - a.y * b.x) * bxy + (a.x * b.z - a.z * b.x) * bxz + (a.y * b.z - a.z * b.y) * bzy +
-        //           (a.x * b.w - a.w * b.x) * bxw + (a.y * b.w - a.w * b.y) * byw + (a.z * b.w - a.w * b.z) * bzw;
-        return new float[] { (a.x * b.y - a.y * b.x), (a.x * b.z - a.z * b.x), (a.y * b.z - a.z * b.y),
-                             (a.x * b.w - a.w * b.x), (a.y * b.w - a.w * b.y), (a.z * b.w - a.w * b.z)};
+        float sina = Mathf.Sin(angle / 2);
+        a = Mathf.Cos(angle / 2);
+        this.bxy = -sina * bv.bxy;
+        this.bxz = -sina * bv.bxz;
+        this.byz = -sina * bv.byz;
+        this.bxw = -sina * bv.bxw;
+        this.byw = -sina * bv.byw;
+        this.bzw = -sina * bv.bzw;
     }
 
-    // The geometric product of vectors a and b
-    // notation: ab = a.b + a^b
-    // Returns a rotor from vector a to vector b
-    public static Rotor4 GeometricProduct(Vector4 a, Vector4 b)
+    // Rotor3-Rotor3 Product
+    public static Rotor4 operator *(Rotor4 p, Rotor4 q)
     {
-        float dot = Vector4.Dot(a, b);
-        float[] wedge = WedgeProduct(a, b);
+        float a = p.a * q.a - p.bxy * q.bxy - p.bxz * q.bxz - p.byz * q.byz - 
+                              p.bxw * p.bxw - p.byw * p.byw - p.bzw * p.bzw;
 
-        float theta = Mathf.Acos(Vector4.Dot(a, b) / (a.magnitude * b.magnitude));
+        float bxy = p.bxy * q.a + p.a * q.bxy +
+                    p.byz * q.bxz - p.bxz * q.byz;// - 
+                    //p.byw * q.bzw + p.bzw * q.byw;
 
-        Rotor4 r = new Rotor4();
-        r.s = theta;
-        r.bzy = dot + wedge[0];
-        r.bxz = dot + wedge[1];
-        r.bxy = dot + wedge[2];
-        r.bxw = dot + wedge[3];
-        r.byw = dot + wedge[4];
-        r.bzw = dot + wedge[5];
-        r.bxyzw = 0;
+        float bxz = p.bxz * q.a + p.a * q.bxz -
+                    p.byz * q.bxy + p.bxy * q.byz;// -
+                    //p.bxw * q.bzw + p.bzw * p.bxw;
 
-        r.Normalise();
+        float byz = p.byz * q.a + p.a * q.byz + 
+                    p.bxz * q.bxy - p.bxy * q.bxz;// -
+                    //p.bxw * q.byw + q.byw * q.bxw;
+
+        float bxw = p.bxw * q.a + p.a * q.bxw -
+                    p.bxy * q.byw + p.byw * q.bxy;// -
+                    //p.bxz * q.bzw + p.bzw * q.bxz;
+
+        float byw = p.byw * q.a + p.a * q.byw +
+                    p.bxy * q.bxw - p.bxw * q.bxy;// -
+                    //p.bxz * q.bzw + p.bzw * q.bxz;
+
+        float bzw = p.bzw * q.a + p.a * q.bzw +
+                    p.bxz * q.bxw - p.bxw * q.bxz;// +
+                    //p.byz * q.byw - p.byw * q.byz;
+
+        p = new Rotor4(a, bxy, bxz, byz, bxw, byw, bzw);
+        return p;
+    }
+
+    // Rotate a Vector with a Rotor
+    public Vector4 Rotate(Vector4 u)
+    {
+        Rotor4 p = this;
+
+        // q = Px
+        Vector4 q;
+        q.x = p.a * u.x + u.y * p.bxy + u.z * p.bxz + u.w * p.bxw;
+        q.y = p.a * u.y;
+                        // - u.x * p.bxy + u.z * p.byz + u.w * p.byw;
+        q.z = p.a * u.z;
+                        // - u.x * p.bxz - u.y * p.byz + u.w * p.bzw;
+        q.w = p.a * u.w;
+                        // - u.x * p.bxw - u.y * p.bzw + u.w * p.byw;
+
+        //float qxyz = u.x * p.byz - u.y * p.bxz + u.z * p.bxy;
+        //bxyzw = u.x * p.bxw - u.y * p.byw + u.z * p.bzw + u.w * qxyz;
+
+        // r = qP*
+        Vector4 r;
+        r.x = p.a * u.x;
+                        // + q.y  * p.bxy + q.z  * p.bxz + qxyz * p.byz + q.w * p.bxw;
+        r.y = p.a * u.y;
+                        // - q.x  * p.bxy - qxyz * p.bxz + q.z  * p.byz + q.w * p.byw;
+        r.z = p.a * u.z;
+                        // + qxyz * p.bxy - q.x  * p.bxz - q.y  * p.byz + q.w * p.bzw;
+        r.w = p.a * u.w;
+                        // + bxyzw * p.bxw + bxyzw * p.byw + bxyzw * p.bzw + bxyzw * qxyz;
+
         return r;
     }
 
-    private Vector4 R(float s, float b, Vector4 v)
+    // Rotate one Rotor to another
+    public Rotor4 Rotate(Rotor4 r)
     {
-        return Mathf.Cos(s) * v + Mathf.Sin(s) * b * v;
-    }
-    private Vector4 R_(float s, float b, Vector4 v)
-    {
-        return Mathf.Cos(s) * v - Mathf.Sin(s) * b * v;
+        return this * r * this.Reverse();
     }
 
-    // Rotate a 4d vector by the rotor
-    // What will be in shader
-    /*
-    public Vector4 Rotate(Vector4 v) 
+    // Conjugate
+    public Rotor4 Reverse()
     {
-        Vector4 u = R(s, bxy, new Vector4(1,1,0,0)) * R(s, bxz, new Vector4(1, 0, 1, 0)) * R(s, bzy, new Vector4(0, 1, 1, 0)) * 
-                    v *
-                    R_(s, bxy, new Vector4(1, 1, 0, 0)) * R_(s, bxz, new Vector4(1, 0, 1, 0)) * R_(s, bzy, new Vector4(0, 1, 1, 0));
-        return u;
-    }*/
-
-    // Used to obtain the composite of rotors R1 and R2 (combining the rotations into a single rotation)
-    public static Rotor4 operator *(Rotor4 r1, Rotor4 r2)
-    {
-        Rotor4 r = new Rotor4();
-        
-        //r.s = r1.s*r2.s;
-
-        r.bzy = Mathf.Log(Mathf.Exp(r1.bzy) * Mathf.Exp(r2.bzy));
-        r.bxz = Mathf.Log(Mathf.Exp(r1.bxz) * Mathf.Exp(r2.bxz));
-        r.bxy = Mathf.Log(Mathf.Exp(r1.bxy) * Mathf.Exp(r2.bxy));
-        r.bxw = Mathf.Log(Mathf.Exp(r1.bxw) * Mathf.Exp(r2.bxw));
-        r.byw = Mathf.Log(Mathf.Exp(r1.byw) * Mathf.Exp(r2.byw));
-        r.bzw = Mathf.Log(Mathf.Exp(r1.bzw) * Mathf.Exp(r2.bzw));
-        
-        r.bxyzw = 0;
-        r.Normalise();
-
-        return r;
-    }
-    /*
-    public static Vector4 operator *(Vector4 u, Vector4 v)
-    {
-        return new Vector4(u.x*v.x, u.y * v.y, u.z * v.z, u.w * v.w);
-    }*/
-    // ======================================
-    // Utility
-    // ======================================
-
-    // Square of x
-    public float square(float x)
-    {
-        return (float) (x * x);
+        return new Rotor4(a, -bxy, -bxz, -byz, -bxw, -byw, -bzw);
     }
 
-    //TODO
-    public float Length()
+    private float sq(float x)
     {
-        return 0;//a * bzy + b * bxz + c * bxy + d * bxw + e * yw + e * zw;
+        return x * x;
     }
 
-    //TODO
-    public float LengthSquared()
+    // Length Squared
+    private float LengthSquared()
     {
-        return 0;// - (square(a), square(b), square(c) ...);
-    }
-    
-    // The magnitude of the rotor
-    public float Magnitude()
-    {
-        return Mathf.Sqrt(square(s) + square(bzy) + square(bxz) + square(bxy) + square(bxw) + square(byw) + square(bzw) + square(bxyzw));
+        return sq(a) + sq(bxy) + sq(bxz) + sq(byz) + 
+                       sq(bxw) + sq(byw) + sq(bzw);
     }
 
-    // Normalise the rotor such that the sum of its components add to 1
+    // Length
+    private float Length()
+    {
+        return Mathf.Sqrt(LengthSquared());
+    }
+
+    // Normalise this rotor
     public void Normalise()
     {
-        //this.s   /= this.Magnitude();
+        float l = Length();
+        a /= l;
+        bxy /= l;
+        bxz /= l;
+        byz /= l;
+        bxw /= l;
+        byw /= l;
+        bzw /= l;
+    }
 
-        this.bzy /= this.Magnitude();
-        this.bxz /= this.Magnitude();
-        this.bxy /= this.Magnitude();
-        this.bxw /= this.Magnitude();
-        this.byw /= this.Magnitude();
-        this.bzw /= this.Magnitude();
+    // Normalised copy of a rotor
+    public Rotor4 Normal()
+    {
+        Rotor4 r = this;
+        r.Normalise();
+        return r;
+    }
 
-        this.bxyzw /= this.Magnitude();
+    // Geometric Product
+    public Rotor4 GeoProd(Vector4 a, Vector4 b)
+    {
+        Bivector4 bv = Bivector4.Wedge(a, b);
+        return new Rotor4(Vector4.Dot(a, b), bv.bxy, bv.bxz, bv.byz,
+                                             bv.bxw, bv.byw, bv.bzw);
     }
 }

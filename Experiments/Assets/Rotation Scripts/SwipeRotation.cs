@@ -48,40 +48,74 @@ public class SwipeRotation : MonoBehaviour
 
             if (Input.GetMouseButton(0))
             {
-                
+                Bivector4 bv;
+                Rotor4 r;
+
                 if (Input.GetKey(KeyCode.LeftShift))
                 {
+                    // Rotate with a circular gesture around global xy plane
+                    if (Input.mousePosition.y < Screen.height / 2) x *= -0.5f;
+                    if (Input.mousePosition.x < Screen.width / 2) y *= -0.5f;
 
                     e1 = new Vector4(1, 0, 0, 0);
                     e2 = new Vector4(0, 1, 0, 0);
-                    Bivector4 bv = Bivector4.Wedge(e1, e2);
-                    Rotor4 r = new Rotor4(bv, x+y);
+                    bv = Bivector4.Wedge(e1, e2);
+                    r = new Rotor4(bv, x+y);
                     total *= r;
                 }
                 else
                 {
-                    //xy rotation
-                    if (Mathf.Abs(y) > Mathf.Abs(2 * x))
-                    {
+                    // Rotate with vertical gesture around global yz plane
+                    e1 = new Vector4(0, 1, 0, 0);
+                    e2 = new Vector4(0, 0, 1, 0);
+                    bv = Bivector4.Wedge(e1, e2);
+                    r = new Rotor4(bv, y);
+                    total *= r;
 
-                        e1 = new Vector4(0, 1, 0, 0);
-                        e2 = new Vector4(0, 0, 1, 0);
-                        Bivector4 bv = Bivector4.Wedge(e1, e2);
-                        Rotor4 r = new Rotor4(bv, y);
-                        total *= r;
-                    }
-
-                    //xz rotation
-                    if (Mathf.Abs(x) > Mathf.Abs(2 * y))
-                    {
-                        e1 = new Vector4(1, 0, 0, 0);
-                        e2 = new Vector4(0, 0, 1, 0);
-                        Bivector4 bv = Bivector4.Wedge(e1, e2);
-                        Rotor4 r = new Rotor4(bv, x);
-                        total *= r;
-                    }
+                    // Rotate with horizontal gesture around global xz plane
+                    e1 = new Vector4(1, 0, 0, 0);
+                    e2 = new Vector4(0, 0, 1, 0);
+                    bv = Bivector4.Wedge(e1, e2);
+                    r = new Rotor4(bv, x);
+                    total *= r;
                 }
             }
+            /*
+            else if (Input.GetMouseButton(1))
+            {
+                Bivector4 bv;
+                Rotor4 r;
+
+                if (Input.GetKey(KeyCode.LeftShift))
+                {
+                    // Rotate with a circular gesture around global zw plane
+                    if (Input.mousePosition.y < Screen.height / 2) x *= -0.5f;
+                    if (Input.mousePosition.x < Screen.width / 2) y *= -0.5f;
+
+                    e1 = new Vector4(0, 0, 1, 0);
+                    e2 = new Vector4(0, 0, 0, 1);
+                    bv = Bivector4.Wedge(e1, e2);
+                    r = new Rotor4(bv, x + y);
+                    total *= r;
+                }
+                else
+                {
+                    // Rotate with vertical gesture around global xw plane
+                    e1 = new Vector4(1, 0, 0, 0);
+                    e2 = new Vector4(0, 0, 0, 1);
+                    bv = Bivector4.Wedge(e1, e2);
+                    r = new Rotor4(bv, y);
+                    total *= r;
+
+                    // Rotate with horizontal gesture around global yw plane
+                    e1 = new Vector4(0, 1, 0, 0);
+                    e2 = new Vector4(0, 0, 0, 1);
+                    bv = Bivector4.Wedge(e1, e2);
+                    r = new Rotor4(bv, x);
+                    total *= r;
+                }
+            }
+            */
         }
     }
 }

@@ -268,3 +268,10 @@
    - Cannot transform rotors to unity `Transform.Rotate`, so have to rotate the actual arc ball with quaternions
  - *2 hours* converting swipe rotation to use the global axis for intuitive rotation
    - Realised I have to swap bxy and bxz or the rotation equation to use the local axes. This may have reprocusions for 4D
+ - *1 hour* trying to have the grab ball rotation follow the mouse when tangent to the arc
+   - stuggling to work properly. restricting the axes do not seem to help. May need to base it off the quaternion
+
+### 8 Nov 2021
+
+ - *2 hours* begin script plans for how to teach users
+ - *2.5 hours* polishing grab ball to correctly use the tangent and to highlight the trajectory to move the mouse for users
