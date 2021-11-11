@@ -110,11 +110,16 @@
                     return sdBox(p, float4(0.9,0.9,0.9,0.9))-0.01;
                 }
                 if (_Shape == 2){
-                    p.w += 1;
                     p = Rotate(p);
-                    return sdCone(p, 1, 2)-0.01;
+                    p.w += 1;
+                    return sdConeW(p, 1, 2)-0.01;
                 }
                 if (_Shape == 3){
+                    p = Rotate(p);
+                    p.y += 1;
+                    return sdConeY(p, 1, 2)-0.01;
+                }
+                if (_Shape == 4){
                     p = Rotate(p);
                     return sdTorus(p, 1, 0.5, 0.2);
                 }

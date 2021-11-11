@@ -85,20 +85,16 @@
                 return o;
             }
 
-            float4 RotateXYZ(float4 p){
+            float4 Rotate(float4 p){
                 float a = _XZ;
                 float b = _ZY;
                 float c = _XY;
                 p.xz = mul(p.xz, float2x2(cos(a), sin(a), -sin(a), cos(a)));
                 p.zy = mul(p.zy, float2x2(cos(b), sin(b), -sin(b), cos(b)));
                 p.xy = mul(p.xy, float2x2(cos(c), sin(c), -sin(c), cos(c)));
-                return p;
-            }
-
-            float4 RotateW(float4 p){
-                float a = _XW;
-                float b = _YW;
-                float c = _ZW;
+                a = _XW;
+                b = _YW;
+                c = _ZW;
                 p.xw = mul(p.xw, float2x2(cos(a), sin(a), -sin(a), cos(a)));
                 p.yw = mul(p.yw, float2x2(cos(b), sin(b), -sin(b), cos(b)));
                 p.zw = mul(p.zw, float2x2(cos(c), sin(c), -sin(c), cos(c)));
@@ -108,25 +104,29 @@
             // Pick a shape based on the integer property
             float Shape(float4 p){
                 if (_Shape == 1){
-                    p = RotateW(p);
+                    p = Rotate(p);
                     return sdBox(p, float4(0.9,0.9,0.9,0.9))-0.01;
                 }
                 if (_Shape == 2){
+                    p = Rotate(p);
                     p.w += 1;
-                    p = RotateW(p);
-                    return sdCone(p, 1, 2)-0.01;
+                    return sdConeW(p, 1, 2)-0.01;
                 }
                 if (_Shape == 3){
-                    p = RotateW(p);
+                    p = Rotate(p);
+                    p.y += 1;
+                    return sdConeY(p, 1, 2)-0.01;
+                }
+                if (_Shape == 4){
+                    p = Rotate(p);
                     return sdTorus(p, 1, 0.5, 0.2);
                 }
-                p = RotateW(p);
+                p = Rotate(p);
                 return sdSphere(p, 1);
             }
 
             float GetDist(float4 p){
                 p -= float4(_X,_Y,_Z,_W);
-                p = RotateXYZ(p);
                 
                 // 3D COMPONENT
                 float shape = Shape(p);
@@ -155,7 +155,6 @@
 
             int GetMat(float4 p){
                 p -= float4(_X,_Y,_Z,_W);
-                p = RotateXYZ(p);
                 
                 // 3D COMPONENT
                 float shape = Shape(p);

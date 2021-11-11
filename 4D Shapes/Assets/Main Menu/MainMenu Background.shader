@@ -88,7 +88,7 @@
                 float torus1  = sdTorus(p-float4(6,-0.1,-3,0), 0.5, 0.1, 0.3);
                 rp = p-float4(4,-0.5,-5,0);
                 rp.yw = Rotate(rp.yw, 3.14159/2);
-                float cone1   = sdCone(rp, 1, 2);
+                float cone1   = sdConeY(p-float4(4,-0.5,-5,0), 1, 2);
                 rp = p-float4(9,0,-7,-0.5);
                 rp.xw = Rotate(rp.xw,-3.14159/3);
                 float cube1   = sdBox(rp, float4(0.5,0.5,0.5,0.5));
@@ -107,7 +107,7 @@
                 float cube22  = sdBox(rp, float4(0.6,0.6,0.6,0.6));
                 rp = p-float4(-2,0.5,-4,2);
                 rp.yw = Rotate(rp.yw, 3.14159);
-                float cone2   = sdCone(rp, 1, 2);
+                float cone2   = sdConeW(rp, 1, 2);
 
                 // W=-1 Objects
                 float sphere3 = sdSphere(p-float4(-1,0.4,-1,-1.2), 0.8);
@@ -148,9 +148,7 @@
                 //W=0 OBJECTS
                 float sphere1 = sdSphere(p-float4(-5,0,-4,0), 0.5);
                 float torus1  = sdTorus(p-float4(6,-0.1,-3,0), 0.5, 0.1, 0.3);
-                rp = p-float4(4,-0.5,-5,0);
-                rp.yw = Rotate(rp.yw, 3.14159/2);
-                float cone1   = sdCone(rp, 1, 2);
+                float cone1   = sdConeY(p-float4(4,-0.5,-5,0), 1, 2);
                 rp = p-float4(9,0,-7,-0.5);
                 rp.xw = Rotate(rp.xw,-3.14159/3);
                 float cube1   = sdBox(rp, float4(0.5,0.5,0.5,0.5));
@@ -169,7 +167,7 @@
                 float cube22  = sdBox(rp, float4(0.6,0.6,0.6,0.6));
                 rp = p-float4(-2,0.5,-4,2);
                 rp.yw = Rotate(rp.yw, 3.14159);
-                float cone2   = sdCone(rp, 1, 2);
+                float cone2   = sdConeW(rp, 1, 2);
 
                 // W=-1 Objects
                 float sphere3 = sdSphere(p-float4(-1,0.4,-1,-1.2), 0.8);
