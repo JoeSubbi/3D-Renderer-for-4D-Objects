@@ -130,10 +130,13 @@
             float GetDist(float4 p){
                 p -= float4(_X,_Y,_Z,_W);
                 
+                //float W_offset = 0.4;
+                float W_offset = abs(_W % 0.4);
+
                 // 3D COMPONENT
-                float c = Shape(p);
-                float f = Shape(p-float4(0,0,0,0.4));
-                float b = Shape(p-float4(0,0,0,-0.4));
+                float c = Shape(p-float4(0,0,0,0));
+                float f = Shape(p-float4(0,0,0, W_offset));
+                float b = Shape(p-float4(0,0,0,-W_offset));
                 
                 // BUILD SCENE
                 float d = min(c, min(f, b));
@@ -156,10 +159,13 @@
             int GetMat(float4 p){
                 p -= float4(_X,_Y,_Z,_W);
                 
+                //float W_offset = 0.4;
+                float W_offset = abs(_W % 0.4);
+
                 // 3D COMPONENT
-                float c = Shape(p);
-                float f = Shape(p-float4(0,0,0,0.4));
-                float b = Shape(p-float4(0,0,0,-0.4));
+                float c = Shape(p-float4(0,0,0,0));
+                float f = Shape(p-float4(0,0,0, W_offset));
+                float b = Shape(p-float4(0,0,0,-W_offset));
                 
                 // BUILD SCENE
                 float d = min(c, min(f, b));
