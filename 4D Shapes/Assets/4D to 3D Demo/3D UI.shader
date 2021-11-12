@@ -217,7 +217,7 @@
             // Distance to point p from the camera
             float GetDist(float3 p){
                 p = p-float3(_X,_Y,_Z);
-                p.x *= -1;
+                p.z *= -1;
                 
                 // 3D COMPONENT
                 float shape = Shape(p);
@@ -234,7 +234,7 @@
             // Assign materials based on the distance
             int GetMat(float3 p){
                 p = p-float3(_X,_Y,_Z);
-                p.x *= -1;
+                p.z *= -1;
                 
                 // 3D COMPONENT
                 float shape = Shape(p);
