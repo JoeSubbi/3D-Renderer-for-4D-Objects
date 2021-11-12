@@ -151,7 +151,6 @@
                 // ASSIGN MATERIAL
                 int mat = 0;
                 if (d == shape)    mat = 1;
-                //if (d == floor)     mat = 2;
                 return mat;
             }
 

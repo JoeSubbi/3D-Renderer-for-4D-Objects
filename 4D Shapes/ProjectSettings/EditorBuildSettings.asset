@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/4D Timeline.unity
     guid: 0a40ab9ba01d9fa49ae74435723717f8
+  - enabled: 1
+    path: Assets/Scenes/4D Multi-View.unity
+    guid: acc62ec5bf901fa4693d96eeba319978
   m_configObjects: {}
