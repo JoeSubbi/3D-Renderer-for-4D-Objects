@@ -271,9 +271,26 @@
  - *1 hour* trying to have the grab ball rotation follow the mouse when tangent to the arc
    - stuggling to work properly. restricting the axes do not seem to help. May need to base it off the quaternion
 
+## Week 8
+
 ### 8 Nov 2021
 
  - *2 hours* begin script plans for how to teach users
  - *2.5 hours* polishing grab ball to correctly use the tangent and to highlight the trajectory to move the mouse for users
  - *2 hours* create multi-rotation view of 4D (inspired by poly-vision), showing default view, xw, yw and zw. Used Cone and torus as example.
    - also solved why cone was being unpredictable, but yet to implement in the main build.
+
+### 10 Nov 2021
+
+ - *3 hours* Experiments with sdf polygon mesh to construct a pentachoron
+   - very glitchy in unity - triangles do not work
+
+### 11 Nov 2021
+
+ - *3 hours* polish multi view representation and add it to the 4D shapes project
+
+### 13 Nov 2021
+
+ - *2.5 hours* testing and implementing a pose matching script&scene that will randomly orient an object and check if 2 objects are of the same orientation
+
+## Week 9

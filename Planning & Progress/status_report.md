@@ -52,6 +52,7 @@ This project focuses on the development of a wide range of 4 Dimensional shapes 
  - Implement intuitive swipe rotation
  - Implement intuitive grab ball rotation
  - Implement 4 perspective (poly-vision inspired) representation
+ - Implement a script to compare the rotations of 2 objects
 
 ## Problems and risks
 ### Problems
@@ -73,6 +74,11 @@ This project focuses on the development of a wide range of 4 Dimensional shapes 
    - I have implemented euler matrices/matrix multiplication in order to prevent axis from skewing unexpectedly - had gimbal lock
    - I implemented 3D quaternion but it cannot be extended to 4D
    - *Attempting* to implement a geometric algebra "rotor". they have held up the project only a little so far. I was hoping to be experimenting on user interaction, however I am still playing around with the implementation of 4D rotation.
+ - Developing intuitive rotation with a grab ball.
+   - Having the grab ball rotate as expected was quite a challenge. 
+   - need tangent of the circle but needed logic to select the correct tangent.
+   - added a guide line to show the user where the mouse should move to have the object rotate as expected. Some people would be inclined to follow the arc of the circle.
+   - It did not hold up the project too much, but did take longer than expected
 
 ### Risks
 <!--[What problems do you foresee in the future and how will you mitigate them?]-->
@@ -124,7 +130,7 @@ Week 9:
 
 Week 10:  
  - [ ] Plan and script a walk through for users to play with shapes and attempt to identify them.  
- - [ ] Set up a new mode for shape matching.
+ - [x] Set up a new mode for shape pose matching.
 
 Week 11:  
  - [ ] Tutorial videos that explain why shapes behave they do, and traits to identify what the shape is.  

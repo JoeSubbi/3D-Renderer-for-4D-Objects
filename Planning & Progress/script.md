@@ -20,8 +20,10 @@ Same format for every test, but randomly give each user 1 specific representatio
 
 Representations to include
  - timeline
- - each rotational view of the 4th dimension?
- - 3D counter part to experiment with
+ - each rotational view of the 4th dimension
+ - 3D rotation view with 4D object
+
+ - 3D counter part to experiment with? Will it showcase that they have learnt if they have direct reference?
 
 Interactions to include
  - swipe
