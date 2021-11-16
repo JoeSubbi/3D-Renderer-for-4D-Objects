@@ -5,22 +5,22 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Main Menu.unity
     guid: 441c2cd58e9d41445993e5841e95cdc3
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/3D-2D.unity
     guid: 0ae11e4047521c549a78b86772a876be
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/4D-3D.unity
     guid: 6f2d9b15b90f61c4db69e37106be27dc
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/4D Onion Skin.unity
     guid: 11c119ea5544a7540b08971b6b4f9077
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/4D Timeline.unity
     guid: 0a40ab9ba01d9fa49ae74435723717f8
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/4D Multi-View.unity
     guid: acc62ec5bf901fa4693d96eeba319978
   m_configObjects: {}

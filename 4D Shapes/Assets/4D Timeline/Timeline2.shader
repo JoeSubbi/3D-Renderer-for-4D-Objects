@@ -1,11 +1,11 @@
-﻿Shader "Unlit/4D"
+﻿Shader "Unlit/Timeline"
 {
     Properties
     {
         _W ("W Axis Cross Section", Range(-3,3)) = 0
-        _X ("X Canvas Position", Float) = 1
+        _X ("X Canvas Position", Float) = 0
         _Y ("Y Canvas Position", Float) = 0
-        _Z ("Z Canvas Position", Float) = 3
+        _Z ("Z Canvas Position", Float) = 0
 
         _ZY ("X Rotation", Float) = 0
         _XZ ("Y Rotation", Float) = 0
@@ -58,7 +58,6 @@
             CBUFFER_START(UnityPerMaterial)
                 // The following line declares the _BaseColor variable, so that you
                 // can use it in the fragment shader.
-                int _Effect;  
                 float _W;     
                 float _Z;
                 float _X;
@@ -79,10 +78,9 @@
                 v2f o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
-                UNITY_TRANSFER_FOG(o,o.vertex);
 
                 // object space
-                o.ro = mul(unity_WorldToObject, float4(_WorldSpaceCameraPos, 1) - float4(_X,0,0,0));
+                o.ro = mul(unity_WorldToObject, float4(_WorldSpaceCameraPos, 1));
                 o.hitPos = v.vertex; 
                 return o;
             }
@@ -121,36 +119,61 @@
                 }
                 if (_Shape == 4){
                     p = Rotate(p);
-                    return sdTorus(p, 0.8, 0.4, 0.1);
+                    return sdTorus(p, 1, 0.5, 0.2);
                 }
                 p = Rotate(p);
                 return sdSphere(p, 1);
             }
 
             float GetDist(float4 p){
-                p = p-float4(_X,_Y,_Z,_W);
+                p -= float4(_X,_Y,_Z,_W);
                 
                 // 3D COMPONENT
                 float shape = Shape(p);
+
+                // Foward
+                float shape_f1 = Shape(p-float4(-3,0,0,-0.4));
+                float shape_f2 = Shape(p-float4(-6,0,0,-0.8));
+
+                // Backward
+                float shape_b1 = Shape(p-float4( 3,0,0, 0.4));
+                float shape_b2 = Shape(p-float4( 6,0,0, 0.8));
                 
                 // BUILD SCENE
                 float d = shape;
+                      d = min(d, shape_f1);
+                      d = min(d, shape_f2);
+                      d = min(d, shape_b1);
+                      d = min(d, shape_b2);
                 
                 return d;
             }
 
             int GetMat(float4 p){
-                p = p-float4(_X,_Y,_Z,_W);
+                p -= float4(_X,_Y,_Z,_W);
                 
                 // 3D COMPONENT
                 float shape = Shape(p);
+
+                // Foward
+                float shape_f1 = Shape(p-float4(-3,0,0,-0.4));
+                float shape_f2 = Shape(p-float4(-6,0,0,-0.8));
+
+                // Backward
+                float shape_b1 = Shape(p-float4( 3,0,0, 0.4));
+                float shape_b2 = Shape(p-float4( 6,0,0, 0.8));
                 
                 // BUILD SCENE
                 float d = shape;
-                
-                // ASSIGN MATERIAL
-                int mat = 0;
-                if (d == shape)    mat = 1;
+                      d = min(d, shape_f1);
+                      d = min(d, shape_f2);
+                      d = min(d, shape_b1);
+                      d = min(d, shape_b2);
+
+                int mat=0;
+                if (d == shape) mat=0;
+                if (d == shape_f1 || d == shape_f2) mat = 1;
+                if (d == shape_b1 || d == shape_b2) mat = 2;
                 return mat;
             }
 
@@ -179,46 +202,33 @@
                 return normalize(n);
             }
 
-            float GetLight(float4 p){
-                float4 lightPos = float4(2,2,2,0);
-
-                //angle dependant fall off
-                float4 lv = normalize(lightPos-p);
-                float4 n  = GetNormal(p);
-                float  light  = clamp(dot(n,lv), 0., 1.);
-
-                //shadow
-                float4 so = p + n * SURF_DIST * 2.; //shadow origin
-                float4 sd = normalize(lightPos-so); //light direction
-                float d = Raymarch(so, sd);
-                if( d<length(lightPos-p) ) light *= 0.1;
-
-                return light;
-            }
-
             fixed4 frag (v2f i) : SV_Target
             {
-                float2 uv = i.uv; // UV coordinates - centered on object
-                float4 ro = float4(i.ro.x, i.ro.y, i.ro.z, 0);           // Ray Origin - Camera
+                float2 uv = i.uv;              // UV coordinates - centered on object
+                float4 ro = float4(i.ro, 0);   // Ray Origin - Camera
                 float4 rd = normalize(
-                    float4(i.hitPos.x, i.hitPos.y, i.hitPos.z, 0) - ro); // Ray Direction
+                    float4(i.hitPos, 0) - ro); // Ray Direction
 
-                float d = Raymarch(ro, rd); // Distance
+                float d = Raymarch(ro, rd);    // Distance
 
-                // Shading
-                fixed4 col = 0;
+                // sample the texture
+                fixed4 col = 1;
 
                 // Colour in the cube based on ray march
                 if (d > MAX_DIST)
-                    col.rgb = float3(0.28,0.28,0.28);
+                    col.rgb = 0.28;
                 else {
                     float4 p = ro + rd * d;
-
                     float4 n = GetNormal(p);
                     float dif = dot(n, normalize(float3(1,2,3))) * .5 +.5;
-                    col.rgb = float3(dif,dif,dif)*1.2 - 0.3;
+                    col.rgb = dif;
+
+                    int mat = GetMat(p);
+                    if (mat == 0) col.rgb *= float3(1,1,1);
+                    if (mat == 1) col.rgb *= float3(1,0,0);
+                    if (mat == 2) col.rgb *= float3(0,0,1);
                 }
-                
+
                 return col;
             }
             ENDCG

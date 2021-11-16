@@ -68,17 +68,17 @@ Material:
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _Shading: 1
-    - _Shape: 0
+    - _Shape: 1
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
-    - _X: -349.40045
+    - _X: -326.09024
     - _XY: 0
     - _XZ: 0
-    - _Y: -93.87562
+    - _Y: -97.99467
     - _Y2: 1.2
-    - _Z: -135.161
+    - _Z: -138.77908
     - _ZWrite: 1
     - _ZY: 0
     m_Colors:

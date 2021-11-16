@@ -32,7 +32,6 @@ public class CanvasWindow : MonoBehaviour
 
         Vector2 size = new Vector2(x, y);
         MiniWindow.sizeDelta  = size;
-        MatchWindow.sizeDelta = size;
 
         //Position of 3D object
         // Does not move when window is max size + constant offset - width of window when window scales with canvas
@@ -48,12 +47,11 @@ public class CanvasWindow : MonoBehaviour
 
         //Position of Randomly Posed Object
         // Does not move when window is max size + constant offset - width of window when window scales with canvas
-        X = -canvas.sizeDelta.x / 10f - (canvas.sizeDelta.x / 2.5f - x) + 60 - x / 2f;
+        X = -canvas.sizeDelta.x / 10f - (canvas.sizeDelta.x / 2.5f - x) - x / 2f + 20;
         // Moves with y - the scale of the window with a constant y + a constant
-        Y = (canvas.sizeDelta.y / 3f) + (canvas.sizeDelta.y / 3 - y) / 2;
+        Y = (canvas.sizeDelta.y / 2.7f) + (canvas.sizeDelta.y / 3 - y) / 3 - 55;
         // Move Z back as the window gets smaller
-        Z = -(x / 9 + y / 16) / .3f;
-        Y -= (Z / 3.5f) + 40;
+        Z = -(x + y) / 3f -30;
         MatchWindow.GetComponent<Image>().material.SetFloat("_X", X);
         MatchWindow.GetComponent<Image>().material.SetFloat("_Y", Y);
         MatchWindow.GetComponent<Image>().material.SetFloat("_Z", Z);

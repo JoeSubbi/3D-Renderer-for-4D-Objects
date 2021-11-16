@@ -83,7 +83,7 @@
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
 
                 // object space
-                o.ro = mul(unity_WorldToObject, float4(_WorldSpaceCameraPos, 0) + float4(_X,_Y+1.2,_Z,0));
+                o.ro = mul(unity_WorldToObject, float4(_WorldSpaceCameraPos, 0) + float4(_X,_Y,_Z,0));
                 o.hitPos = v.vertex; 
                 return o;
             }

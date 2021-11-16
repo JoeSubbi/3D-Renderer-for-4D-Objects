@@ -73,13 +73,13 @@ Material:
     - _SrcBlend: 1
     - _UVSec: 0
     - _W: 0
-    - _X: 1.25
+    - _X: 0
     - _XW: 0
     - _XY: 0
     - _XZ: 0
-    - _Y: 2.79
+    - _Y: 0
     - _YW: 0
-    - _Z: -1.58
+    - _Z: 0
     - _ZW: 0
     - _ZWrite: 1
     - _ZY: 0
