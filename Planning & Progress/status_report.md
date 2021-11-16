@@ -53,6 +53,9 @@ This project focuses on the development of a wide range of 4 Dimensional shapes 
  - Implement intuitive grab ball rotation
  - Implement 4 perspective (poly-vision inspired) representation
  - Implement a script to compare the rotations of 2 objects
+ - Create modular scene that will load each test and each representation of 4D
+   - Does not include loadable rotation as of yet - unsure if to include in the same scene, or to create a different scene
+   - Need to create a load script that will set each condition to load the scene correctly based on the conditions.
 
 ## Problems and risks
 ### Problems

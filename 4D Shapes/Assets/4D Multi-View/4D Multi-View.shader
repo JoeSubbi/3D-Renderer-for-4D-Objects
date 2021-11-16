@@ -394,7 +394,7 @@
 
                 // Colour in the cube based on ray march
                 if (d > MAX_DIST)
-                    col.rgb = float3(0.3,0.3,0.31);
+                    col.rgb = float3(0.28,0.28,0.28);
                 else {
                     float4 p = ro + rd * d;
 
@@ -403,9 +403,9 @@
                     col.rgb = float3(dif,dif,dif)*1.2 - 0.3;
 
                     int mat = GetMat(p);
-                    if (mat == 2) col.rgb *= float3(1,0,0);
-                    if (mat == 3) col.rgb *= float3(0,1,0);
-                    if (mat == 4) col.rgb *= float3(0,0,1);
+                    if (mat == 2) col.rgb *= float3(1,0.2,0.2);
+                    if (mat == 3) col.rgb *= float3(0.2,1,0.2);
+                    if (mat == 4) col.rgb *= float3(0.2,0.2,1);
                 }
 
                 return col;

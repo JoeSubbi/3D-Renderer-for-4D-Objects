@@ -1,11 +1,11 @@
-﻿Shader "Unlit/4D"
+﻿Shader "Unlit/4D UI"
 {
     Properties
     {
         _W ("W Axis Cross Section", Range(-3,3)) = 0
-        _X ("X Canvas Position", Float) = 1
+        _X ("X Canvas Position", Float) = 0
         _Y ("Y Canvas Position", Float) = 0
-        _Z ("Z Canvas Position", Float) = 3
+        _Z ("Z Canvas Position", Float) = 0
 
         _ZY ("X Rotation", Float) = 0
         _XZ ("Y Rotation", Float) = 0
@@ -15,11 +15,12 @@
         _ZW ("ZW Rotation", Float) = 0
 
         _Shape ("Shape", Int) = 0
+        _Bg ("Background Trasparency", Int) = 0
     }
     SubShader
     {
-        Tags { "RenderType"="Opaque" }
-        LOD 100
+        // No culling or depth
+        Cull Off ZWrite Off ZTest Always
 
         Pass
         {
@@ -58,7 +59,6 @@
             CBUFFER_START(UnityPerMaterial)
                 // The following line declares the _BaseColor variable, so that you
                 // can use it in the fragment shader.
-                int _Effect;  
                 float _W;     
                 float _Z;
                 float _X;
@@ -72,6 +72,8 @@
                 float _XW;
                 float _YW;
                 float _ZW;   
+
+                bool _Bg;
             CBUFFER_END
 
             v2f vert (appdata v)
@@ -79,12 +81,28 @@
                 v2f o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
-                UNITY_TRANSFER_FOG(o,o.vertex);
 
                 // object space
-                o.ro = mul(unity_WorldToObject, float4(_WorldSpaceCameraPos, 1) - float4(_X,0,0,0));
+                o.ro = mul(unity_WorldToObject, float4(_WorldSpaceCameraPos, 0) + float4(_X,_Y+1.2,_Z,0));
                 o.hitPos = v.vertex; 
                 return o;
+            }
+
+            float2x2 RotateMat(float a) {
+                float s = sin(a);
+                float c = cos(a);
+                return float2x2(c, s, -s ,c);
+            }
+
+            /**
+             * \brief   Rotation Matrix Multiplication
+             *
+             * \param   mat rotation matrix
+             * \param   a   axis to rotate from
+             * \param   b   axis to rotate towards
+             */
+            float2 RotMatMul(float2 p, float2x2 mat){
+                return mul(p, mat);
             }
 
             float4 Rotate(float4 p){
@@ -111,24 +129,24 @@
                 }
                 if (_Shape == 2){
                     p = Rotate(p);
-                    p.w += 1;
-                    return sdConeW(p, 1, 2)-0.01;
+                    p.w += 1.25;
+                    return sdConeW(p, 1.2, 2.5)-0.01;
                 }
                 if (_Shape == 3){
                     p = Rotate(p);
-                    p.y += 1;
-                    return sdConeY(p, 1, 2)-0.01;
+                    p.y += 1.25;
+                    return sdConeY(p, 1.2, 2.5)-0.01;
                 }
                 if (_Shape == 4){
                     p = Rotate(p);
-                    return sdTorus(p, 1, 0.5, 0.2);
+                    return sdTorus(p, 1.3, 0.5, 0.2);
                 }
                 p = Rotate(p);
-                return sdSphere(p, 1);
+                return sdSphere(p, 1.2);
             }
 
             float GetDist(float4 p){
-                p = p-float4(_X,_Y,_Z,_W);
+                p -= float4(_X,_Y,_Z,_W);
                 
                 // 3D COMPONENT
                 float shape = Shape(p);
@@ -137,21 +155,6 @@
                 float d = shape;
                 
                 return d;
-            }
-
-            int GetMat(float4 p){
-                p = p-float4(_X,_Y,_Z,_W);
-                
-                // 3D COMPONENT
-                float shape = Shape(p);
-                
-                // BUILD SCENE
-                float d = shape;
-                
-                // ASSIGN MATERIAL
-                int mat = 0;
-                if (d == shape)    mat = 1;
-                return mat;
             }
 
             float Raymarch(float4 ro, float4 rd){
@@ -179,46 +182,31 @@
                 return normalize(n);
             }
 
-            float GetLight(float4 p){
-                float4 lightPos = float4(2,2,2,0);
-
-                //angle dependant fall off
-                float4 lv = normalize(lightPos-p);
-                float4 n  = GetNormal(p);
-                float  light  = clamp(dot(n,lv), 0., 1.);
-
-                //shadow
-                float4 so = p + n * SURF_DIST * 2.; //shadow origin
-                float4 sd = normalize(lightPos-so); //light direction
-                float d = Raymarch(so, sd);
-                if( d<length(lightPos-p) ) light *= 0.1;
-
-                return light;
-            }
-
             fixed4 frag (v2f i) : SV_Target
             {
-                float2 uv = i.uv; // UV coordinates - centered on object
-                float4 ro = float4(i.ro.x, i.ro.y, i.ro.z, 0);           // Ray Origin - Camera
+                float2 uv = i.uv;              // UV coordinates - centered on object
+                float4 ro = float4(i.ro, 0);   // Ray Origin - Camera
                 float4 rd = normalize(
-                    float4(i.hitPos.x, i.hitPos.y, i.hitPos.z, 0) - ro); // Ray Direction
+                    float4(i.hitPos, 0) - ro); // Ray Direction
 
-                float d = Raymarch(ro, rd); // Distance
+                float d = Raymarch(ro, rd);    // Distance
 
-                // Shading
-                fixed4 col = 0;
+                // sample the texture
+                fixed4 col = 1;
 
                 // Colour in the cube based on ray march
-                if (d > MAX_DIST)
-                    col.rgb = float3(0.28,0.28,0.28);
+                if (d > MAX_DIST){
+                    if (_Bg) discard;
+                    else col.rgb = 0.2;
+                }
                 else {
                     float4 p = ro + rd * d;
-
-                    float4 n = GetNormal(p);
-                    float dif = dot(n, normalize(float3(1,2,3))) * .5 +.5;
-                    col.rgb = float3(dif,dif,dif)*1.2 - 0.3;
+                    float2x2 mat = RotateMat(3.14159);
+                    float4 n = Rotate(GetNormal(p));
+                    n.xz = RotMatMul(n.xz, mat);
+                    col.rgb = n;
                 }
-                
+
                 return col;
             }
             ENDCG

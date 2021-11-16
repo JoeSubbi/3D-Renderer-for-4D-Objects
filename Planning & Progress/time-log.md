@@ -294,3 +294,14 @@
  - *2.5 hours* testing and implementing a pose matching script&scene that will randomly orient an object and check if 2 objects are of the same orientation
 
 ## Week 9
+
+### 15 Nov 2021
+
+ - *4 hours* building a modular scene that will be used to conduct tests
+   - when specific options are set the scene can load each representation and the associated UI elements
+   - when specific options are set the scene can load the UI elements associated with each test
+ - *1 hour* changing and improving the UI for "Shape Matching"
+ - *3 hours* general improvements and polishing
+   - ensuring the UI is scalable to different sized screens
+   - ensure UI is clear and concise
+   - have not uploaded images yet
