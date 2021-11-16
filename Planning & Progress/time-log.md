@@ -305,3 +305,10 @@
    - ensuring the UI is scalable to different sized screens
    - ensure UI is clear and concise
    - have not uploaded images yet
+
+### 16 Nov 2021
+
+ - *2.5 hours* polishing modular scene
+   - reduced w axis timeline to only show 2 cross sections forward and backwards rather than 3 - totally 5 rather than 7
+   - have pose matching window be able to move anywhere on the screen, and is set to custom positions depending on the representation
+   - improved scale of UI elements
