@@ -24,6 +24,7 @@
             #pragma fragment frag
 
             #include "UnityCG.cginc"
+            #include "../Shapes.cginc"
 
             #define MAX_STEPS 200
             #define MAX_DIST  100
@@ -86,68 +87,6 @@
                 return d;
             }
 
-            /**
-             * \brief   Shape distance function for a sphere
-             *
-             * \param   p   center point of object
-             * \param   r   radius of sphere
-             */
-            float sdSphere(float3 p, float r){
-                float d = length(p) - r;
-                return d;
-            }
-
-            /**
-             * \brief   Shape distance function for a box
-             *
-             * \param   p   center point of object
-             * \param   s   float 3 of box shape
-             *              x, y, z -> width, height, depth
-             */
-            float sdBox(float3 p, float3 s){
-                float d = length(max(abs(p)-s, 0));
-                return d;
-            }
-
-            /**
-             * \brief   Shape distance function for a torus
-             *
-             * \param   p   center point of object
-             * \param   r1  major radius - torus ring
-             * \param   r2  minor radius - torus thickness
-             */
-            float sdTorus(float3 p, float r1, float r2){
-                float d = length( float2(length(p.zx) - r1, p.y)) - r2;
-                return d;
-            }
-
-            /**
-             * \brief Shape distance function for a cone
-             * 
-             * \param   p        center point of object
-             * \param   radius   radius of the base of the cone
-             * \param   height   height of the cone
-             */
-            float sdCone(float3 p, float radius, float height) {
-                float2 q = float2(length(p.xz), p.y);
-                float2 tip = q - float2(0, height);
-                float2 mantleDir = normalize(float2(height, radius));
-                float mantle = dot(tip, mantleDir);
-                float d = max(mantle, -q.y);
-                float projected = dot(tip, float2(mantleDir.y, -mantleDir.x));
-                
-                // distance to tip
-                if ((q.y > height) && (projected < 0)) {
-                    d = max(d, length(tip));
-                }
-                
-                // distance to base ring
-                if ((q.x > radius) && (projected > length(float2(height, radius)))) {
-                    d = max(d, length(q - float2(radius, 0)));
-                }
-                return d;
-            }
-
             float3 Rotate(float3 p){
                 float a = _XZ;
                 float b = _ZY;
@@ -160,31 +99,39 @@
 
             // Pick a shape based on the integer property
             float Shape(float3 p){
+                p.z-=_Z;
                 if (_Shape == 1){
-                    p -= float3(0,0.4,_Z);
+                    p -= float3(0,0.4,0);
                     p = Rotate(p);
                     return sdBox(p, float3(0.9,0.9,0.9))-0.005;
                 }
                 if (_Shape == 2){
-                    p -= float3(0,0.4,_Z);
-                    float a = 3.14159/2;
-                    p.zy = mul(p.zy, float2x2(cos(a), sin(a), -sin(a), cos(a)));
+                    p -= float3(0,0.4,0);
                     p = Rotate(p);
-                    p -= float3(0,-1,0);
-                    return sdCone(p, 1, 2);
+                    p -= float3(0,0,-1);
+                    return sdConeZ(p, 1, 2);
                 }
                 if (_Shape == 3){
-                    p -= float3(0,0.4,_Z);
+                    p -= float3(0,0.4,0);
                     p = Rotate(p);
                     p -= float3(0,-1,0);
-                    return sdCone(p, 1, 2);
+                    return sdConeY(p, 1, 2);
                 }
                 if (_Shape == 4){
-                    p -= float3(0,0.5,_Z);
+                    p -= float3(0,0.5,0);
                     p = Rotate(p);
                     return sdTorus(p, 1, 0.5);
                 }
-                p -= float3(0,0,_Z);
+                if (_Shape == 5){
+                    p -= float3(0,0.6,0.4);
+                    p = Rotate(p);
+                    return sdCapsuleZ(p, 1.5, 0.4);
+                }
+                if (_Shape == 6){
+                    p -= float3(0,0.6,0.4);
+                    p = Rotate(p);
+                    return sdCapsuleX(p, 1.5, 0.4);
+                }
                 p = Rotate(p);
                 return sdSphere(p, 1);
             }

@@ -222,6 +222,41 @@
                     return d;
                 }
 
+                // Capsule along X
+                if (_Shape == 5){
+                    float l = 1.8;
+                    float r = 0.5;
+
+                    float s1 = sdCapsuleW(p1, l, r);
+                    float s2 = sdCapsuleW(p2, l, r);
+                    float s3 = sdCapsuleW(p3, l, r);
+                    float s4 = sdCapsuleW(p4, l, r);
+                    
+                    float d = s1;
+                          d = min(d, s2);
+                          d = min(d, s3);
+                          d = min(d, s4);
+                    return d;
+                }
+
+                //Capsule along W
+                if (_Shape == 6){
+                    float l = 1.8;
+                    float r = 0.5;
+
+                    float s1 = sdCapsuleX(p1, l, r);
+                    float s2 = sdCapsuleX(p2, l, r);
+                    float s3 = sdCapsuleX(p3, l, r);
+                    float s4 = sdCapsuleX(p4, l, r);
+                    
+                    float d = s1;
+                          d = min(d, s2);
+                          d = min(d, s3);
+                          d = min(d, s4);
+                    return d;
+                }
+
+
                 // Sphere
                 float r = 0.75;
 
@@ -334,6 +369,38 @@
                           d = min(d, s4);
                 }
 
+                // Capsule along X
+                if (_Shape == 5){
+                    float l = 1.8;
+                    float r = 0.5;
+
+                    float s1 = sdCapsuleW(p1, l, r);
+                    float s2 = sdCapsuleW(p2, l, r);
+                    float s3 = sdCapsuleW(p3, l, r);
+                    float s4 = sdCapsuleW(p4, l, r);
+                    
+                    float d = s1;
+                          d = min(d, s2);
+                          d = min(d, s3);
+                          d = min(d, s4);
+                }
+
+                //Capsule along W
+                if (_Shape == 6){
+                    float l = 1.8;
+                    float r = 0.5;
+
+                    float s1 = sdCapsuleX(p1, l, r);
+                    float s2 = sdCapsuleX(p2, l, r);
+                    float s3 = sdCapsuleX(p3, l, r);
+                    float s4 = sdCapsuleX(p4, l, r);
+                    
+                    float d = s1;
+                          d = min(d, s2);
+                          d = min(d, s3);
+                          d = min(d, s4);
+                }
+
                 // Sphere
                 float r = 0.75;
 
@@ -394,13 +461,14 @@
 
                 // Colour in the cube based on ray march
                 if (d > MAX_DIST)
-                    col.rgb = float3(0.28,0.28,0.28);
+                    //col.rgb = float3(0.28,0.28,0.28);
+                    discard;
                 else {
                     float4 p = ro + rd * d;
 
                     float4 n = GetNormal(p);
                     float dif = dot(n, normalize(float3(1,2,3))) * .5 +.5;
-                    col.rgb = float3(dif,dif,dif)*1.2 - 0.3;
+                    col.rgb = float3(dif,dif,dif)*1.1 - 0.2;
 
                     int mat = GetMat(p);
                     if (mat == 2) col.rgb *= float3(1,0.2,0.2);

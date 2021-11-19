@@ -125,10 +125,6 @@
                 }
                 if (_Shape == 5){
                     p = Rotate(p);
-                    return sdCapsuleW(p, 2.5, 0.6);
-                }
-                if (_Shape == 6){
-                    p = Rotate(p);
                     return sdCapsuleX(p, 2.5, 0.6);
                 }
                 p = Rotate(p);
@@ -138,11 +134,12 @@
             float GetDist(float4 p){
                 p = p-float4(_X,_Y,_Z,_W);
                 
-                // 3D COMPONENT
                 float shape = Shape(p);
+                float floor = p.y+1;
                 
                 // BUILD SCENE
                 float d = shape;
+                      d = min(d, floor);
                 
                 return d;
             }
@@ -150,15 +147,17 @@
             int GetMat(float4 p){
                 p = p-float4(_X,_Y,_Z,_W);
                 
-                // 3D COMPONENT
                 float shape = Shape(p);
+                float floor = p.y+1;
                 
                 // BUILD SCENE
                 float d = shape;
+                      d = min(d, floor);
                 
                 // ASSIGN MATERIAL
                 int mat = 0;
                 if (d == shape)    mat = 1;
+                if (d == floor)    mat = 2;
                 return mat;
             }
 
@@ -188,7 +187,7 @@
             }
 
             float GetLight(float4 p){
-                float4 lightPos = float4(2,2,2,0);
+                float4 lightPos = float4(-2,2,3,0);
 
                 //angle dependant fall off
                 float4 lv = normalize(lightPos-p);
@@ -218,14 +217,13 @@
 
                 // Colour in the cube based on ray march
                 if (d > MAX_DIST)
-                    //col.rgb = float3(0.28,0.28,0.28);
-                    discard;
+                    col.rgb = 0.8;
                 else {
                     float4 p = ro + rd * d;
 
-                    float4 n = GetNormal(p);
-                    float dif = dot(n, normalize(float3(1,2,3))) * .5 +.5;
-                    col.rgb = float3(dif,dif,dif)*1.1 - 0.2;
+                    int mat = GetMat(p);
+                    if (mat == 1) col.rgb = (GetLight(p)/4)+0.6*float3(0.8,0.1,0.1);
+                    if (mat == 2) col.rgb = ((GetLight(p)/2)+0.5);
                 }
                 
                 return col;

@@ -69,20 +69,20 @@ Material:
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _Shading: 0
-    - _Shape: 1
+    - _Shape: 0
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
     - _W: 0
-    - _X: -326.09024
+    - _X: -427.55554
     - _XW: 0
     - _XY: 0
     - _XZ: 5.66
-    - _Y: 164.60648
+    - _Y: 163.37962
     - _Y2: 0
     - _YW: 0
-    - _Z: -183.72453
+    - _Z: -182.86575
     - _ZW: 0
     - _ZWrite: 1
     - _ZY: -0.61

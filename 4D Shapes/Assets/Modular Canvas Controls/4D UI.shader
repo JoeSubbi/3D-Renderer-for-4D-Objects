@@ -141,6 +141,14 @@
                     p = Rotate(p);
                     return sdTorus(p, 1.3, 0.5, 0.2);
                 }
+                if (_Shape == 5){
+                    p = Rotate(p);
+                    return sdCapsuleW(p, 2.5, 0.6);
+                }
+                if (_Shape == 6){
+                    p = Rotate(p);
+                    return sdCapsuleX(p, 2.5, 0.6);
+                }
                 p = Rotate(p);
                 return sdSphere(p, 1.2);
             }

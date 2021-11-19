@@ -121,6 +121,14 @@
                     p = Rotate(p);
                     return sdTorus(p, 1, 0.5, 0.2);
                 }
+                if (_Shape == 5){
+                    p = Rotate(p);
+                    return sdCapsuleW(p, 2, 0.6);
+                }
+                if (_Shape == 6){
+                    p = Rotate(p);
+                    return sdCapsuleX(p, 2, 0.6);
+                }
                 p = Rotate(p);
                 return sdSphere(p, 1);
             }
@@ -216,15 +224,14 @@
 
                 // Colour in the cube based on ray march
                 if (d > MAX_DIST)
-                    col.rgb = 0.28;
+                    discard; //col.rgb = 0.28;
                 else {
                     float4 p = ro + rd * d;
                     float4 n = GetNormal(p);
                     float dif = dot(n, normalize(float3(1,2,3))) * .5 +.5;
-                    col.rgb = dif;
+                    col.rgb = float3(dif,dif,dif)*1.1 - 0.2;
 
                     int mat = GetMat(p);
-                    if (mat == 0) col.rgb *= float3(1,1,1);
                     if (mat == 1) col.rgb *= float3(1,0,0);
                     if (mat == 2) col.rgb *= float3(0,0,1);
                 }
