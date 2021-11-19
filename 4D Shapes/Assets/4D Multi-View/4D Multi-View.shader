@@ -125,6 +125,8 @@
                 
                 float dist = 1.5;
 
+                if (_Shape == 2) p.w *= -1;
+
                 //Split into 4 coordinates
                 float4 p1 = p-float4( dist, dist, 0, 0);
                 float4 p2 = p-float4(-dist, dist, 0, 0);

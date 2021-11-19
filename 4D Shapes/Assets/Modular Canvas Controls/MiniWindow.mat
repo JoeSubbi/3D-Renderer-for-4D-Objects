@@ -68,12 +68,12 @@ Material:
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _Shading: 1
-    - _Shape: 0
+    - _Shape: 2
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
-    - _X: -387.55554
+    - _X: -169.76491
     - _XY: 0
     - _XZ: 0
     - _Y: -97.11201

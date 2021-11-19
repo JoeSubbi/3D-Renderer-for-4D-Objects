@@ -110,6 +110,7 @@
                     return sdBox(p, float4(0.9,0.9,0.9,0.9))-0.01;
                 }
                 if (_Shape == 2){
+                    p.w *= -1;
                     p = Rotate(p);
                     p.w += 1;
                     return sdConeW(p, 1, 2)-0.01;

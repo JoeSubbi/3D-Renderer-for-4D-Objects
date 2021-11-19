@@ -17,6 +17,7 @@ public class UIController : MonoBehaviour
     public Shader Onion_Skin_Shader;
     public GameObject Window;
     private Renderer rend;
+    public Slider wSlider;
 
     // Shape
     public int shape;
@@ -45,6 +46,8 @@ public class UIController : MonoBehaviour
         rend.material.SetInt("_Shape", shape);
         MiniWindow.GetComponent<Image>().material.SetInt("_Shape", shape);
         MatchWindow.GetComponent<Image>().material.SetInt("_Shape", shape);
+
+        rend.material.SetFloat("_W", wSlider.value);
 
         // Update Shape Positons
         rend.material.SetFloat("_Z", 0);
