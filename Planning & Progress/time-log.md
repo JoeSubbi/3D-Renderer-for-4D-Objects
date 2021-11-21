@@ -312,3 +312,23 @@
    - reduced w axis timeline to only show 2 cross sections forward and backwards rather than 3 - totally 5 rather than 7
    - have pose matching window be able to move anywhere on the screen, and is set to custom positions depending on the representation
    - improved scale of UI elements
+
+### 17 Nov 2021
+
+ - *2 hours* Add capsule to polished scenes, and 3D objects to `Shapes.cginc`
+
+### 19 Nov 2021
+
+ - *2 hours* writing up intro script
+
+### 20 Nov 2021
+
+ - *3 hours* re-organising plan for testing
+   - each stage of the test
+   - data to be collected
+ - *2 hours* Creating some visualisations for the intro video for users
+ - *2 hours* Trying to build a pentachoron
+
+### 21 Nov 2021
+
+ - *2 hours* Created a working pentachoron (hyper tetrahedron)

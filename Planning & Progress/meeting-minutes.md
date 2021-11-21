@@ -5,7 +5,8 @@
   - [07/10/2021](#07102021)
   - [14/10/2021](#14102021)
   - [22/10/2021](#22102021)
-  - [04/10/2021](#04102021)
+  - [04/11/2021](#04112021)
+  - [18/11/2021](#18112021)
 
 # Semester 1
 ## 07/10/2021
@@ -29,7 +30,7 @@ look into exp/log map rotation - expandable to multiple dimensions
 
 Give Rotors sense of direction by multiplying with a vector
 
-## 04/10/2021
+## 04/11/2021
 
 How to decide whether to use certain representations
  - 10 different ideas - informal trial  
@@ -39,3 +40,12 @@ How to decide whether to use certain representations
 User interaction
  - geodesic - representation of the surface by shortest path
  - project touch onto a sphere to rotate between pos1 and pos2 vectors
+
+## 18/11/2021
+
+Consider different textural visualisations
+
+Within groups testing
+ - have each user try multiple representations
+
+Show user progress between each representation

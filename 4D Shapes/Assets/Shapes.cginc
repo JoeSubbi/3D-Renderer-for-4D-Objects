@@ -155,6 +155,21 @@ float sdCapsuleW(float4 p, float length, float r)
                     );
 }
 
+/**
+ * \brief   Signed Distance Function for a pentachoron
+ *          Also known as a 5-cell or hyper tetrahedron
+ *
+ * \param   p   center point of object
+ * \param   s   scale of object (radius)
+ */
+float sdPentachoron(float4 p, float s){
+    float a = +p.x +p.y -p.z -p.w;
+    float b = -p.x -p.y -p.z -p.w;
+    float c = +p.x -p.y +p.z -p.w;
+    float d = -p.x +p.y +p.z -p.w;
+    float e = p.w;
+    return (max(max(max(a,b),max(c,d)), e)-s)/sqrt(5.);
+}
 
 /*
  * 3D SHAPES
@@ -306,4 +321,18 @@ float sdCapsuleZ(float3 p, float length, float r)
                     float3(0, 0, l),
                     r
                     );
+}
+
+/**
+ * \brief   Signed Distance Function for a Tetrahedron
+ *
+ * \param   p   center point of object
+ * \param   s   scale of object (radius)
+ */
+float sdTetrahedron(float3 p, float s){
+    float a = +p.x +p.y -p.z;
+    float b = -p.x -p.y -p.z;
+    float c = +p.x -p.y +p.z;
+    float d = -p.x +p.y +p.z;
+    return (max(max(a,b),max(c,d))-s)/sqrt(5.);
 }

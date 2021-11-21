@@ -258,6 +258,22 @@
                     return d;
                 }
 
+                //Pentachoron
+                if (_Shape == 7){
+                    float s = 0.5;
+                    
+                    float s1 = sdPentachoron(p1, s);
+                    float s2 = sdPentachoron(p2, s);
+                    float s3 = sdPentachoron(p3, s);
+                    float s4 = sdPentachoron(p4, s);
+                    
+                    float d = s1;
+                          d = min(d, s2);
+                          d = min(d, s3);
+                          d = min(d, s4);
+                    return d;
+                }
+
 
                 // Sphere
                 float r = 0.75;

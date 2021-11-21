@@ -131,6 +131,11 @@
                     p = Rotate(p);
                     return sdCapsuleX(p, 1.5, 0.4);
                 }
+                if (_Shape == 7){
+                    p -= float3(0,0.6,0.4);
+                    p = Rotate(p);
+                    return sdTetrahedron(p, 0.7);
+                }
                 p = Rotate(p);
                 return sdSphere(p, 1);
             }

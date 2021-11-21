@@ -1,4 +1,4 @@
-﻿Shader "Unlit/Scene"
+Shader "Unlit/Scene"
 {
     Properties
     {
@@ -218,6 +218,116 @@
                 return d;
             }
 
+            float dot2( float4 v ) { return dot(v,v); }
+            float dot2( float3 v ) { return dot(v,v); }
+
+            /*
+            float4 crossProd(float4 u, float4 v){
+                float a = acos(dot(u,v) - length(u) * length(v));
+                float c = length(u) * length(v) * sin(a);
+                return float4();
+            }*/
+
+            float udTriangle(float4 p, float4 a, float4 b, float4 c){
+                float4 ba = b - a; float4 pa = p - a;
+                float4 cb = c - b; float4 pb = p - b;
+                float4 ac = a - c; float4 pc = p - c;
+                
+                float4 nor = float4(cross( ba, ac ), 0);
+
+                return sqrt(
+                    (       (dot(cross(ba,nor),pa)) +
+                    sign(dot(cross(cb,nor),pb)) +
+                    sign(dot(cross(ac,nor),pc))<2.0)
+                    ?
+                    min( min(
+                    dot2(ba*clamp(dot(ba,pa)/dot2(ba),0.0,1.0)-pa),
+                    dot2(cb*clamp(dot(cb,pb)/dot2(cb),0.0,1.0)-pb) ),
+                    dot2(ac*clamp(dot(ac,pc)/dot2(ac),0.0,1.0)-pc) )
+                    :
+                    dot(nor,pa)*dot(nor,pa)/dot2(nor) );
+            }
+
+            float udTriangle3(float3 p, float3 a, float3 b, float3 c){
+                float3 ba = b - a; float3 pa = p - a;
+                float3 cb = c - b; float3 pb = p - b;
+                float3 ac = a - c; float3 pc = p - c;
+                
+                float3 nor = cross( ba, ac );
+
+                return sqrt(
+                    (       (dot(cross(ba,nor),pa)) +
+                    sign(dot(cross(cb,nor),pb)) +
+                    sign(dot(cross(ac,nor),pc))<2.0)
+                    ?
+                    min( min(
+                    dot2(ba*clamp(dot(ba,pa)/dot2(ba),0.0,1.0)-pa),
+                    dot2(cb*clamp(dot(cb,pb)/dot2(cb),0.0,1.0)-pb) ),
+                    dot2(ac*clamp(dot(ac,pc)/dot2(ac),0.0,1.0)-pc) )
+                    :
+                    dot(nor,pa)*dot(nor,pa)/dot2(nor) );
+            }
+
+            float sdTetrahedron2(float4 triangles){
+                return min(triangles[0], min(triangles[1], min(triangles[2], triangles[3])));
+            }
+            
+            float Pentachoron(float4 p){
+                
+                float scale = 0.5;
+                float4 verts[5] = {
+                                            float4( scale, scale, scale, (-scale/sqrt(5)) ),
+                                            float4( scale,-scale,-scale, (-scale/sqrt(5)) ),
+                                            float4(-scale, scale,-scale, (-scale/sqrt(5)) ),
+                                            float4(-scale,-scale, scale, (-scale/sqrt(5)) ),
+                                            float4( 0, 0, 0, ( (4*scale)/sqrt(5)) )
+                };
+                float triangles[10] = {
+                                            udTriangle(p, verts[0], verts[1], verts[4]),
+                                            udTriangle(p, verts[1], verts[2], verts[4]),
+                                            udTriangle(p, verts[1], verts[3], verts[4]),
+                                        
+                                            udTriangle(p, verts[0], verts[2], verts[4]),
+                                            udTriangle(p, verts[0], verts[3], verts[4]),
+                                            udTriangle(p, verts[2], verts[3], verts[4]),
+                                            
+                                            udTriangle(p, verts[0], verts[1], verts[2]),
+                                            udTriangle(p, verts[0], verts[1], verts[3]),
+                                            udTriangle(p, verts[0], verts[2], verts[3]),
+                                            udTriangle(p, verts[1], verts[2], verts[3])
+                };
+
+                float tets[5] = {
+                                            sdTetrahedron2( (triangles[3], triangles[4], triangles[5], triangles[8]) ),
+                                            sdTetrahedron2( (triangles[0], triangles[2], triangles[4], triangles[7]) ),
+                                            sdTetrahedron2( (triangles[0], triangles[1], triangles[3], triangles[6]) ),
+                                            sdTetrahedron2( (triangles[1], triangles[2], triangles[5], triangles[9]) ),
+                                            sdTetrahedron2( (triangles[6], triangles[7], triangles[8], triangles[9]) )
+                };
+                
+                /*
+                float d = min(triangles[0], triangles[1]);
+                      d = min(d, triangles[2]);
+                      d = min(d, triangles[3]);
+                      d = min(d, triangles[4]);
+                      d = min(d, triangles[5]);
+                      d = min(d, triangles[6]);
+                      d = min(d, triangles[7]);
+                      d = min(d, triangles[8]);
+                      d = min(d, triangles[9]);
+
+                      d = abs(d)-0.01;
+                      */
+                float d = min(tets[0], tets[1]);
+                      d = min(d, tets[2]);
+                      d = min(d, tets[3]);
+                      d = min(d, tets[4]);
+                      d = abs(d)-0.01;
+
+                return d;
+            }
+            
+
             float4 Rotate(float a) {
                 float s = sin(a);
                 float c = cos(a);
@@ -260,7 +370,7 @@
                 float4 p3 = p-float4(-1,-1, 0, _W);
                 float4 p4 = p-float4( 1,-1, 0, _W);
                 
-                float4 mat = Rotate(90);
+                float4 mat = Rotate(3.14159/2);
                 p2.xw = RotMatMul(mat, p2.x, p2.w);
                 p3.yw = RotMatMul(mat, p3.y, p3.w);
                 p4.zw = RotMatMul(mat, p4.z, p4.w);
@@ -363,12 +473,14 @@
             }
 
             float GetDist(float4 p){
-                int s = _Shape % 3;
+                /*
+                int s = _Shape % 3.;
                 if (s == 0) return torus(p);
                 else if (s == 1) return coneW(p);
                 else if (s == 2) return coneY(p);
                 
-                return 0;
+                return 0;*/
+                return Pentachoron(p-float4(0,0,0,_W));
             }
 
             float Raymarch(float4 ro, float4 rd){

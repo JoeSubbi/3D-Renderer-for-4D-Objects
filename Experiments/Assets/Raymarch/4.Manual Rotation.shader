@@ -153,6 +153,51 @@
                 return d;
             }
 
+            
+            float  plane(float3 p, float3 c, float3 n)
+            { 
+                return dot(p-c,n);   
+            }
+            float  plane(float4 p, float4 c, float4 n)
+            { 
+                return dot(p-c,n);   
+            }
+
+            float tetrahedron(float3 p, float e) 
+            {
+                float f = 0.57735;
+                float a = plane(p,float3(e,e,e),float3(-f,f,f)); 
+                float b = plane(p,float3(e,-e,-e),float3(f,-f,f));
+                float c = plane(p,float3(-e,e,-e),float3(f,f,-f));
+                float d = plane(p,float3(-e,-e,e),float3(-f,-f,-f));
+                return max(max(a,b),max(c,d));
+            }
+            /*
+            float pentachoron(float4 p, float s){
+                
+                float w1 = s*(-1/sqrt(5));
+                float w2 = s*( 4/sqrt(5));
+
+                float f = 0.57735; // 1 / sqrt(3);
+                float f2 = 1 / sqrt(5);
+                float a = plane(p,float4( s, s, s, w1),  float4(-f, f, f,-f2)); 
+                float b = plane(p,float4( s,-s,-s, w1),  float4( f,-f, f,-f2));
+                float c = plane(p,float4(-s, s,-s, w1),  float4( f, f,-f,-f2));
+                float d = plane(p,float4(-s,-s, s, w1),  float4(-f,-f,-f,-f2));
+                float e = plane(p,float4( 0, 0, 0, w2),  float4(-f,-f,-f, f2));
+                
+                return max( max(max(a,b),max(c,d)), e);
+            }*/
+            
+            float sdTetrahedron2(float4 p, float s){
+                float a = +p.x +p.y -p.z -p.w;
+                float b = -p.x -p.y -p.z -p.w;
+                float c = +p.x -p.y +p.z -p.w;
+                float d = -p.x +p.y +p.z -p.w;
+                float e = p.w;
+                return (max(max(max(a,b),max(c,d)), e)-s)/sqrt(5.);
+            }
+
             float4 RotationMatrix(float a) {
                 float s = sin(a);
                 float c = cos(a);
@@ -203,9 +248,11 @@
                 bp = Rotate(bp);
                 
                 //float d = sdBox( bp, float4(1,1,1,1)) - 0.05;
-                float d = sdOctahedron(bp, 1) - 0.001;
+                //float d = sdOctahedron(bp, 1) - 0.001;
                 //float d = sdTetrahedron(bp, 1) - 0.05;
                 //float d = sdTorus(bp, 1, 0.4, 0.1);
+                
+                float d =  sdTetrahedron2(bp, 0.5); //pentachoron(bp, 0.5);  //sdTetrahedron2(bp, 1);
                 
                 return d;
             }

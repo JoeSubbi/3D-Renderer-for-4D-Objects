@@ -130,6 +130,11 @@
                     p = Rotate(p);
                     return sdCapsuleX(p, 2, 0.6);
                 }
+                if (_Shape == 7){
+                    p.w *= -1;
+                    p = Rotate(p);
+                    return sdPentachoron(p, 0.7);
+                }
                 p = Rotate(p);
                 return sdSphere(p, 1);
             }

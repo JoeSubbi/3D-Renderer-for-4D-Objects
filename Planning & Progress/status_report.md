@@ -56,6 +56,7 @@ This project focuses on the development of a wide range of 4 Dimensional shapes 
  - Create modular scene that will load each test and each representation of 4D
    - Does not include loadable rotation as of yet - unsure if to include in the same scene, or to create a different scene
    - Need to create a load script that will set each condition to load the scene correctly based on the conditions.
+ - Implemented Pentachoron
 
 ## Problems and risks
 ### Problems
@@ -128,12 +129,12 @@ Week 8: Create intuitive UI for users to manipulate shapes with.
  - [x] Arc/Grab Ball Rotation. *Extendable to 4D*
 
 Week 9:  
- - [ ] Create an "Identify the shape" mode. 
- - [ ] Add more shapes - 4D cylinder, ~~cone, capsule~~ pentachoron.
+ - [x] Plan and script a walk through for users to play with shapes and attempt to identify them.  
+ - [x] Set up a new mode for shape pose matching.
 
 Week 10:  
- - [ ] Plan and script a walk through for users to play with shapes and attempt to identify them.  
- - [x] Set up a new mode for shape pose matching.
+ - [ ] Create an "Identify the shape" mode. 
+ - [x] Add more shapes - 4D cylinder, ~~cone, capsule, pentachoron~~.
 
 Week 11:  
  - [ ] Tutorial videos that explain why shapes behave they do, and traits to identify what the shape is.  

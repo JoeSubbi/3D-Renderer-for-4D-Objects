@@ -1223,8 +1223,8 @@ MonoBehaviour:
   Onion_Skin_Shader: {fileID: 4800000, guid: c34e9a050e6bd1c458572c8a5a52f825, type: 3}
   Window: {fileID: 34724911}
   wSlider: {fileID: 585531722}
-  shape: 4
-  Shape_Match: 0
+  shape: 3
+  Shape_Match: 1
   Pose_Match: 0
   MiniWindow: {fileID: 742613820}
   MatchWindow: {fileID: 1108419392}

@@ -108,6 +108,7 @@
                     return sdBox(p, float4(0.9,0.9,0.9,0.9))-0.01;
                 }
                 if (_Shape == 2){
+                    p.w *= -1;
                     p = Rotate(p);
                     p.w += 1;
                     return sdConeW(p, 1, 2)-0.01;
@@ -120,6 +121,18 @@
                 if (_Shape == 4){
                     p = Rotate(p);
                     return sdTorus(p, 1, 0.5, 0.2);
+                }
+                if (_Shape == 5){
+                    p = Rotate(p);
+                    return sdCapsuleW(p, 2, 0.6);
+                }
+                if (_Shape == 6){
+                    p = Rotate(p);
+                    return sdCapsuleX(p, 2, 0.6);
+                }
+                if (_Shape == 7){
+                    p = Rotate(p);
+                    return sdPentachoron(p, 0.7);
                 }
                 p = Rotate(p);
                 return sdSphere(p, 1);
