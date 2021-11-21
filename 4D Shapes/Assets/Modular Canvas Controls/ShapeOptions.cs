@@ -20,27 +20,24 @@ public class ShapeOptions : MonoBehaviour
     void Update()
     {
         //Padding between panels
-        int pady = 10;
-        int padx = 25;
+        int padxr = 8; //Left
+        int padxl = 30; //Right
+        int pady  = 8;   //Above and Below
 
         //Height of canvas - 60 buffer on top and bottom
-        //                 - gap of 10 above and below each panel
+        //                 - gap of pady above and below each panel
         float y = (canvas.sizeDelta.y - 120 - (options.Length+1)*pady) / options.Length ;
         //Maintain a 4.5:3 aspect ratio
         float x = (y / 3) * 4.5f;
 
-        container.sizeDelta = new Vector2(x+pady+padx, -120);
+        container.sizeDelta = new Vector2(x+padxr+padxl, -120);
         container.anchoredPosition = new Vector2(0, -60);
 
         Vector2 size = new Vector2(x, y);
-        foreach (RectTransform shape in options)
+        for (int i = 0; i< options.Length; i++)
         {
-            shape.sizeDelta = size;
+            options[i].sizeDelta = size;
+            options[i].anchoredPosition = new Vector2(padxl, i*-y + (i+1) * -pady);
         }
-        options[0].anchoredPosition = new Vector2(padx, 0);
-        options[1].anchoredPosition = new Vector2(padx,  y + 10);
-        options[2].anchoredPosition = new Vector2(padx, -y - 10);
-        options[3].anchoredPosition = new Vector2(padx,  2*y + 2*10);
-        options[4].anchoredPosition = new Vector2(padx, -2*y - 2*10);
     }
 }
