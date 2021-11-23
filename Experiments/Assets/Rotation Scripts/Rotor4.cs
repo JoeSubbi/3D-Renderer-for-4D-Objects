@@ -20,7 +20,7 @@ public class Rotor4
 
     // CONSTRUCTORS
     public Rotor4(float a, float bxy, float bxz, float byz,
-                           float bxw, float byw, float bzw)
+                           float bxw, float byw, float bzw, float bxyzw)
     {
         this.a = a;
         this.bxy = bxy;
@@ -29,6 +29,7 @@ public class Rotor4
         this.bxw = bxw;
         this.byw = byw;
         this.bzw = bzw;
+        this.bxyzw = bxyzw;
     }
 
     public Rotor4(Bivector4 bv, float angle)
@@ -41,40 +42,40 @@ public class Rotor4
         this.bxw = -sina * bv.bxw;
         this.byw = -sina * bv.byw;
         this.bzw = -sina * bv.bzw;
+        this.bxyzw = 0;
     }
 
-    // Rotor3-Rotor3 Product
+    // Rotor4-Rotor4 Product
     public static Rotor4 operator *(Rotor4 p, Rotor4 q)
     {
-        float a = p.a * q.a - p.bxy * q.bxy - p.bxz * q.bxz - p.byz * q.byz - 
-                              p.bxw * p.bxw - p.byw * p.byw - p.bzw * p.bzw;
+        float a0    = p.a;
+        float a1e01 = p.bxy;
+        float a2e20 = -p.bxz;
+        float a4e12 = p.byz;
+        float a3e30 = -p.bxw;
+        float a5e31 = -p.byw;
+        float a6e32 = -p.bzw;
+        float a7e0123 = p.bxyzw;
 
-        float bxy = p.bxy * q.a + p.a * q.bxy +
-                    p.byz * q.bxz - p.bxz * q.byz;// - 
-                    //p.byw * q.bzw + p.bzw * q.byw;
+        float b0    = q.a;
+        float b1e01 = q.bxy;
+        float b2e20 = -q.bxz;
+        float b4e12 = q.byz;
+        float b3e30 = -q.bxw;
+        float b5e31 = -q.byw;
+        float b6e32 = -q.bzw;
+        float b7e0123 = q.bxyzw;
+ 
+        float e     = a0 * b0      - a1e01 * b1e01    - a2e20 * b2e20   - a4e12 * b4e12   - a3e30 * b3e30   - a5e31 * b5e31   - a6e32 * b6e32	  + a7e0123 * b7e0123;
+		float e01   = a0 * b1e01   + a1e01 * b0       + a2e20 * b4e12   - a4e12 * b2e20   + a3e30 * b5e31   - a5e31 * b3e30   - a6e32 * b7e0123   - a7e0123 * b6e32;
+		float e20   = a0 * b2e20   - a1e01 * b4e12    + a2e20 * b0      + a4e12 * b1e01   + a3e30 * b6e32   + a5e31 * b7e0123 - a6e32 * b3e30	  + a7e0123 * b5e31;
+		float e12   = a0 * b4e12   + a1e01 * b2e20    - a2e20 * b1e01   + a4e12 * b0      - a3e30 * b7e0123 + a5e31 * b6e32   - a6e32 * b5e31	  - a7e0123 * b3e30;
+		float e30   = a0 * b3e30   + a1e01 * b5e31    + a2e20 * b6e32   + a4e12 * b7e0123 + a3e30 * b0      - a5e31 * b1e01   - a6e32 * b2e20	  + a7e0123 * b4e12;
+		float e31   = a0 * b5e31   + a1e01 * b3e30    + a2e20 * b7e0123 - a4e12 * b6e32   - a3e30 * b1e01   + a5e31 * b0      + a6e32 * b4e12	  + a7e0123 * b2e20;
+		float e32   = a0 * b6e32   + a1e01 * b7e0123  - a2e20 * b3e30   - a4e12 * b5e31   + a3e30 * b2e20   + a5e31 * b4e12   + a6e32 * b0        + a7e0123 * b1e01;
+		float e0123 = a0 * b7e0123 + a1e01 * b6e32    - a2e20 * b5e31   + a4e12 * b3e30   + a3e30 * b4e12   - a5e31 * b2e20   + a6e32 * b1e01     + a7e0123 * b0;
 
-        float bxz = p.bxz * q.a + p.a * q.bxz -
-                    p.byz * q.bxy + p.bxy * q.byz;// -
-                    //p.bxw * q.bzw + p.bzw * p.bxw;
-
-        float byz = p.byz * q.a + p.a * q.byz + 
-                    p.bxz * q.bxy - p.bxy * q.bxz;// -
-                    //p.bxw * q.byw + q.byw * q.bxw;
-
-        float bxw = p.bxw * q.a + p.a * q.bxw -
-                    p.bxy * q.byw + p.byw * q.bxy;// -
-                    //p.bxz * q.bzw + p.bzw * q.bxz;
-
-        float byw = p.byw * q.a + p.a * q.byw +
-                    p.bxy * q.bxw - p.bxw * q.bxy;// -
-                    //p.bxz * q.bzw + p.bzw * q.bxz;
-
-        float bzw = p.bzw * q.a + p.a * q.bzw +
-                    p.bxz * q.bxw - p.bxw * q.bxz;// +
-                    //p.byz * q.byw - p.byw * q.byz;
-
-        p = new Rotor4(a, bxy, bxz, byz, bxw, byw, bzw);
-        return p;
+        return new Rotor4(e, e01, e20, e12, e30, e31, e32, e0123);
     }
 
     // Rotate a Vector with a Rotor
@@ -118,7 +119,7 @@ public class Rotor4
     // Conjugate
     public Rotor4 Reverse()
     {
-        return new Rotor4(a, -bxy, -bxz, -byz, -bxw, -byw, -bzw);
+        return new Rotor4(a, -bxy, -bxz, -byz, -bxw, -byw, -bzw, -bxyzw);
     }
 
     private float sq(float x)
@@ -165,6 +166,6 @@ public class Rotor4
     {
         Bivector4 bv = Bivector4.Wedge(a, b);
         return new Rotor4(Vector4.Dot(a, b), bv.bxy, bv.bxz, bv.byz,
-                                             bv.bxw, bv.byw, bv.bzw);
+                                             bv.bxw, bv.byw, bv.bzw, 0);
     }
 }

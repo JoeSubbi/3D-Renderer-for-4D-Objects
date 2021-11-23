@@ -5,14 +5,14 @@ using UnityEngine;
 public class RandomRotate : MonoBehaviour
 {
     private Renderer rend;
-    private Rotor4 RandomRotor = new Rotor4(1,0,0,0,0,0,0);
+    private Rotor4 RandomRotor = new Rotor4(1,0,0,0,0,0,0,0);
     private Material matchMat;
 
     // Start is called before the first frame update
     void Start()
     {
         RandomRotor = new Rotor4(1, Random.Range(0, 6.28318f), Random.Range(0, 6.28318f), Random.Range(0, 6.28318f),
-                                 0,0,0);
+                                 0,0,0,0);
         RandomRotor.Normalise();
 
         rend = GetComponent<Renderer>();
@@ -47,6 +47,9 @@ public class RandomRotate : MonoBehaviour
             range(RandomRotor.byw, yw, 0.1f) &&
             range(RandomRotor.bzw, zw, 0.1f))
             Debug.Log("True");
+
+        //Debug.Log(Mathf.Abs(a) - Mathf.Abs(RandomRotor.a));
+       
     }
 
     private bool range(float a, float b, float epsilon)
