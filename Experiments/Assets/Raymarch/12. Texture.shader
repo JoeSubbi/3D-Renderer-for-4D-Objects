@@ -285,26 +285,38 @@
                     discard;
                 else {
                     float4 p = ro + rd * d;
-                    float dif = dot(RotatedNormals(p), normalize(float3(1,2,3))) * .5 +.5;
+                    float dif = dot(GetNormal(p), normalize(float3(1,2,3))) * .5 +.5;
                     
                     //Light
                     if (_Effect == 1) 
                         col.rgb = GetLight(p);
+                    if (_Effect == 2)
+                        col.rgb = dif;
                     //3D Normals - classic Rx Gy Bz
-                    if (_Effect == 2) 
+                    if (_Effect == 3) 
                         col.rgb = RotatedNormals(p);
+                    //3D Normals with lighting
+                    if (_Effect == 4) 
+                        col.rgb = dif/2 + 2*clamp(RotatedNormals(p)/3, 0, 1);
+                    
+                    //RGBW - W is light by white
+                    if (_Effect == 5)
+                        col.rgb = (RotatedNormals(p).xyz / 2) + RotatedNormals(p).w;
+        
+                    //RGBW with lighting
+                    if (_Effect == 6)
+                        col.rgb = dif/2 + 2*clamp(((RotatedNormals(p).xyz) + RotatedNormals(p).w)/2, 0, 1);
+
                     //Only W is lit - red one direction, blue the other
-                    if (_Effect == 3) {
+                    if (_Effect == 7) {
                         float t = 0.0001;
                         if (RotatedNormals(p).w > t) col.rgb = float3(1,0,0);
                         else if (RotatedNormals(p).w < -t) col.rgb = float3(0,0,1);
                         else col.rgb = dif;
                     }
-                    //RGBW - W is light by white
-                    if (_Effect == 4)
-                        col.rgb = (RotatedNormals(p).xyz / 2) + RotatedNormals(p).w;
-                    //Combos - Not that good
-                    if (_Effect == 5) {
+                    //Combos - Only show when w is mixed with another direction.
+                    //Not good
+                    if (_Effect == 8) {
                         col.rgb = dif;
                         float4 n = RotatedNormals(p);
                         float xw = n.x * n.w;
@@ -312,9 +324,6 @@
                         float zw = n.z * n.w;
                         col.rgb *= float3(xw, yw, zw);
                     }
-                    //RGBW with lighting
-                    if (_Effect == 4)
-                        col.rgb = dif/2 + 2*((RotatedNormals(p).xyz) + RotatedNormals(p).w)/3;
                 }
 
                 return col;
