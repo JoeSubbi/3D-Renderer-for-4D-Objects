@@ -21,7 +21,7 @@ Shader "Unlit/Scene"
 
             #define MAX_STEPS 100
             #define MAX_DIST  100
-            #define SURF_DIST 0.0001
+            #define SURF_DIST 0.001
 
             struct appdata
             {
@@ -58,24 +58,14 @@ Shader "Unlit/Scene"
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
 
                 // object space
-                o.ro = mul(unity_WorldToObject, float4(_WorldSpaceCameraPos, 1));
-                o.hitPos = v.vertex; 
+                //o.ro = mul(unity_WorldToObject, float4(_WorldSpaceCameraPos, 1));
+                //o.hitPos = v.vertex; 
                 
                 //world space
-                //o.ro = _WorldSpaceCameraPos;
-                //o.hitPos = mul(unity_ObjectToWorld, v.vertex);
+                o.ro = _WorldSpaceCameraPos;
+                o.hitPos = mul(unity_ObjectToWorld, v.vertex);
 
                 return o;
-            }
-
-            /**
-             * \brief   Shape distance function for an infinite plane
-             *
-             * \param   p   center point of object
-             */
-            float sdPlaneInf(float3 p){
-                float d = p.y;
-                return d;
             }
 
             /**
@@ -110,19 +100,6 @@ Shader "Unlit/Scene"
              */
             float sdBox(float3 p, float3 s){
                 float d = length(max(abs(p)-s, 0));
-                return d;
-            }
-
-            /**
-             * \brief   Shape distance function for a box
-             *
-             * \param   p   center point of object
-             * \param   s   float 3 of box shape
-             *              x, y, z -> width, height, depth
-             * \param   r   radius of the bevel
-             */
-            float sdRoundedBox(float3 p, float3 s, float r){
-                float d = length(max(abs(p)-s, 0)) - r;
                 return d;
             }
 
@@ -171,10 +148,36 @@ Shader "Unlit/Scene"
                 return e+i;
             }
 
-            float4 RotationMatrix(float a) {
+            /**
+             * \brief   Shape distance function for a cone
+             *
+             * \param   r   radius at base of cone
+             * \param   h   height of cone
+             */
+            float sdCone(float3 p, float radius, float height) {
+                float2 q = float2(length(p.xz), p.y);
+                float2 tip = q - float2(0, height);
+                float2 mantleDir = normalize(float2(height, radius));
+                float mantle = dot(tip, mantleDir);
+                float d = max(mantle, -q.y);
+                float projected = dot(tip, float2(mantleDir.y, -mantleDir.x));
+                
+                // distance to tip
+                if ((q.y > height) && (projected < 0)) {
+                    d = max(d, length(tip));
+                }
+                
+                // distance to base ring
+                if ((q.x > radius) && (projected > length(float2(height, radius)))) {
+                    d = max(d, length(q - float2(radius, 0)));
+                }
+                return d;
+            }
+
+            float2x2 RotationMatrix(float a) {
                 float s = sin(a);
                 float c = cos(a);
-                return float4(c, s, -s ,c);
+                return float2x2(c, s, -s ,c);
             }
 
             /**
@@ -184,104 +187,347 @@ Shader "Unlit/Scene"
              * \param   a   axis of rotation
              * \param   b   axis of rotation
              */
-            float2 RotMatMul(float4 mat, float a, float b){
-                float2 rot = float2( a * mat[0] + b * mat[1],
-                                     a * mat[2] + b * mat[3] );
-                return rot;
+            float2 RotMatMul(float2x2 mat, float2 p){
+                return mul(mat, p);
             }
 
             float GetDist(float3 p){
                 
+                // Floor
+                float floor = p.y+0.5;
+
                 // Front Wheel
-                float3 fwp = p-float3(0.25,0,0);
-                float fwheel = sdSphere(fwp, 0.1);
-                fwheel = max(fwheel, -sdSphere(fwp-float3(0,0,0.1), 0.07));
-                fwheel = max(fwheel, -sdSphere(fwp-float3(0,0,-0.1), 0.07));
+                float frontWheel;
+                float ball = sdSphere(p-float3(1,0,0), 0.5);
+                    //Subtraction
+                    float frontSubL = sdSphere(p-float3(1,0, 0.45), 0.35);
+                    float frontSubR = sdSphere(p-float3(1,0,-0.45), 0.35);
+                    float frontSubBox = sdBox(p-float3(1,0,0), float3(0.5,0.5,0.25)) -0.01;
+                    float frontSub = max( -frontSubBox, min(frontSubL, frontSubR));
+                    frontWheel = max(-frontSub, ball);
+                    //Bolts
+                    float FWboltF = sdSphere(p-float3(1,0, 0.25), 0.1);
+                    float FWboltB = sdSphere(p-float3(1,0,-0.25), 0.1);
+                    frontWheel = min(frontWheel, min(FWboltF,FWboltB));
 
-                fwheel = min(fwheel, sdCylinder(p,
-                                                float3(0.25,0,-0.055),
-                                                float3(0.25,0,0.055), 0.06));
-                float cap = min(
-                    sdSphere(fwp-float3(0,0,0.05), 0.02),
-                    sdSphere(fwp-float3(0,0,-0.05), 0.02)
-                );
-                fwheel = min(fwheel, cap);
-                
                 // Back Wheel
-                float3 bwp = p-float3(-0.25,0,0);
-                float bwheel = sdCylinder(p, 
-                                          float3(-0.25,0,-0.005), 
-                                          float3(-0.25,0,0.005), 0.09)-0.01;
-                bwheel = max(bwheel, -sdCylinder(p,
-                                                float3(-0.25,0,-0.03),
-                                                float3(-0.25,0,0.03), 0.06));
-
-                bwheel = min(bwheel, sdCylinder(p,
-                                                float3(-0.25,0,-0.009),
-                                                float3(-0.25,0,0.009), 0.06));
-                cap = min(
-                    sdSphere(bwp-float3(0,0,0.01), 0.02),
-                    sdSphere(bwp-float3(0,0,-0.01), 0.02)
-                );
-                bwheel = min(bwheel, cap);
+                float backWheel;
+                float pos = -1.2;
+                float backWheelLeft  = sdSphere(p-float3(pos,0,-0.9), 1);
+                float backWheelRight = sdSphere(p-float3(pos,0,0.9), 1);
+                backWheel = max(backWheelLeft, backWheelRight)-0.03;
+                    //Subtraction
+                    float backSubL = sdSphere(p-float3(pos,0, 0.2), 0.35);
+                    float backSubR = sdSphere(p-float3(pos,0,-0.2), 0.35);
+                    float backSubBox = sdBox(p-float3(pos,0,0), float3(0.5,0.5,0.03)) -0.01;
+                    float backSub = max( -backSubBox, min(backSubL, backSubR));
+                    backWheel = max(-backSub, backWheel);
+                    //Bolts
+                    float BWboltF = sdSphere(p-float3(pos,0, 0.03), 0.1);
+                    float BWboltB = sdSphere(p-float3(pos,0,-0.03), 0.1);
+                    backWheel = min(backWheel, min(BWboltF,BWboltB));
 
                 // Engine
+                float engine;
+                float3 ep = p-float3(0.66,0,0);
+                float2x2 mat = RotationMatrix(3.14159/2);
+                ep.xy = RotMatMul(mat, ep.xy);
+                float steer = sdCone(ep, 0.36, 0.9);
+                engine = steer;
+                // Engine Block
+                float3 bp = p-float3(-0.1,-1.4,0);
+                float pad = 0.15+0.01;
+                float bodyCurve = max( max( (length(bp.xy) - 2.21), -bp.z-pad), bp.z-pad);
+                float body = sdBox(p-float3(-0.25,0.22,0), float3(0.95,0.44,pad-0.01))-0.01;
+                body = max(bodyCurve, body);
+                engine = min(engine, body);
+                    //Subtract
+                    float bolt = length((p-float3(pos, 0, 0.3)).xy) - 0.125;
+                    engine = max(-bolt, engine);
+                // Cones Mid
+                ep = p-float3(-0.3,0,0);
+                mat = RotationMatrix(-3.14159/2);
+                ep.xy = RotMatMul(mat, ep.xy);
+                float LowConeL = sdCone(ep-float3(0,0, 0.1), 0.1, 0.8);
+                float LowConeR = sdCone(ep-float3(0,0,-0.1), 0.1, 0.8);
+                engine = min(engine, min(LowConeL, LowConeR));
+                // Cones Back
+                ep = p-float3(pos-0.03,0.35,0);
+                mat = RotationMatrix(-3.14159/2 -0.15);
+                ep.xy = RotMatMul(mat, ep.xy);
+                float BackConeL = sdCone(ep-float3(0,0, 0.1), 0.1, 0.8);
+                float BackConeR = sdCone(ep-float3(0,0,-0.1), 0.1, 0.8);
+                ep = p-float3(pos-0.03,0.28,0);
+                mat = RotationMatrix(-3.14159/2 -0.15);
+                ep.xy = RotMatMul(mat, ep.xy);
+                float TireCone  = sdCone(ep-float3(-0.25,-0.18,0), 0.18, 0.8);
+                float backCones = max(-p.x+pos-0.01, min(min(BackConeL, BackConeR), TireCone));
+                engine = min(engine, backCones);
+                    //Subtract
+                    float wheelGap = sdCylinder(p-float3(pos, 0, 0),
+                                                float3(0,0,0.01),
+                                                float3(0,0,-0.01), 0.53)-0.09;
+                    engine = max(engine, -wheelGap); 
+                // Bar
+                float3 cyl = p-float3(-0.54, -0.15, 0);
+                float cylinder = max( max( (length(cyl.xy) - 0.03), -cyl.z-0.2), cyl.z-0.2);
+                engine = min(engine, cylinder);
 
-                float d = min(fwheel, bwheel);
-                //d = min(d, stear);
+                // Window
+                float window;
+                float3 wp = p-float3(-0.05,-1.4,0);
+                pad = 0.11;
+                float canopy = max( max( (length(wp.xy) - 2.29), -wp.z-pad), wp.z-pad);
+                    // Subtract
+                    canopy = max(canopy, -p.y+0.35);
+                    canopy = max(canopy, -p.x-1.2);
+                    window = max(canopy, -wheelGap); 
+                    
+                float windScreen = sdCylinder(p-float3(0.7,1.2,0),
+                                              float3(0,0,0.2),
+                                              float3(0,0,-0.2),
+                                              0.8);
+                windScreen = max(windScreen, canopy);
+                //Side Windows
+                float3 winp = p-float3(0.3, 0.35, 0.17);
+                winp *= float3(0.45, 1, 1);
+                float side1 = sdSphere(winp, 0.33);
+                winp = p-float3(0.3, 0.35, -0.17);
+                winp *= float3(0.45, 1, 1);
+                float side2 = sdSphere(winp, 0.33);
+                float sides = min(side1, side2);
+                    // Subtract
+                    float sub = sdBox(p, float3(2, 0.35, 0.5))-0.01;
+                    sides = max(sides, -sub);
+                    winp = p-float3(-0.25,0.4,0);
+                    mat = RotationMatrix(-3.14159/3);
+                    winp.xy = RotMatMul(mat, winp.xy);
+                    sub = sdBox(winp, float3(0.5,0.4,0.5))-0.01;
+                    sides = max(sides, -sub);
+                window = min(window, sides);
+
+                // Walls
+                float walls;
+                pad = 0.17;
+                float wallBlock = sdCylinder(wp, 
+                                            float3(0,0, pad),
+                                            float3(0,0,-pad), 2.2);
+                    // Mask
+                    // Triangle
+                    float mask = sdBox(p-float3(-0.22,0.26,0), float3(0.3,0.3,pad))-0.01;
+                    walls = mask;
+                    float3 mp = p-float3(-0.47,0.5,0);
+                    mat = RotationMatrix(3.14159/3);
+                    mp.xy = RotMatMul(mat, mp.xy);
+                    mask = sdBox(mp, float3(0.5,0.2,pad))-0.01;
+                    walls = max(walls, mask);
+                    // Back
+                    mp = p-float3(-0.8,1.2,0);
+                    mat = RotationMatrix(3.14159/2.6);
+                    mp.xy = RotMatMul(mat, mp.xy);
+                    mask = sdBox(mp, float3(0.6,0.55,pad))-0.01;
+                    walls = min(walls, mask);
+                    // Base
+                    mask = sdBox(p-float3(-0.1,0.85,0), float3(0.35,0.7,pad))-0.01;
+                    walls = min(walls, mask);
+                    // Front
+                    mp = p-float3(0.46,0.94,0);
+                    mat = RotationMatrix(-3.14159/2.9);
+                    mp.xy = RotMatMul(mat, mp.xy);
+                    mask = sdBox(mp, float3(0.6,0.55,pad))-0.01;
+                    walls = min(walls, mask);
+                    // Tip
+                    mask = sdBox(p-float3(1,0.6,0), float3(0.5, 0.2, pad))-0.01;
+                    walls = min(walls, mask);
+                walls = max(walls, wallBlock) -0.05;
+
+                float d = floor;
+                      d = min(d, frontWheel);
+                      d = min(d, backWheel);
+                      d = min(d, engine);
+                      d = min(d, window);
+                      d = min(d, walls);
                 
                 return d;
             }
 
             int GetMat(float3 p){
-                int mat = 1;
+                // Floor
+                float floor = p.y+0.5;
 
                 // Front Wheel
-                float3 fwp = p-float3(0.25,0,0);
-                float fwheel = sdSphere(fwp, 0.1);
-                fwheel = max(fwheel, -sdSphere(fwp-float3(0,0,0.1), 0.07));
-                fwheel = max(fwheel, -sdSphere(fwp-float3(0,0,-0.1), 0.07));
-
-                float ball = fwheel;
-
-                float hub = sdCylinder(p,
-                                        float3(0.25,0,-0.058),
-                                        float3(0.25,0,0.058), 0.06);
-                fwheel = min(fwheel, hub);
-
-                float cap = min(
-                    sdSphere(p-float3(0.25,0,0.05), 0.02),
-                    sdSphere(p-float3(0.25,0,-0.05), 0.02)
-                );
-                fwheel = min(fwheel, cap);
+                float frontWheel;
+                float ball = sdSphere(p-float3(1,0,0), 0.5);
+                    //Subtraction
+                    float frontSubL = sdSphere(p-float3(1,0, 0.45), 0.35);
+                    float frontSubR = sdSphere(p-float3(1,0,-0.45), 0.35);
+                    float frontSubBox = sdBox(p-float3(1,0,0), float3(0.5,0.5,0.25)) -0.01;
+                    float frontSub = max( -frontSubBox, min(frontSubL, frontSubR));
+                    frontWheel = max(-frontSub, ball);
+                    //Bolts
+                    float FWboltF = sdSphere(p-float3(1,0, 0.25), 0.1);
+                    float FWboltB = sdSphere(p-float3(1,0,-0.25), 0.1);
+                    frontWheel = min(frontWheel, min(FWboltF,FWboltB));
 
                 // Back Wheel
-                float bwheel = sdCylinder(p, 
-                                          float3(-0.25,0,-0.005), 
-                                          float3(-0.25,0,0.005), 0.09)-0.01;
-                bwheel = max(bwheel, -sdCylinder(p,
-                                                float3(-0.25,0,-0.03),
-                                                float3(-0.25,0,0.03), 0.06));
-                float bball = bwheel;
+                float backWheel;
+                float pos = -1.2;
+                float backWheelLeft  = sdSphere(p-float3(pos,0,-0.9), 1);
+                float backWheelRight = sdSphere(p-float3(pos,0,0.9), 1);
+                backWheel = max(backWheelLeft, backWheelRight)-0.03;
+                    //Subtraction
+                    float backSubL = sdSphere(p-float3(pos,0, 0.2), 0.35);
+                    float backSubR = sdSphere(p-float3(pos,0,-0.2), 0.35);
+                    float backSubBox = sdBox(p-float3(pos,0,0), float3(0.5,0.5,0.03)) -0.01;
+                    float backSub = max( -backSubBox, min(backSubL, backSubR));
+                    backWheel = max(-backSub, backWheel);
+                    //Bolts
+                    float BWboltF = sdSphere(p-float3(pos,0, 0.03), 0.1);
+                    float BWboltB = sdSphere(p-float3(pos,0,-0.03), 0.1);
+                    backWheel = min(backWheel, min(BWboltF,BWboltB));
 
-                float bhub = sdCylinder(p,
-                                float3(-0.25,0,-0.009),
-                                float3(-0.25,0,0.009), 0.06);
-                bwheel = min(bwheel, bhub);
+                // Engine
+                float engine;
+                float3 ep = p-float3(0.66,0,0);
+                float2x2 mat = RotationMatrix(3.14159/2);
+                ep.xy = RotMatMul(mat, ep.xy);
+                float steer = sdCone(ep, 0.36, 0.9);
+                engine = steer;
+                // Engine Block
+                float3 bp = p-float3(-0.1,-1.4,0);
+                float pad = 0.15+0.01;
+                float bodyCurve = max( max( (length(bp.xy) - 2.21), -bp.z-pad), bp.z-pad);
+                float body = sdBox(p-float3(-0.25,0.22,0), float3(0.95,0.44,pad-0.01))-0.01;
+                body = max(bodyCurve, body);
+                engine = min(engine, body);
+                    //Subtract
+                    float bolt = length((p-float3(pos, 0, 0.3)).xy) - 0.125;
+                    engine = max(-bolt, engine);
+                // Cones Mid
+                ep = p-float3(-0.3,0,0);
+                mat = RotationMatrix(-3.14159/2);
+                ep.xy = RotMatMul(mat, ep.xy);
+                float LowConeL = sdCone(ep-float3(0,0, 0.1), 0.1, 0.8);
+                float LowConeR = sdCone(ep-float3(0,0,-0.1), 0.1, 0.8);
+                engine = min(engine, min(LowConeL, LowConeR));
+                // Cones Back
+                ep = p-float3(pos-0.03,0.35,0);
+                mat = RotationMatrix(-3.14159/2 -0.15);
+                ep.xy = RotMatMul(mat, ep.xy);
+                float BackConeL = sdCone(ep-float3(0,0, 0.1), 0.1, 0.8);
+                float BackConeR = sdCone(ep-float3(0,0,-0.1), 0.1, 0.8);
+                ep = p-float3(pos-0.03,0.28,0);
+                mat = RotationMatrix(-3.14159/2 -0.15);
+                ep.xy = RotMatMul(mat, ep.xy);
+                float TireCone  = sdCone(ep-float3(-0.25,-0.18,0), 0.18, 0.8);
+                float backCones = max(-p.x+pos-0.01, min(min(BackConeL, BackConeR), TireCone));
+                engine = min(engine, backCones);
+                    //Subtract
+                    float wheelGap = sdCylinder(p-float3(pos, 0, 0),
+                                                float3(0,0,0.01),
+                                                float3(0,0,-0.01), 0.53)-0.09;
+                    engine = max(engine, -wheelGap); 
+                // Bar
+                float3 cyl = p-float3(-0.54, -0.15, 0);
+                float cylinder = max( max( (length(cyl.xy) - 0.03), -cyl.z-0.2), cyl.z-0.2);
+                engine = min(engine, cylinder);
 
-                float bcap = min(
-                    sdSphere(p-float3(-0.25,0,0.01), 0.02),
-                    sdSphere(p-float3(-0.25,0,-0.01), 0.02)
-                );
-                bwheel = min(bwheel, bcap);
+                // Window
+                float window;
+                float3 wp = p-float3(-0.05,-1.4,0);
+                pad = 0.11;
+                float canopy = max( max( (length(wp.xy) - 2.29), -wp.z-pad), wp.z-pad);
+                    // Subtract
+                    canopy = max(canopy, -p.y+0.35);
+                    canopy = max(canopy, -p.x-1.2);
+                    window = max(canopy, -wheelGap);
 
-                float d = min(fwheel, bwheel);
+                float windScreen = sdCylinder(p-float3(0.7,1.2,0),
+                                              float3(0,0,0.2),
+                                              float3(0,0,-0.2),
+                                              0.8);
+                windScreen = max(windScreen, canopy);
+                //Side Windows
+                float3 winp = p-float3(0.3, 0.35, 0.17);
+                winp *= float3(0.45, 1, 1);
+                float side1 = sdSphere(winp, 0.33);
+                winp = p-float3(0.3, 0.35, -0.17);
+                winp *= float3(0.45, 1, 1);
+                float side2 = sdSphere(winp, 0.33);
+                float sides = min(side1, side2);
+                    // Subtract
+                    float sub = sdBox(p, float3(2, 0.35, 0.5))-0.01;
+                    sides = max(sides, -sub);
+                    winp = p-float3(-0.25,0.4,0);
+                    mat = RotationMatrix(-3.14159/3);
+                    winp.xy = RotMatMul(mat, winp.xy);
+                    sub = sdBox(winp, float3(0.5,0.4,0.5))-0.01;
+                    sides = max(sides, -sub);
+                window = min(window, sides);
 
-                if(d == ball || d == bball) mat = 1;
-                else if(d == hub || d == bhub) mat = 2;
-                else if(d == cap || d == bcap) mat = 3;
+                // Walls
+                float walls;
+                pad = 0.17;
+                float wallBlock = sdCylinder(wp, 
+                                            float3(0,0, pad),
+                                            float3(0,0,-pad), 2.2);
+                    // Mask
+                    // Triangle
+                    float mask = sdBox(p-float3(-0.22,0.26,0), float3(0.3,0.3,pad))-0.01;
+                    walls = mask;
+                    float3 mp = p-float3(-0.47,0.5,0);
+                    mat = RotationMatrix(3.14159/3);
+                    mp.xy = RotMatMul(mat, mp.xy);
+                    mask = sdBox(mp, float3(0.5,0.2,pad))-0.01;
+                    walls = max(walls, mask);
+                    // Back
+                    mp = p-float3(-0.8,1.2,0);
+                    mat = RotationMatrix(3.14159/2.6);
+                    mp.xy = RotMatMul(mat, mp.xy);
+                    mask = sdBox(mp, float3(0.6,0.55,pad))-0.01;
+                    walls = min(walls, mask);
+                    // Base
+                    mask = sdBox(p-float3(-0.1,0.85,0), float3(0.35,0.7,pad))-0.01;
+                    walls = min(walls, mask);
+                    // Front
+                    mp = p-float3(0.46,0.94,0);
+                    mat = RotationMatrix(-3.14159/2.9);
+                    mp.xy = RotMatMul(mat, mp.xy);
+                    mask = sdBox(mp, float3(0.6,0.55,pad))-0.01;
+                    walls = min(walls, mask);
+                    // Tip
+                    mask = sdBox(p-float3(1,0.6,0), float3(0.5, 0.2, pad))-0.01;
+                    walls = min(walls, mask);
+                walls = max(walls, wallBlock) -0.05;
 
-                return mat;
+                float d = floor;
+                      d = min(d, frontWheel);
+                      d = min(d, backWheel);
+                      d = min(d, engine);
+                      d = min(d, window);
+                      d = min(d, walls);
+
+                int material = 0; 
+                if (d == frontWheel ||
+                    d == cylinder  ||
+                    d == backWheel ||
+                    d == canopy ||
+                    d == walls)
+                    material = 1;
+                
+                if (d == backSubBox ||
+                    d == frontSubBox)
+                    material = 2;
+
+                if (d == sides ||
+                    d == windScreen)
+                    material = 3;
+
+                if (d == BWboltB || d == BWboltF ||
+                    d == FWboltB || d == FWboltF)
+                    material = 0;
+
+                return material;
             }
 
             float Raymarch(float3 ro, float3 rd){
@@ -314,7 +560,7 @@ Shader "Unlit/Scene"
             }
 
             float GetLight(float3 p){
-                float3 lightPos = float3(3,2,2);
+                float3 lightPos = float3(2,3,4);
 
                 //angle dependant fall off
                 float3 lv = normalize(lightPos-p);
@@ -353,14 +599,15 @@ Shader "Unlit/Scene"
                     float3 r = reflect(rd, n);
                     float3 ref = tex2D(_MainTex, r).rgb;
 
-                    //Global illumination - nicer than 1 diffuse light
+                    //Normal Lighting
                     float dif = dot(n, normalize(float3(1,2,3))) * .5 +.5;
-                    col.rgb = float3(dif,dif,dif);
+                    col.rgb = (dif + GetLight(p))/2;
                     
                     int mat = GetMat(p);
                     if (mat==1) col.rgb *= _Color*(((ref*_R)/3)+0.6);
                     else if (mat==2) col.rgb *= ((ref*_R)/6)+(0.1);
-                    else if (mat==3) col.rgb *= ((ref*_R)/1)+(0.4);;
+                    else if (mat==3) col.rgb = GetLight(p)/10;
+
                 }
 
                 return col;
