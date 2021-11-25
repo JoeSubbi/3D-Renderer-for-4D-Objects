@@ -106,8 +106,11 @@ public class GrabRotation : MonoBehaviour
                 total *= r;
 
                 //Rotate grab ball
-                qTotal *= Quaternion.AngleAxis(RadToDeg(x+y), plane);
-                transform.rotation = qTotal;
+                if (!wRotation)
+                {
+                    qTotal *= Quaternion.AngleAxis(RadToDeg(x + y), plane);
+                    transform.rotation = qTotal;
+                }
             }
             //If not dragging mouse, disbale specified plane of rotation
             if (Input.GetMouseButtonUp(0))
@@ -128,35 +131,71 @@ public class GrabRotation : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit))
         {
-            switch (hit.collider.name)
+            if (!wRotation)
             {
-                case "arc xy":
-                    e1 = new Vector4(-1, 0, 0, 0);
-                    e2 = new Vector4( 0, 1, 0, 0);
+                switch (hit.collider.name)
+                {
+                    case "arc xy":
+                        e1 = new Vector4(-1, 0, 0, 0);
+                        e2 = new Vector4(0, 1, 0, 0);
 
-                    plane = new Vector3(0, 0, 1);
-                    line.material = GameObject.Find("arc xy").GetComponent<Renderer>().material;
-                    break;
-                case "arc zx":
-                    e1 = new Vector4(-1, 0, 0, 0);
-                    e2 = new Vector4( 0, 0, 1, 0);
+                        plane = new Vector3(0, 0, 1);
+                        line.material = GameObject.Find("arc xy").GetComponent<Renderer>().material;
+                        break;
+                    case "arc zx":
+                        e1 = new Vector4(-1, 0, 0, 0);
+                        e2 = new Vector4(0, 0, 1, 0);
 
-                    plane = new Vector3(0, 1, 0);
-                    line.material = GameObject.Find("arc zx").GetComponent<Renderer>().material;
-                    break;
-                case "arc yz":
-                    e1 = new Vector4(0, 1, 0, 0);
-                    e2 = new Vector4(0, 0, 1, 0);
+                        plane = new Vector3(0, 1, 0);
+                        line.material = GameObject.Find("arc zx").GetComponent<Renderer>().material;
+                        break;
+                    case "arc yz":
+                        e1 = new Vector4(0, 1, 0, 0);
+                        e2 = new Vector4(0, 0, 1, 0);
 
-                    plane = new Vector3(1, 0, 0);
-                    line.material = GameObject.Find("arc yz").GetComponent<Renderer>().material;
-                    break;
-                default:
-                    e1 = new Vector4(0, 0, 0, 0);
-                    e2 = new Vector4(0, 0, 0, 0);
+                        plane = new Vector3(1, 0, 0);
+                        line.material = GameObject.Find("arc yz").GetComponent<Renderer>().material;
+                        break;
+                    default:
+                        e1 = new Vector4(0, 0, 0, 0);
+                        e2 = new Vector4(0, 0, 0, 0);
 
-                    plane = new Vector3(0, 0, 0);
-                    break;
+                        plane = new Vector3(0, 0, 0);
+                        break;
+                }
+            }
+            else
+            {
+                switch (hit.collider.name)
+                {
+                    case "arc xy":
+                        e1 = new Vector4(0, 0, 1, 0);
+                        e2 = new Vector4(0, 0, 0, 1);
+
+                        plane = new Vector3(0, 0, 1);
+                        line.material = GameObject.Find("arc xy").GetComponent<Renderer>().material;
+                        break;
+                    case "arc zx":
+                        e1 = new Vector4(0, 1, 0, 0);
+                        e2 = new Vector4(0, 0, 0, 1);
+
+                        plane = new Vector3(0, 1, 0);
+                        line.material = GameObject.Find("arc zx").GetComponent<Renderer>().material;
+                        break;
+                    case "arc yz":
+                        e1 = new Vector4(1, 0, 0, 0);
+                        e2 = new Vector4(0, 0, 0, 1);
+
+                        plane = new Vector3(1, 0, 0);
+                        line.material = GameObject.Find("arc yz").GetComponent<Renderer>().material;
+                        break;
+                    default:
+                        e1 = new Vector4(0, 0, 0, 0);
+                        e2 = new Vector4(0, 0, 0, 0);
+
+                        plane = new Vector3(0, 0, 0);
+                        break;
+                }
             }
         }
         normal = hit.normal;
