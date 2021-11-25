@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * Implementation of a Rotor3 class based on Marc ten Bosch's c++ implementation
+ * https://marctenbosch.com/quaternions/code.htm
+ */
+
 public class Rotor3
 {
     // scalar part

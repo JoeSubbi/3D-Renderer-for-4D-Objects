@@ -2,6 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * Based on a c++ template by Marc ten Bosch
+ * https://marctenbosch.com/news/2011/05/4d-rotations-and-the-4d-equivalent-of-quaternions/
+ * 
+ * Rotor4 was founded on Marc ten Bosch's Rotor3
+ * https://marctenbosch.com/quaternions/code.htm
+ */
+
 public class Rotor4
 {
     // scalar part
@@ -93,9 +101,9 @@ public class Rotor4
         float be12 = p.bxy;
         float be31 = p.bxz;
         float be23 = p.byz;
-        float be41 = -p.bxw;
-        float be42 = -p.byw;
-        float be43 = -p.bzw;
+        float be41 = p.bxw;
+        float be42 = p.byw;
+        float be43 = p.bzw;
         float be1234 = p.bxyzw;
 
         // q = Px
@@ -115,9 +123,9 @@ public class Rotor4
         float ae12 = p.bxy;
         float ae31 = p.bxz;
         float ae23 = p.byz;
-        float ae41 = -p.bxw;
-        float ae42 = -p.byw;
-        float ae43 = -p.bzw;
+        float ae41 = p.bxw;
+        float ae42 = p.byw;
+        float ae43 = p.bzw;
         float ae1234 = p.bxyzw;
 
         float be1 = q.x;
