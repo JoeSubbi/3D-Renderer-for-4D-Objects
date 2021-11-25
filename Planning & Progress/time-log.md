@@ -359,3 +359,8 @@
  - *3 hours* finished deriving rotate function... it did not work
  - *1 hour* diagnose why it is not working, improved a bit but still not working as expected - I think something is wrong with the signs of each component of the equations
  - *0.5 hours* added another colour based texture - all positive red, all positive blue, overlayed over lighting
+
+### 25 Nov 2021
+
+ - *0.5 hours* weekly meeting
+ - *1 hour* 4D rotor works on 3D!, 4D rotation still doesn't work

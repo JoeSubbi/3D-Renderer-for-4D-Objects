@@ -32,8 +32,8 @@ This project focuses on the development of a wide range of 4 Dimensional shapes 
    - 4D hyper sphere
    - 4D hyper cube/box
    - 4D Torus
-   - 4D Octahedron
-   - 4D Tetrahedron
+   - ~~4D Octahedron~~
+   - ~~4D Tetrahedron~~
  - Render 3D cross sections of these 4D shapes (the camera is in the 3D "slice" of this 4D world).
  - Research transformations on the objects
    - Rotate the objects in 3D
@@ -58,6 +58,7 @@ This project focuses on the development of a wide range of 4 Dimensional shapes 
    - Need to create a load script that will set each condition to load the scene correctly based on the conditions.
  - Implemented Pentachoron
  - Derived rotor equations (incorrectly). I think the signs are wrong in places so need to review. Progress though
+ - 4D rotor now works for 3D rotation, 4D rotation doesn't work yet
 
 ## Problems and risks
 ### Problems
