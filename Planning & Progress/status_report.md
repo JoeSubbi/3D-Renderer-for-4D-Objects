@@ -57,6 +57,7 @@ This project focuses on the development of a wide range of 4 Dimensional shapes 
    - Does not include loadable rotation as of yet - unsure if to include in the same scene, or to create a different scene
    - Need to create a load script that will set each condition to load the scene correctly based on the conditions.
  - Implemented Pentachoron
+ - Derived rotor equations (incorrectly). I think the signs are wrong in places so need to review. Progress though
 
 ## Problems and risks
 ### Problems

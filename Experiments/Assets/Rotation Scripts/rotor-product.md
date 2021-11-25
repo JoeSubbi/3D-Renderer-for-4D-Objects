@@ -215,7 +215,253 @@ impl std::ops::Mul<Rotor> for Rotor {
 		e31   = a0 * b5e31   + a1e01 * b3e30    + a2e20 * b7e0123 - a4e12 * b6e32   - a3e30 * b1e01   + a5e31 * b0      + a6e32 * b4e12	  + a7e0123 * b2e20
 		e32   = a0 * b6e32   + a1e01 * b7e0123  - a2e20 * b3e30   - a4e12 * b5e31   + a3e30 * b2e20   + a5e31 * b4e12   + a6e32 * b0      + a7e0123 * b1e01
 		e0123 = a0 * b7e0123 + a1e01 * b6e32    - a2e20 * b5e31   + a4e12 * b3e30   + a3e30 * b4e12   - a5e31 * b2e20   + a6e32 * b1e01   + a7e0123 * b0
-
 	}
+}
+```
+
+```cs
+// Rotate a Vector with a Rotor
+public Vector4 Rotate(Vector4 u)
+{
+	Rotor4 p = this;
+
+	/* Rotor3 version
+
+	q = Px
+	a.e1 * b.e   -> e1
+	a.e1 * b.e12 -> e2
+	a.e1 * b.e31 -> -e3
+	a.e1 * b.e23 -> e123
+	
+	a.e2 * b.e   -> e2
+	a.e2 * b.e12 -> -e1
+	a.e2 * b.e31 -> e123
+	a.e2 * b.e23 -> e3
+	
+	a.e3 * b.e   -> e3
+	a.e3 * b.e12 -> e123
+	a.e3 * b.e31 -> e1
+	a.e3 * b.e23 -> -e2
+
+	Therefore
+	e1 =    a.e1 * b.e   - a.e2 * b.e12 + a.e3 * b.e31
+	e2 =    a.e1 * b.e12 + a.e2 * b.e   - a.e3 * b.e23
+	e3 =   -a.e1 * b.e31 + a.e2 * b.e23 + a.e3 * b.e 
+	e123 =  a.e1 * b.e23 + a.e2 * b.e31 + a.e3 * b.e12
+	
+	Ordered ==
+	e1 =   a.e1 * b.e - a.e2 * b.e12 + a.e3 * b.e31
+	e2 =   a.e2 * b.e + a.e1 * b.e12 - a.e3 * b.e23
+	e3 =   a.e3 * b.e - a.e1 * b.e31 + a.e2 * b.e23
+	WHICH IS CORRECT!
+
+	STAGE 2...
+	r = qP* 
+	a.e   * be1   -> e1
+	a.e   * be2   -> e2
+	a.e   * be3   -> e3
+	a.e	  * be123 -> e123
+
+	a.e12 * be1   -> -e2
+	a.e12 * be2   -> e1
+	a.e12 * be3   -> e123
+	a.e12 * be123 -> -e3
+
+	a.e31 * be1   -> e3
+	a.e31 * be2   -> e123
+	a.e31 * be3   -> -e1
+	a.e31 * be123 -> -e2
+
+	a.e23 * be1   -> e123
+	a.e23 * be2   -> -e3
+	a.e23 * be3   -> e2
+	a.e23 * be123 -> -e1
+
+	e1 = a.e * be1 + a.e12 * be2   - a.e31 * be3   - a.e23 * be123
+	e2 = a.e * be2 - a.e12 * be1   - a.e31 * be123 + a.e23 * be3
+	e3 = a.e * be3 - a.e12 * be123 + a.e31 * be1   - a.e23 * be2
+
+	Ordered ==
+	e1 = a.e * be1 + be2   * a.e12 - be3   * a.e31 - be123 * a.e23
+	e2 = a.e * be2 - be1   * a.e12 - be123 * a.e31 + be3   * a.e23
+	e3 = a.e * be3 - be123 * a.e12 + be1   * a.e31 - be2   * a.e23
+	WHICH IS CORRECT!
+
+	YESSSSSSSSSSSSSSSSSSSS!!!!!!!!!!!!!!!!!!!
+
+	*/
+
+	/* Rotor4 Version
+
+	q = Px
+	  a.e1 * b.e     -> e1
+	+ a.e1 * b.e12   -> e2
+	+ a.e1 * b.e31   -> -e3
+	+ a.e1 * b.e23   -> e123
+	+ a.e1 * b.e41   -> e4
+	+ a.e1 * b.e42   -> e142
+	+ a.e1 * b.e43   -> -e134
+	+ a.e1 * b.e1234 -> e324
+
+	q.y
+	  a.e2 * b.e     -> e2
+	+ a.e2 * b.e12   -> -e1
+	+ a.e2 * b.e31   -> e123
+	+ a.e2 * b.e23   -> e3
+	+ a.e2 * b.e41   -> e142
+	+ a.e2 * b.e42   -> -e4
+	+ a.e2 * b.e43   -> e324
+	+ a.e2 * b.e1234 -> e134
+
+	q.z
+	  a.e3 * b.e     -> e3
+	+ a.e3 * b.e12   -> e123
+	+ a.e3 * b.e31   -> e1
+	+ a.e3 * b.e23   -> -e2
+	+ a.e3 * b.e41   -> e134
+	+ a.e3 * b.e42   -> e324
+	+ a.e3 * b.e43   -> e4
+	+ a.e3 * b.e1234 -> -e142
+
+	q.w
+	  a.e4 * b.e     -> e4
+	+ a.e4 * b.e12   -> -e142
+	+ a.e4 * b.e31   -> e134
+	+ a.e4 * b.e23   -> e324
+	+ a.e4 * b.e41   -> -e4
+	+ a.e4 * b.e42   -> e2
+	+ a.e4 * b.e43   -> -e3
+	+ a.e4 * b.e1234 -> -e123
+
+	Therefore
+	e1 =  a.e1 * b.e   - a.e2 * b.e12 + a.e3 * b.e31 
+	e2 =  a.e1 * b.e12 + a.e2 * b.e   - a.e3 * b.e23 + a.e4 * b.e42
+	e3 = -a.e1 * b.e31 + a.e2 * b.e23 + a.e3 * b.e   - a.e4 * b.e43
+	e4 =  a.e1 * b.e41 - a.e2 * b.e42 + a.e3 * b.e43 + a.e4 * b.e   - a.e4 * b.e41
+
+	e123 =  a.e1 * b.e23   + a.e2 * b.e31   + a.e3 * b.e12   - a.e4 * b.e1234
+	e142 =  a.e1 * b.e42   + a.e2 * b.e41   - a.e3 * b.e1234 - a.e4 * b.e12
+	e134 = -a.e1 * b.e43   + a.e2 * b.e1234 + a.e3 * b.e41   + a.e4 * b.e31
+	e324 =  a.e1 * b.e1234 + a.e2 * b.e43   + a.e3 * b.e42   + a.e4 * b.e23 
+	
+	Ordered ==
+	e1 = a.e1 * b.e - a.e2 * b.e12 + a.e3 * b.e31 
+	e2 = a.e2 * b.e + a.e1 * b.e12 - a.e3 * b.e23 + a.e4 * b.e42
+	e3 = a.e3 * b.e - a.e1 * b.e31 + a.e2 * b.e23 - a.e4 * b.e43
+	e4 = a.e4 * b.e + a.e1 * b.e41 - a.e4 * b.e41 + a.e3 * b.e43
+	FINGERS CROSSED
+
+	r = qP*
+	a.e   * b.e1   -> e1
+	a.e   * b.e2   -> e2
+	a.e   * b.e3   -> e3
+	a.e   * b.e4   -> e4
+	a.e   * b.e123 -> e123
+	a.e   * b.e134 -> e134
+	a.e   * b.e142 -> e142
+	a.e   * b.e324 -> e324
+
+	a.e12 * b.e1   -> -e2
+	a.e12 * b.e2   -> e1
+	a.e12 * b.e3   -> e123
+	a.e12 * b.e4   -> -e142
+	a.e12 * b.e123 -> e3
+	a.e12 * b.e134 -> e324
+	a.e12 * b.e142 -> -e4
+	a.e12 * b.e324 -> -e134
+
+	a.e31 * b.e1   -> e3
+	a.e31 * b.e2   -> e123
+	a.e31 * b.e3   -> -e1
+	a.e31 * b.e4   -> e134
+	a.e31 * b.e123 -> e2
+	a.e31 * b.e134 -> -e4
+	a.e31 * b.e142 -> -e324
+	a.e31 * b.e324 -> -e142
+
+	a.e23 * b.e1   -> e123
+	a.e23 * b.e2   -> -e3
+	a.e23 * b.e3   -> e2
+	a.e23 * b.e4   -> e324
+	a.e23 * b.e123 -> e1
+	a.e23 * b.e134 -> e142
+	a.e23 * b.e142 -> e134
+	a.e23 * b.e324 -> -e4
+
+	a.e41 * b.e1   -> -e4
+	a.e41 * b.e2   -> e142
+	a.e41 * b.e3   -> e134
+	a.e41 * b.e4   -> e1
+	a.e41 * b.e123 -> e324 
+	a.e41 * b.e134 -> e2
+	a.e41 * b.e142 -> -e3
+	a.e41 * b.e324 -> e123
+
+	a.e42 * b.e1   -> e142
+	a.e42 * b.e2   -> e4
+	a.e42 * b.e3   -> e324
+	a.e42 * b.e4   -> -e2
+	a.e42 * b.e123 -> -e134
+	a.e42 * b.e134 -> e1
+	a.e42 * b.e142 -> -e123
+	a.e42 * b.e324 -> -e3
+
+	a.e43 * b.e1   -> -e134
+	a.e43 * b.e2   -> e324
+	a.e43 * b.e3   -> -e4
+	a.e43 * b.e4   -> e3
+	a.e43 * b.e123 -> -e142
+	a.e43 * b.e134 -> e123
+	a.e43 * b.e142 -> e1
+	a.e43 * b.e324 -> -e2
+
+	a.e1234 * b.e1   -> -e324
+	a.e1234 * b.e2   -> -e134
+	a.e1234 * b.e3   -> e142
+	a.e1234 * b.e4   -> e123
+	a.e1234 * b.e123 -> -e4
+	a.e1234 * b.e134 -> -e3
+	a.e1234 * b.e142 -> -e2
+	a.e1234 * b.e324 -> -e1
+
+	Therefore
+	e1 = a.e * b.e1 + a.e12 * b.e2   - a.e31 * b.e3   + a.e23 * b.e123 + a.e41 * b.e4   + a.e42 * b.e134 + a.e43 * b.e142 - a.e1234 * b.e324
+	e2 = a.e * b.e2 - a.e12 * b.e1   + a.e31 * b.e123 + a.e23 * b.e3   + a.e41 * b.e134 - a.e42 * b.e4   - a.e43 * b.e324 - a.e1234 * b.e142
+	e3 = a.e * b.e3 + a.e12 * b.e123 + a.e31 * b.e1   - a.e23 * b.e2   - a.e41 * b.e142 - a.e42 * b.e324 + a.e43 * b.e4   - a.e1234 * b.e134
+	e4 = a.e * b.e4 - a.e12 * b.e142 - a.e31 * b.e134 - a.e23 * b.e324 - a.e41 * b.e1   + a.e42 * b.e2   - a.e43 * b.e3   - a.e1234 * b.e123
+
+	*/
+
+
+	float e1 = a.e1 * b.e - a.e2 * b.e12 + a.e3 * b.e31;
+	float e2 = a.e2 * b.e + a.e1 * b.e12 - a.e3 * b.e23 + a.e4 * b.e42;
+	float e3 = a.e3 * b.e - a.e1 * b.e31 + a.e2 * b.e23 - a.e4 * b.e43;
+	float e4 = a.e4 * b.e + a.e1 * b.e41 - a.e4 * b.e41 + a.e3 * b.e43;
+
+	float e123 =  a.e1 * b.e23   + a.e2 * b.e31   + a.e3 * b.e12   - a.e4 * b.e1234;
+	float e142 =  a.e1 * b.e42   + a.e2 * b.e41   - a.e3 * b.e1234 - a.e4 * b.e12;
+	float e134 = -a.e1 * b.e43   + a.e2 * b.e1234 + a.e3 * b.e41   + a.e4 * b.e31;
+	float e324 =  a.e1 * b.e1234 + a.e2 * b.e43   + a.e3 * b.e42   + a.e4 * b.e23;
+
+	// q = Px
+	Vector4 q;
+	q.x = e1;
+	q.y = e2;
+	q.z = e3;
+	q.w = e4;
+
+	e1 = a.e * b.e1 + a.e12 * b.e2   - a.e31 * b.e3   + a.e23 * b.e123 + a.e41 * b.e4   + a.e42 * b.e134 + a.e43 * b.e142 - a.e1234 * b.e324
+	e2 = a.e * b.e2 - a.e12 * b.e1   + a.e31 * b.e123 + a.e23 * b.e3   + a.e41 * b.e134 - a.e42 * b.e4   - a.e43 * b.e324 - a.e1234 * b.e142
+	e3 = a.e * b.e3 + a.e12 * b.e123 + a.e31 * b.e1   - a.e23 * b.e2   - a.e41 * b.e142 - a.e42 * b.e324 + a.e43 * b.e4   - a.e1234 * b.e134
+	e4 = a.e * b.e4 - a.e12 * b.e142 - a.e31 * b.e134 - a.e23 * b.e324 - a.e41 * b.e1   + a.e42 * b.e2   - a.e43 * b.e3   - a.e1234 * b.e123
+
+	// r = qP*
+	Vector4 r;
+	r.x = e1;
+	r.y = e2;
+	r.z = e3;
+	r.w = e4;
+
+	return r;
 }
 ```

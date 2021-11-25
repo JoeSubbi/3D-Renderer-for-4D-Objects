@@ -10,6 +10,10 @@
         _YZ ("Y to Z Rotation", Float) = 0
         _XZ ("Z to X Rotation", Float) = 0
         _XY ("X to Y Rotation", Float) = 0
+        _XW ("X to W Rotation", Float) = 0
+        _YW ("Y to W Rotation", Float) = 0
+        _ZW ("Z to W Rotation", Float) = 0
+        _XYZW ("Quad-Vector", Float) = 0
     }
     SubShader
     {
@@ -56,9 +60,13 @@
                 float _W;   
 
                 float _A;
-                float _XY;
                 float _YZ;
                 float _XZ;
+                float _XY;
+                float _XW;
+                float _YW;
+                float _ZW;
+                float _XYZW;
 
             CBUFFER_END
 
@@ -152,22 +160,59 @@
             }
 
             float4 Rotate(float4 u){
+                float ae1 = u.x;
+                float ae2 = u.y;
+                float ae3 = u.z;
+                float ae4 = u.w;
+
+                float be = _A;
+                float be12 = _XY;
+                float be31 = _XZ;
+                float be23 = _YZ;
+                float be41 = _XW;
+                float be42 = _YW;
+                float be43 = _ZW;
+                float be1234 = _XYZW;
+
                 // q = Px
+                float4 q;
+                q.x = ae1 * be - ae2 * be12 + ae3 * be31;
+                q.y = ae2 * be + ae1 * be12 - ae3 * be23 + ae4 * be42;
+                q.z = ae3 * be - ae1 * be31 + ae2 * be23 - ae4 * be43;
+                q.w = ae4 * be + ae1 * be41 - ae4 * be41 + ae3 * be43;
 
-                float3 q;
-                q.x = _A * u.x + u.y * _XY + u.z * _XZ;
-                q.y = _A * u.y - u.x * _XY + u.z * _YZ;
-                q.z = _A * u.z - u.x * _XZ - u.y * _YZ;
+                float q123 =  ae1 * be23   + ae2 * be31   + ae3 * be12   - ae4 * be1234;
+                float q134 = -ae1 * be43   + ae2 * be1234 + ae3 * be41   + ae4 * be31;
+                float q142 =  ae1 * be42   + ae2 * be41   - ae3 * be1234 - ae4 * be12;
+                float q324 =  ae1 * be1234 + ae2 * be43   + ae3 * be42   + ae4 * be23;
 
-                float XYZ = u.x * _YZ - u.y * _XZ + u.z * _XY;
+                //Conjugate of rotor
+                float ae = _A;
+                float ae12 = -_XY;
+                float ae31 = -_XZ;
+                float ae23 = -_YZ;
+                float ae41 = -_XW;
+                float ae42 = -_YW;
+                float ae43 = -_ZW;
+                float ae1234 = -_XYZW;
+
+                float be1 = q.x;
+                float be2 = q.y;
+                float be3 = q.z;
+                float be4 = q.w;
+                float be123 = q123;
+                float be134 = q134;
+                float be142 = q142;
+                float be324 = q324;
 
                 // r = qP*
-                float3 r;
-                r.x = _A * q.x + q.y * _XY + q.z * _XZ + XYZ * _YZ;
-                r.y = _A * q.y - q.x * _XY - XYZ * _XZ + q.z * _YZ;
-                r.z = _A * q.z + XYZ * _XY - q.x * _XZ - q.y * _YZ;
-
-                return float4(r, u.w);
+                float4 r;
+                r.x = ae * be1 + ae12 * be2   - ae31 * be3   + ae23 * be123 + ae41 * be4   + ae42 * be134 + ae43 * be142 - ae1234 * be324;
+                r.y = ae * be2 - ae12 * be1   + ae31 * be123 + ae23 * be3   + ae41 * be134 - ae42 * be4   - ae43 * be324 - ae1234 * be142;
+                r.z = ae * be3 + ae12 * be123 + ae31 * be1   - ae23 * be2   - ae41 * be142 - ae42 * be324 + ae43 * be4   - ae1234 * be134;
+                r.w = ae * be4 - ae12 * be142 - ae31 * be134 - ae23 * be324 - ae41 * be1   + ae42 * be2   - ae43 * be3   - ae1234 * be123;
+                
+            return r;
             }
 
             float GetDist(float4 p){

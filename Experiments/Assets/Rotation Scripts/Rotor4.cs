@@ -50,20 +50,20 @@ public class Rotor4
     {
         float a0    = p.a;
         float a1e01 = p.bxy;
-        float a2e20 = -p.bxz;
+        float a2e20 = p.bxz;
         float a4e12 = p.byz;
-        float a3e30 = -p.bxw;
-        float a5e31 = -p.byw;
-        float a6e32 = -p.bzw;
+        float a3e30 = p.bxw;
+        float a5e31 = p.byw;
+        float a6e32 = p.bzw;
         float a7e0123 = p.bxyzw;
 
         float b0    = q.a;
         float b1e01 = q.bxy;
-        float b2e20 = -q.bxz;
+        float b2e20 = q.bxz;
         float b4e12 = q.byz;
-        float b3e30 = -q.bxw;
-        float b5e31 = -q.byw;
-        float b6e32 = -q.bzw;
+        float b3e30 = q.bxw;
+        float b5e31 = q.byw;
+        float b6e32 = q.bzw;
         float b7e0123 = q.bxyzw;
  
         float e     = a0 * b0      - a1e01 * b1e01    - a2e20 * b2e20   - a4e12 * b4e12   - a3e30 * b3e30   - a5e31 * b5e31   - a6e32 * b6e32	  + a7e0123 * b7e0123;
@@ -83,29 +83,57 @@ public class Rotor4
     {
         Rotor4 p = this;
 
+        float ae1 = u.x;
+        float ae2 = u.y;
+        float ae3 = u.z;
+        float ae4 = u.w;
+
+        float be = p.a;
+        float be12 = p.bxy;
+        float be31 = p.bxz;
+        float be23 = p.byz;
+        float be41 = -p.bxw;
+        float be42 = -p.byw;
+        float be43 = -p.bzw;
+        float be1234 = p.bxyzw;
+
         // q = Px
         Vector4 q;
-        q.x = p.a * u.x + u.y * p.bxy + u.z * p.bxz + u.w * p.bxw;
-        q.y = p.a * u.y;
-                        // - u.x * p.bxy + u.z * p.byz + u.w * p.byw;
-        q.z = p.a * u.z;
-                        // - u.x * p.bxz - u.y * p.byz + u.w * p.bzw;
-        q.w = p.a * u.w;
-                        // - u.x * p.bxw - u.y * p.bzw + u.w * p.byw;
+        q.x = ae1 * be - ae2 * be12 + ae3 * be31;
+        q.y = ae2 * be + ae1 * be12 - ae3 * be23 + ae4 * be42;
+        q.z = ae3 * be - ae1 * be31 + ae2 * be23 - ae4 * be43;
+        q.w = ae4 * be + ae1 * be41 - ae4 * be41 + ae3 * be43;
 
-        //float qxyz = u.x * p.byz - u.y * p.bxz + u.z * p.bxy;
-        //bxyzw = u.x * p.bxw - u.y * p.byw + u.z * p.bzw + u.w * qxyz;
+        float q123 =  ae1 * be23   + ae2 * be31   + ae3 * be12   - ae4 * be1234;
+        float q134 = -ae1 * be43   + ae2 * be1234 + ae3 * be41   + ae4 * be31;
+        float q142 =  ae1 * be42   + ae2 * be41   - ae3 * be1234 - ae4 * be12;
+        float q324 =  ae1 * be1234 + ae2 * be43   + ae3 * be42   + ae4 * be23;
+
+        p = p.Reverse();
+        float ae = p.a;
+        float ae12 = p.bxy;
+        float ae31 = p.bxz;
+        float ae23 = p.byz;
+        float ae41 = -p.bxw;
+        float ae42 = -p.byw;
+        float ae43 = -p.bzw;
+        float ae1234 = p.bxyzw;
+
+        float be1 = q.x;
+        float be2 = q.y;
+        float be3 = q.z;
+        float be4 = q.w;
+        float be123 = q123;
+        float be134 = q134;
+        float be142 = q142;
+        float be324 = q324;
 
         // r = qP*
         Vector4 r;
-        r.x = p.a * u.x;
-                        // + q.y  * p.bxy + q.z  * p.bxz + qxyz * p.byz + q.w * p.bxw;
-        r.y = p.a * u.y;
-                        // - q.x  * p.bxy - qxyz * p.bxz + q.z  * p.byz + q.w * p.byw;
-        r.z = p.a * u.z;
-                        // + qxyz * p.bxy - q.x  * p.bxz - q.y  * p.byz + q.w * p.bzw;
-        r.w = p.a * u.w;
-                        // + bxyzw * p.bxw + bxyzw * p.byw + bxyzw * p.bzw + bxyzw * qxyz;
+        r.x = ae * be1 + ae12 * be2   - ae31 * be3   + ae23 * be123 + ae41 * be4   + ae42 * be134 + ae43 * be142 - ae1234 * be324;
+        r.y = ae * be2 - ae12 * be1   + ae31 * be123 + ae23 * be3   + ae41 * be134 - ae42 * be4   - ae43 * be324 - ae1234 * be142;
+        r.z = ae * be3 + ae12 * be123 + ae31 * be1   - ae23 * be2   - ae41 * be142 - ae42 * be324 + ae43 * be4   - ae1234 * be134;
+        r.w = ae * be4 - ae12 * be142 - ae31 * be134 - ae23 * be324 - ae41 * be1   + ae42 * be2   - ae43 * be3   - ae1234 * be123;
 
         return r;
     }

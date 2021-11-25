@@ -34,6 +34,7 @@ public class SwipeRotation : MonoBehaviour
         rend.material.SetFloat("_XW", total.bxw);
         rend.material.SetFloat("_YW", total.byw);
         rend.material.SetFloat("_ZW", total.bzw);
+        rend.material.SetFloat("_XYZW", total.bxyzw);
 
         total.Normalise();
     }

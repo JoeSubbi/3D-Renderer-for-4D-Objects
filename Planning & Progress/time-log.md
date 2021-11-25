@@ -317,6 +317,10 @@
 
  - *2 hours* Add capsule to polished scenes, and 3D objects to `Shapes.cginc`
 
+### 18 Nov 2021
+
+ - *0.5 hours* weekly meeting
+
 ### 19 Nov 2021
 
  - *2 hours* writing up intro script
@@ -332,3 +336,26 @@
 ### 21 Nov 2021
 
  - *2 hours* Created a working pentachoron (hyper tetrahedron)
+
+## Week 10
+
+### 22 Nov 2021
+
+ - *2 hours* playing with different "texturing"
+   - currently just colouring faces
+ - *3 hours* deriving rotor-rotor product
+   - appears successful - interacts well with 3D rotation
+
+### 23 Nov 2021
+
+ - *2 hours* created more visualisations for the users
+   - tesseract
+ - *2 hours* derive 3D rotation expressions
+   - correct - but some signs are wrong, presumably because bosch takes Z as up, but the multiplication table, and me take Y as up
+ - *0.5 hours* improving face colouring for "texturing"
+
+### 24 Nov 2021
+
+ - *3 hours* finished deriving rotate function... it did not work
+ - *1 hour* diagnose why it is not working, improved a bit but still not working as expected - I think something is wrong with the signs of each component of the equations
+ - *0.5 hours* added another colour based texture - all positive red, all positive blue, overlayed over lighting

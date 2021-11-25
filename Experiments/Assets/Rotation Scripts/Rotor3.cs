@@ -34,11 +34,8 @@ public class Rotor3
     public static Rotor3 operator *(Rotor3 p, Rotor3 q)
     {
         float a   = p.a * q.a - p.b01 * q.b01 - p.b02 * q.b02 - p.b12 * q.b12;
-
         float b01 = p.b01 * q.a + p.a * q.b01 + p.b12 * q.b02 - p.b02 * q.b12;
-
         float b02 = p.b02 * q.a + p.a * q.b02 - p.b12 * q.b01 + p.b01 * q.b12;
-
         float b12 = p.b12 * q.a + p.a * q.b12 + p.b02 * q.b01 - p.b01 * q.b02;
 
         p = new Rotor3(a, b01, b02, b12);

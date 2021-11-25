@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class GrabRotation : MonoBehaviour
 {
-    private Vector3 e1 = new Vector3(0, 0, 0);
-    private Vector3 e2 = new Vector3(0, 0, 0);
-    public Rotor3 total = new Rotor3(1, 0, 0, 0);
+    private Vector4 e1 = new Vector4(0, 0, 0, 0);
+    private Vector4 e2 = new Vector4(0, 0, 0, 0);
+    public Rotor4 total = new Rotor4(1, 0, 0, 0, 0, 0, 0, 0);
 
     private Vector3 plane = new Vector3(0, 0, 0);
     private Quaternion qTotal = new Quaternion(1, 0, 0, 0);
     private LineRenderer line;
     private Renderer image;
-
 
     public bool wRotation = false;
     private Vector3 normal = new Vector3(0, 0, 0);
@@ -21,8 +20,10 @@ public class GrabRotation : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //4D Object
         image = GameObject.Find("Plane").GetComponent<Renderer>();
 
+        //Guide line when rotating grab ball
         line = gameObject.AddComponent<LineRenderer>();
         Vector3[] initLinePos = new Vector3[2] { Vector3.zero, Vector3.zero };
         line.SetPositions(initLinePos);
@@ -34,12 +35,16 @@ public class GrabRotation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        //Rotate 4D Object
         image.material.SetFloat("_A",  total.a);
-        image.material.SetFloat("_XY", total.b02);
-        image.material.SetFloat("_XZ", total.b01);
-        image.material.SetFloat("_YZ", total.b12);
-        
+        image.material.SetFloat("_XY", total.bxy);
+        image.material.SetFloat("_XZ", total.bxz);
+        image.material.SetFloat("_YZ", total.byz);
+        image.material.SetFloat("_XW", total.bxw);
+        image.material.SetFloat("_YW", total.byw);
+        image.material.SetFloat("_ZW", total.bzw);
+        image.material.SetFloat("_XYZW", total.bxyzw);
+
         total.Normalise();
         qTotal.Normalize();
 
@@ -63,18 +68,19 @@ public class GrabRotation : MonoBehaviour
         Event e = Event.current;
         if (e.isMouse)
         {
-
+            //Get Mouse Movements
             int speed = 50;
             float x = e.delta.x / speed;
             float y = e.delta.y / speed;
 
+            //See what axis the object should rotate on
             if (e1 == e2 && Input.GetMouseButtonDown(0))
             {
                 CheckHit();
             }
             else if (e1 != e2)
             {
-                // Define direction for intuitive rotation
+                // Define direction for intuitive rotation with grab ball
                 Vector3 perp = qTotal * plane;
                 if (perp.x == 1) normal.x = 0;
                 if (perp.y == 1) normal.z = 0;
@@ -94,18 +100,20 @@ public class GrabRotation : MonoBehaviour
                 line.SetPosition(0, point-tangent*5);
                 line.SetPosition(1, point+tangent*5);
 
-                //Rotate
-                Bivector3 bv = Bivector3.Wedge(e1, e2);
-                Rotor3 r = new Rotor3(bv, x+y);
+                //Rotate object
+                Bivector4 bv = Bivector4.Wedge(e1, e2);
+                Rotor4 r = new Rotor4(bv, x+y);
                 total *= r;
 
+                //Rotate grab ball
                 qTotal *= Quaternion.AngleAxis(RadToDeg(x+y), plane);
                 transform.rotation = qTotal;
             }
+            //If not dragging mouse, disbale specified plane of rotation
             if (Input.GetMouseButtonUp(0))
             {
-                e1 = new Vector3(0, 0, 0);
-                e2 = new Vector3(0, 0, 0);
+                e1 = new Vector4(0, 0, 0, 0);
+                e2 = new Vector4(0, 0, 0, 0);
 
                 plane = new Vector3(0, 0, 0);
 
@@ -123,29 +131,29 @@ public class GrabRotation : MonoBehaviour
             switch (hit.collider.name)
             {
                 case "arc xy":
-                    e1 = new Vector3(1, 0, 0);
-                    e2 = new Vector3(0, 0, 1);
+                    e1 = new Vector4(1, 0, 0, 0);
+                    e2 = new Vector4(0, 0, 1, 0);
 
                     plane = new Vector3(0, 0, 1);
                     line.material = GameObject.Find("arc xy").GetComponent<Renderer>().material;
                     break;
                 case "arc zx":
-                    e1 = new Vector3(-1, 0, 0);
-                    e2 = new Vector3( 0, 1, 0);
+                    e1 = new Vector4( 1, 0, 0, 0);
+                    e2 = new Vector4( 0, 1, 0, 0);
 
                     plane = new Vector3(0, 1, 0);
                     line.material = GameObject.Find("arc zx").GetComponent<Renderer>().material;
                     break;
                 case "arc yz":
-                    e1 = new Vector3(0, 1, 0);
-                    e2 = new Vector3(0, 0, 1);
+                    e1 = new Vector4(0, 1, 0, 0);
+                    e2 = new Vector4(0, 0, 1, 0);
 
                     plane = new Vector3(-1, 0, 0);
                     line.material = GameObject.Find("arc yz").GetComponent<Renderer>().material;
                     break;
                 default:
-                    e1 = new Vector3(0, 0, 0);
-                    e2 = new Vector3(0, 0, 0);
+                    e1 = new Vector4(0, 0, 0, 0);
+                    e2 = new Vector4(0, 0, 0, 0);
 
                     plane = new Vector3(0, 0, 0);
                     break;
