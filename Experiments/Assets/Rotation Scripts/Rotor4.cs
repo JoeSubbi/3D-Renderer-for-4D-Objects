@@ -48,34 +48,34 @@ public class Rotor4
     // Rotor4-Rotor4 Product
     public static Rotor4 operator *(Rotor4 p, Rotor4 q)
     {
-        float a0    = p.a;
-        float a1e01 = p.bxy;
-        float a2e20 = p.bxz;
-        float a4e12 = p.byz;
-        float a3e30 = p.bxw;
-        float a5e31 = p.byw;
-        float a6e32 = p.bzw;
-        float a7e0123 = p.bxyzw;
+        float ae    = p.a;
+        float ae12 = p.bxy;
+        float ae31 = p.bxz;
+        float ae23 = p.byz;
+        float ae41 = p.bxw;
+        float ae42 = p.byw;
+        float ae43 = p.bzw;
+        float ae1234 = p.bxyzw;
 
-        float b0    = q.a;
-        float b1e01 = q.bxy;
-        float b2e20 = q.bxz;
-        float b4e12 = q.byz;
-        float b3e30 = q.bxw;
-        float b5e31 = q.byw;
-        float b6e32 = q.bzw;
-        float b7e0123 = q.bxyzw;
+        float be    = q.a;
+        float be12 = q.bxy;
+        float be31 = q.bxz;
+        float be23 = q.byz;
+        float be41 = q.bxw;
+        float be42 = q.byw;
+        float be43 = q.bzw;
+        float be1234 = q.bxyzw;
  
-        float e     = a0 * b0      - a1e01 * b1e01    - a2e20 * b2e20   - a4e12 * b4e12   - a3e30 * b3e30   - a5e31 * b5e31   - a6e32 * b6e32	  + a7e0123 * b7e0123;
-		float e01   = a0 * b1e01   + a1e01 * b0       + a2e20 * b4e12   - a4e12 * b2e20   + a3e30 * b5e31   - a5e31 * b3e30   - a6e32 * b7e0123   - a7e0123 * b6e32;
-		float e20   = a0 * b2e20   - a1e01 * b4e12    + a2e20 * b0      + a4e12 * b1e01   + a3e30 * b6e32   + a5e31 * b7e0123 - a6e32 * b3e30	  + a7e0123 * b5e31;
-		float e12   = a0 * b4e12   + a1e01 * b2e20    - a2e20 * b1e01   + a4e12 * b0      - a3e30 * b7e0123 + a5e31 * b6e32   - a6e32 * b5e31	  - a7e0123 * b3e30;
-		float e30   = a0 * b3e30   + a1e01 * b5e31    + a2e20 * b6e32   + a4e12 * b7e0123 + a3e30 * b0      - a5e31 * b1e01   - a6e32 * b2e20	  + a7e0123 * b4e12;
-		float e31   = a0 * b5e31   + a1e01 * b3e30    + a2e20 * b7e0123 - a4e12 * b6e32   - a3e30 * b1e01   + a5e31 * b0      + a6e32 * b4e12	  + a7e0123 * b2e20;
-		float e32   = a0 * b6e32   + a1e01 * b7e0123  - a2e20 * b3e30   - a4e12 * b5e31   + a3e30 * b2e20   + a5e31 * b4e12   + a6e32 * b0        + a7e0123 * b1e01;
-		float e0123 = a0 * b7e0123 + a1e01 * b6e32    - a2e20 * b5e31   + a4e12 * b3e30   + a3e30 * b4e12   - a5e31 * b2e20   + a6e32 * b1e01     + a7e0123 * b0;
+        float e     = ae * be     - ae12 * be12    - ae31 * be31   - ae23 * be23   - ae41 * be41   - ae42 * be42   - ae43 * be43   + ae1234 * be1234;
+		float e12   = ae * be12   + ae12 * be      + ae31 * be23   - ae23 * be31   + ae41 * be42   - ae42 * be41   - ae43 * be1234 - ae1234 * be43;
+		float e31   = ae * be31   - ae12 * be23    + ae31 * be     + ae23 * be12   + ae41 * be43   + ae42 * be1234 - ae43 * be41   + ae1234 * be42;
+		float e23   = ae * be23   + ae12 * be31    - ae31 * be12   + ae23 * be     - ae41 * be1234 + ae42 * be43   - ae43 * be42   - ae1234 * be41;
+		float e41   = ae * be41   + ae12 * be42    + ae31 * be43   + ae23 * be1234 + ae41 * be     - ae42 * be12   - ae43 * be31   + ae1234 * be23;
+		float e42   = ae * be42   + ae12 * be41    + ae31 * be1234 - ae23 * be43   - ae41 * be12   + ae42 * be     + ae43 * be23   + ae1234 * be31;
+		float e43   = ae * be43   + ae12 * be1234  - ae31 * be41   - ae23 * be42   + ae41 * be31   + ae42 * be23   + ae43 * be     + ae1234 * be12;
+		float e1234 = ae * be1234 + ae12 * be43    - ae31 * be42   + ae23 * be41   + ae41 * be23   - ae42 * be31   + ae43 * be12   + ae1234 * be;
 
-        return new Rotor4(e, e01, e20, e12, e30, e31, e32, e0123);
+        return new Rotor4(e, e12, e31, e23, e41, e42, e43, e1234);
     }
 
     // Rotate a Vector with a Rotor
@@ -88,6 +88,7 @@ public class Rotor4
         float ae3 = u.z;
         float ae4 = u.w;
 
+        //
         float be = p.a;
         float be12 = p.bxy;
         float be31 = p.bxz;
@@ -123,10 +124,10 @@ public class Rotor4
         float be2 = q.y;
         float be3 = q.z;
         float be4 = q.w;
-        float be123 = q123;
-        float be134 = q134;
-        float be142 = q142;
-        float be324 = q324;
+        float be123 = -q123;
+        float be134 = -q134;
+        float be142 = -q142;
+        float be324 = -q324;
 
         // r = qP*
         Vector4 r;

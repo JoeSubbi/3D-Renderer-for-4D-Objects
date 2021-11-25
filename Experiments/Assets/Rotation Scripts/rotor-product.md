@@ -254,6 +254,13 @@ public Vector4 Rotate(Vector4 u)
 	e2 =   a.e2 * b.e + a.e1 * b.e12 - a.e3 * b.e23
 	e3 =   a.e3 * b.e - a.e1 * b.e31 + a.e2 * b.e23
 	WHICH IS CORRECT!
+	
+	DIFFERENT SIGNS...
+	e1 =   a.e1 * b.e + a.e2 * b.e12 + a.e3 * b.e31
+	e2 =   a.e2 * b.e - a.e1 * b.e12 + a.e3 * b.e23
+	e3 =   a.e3 * b.e - a.e1 * b.e31 - a.e2 * b.e23
+	23 -> -23 == 32
+	12 -> -12 == 21
 
 	STAGE 2...
 	r = qP* 
@@ -288,6 +295,19 @@ public Vector4 Rotate(Vector4 u)
 	WHICH IS CORRECT!
 
 	YESSSSSSSSSSSSSSSSSSSS!!!!!!!!!!!!!!!!!!!
+
+	DIFFERENT SIGNS...
+	e1 = a.e * be1 + be2   * a.e12 + be3   * a.e31 + be123 * a.e23
+	e2 = a.e * be2 - be1   * a.e12 - be123 * a.e31 + be3   * a.e23
+	e3 = a.e * be3 + be123 * a.e12 - be1   * a.e31 - be2   * a.e23
+
+	123 -> -123
+	31  -> -31
+	which kind of makes sense because using P* (conjugate a)
+	a.a would not change with conjugate
+	a.e12 would
+	a.e31 would
+	a.e23 would
 
 	*/
 

@@ -200,10 +200,10 @@
                 float be2 = q.y;
                 float be3 = q.z;
                 float be4 = q.w;
-                float be123 = q123;
-                float be134 = q134;
-                float be142 = q142;
-                float be324 = q324;
+                float be123 = -q123;
+                float be134 = -q134;
+                float be142 = -q142;
+                float be324 = -q324;
 
                 // r = qP*
                 float4 r;
