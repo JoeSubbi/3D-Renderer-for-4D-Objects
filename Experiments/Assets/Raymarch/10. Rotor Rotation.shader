@@ -177,9 +177,9 @@
                 // q = Px
                 float4 q;
                 q.x = ae1 * be - ae2 * be12 + ae3 * be31;
-                q.y = ae2 * be + ae1 * be12 - ae3 * be23 + ae4 * be42;
-                q.z = ae3 * be - ae1 * be31 + ae2 * be23 - ae4 * be43;
-                q.w = ae4 * be + ae1 * be41 - ae4 * be41 + ae3 * be43;
+	            q.y = ae2 * be + ae1 * be12 - ae3 * be23 + ae4 * be42;
+	            q.z = ae3 * be - ae1 * be31 + ae2 * be23 - ae4 * be43;
+	            q.w = ae4 * be + ae1 * be41 - ae2 * be42 + ae3 * be43 - ae4 * be41;
 
                 float q123 =  ae1 * be23   + ae2 * be31   + ae3 * be12   - ae4 * be1234;
                 float q134 = -ae1 * be43   + ae2 * be1234 + ae3 * be41   + ae4 * be31;

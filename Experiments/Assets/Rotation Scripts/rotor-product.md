@@ -368,7 +368,8 @@ public Vector4 Rotate(Vector4 u)
 	e1 = a.e1 * b.e - a.e2 * b.e12 + a.e3 * b.e31 
 	e2 = a.e2 * b.e + a.e1 * b.e12 - a.e3 * b.e23 + a.e4 * b.e42
 	e3 = a.e3 * b.e - a.e1 * b.e31 + a.e2 * b.e23 - a.e4 * b.e43
-	e4 = a.e4 * b.e + a.e1 * b.e41 - a.e4 * b.e41 + a.e3 * b.e43
+	e4 = a.e4 * b.e + a.e1 * b.e41 - a.e2 * b.e42 + a.e3 * b.e43 - a.e4 * b.e41
+
 	FINGERS CROSSED
 
 	r = qP*
