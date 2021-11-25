@@ -56,57 +56,83 @@ Briefly describe your experience with 4D shapes:
 ## 4D Shapes
 
 **Geometry**
+<!-- Graphic of 3D axes -->
 As I am sure you know, 3D Euclidean space is made up of 3 axes; x, y and z.
 In 4D we have 4 axes, x, y, z and w. it is impossible to imagine, but the w axis is perpendicular to x and y and z, in the same way that z is perpendicular to x and y.
 
+<!-- Tesseract graphic -->
+Each dimension, brings a new perpendicular axis, but like I said we cannot visualise this properly. Rather than trying to visualise the 4D space, we will be viewing a 3D cross section of 4D objects.
+
+<!-- 3D Sphere -->
 To begin understanding 4D shapes, it is best to start with 3D examples.
 
 Take a 3D sphere:
 
 If we take a 2D slice at the center of that sphere, you can see it appears as a circle.
 
+<!-- overlaid arrows to show axes -->
 As I said before 3D space is described with 3 axes, x y and z. In this example, we take y to be up. In this case, the cross section covers a slice along the z axis and spans the x, y plane.
 
 If we move that sphere, along the z axis, through the translucent plane, you can see the 2D circle changes size.
 
+<!-- 3D Cube -->
 Now we will take a 3D Cube:
 
 If we move this cube through the plane, you can see it actually remains the same shape. That is until we get so far that the shape is no longer within the slice and disappears.
 
+<!-- 4D Sphere -->
 Moving on to 4D: 
 
 Here we are taking a 3D cross section of a 4 Dimensional object, in this case a hyper sphere.
 
-If we move the sphere forward or backward along the W axis, you can see it appears as a sphere that shrinks and expands, very similar to the 2D cross section of the 3D sphere.
+A hyper sphere has a radius spanning in all 4 axes. In 2D the radius spans x and y. in 3D it spans x and y and z. In 4D it spans X Y Z and W.
 
-If we now take the 4D hyper cube, also known as a tesseract, you can see it also behaves very similarly when we move it along the W axis as to when we moved a 3D cube along the Z axis.
+If we move the sphere forward or backward along the W axis, you can see it appears as a sphere that shrinks and expands, very similar to the circular 2D cross section of the 3D sphere.
+
+<!-- 4D Cube -->
+If we now take the 4D hyper cube also known as a tesseract.
+A hyper cube is a cube extruded along the W axis, in the same way a cube is a square extruded along the Z axis.
+
+You can see the hyper cube also behaves very similarly when we move it along the W axis as to when we moved a 3D cube along the Z axis.
 
 **Rotation**
 Moving on to 4D rotation.
 
-I am sure you are used to thinking of rotation as "rotating about an axis". For the sake of understand 4D rotation, you will need to adapt your understanding slightly. 
+<!-- Rotation Video -->
+I am sure you are used to thinking of rotation an object as "rotating the object about an axis". For the sake of understand 4D rotation, you will need to adapt your understanding slightly. 
 
 Instead: consider that we rotate an object around a plane.
-In 3D this would make rotating about the Y axis, equivalent to rotating about the XZ plane.
+For example: this would make rotating about the Y axis, equivalent to rotating about the XZ plane.
 
-You can think of the rotation as rotating 1 axis towards another. So XZ rotation would be rotating from X to Z.
+You can think of the rotation as rotating from 1 axis to another. So XZ rotation would be rotating from X to Z.
 
 the 3 degrees of rotation in 3D would then be YZ, XZ, XY rather than X, Y and Z respectively.
 
+<!-- QUICK Video of each degree - _W disapear-->
 Now In 4D there are 6 degrees of rotation. The regular, Y to Z, X to Z, X to Y, plus X to W, Y to W and Z to W.
 
 Whilst you should think of rotation in terms of rotating about a plane, it can help to keep axial rotation in mind. XW rotation can be similar to YZ rotation, and YZ rotation is equivalent to rotation about the X axis.
 
-Lets look at the rotation of a cube in all 6 degrees of rotation.
+Lets look at the rotation of a cube.
 
+<!-- Rotating 3D Cube -->
 If we take a look at the 2D cross section of the 3D cube, we can get a hint at what will happen in 4D.
 
-When rotating the cube along the XZ plane we can see the cross section looks like it gets wider and thinner.
+When rotating the cube along the XZ plane we can see the cross section looks like it gets wider and then retracts to a square again.
 
+<!-- Rotating a 4D Cube -->
 Now when we rotate the hyper cube along the XW plane, we can see it does more or less the same thing.
 
+<!-- Rotating in multiple planes 4D Cube -->
 If we rotate along multiple axes in 3D you can see it gets a bit confusing,
+
 but it is still similar to that in 4D
+
+<!-- Rotated 3D cube along W -->
+You can see also, that a rotated cube in 3D will produce cross section that may not look like a square
+
+<!-- Rotated 4D cube along W -->
+Once again, the same principles apply to 4D
 
 ## The Experiment
 <!--
