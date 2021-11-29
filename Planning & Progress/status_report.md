@@ -59,6 +59,7 @@ This project focuses on the development of a wide range of 4 Dimensional shapes 
  - Implemented Pentachoron
  - Derived rotor equations (incorrectly). I think the signs are wrong in places so need to review. Progress though
  - 4D rotor now works for 3D rotation, 4D rotation doesn't work yet
+ - Texture patterns to colour objects with patterns
 
 ## Problems and risks
 ### Problems

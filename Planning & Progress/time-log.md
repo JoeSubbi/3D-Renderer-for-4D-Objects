@@ -364,3 +364,22 @@
 
  - *0.5 hours* weekly meeting
  - *1 hour* 4D rotor works on 3D!, 4D rotation still doesn't work
+
+### 26 Nov 2021
+
+ - *1.5 hours* re-derived 4D rotation - turns out I was doing P\*uP rather than PuP\*
+   - Rotation now works in yz, xz, xy AND 2 w3 planes. but not the last one... Need to re-derive Rotor3 rotation correctly and see if I learn anything.
+
+### 27 Nov 2021
+
+ - *0.5 hours* considering how a grab ball should interact with XW, YW and ZW. Should it remain unmoving? or should I be controlling 2 3D grab balls to represent 3D and 4D
+
+### 28 Nov 2021
+
+ - *1.5 hours* re-deriving rotor3 product and rotor4 rotation - found some stuff I thought maybe I missed but seems less accurate than before
+
+## Week 11
+
+## 29 Nov 2021
+
+ - *1.5 hours* working texture patterns

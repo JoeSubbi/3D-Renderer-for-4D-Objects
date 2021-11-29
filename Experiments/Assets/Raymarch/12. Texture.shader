@@ -3,6 +3,11 @@
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
+        _TexX ("X Texture", 2D) = "red" {}
+        _TexY ("Y Texture", 2D) = "green" {}
+        _TexZ ("Z Texture", 2D) = "blue" {}
+        _TexW ("W Texture", 2D) = "white" {}
+
         _Effect ("ShadingType", Int) = 2
         _W ("W Axis Cross Section", Range(-3,3)) = 0
         // Rotation -pi to pi rad == -180 to 180 deg
@@ -47,6 +52,15 @@
 
             sampler2D _MainTex;
             float4 _MainTex_ST;
+
+            sampler2D _TexX;
+            sampler2D _TexY;
+            sampler2D _TexZ;
+            sampler2D _TexW;
+            float4 _TexX_ST;
+            float4 _TexY_ST;
+            float4 _TexZ_ST;
+            float4 _TexW_ST;
 
             // To make the Unity shader SRP Batcher compatible, declare all
             // properties related to a Material in a a single CBUFFER block with 
@@ -323,6 +337,113 @@
                         float yw = n.y * n.w;
                         float zw = n.z * n.w;
                         col.rgb *= float3(xw, yw, zw);
+                    }
+                    //Forward and Backward
+                    if (_Effect == 9) {
+                        if ( dot(float4(1,1,1,1), RotatedNormals(p)) > 0.5)
+                            col.rgb = dif*float3(1,0.5,0.5);
+                        else if (dot(float4(1,1,1,1), RotatedNormals(p)) < -0.5)
+                            col.rgb = dif*float3(0.5,0.5,1);
+                        else
+                            col.rgb = dif;
+                    }
+
+                    //Textures
+                    if (_Effect == 10) {
+                        float4 n = RotatedNormals(p);
+                        
+                        float3 colyzw = tex2D(_TexX, Rotate(p).yzw).rgb;
+                        float3 colzxw = tex2D(_TexY, Rotate(p).zxw).rgb;
+                        float3 colxyw = tex2D(_TexZ, Rotate(p).xyw).rgb;
+                        float3 colxyz = tex2D(_TexW, Rotate(p).xyz).rgb;
+                        
+                        n = pow(n,3);
+                        col.rgb = clamp(
+                                  colyzw * n.x + colzxw * n.y +
+                                  colxyw * n.z + colxyz * n.w,
+                                  0, 1);
+                    }
+
+                    // Textures Lit
+                    // Not much better than RGBW, but does show scaling
+                    if (_Effect == 11) {
+                        float4 n = RotatedNormals(p);
+                        
+                        float3 colyzw = tex2D(_TexX, Rotate(p).yzw).rgb;
+                        float3 colzxw = tex2D(_TexY, Rotate(p).zxw).rgb;
+                        float3 colxyw = tex2D(_TexZ, Rotate(p).xyw).rgb;
+                        float3 colxyz = tex2D(_TexW, Rotate(p).xyz).rgb;
+                        
+                        n = pow(n,3);
+                        col.rgb = clamp(
+                                  colyzw * n.x + colzxw * n.y +
+                                  colxyw * n.z + colxyz * n.w,
+                                  0.1, 1);
+                        
+                        col.rgb += dif/3;
+                    }
+
+                    //Textures - directional
+                    if (_Effect == 12) {
+                        float4 n = RotatedNormals(p);
+                        
+                        float3 colyzw = tex2D(_TexX, Rotate(p).yzw).rgb;
+                        float3 colzxw = tex2D(_TexY, Rotate(p).zxw).rgb;
+                        float3 colxyw = tex2D(_TexZ, Rotate(p).xyw).rgb;
+                        float3 colxyz = tex2D(_TexW, Rotate(p).xyz).rgb;
+
+                        float4 np = pow(n,4);
+                        col.rgb = clamp(
+                                  colyzw * np.x + colzxw * np.y +
+                                  colxyw * np.z + colxyz * np.w,
+                                  0, 1);
+
+                        if ( dot(float4(1,1,1,1), n) > 0.5)
+                            col.rgb *= float3(1,0.5,0.5);
+                        else if (dot(float4(1,1,1,1), n) < -0.5)
+                            col.rgb *= float3(0.5,0.5,1);
+                    }
+
+                    //Textures - directional - lit - messes up on tetrahedron
+                    if (_Effect == 13) {
+                        float4 n = RotatedNormals(p);
+                        
+                        float3 colyzw = tex2D(_TexX, Rotate(p).yzw).rgb;
+                        float3 colzxw = tex2D(_TexY, Rotate(p).zxw).rgb;
+                        float3 colxyw = tex2D(_TexZ, Rotate(p).xyw).rgb;
+                        float3 colxyz = tex2D(_TexW, Rotate(p).xyz).rgb;
+
+                        float4 np = pow(n,4);
+                        col.rgb = clamp(
+                                  colyzw * np.x + colzxw * np.y +
+                                  colxyw * np.z + colxyz * np.w,
+                                  0, 1);
+
+                        col.rgb += clamp(dif/3, 0, 1);
+
+                        //Colour based on direction
+                        if ( dot(float4(1,1,1,1), n) > 0)
+                            col.rgb *= float3(1,0.5,0.5);
+                        else if (dot(float4(1,1,1,1), n) < 0)
+                            col.rgb *= float3(0.5,0.5,1);
+                    }
+
+                    //Textures - Coloured RGBW
+                    if (_Effect == 14) {
+                        float4 n = RotatedNormals(p);
+                        
+                        float3 colyzw = tex2D(_TexX, Rotate(p).yzw).rgb;
+                        float3 colzxw = tex2D(_TexY, Rotate(p).zxw).rgb;
+                        float3 colxyw = tex2D(_TexZ, Rotate(p).xyw).rgb;
+                        float3 colxyz = tex2D(_TexW, Rotate(p).xyz).rgb;
+
+                        float4 np = abs(pow(n,3));
+                        col.rgb = clamp(
+                                  colyzw * np.x + colzxw * np.y +
+                                  colxyw * np.z + colxyz * np.w,
+                                  0, 1);
+
+                        col.rgb *= clamp((n.xyz / 2) + n.w, 0, 0.8)+0.2;
                     }
                 }
 
