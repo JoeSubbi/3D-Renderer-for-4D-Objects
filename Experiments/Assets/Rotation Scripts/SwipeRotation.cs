@@ -29,8 +29,8 @@ public class SwipeRotation : MonoBehaviour
         //rend.material.SetFloat("_XY", total.b01);
 
         rend.material.SetFloat("_YZ", total.byz);
-        rend.material.SetFloat("_XZ", total.bxy);
-        rend.material.SetFloat("_XY", total.bxz);
+        rend.material.SetFloat("_XZ", total.bxz);
+        rend.material.SetFloat("_XY", total.bxy);
         rend.material.SetFloat("_XW", total.bxw);
         rend.material.SetFloat("_YW", total.byw);
         rend.material.SetFloat("_ZW", total.bzw);
@@ -55,33 +55,35 @@ public class SwipeRotation : MonoBehaviour
                 if (Input.GetKey(KeyCode.LeftShift))
                 {
                     // Rotate with a circular gesture around global XY plane
-                    // Which is swapped with the XZ plane for local rotation
                     if (Input.mousePosition.y < Screen.height / 2) x *= -0.5f;
                     if (Input.mousePosition.x < Screen.width / 2) y *= -0.5f;
 
-                    e1 = new Vector4(1, 0, 0, 0);
-                    e2 = new Vector4(0, 0, 1, 0);
+                    e1 = new Vector4(-1, 0, 0, 0);
+                    e2 = new Vector4( 0, 1, 0, 0);
                     bv = Bivector4.Wedge(e1, e2);
                     r = new Rotor4(bv, x+y);
-                    total *= r;
+
+                    total /= r;
                 }
                 else
                 {
                     // Rotate with vertical gesture around global YZ plane
-                    e1 = new Vector4(0, 1, 0, 0);
+                    e1 = new Vector4(0,-1, 0, 0);
                     e2 = new Vector4(0, 0, 1, 0);
                     bv = Bivector4.Wedge(e1, e2);
                     r = new Rotor4(bv, y);
-                    total *= r;
+
+                    total /= r;
 
                     // Rotate with horizontal gesture around global XZ plane
-                    // Which is swapped with the XY plane for local rotation
-                    e1 = new Vector4(-1, 0, 0, 0);
-                    e2 = new Vector4( 0, 1, 0, 0);
+                    e1 = new Vector4( 1, 0, 0, 0);
+                    e2 = new Vector4( 0, 0, 1, 0);
                     bv = Bivector4.Wedge(e1, e2);
                     r = new Rotor4(bv, x);
-                    total *= r;
+
+                    total /= r;
                 }
+
             }
             
             else if (Input.GetMouseButton(1))
@@ -99,7 +101,8 @@ public class SwipeRotation : MonoBehaviour
                     e2 = new Vector4(0, 0, 0, 1);
                     bv = Bivector4.Wedge(e1, e2);
                     r = new Rotor4(bv, x + y);
-                    total *= r;
+
+                    total /= r;
                 }
                 else
                 {
@@ -108,14 +111,16 @@ public class SwipeRotation : MonoBehaviour
                     e2 = new Vector4(0, 0, 0, 1);
                     bv = Bivector4.Wedge(e1, e2);
                     r = new Rotor4(bv, y);
-                    total *= r;
+
+                    total /= r;
 
                     // Rotate with horizontal gesture around global yw plane
                     e1 = new Vector4(0, 1, 0, 0);
                     e2 = new Vector4(0, 0, 0, 1);
                     bv = Bivector4.Wedge(e1, e2);
                     r = new Rotor4(bv, x);
-                    total *= r;
+
+                    total /= r;
                 }
             }
         }

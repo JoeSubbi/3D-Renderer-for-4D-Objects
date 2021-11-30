@@ -136,21 +136,21 @@ public class GrabRotation : MonoBehaviour
                 switch (hit.collider.name)
                 {
                     case "arc xy":
-                        e1 = new Vector4(-1, 0, 0, 0);
+                        e1 = new Vector4(1, 0, 0, 0);
                         e2 = new Vector4(0, 1, 0, 0);
 
                         plane = new Vector3(0, 0, 1);
                         line.material = GameObject.Find("arc xy").GetComponent<Renderer>().material;
                         break;
                     case "arc zx":
-                        e1 = new Vector4(-1, 0, 0, 0);
+                        e1 = new Vector4(1, 0, 0, 0);
                         e2 = new Vector4(0, 0, 1, 0);
 
                         plane = new Vector3(0, 1, 0);
                         line.material = GameObject.Find("arc zx").GetComponent<Renderer>().material;
                         break;
                     case "arc yz":
-                        e1 = new Vector4(0, 1, 0, 0);
+                        e1 = new Vector4(0,-1, 0, 0);
                         e2 = new Vector4(0, 0, 1, 0);
 
                         plane = new Vector3(1, 0, 0);
