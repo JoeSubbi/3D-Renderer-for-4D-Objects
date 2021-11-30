@@ -383,3 +383,13 @@
 ## 29 Nov 2021
 
  - *1.5 hours* working texture patterns
+   - Best Textures:
+     - 2. Normal based diffuse lighting
+     - 6. RGBW Lit
+     - 13. Blue & Red normal direction with pattern
+     - 14. RGBW with pattern
+   - Pentachoron is a bit funny, needs to have normal negated to show good results, shouldn't affect any other model whilst negative, just swipes direction of colours
+ - *1 hour* further investigation into rotors
+   - found difference between local vs global rotation within rotor product. defined rotor product using "/" operator for global rotation - swiping
+
+## 30 Nov 2021

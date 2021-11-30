@@ -171,8 +171,9 @@ Explain the series of tests
  - Texture
    - Through each test the object may be coloured in a different way.
      - diffuse lighting
-     - normal representation
-     - texture mapped letters
+     - RGBW with diffuse lighting
+     - RGBW with pattern
+     - Blue/Red +/-normal direction with pattern
 
  - Measurements
    - You will be measured on your speed and your accuracy but take your time. 
