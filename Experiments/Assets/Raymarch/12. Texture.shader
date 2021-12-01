@@ -3,10 +3,12 @@
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
-        _TexX ("X Texture", 2D) = "red" {}
-        _TexY ("Y Texture", 2D) = "green" {}
-        _TexZ ("Z Texture", 2D) = "blue" {}
-        _TexW ("W Texture", 2D) = "white" {}
+        _TexYZ ("YZ Texture", 2D) = "red" {}
+        _TexXZ ("XZ Texture", 2D) = "green" {}
+        _TexXY ("XY Texture", 2D) = "blue" {}
+        _TexWX ("WX Texture", 2D) = "white" {}
+        _TexWY ("WY Texture", 2D) = "white" {}
+        _TexWZ ("WZ Texture", 2D) = "white" {}
 
         _Effect ("ShadingType", Int) = 2
         _W ("W Axis Cross Section", Range(-3,3)) = 0
@@ -53,14 +55,18 @@
             sampler2D _MainTex;
             float4 _MainTex_ST;
 
-            sampler2D _TexX;
-            sampler2D _TexY;
-            sampler2D _TexZ;
-            sampler2D _TexW;
-            float4 _TexX_ST;
-            float4 _TexY_ST;
-            float4 _TexZ_ST;
-            float4 _TexW_ST;
+            sampler2D _TexYZ;
+            sampler2D _TexXZ;
+            sampler2D _TexXY;
+            sampler2D _TexWX;
+            sampler2D _TexWY;
+            sampler2D _TexWZ;
+            float4 _TexYZ_ST;
+            float4 _TexXZ_ST;
+            float4 _TexXY_ST;
+            float4 _TexWX_ST;
+            float4 _TexWY_ST;
+            float4 _TexWZ_ST;
 
             // To make the Unity shader SRP Batcher compatible, declare all
             // properties related to a Material in a a single CBUFFER block with 
@@ -347,15 +353,15 @@
                         else
                             col.rgb = dif;
                     }
+                    
+                    float3 colyzw = tex2D(_TexYZ, Rotate(p).yzw).rgb; // X
+                    float3 colzxw = tex2D(_TexXZ, Rotate(p).zxw).rgb; // Y
+                    float3 colxyw = tex2D(_TexXY, Rotate(p).xyw).rgb; // Z
+                    float3 colxyz = tex2D(_TexWX, Rotate(p).xyz).rgb; // W
 
                     //Textures
                     if (_Effect == 10) {
                         float4 n = RotatedNormals(p);
-                        
-                        float3 colyzw = tex2D(_TexX, Rotate(p).yzw).rgb;
-                        float3 colzxw = tex2D(_TexY, Rotate(p).zxw).rgb;
-                        float3 colxyw = tex2D(_TexZ, Rotate(p).xyw).rgb;
-                        float3 colxyz = tex2D(_TexW, Rotate(p).xyz).rgb;
                         
                         n = pow(n,3);
                         col.rgb = clamp(
@@ -369,11 +375,6 @@
                     if (_Effect == 11) {
                         float4 n = RotatedNormals(p);
                         
-                        float3 colyzw = tex2D(_TexX, Rotate(p).yzw).rgb;
-                        float3 colzxw = tex2D(_TexY, Rotate(p).zxw).rgb;
-                        float3 colxyw = tex2D(_TexZ, Rotate(p).xyw).rgb;
-                        float3 colxyz = tex2D(_TexW, Rotate(p).xyz).rgb;
-                        
                         n = pow(n,3);
                         col.rgb = clamp(
                                   colyzw * n.x + colzxw * n.y +
@@ -386,11 +387,6 @@
                     //Textures - directional
                     if (_Effect == 12) {
                         float4 n = RotatedNormals(p);
-                        
-                        float3 colyzw = tex2D(_TexX, Rotate(p).yzw).rgb;
-                        float3 colzxw = tex2D(_TexY, Rotate(p).zxw).rgb;
-                        float3 colxyw = tex2D(_TexZ, Rotate(p).xyw).rgb;
-                        float3 colxyz = tex2D(_TexW, Rotate(p).xyz).rgb;
 
                         float4 np = pow(n,4);
                         col.rgb = clamp(
@@ -404,14 +400,9 @@
                             col.rgb *= float3(0.5,0.5,1);
                     }
 
-                    //Textures - directional - lit - messes up on tetrahedron
+                    //Textures - directional - lit
                     if (_Effect == 13) {
                         float4 n = RotatedNormals(p);
-                        
-                        float3 colyzw = tex2D(_TexX, Rotate(p).yzw).rgb;
-                        float3 colzxw = tex2D(_TexY, Rotate(p).zxw).rgb;
-                        float3 colxyw = tex2D(_TexZ, Rotate(p).xyw).rgb;
-                        float3 colxyz = tex2D(_TexW, Rotate(p).xyz).rgb;
 
                         float4 np = pow(n,4);
                         col.rgb = clamp(
@@ -431,11 +422,6 @@
                     //Textures - Coloured RGBW
                     if (_Effect == 14) {
                         float4 n = RotatedNormals(p);
-                        
-                        float3 colyzw = tex2D(_TexX, Rotate(p).yzw).rgb;
-                        float3 colzxw = tex2D(_TexY, Rotate(p).zxw).rgb;
-                        float3 colxyw = tex2D(_TexZ, Rotate(p).xyw).rgb;
-                        float3 colxyz = tex2D(_TexW, Rotate(p).xyz).rgb;
 
                         float4 np = abs(pow(n,3));
                         col.rgb = clamp(
@@ -445,6 +431,14 @@
 
                         col.rgb *= clamp((n.xyz / 2) + n.w, 0, 0.8)+0.2;
                     }
+                    /*
+                    float3 colyz = tex2D(_TexYZ, Rotate(p).yz).rgb;
+                    float3 colzx = tex2D(_TexXZ, Rotate(p).zx).rgb;
+                    float3 colxy = tex2D(_TexXY, Rotate(p).xy).rgb;
+                    float3 colwx = tex2D(_TexWX, Rotate(p).wx).rgb;
+                    float3 colwy = tex2D(_TexWY, Rotate(p).wy).rgb;
+                    float3 colwz = tex2D(_TexWZ, Rotate(p).wz).rgb;
+                    */
                 }
 
                 return col;
