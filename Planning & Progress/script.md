@@ -4,6 +4,11 @@
   - [4D Shapes](#4d-shapes)
   - [The Experiment](#the-experiment)
   - [Survey 2](#survey-2)
+  - [Representations](#representations)
+    - [Control - 4D Object](#control---4d-object)
+    - [3D View](#3d-view)
+    - [4D Timeline](#4d-timeline)
+    - [4D Multi-view](#4d-multi-view)
 - [Identify the shape](#identify-the-shape)
   - [Experiment](#experiment)
   - [Survey 3](#survey-3)
@@ -153,6 +158,8 @@ Explain the series of tests
      - Try get as close as possible before submitting
      - 6 mins per shape
  - Representations:
+   - Control
+     - Just a regular 4D Object
    - 3D to 4D
      - A 3D object in the bottom left that mimics XW, YW and ZW
        rotation by rotating on YZ, XZ and XY planes respectively
@@ -214,7 +221,7 @@ So as a participant it is important that you understand your rights
 
 ...
 
-You will, if you choose to do so, be participating in a series of tests.
+You will, if you choose to do so, be participating in a series of tests. These tests will be explained as and when they occur. You are free to stop the experiment at any time. Tests will be repeated for a series of different representations of 4D objects. The representation will be explained to you, prior to starting the next stage of testing. After each stage of testing, you will be shown a graph to indicate your performance between different representations.
 
 ## Survey 2
 <!--
@@ -222,6 +229,24 @@ Note down anything you think you may not understand fully or think may be a chal
 -->
 
 If there is anything you feel you may not understand, or may be a challenge for you, write it here:
+
+## Representations
+
+### Control - 4D Object
+
+The representation of the 4D objects you will be interacting with for the next series of tests will be just a regular 3D cross section of a 4 dimensional object.
+
+### 3D View
+
+The representation of the 4D objects you will be interacting with for the next series of tests will be a 3D cross section of a 4 dimensional object, accompanied with a window showing (the analogous 3D version of the object) (a regular 3D cube). This 3D object will rotate along the 3D axis that best match the 4D planar rotations. For example, WX rotation will rotate the object about the X axis (about the YZ plane). The idea of this is to help you understand what rotations you make in 4D, as you make them.
+
+### 4D Timeline
+
+The representation of the 4D objects you will be interacting with for the next series of tests will be a 3D cross section of a 4 dimensional object, accompanied with 2 more cross sections either side of the main object. These cross sections are stepped forward and backward along the W axis. The idea of this is that it gives you a more in depth idea of the shape of the object.
+
+### 4D Multi-view
+
+The representation of the 4D objects you will be interacting with for the next series of tests will be a 3D cross section of a 4 dimensional object, accompanied with 3 more 4D objects. Each of the other 4D objects are rotated 90 degrees about each planar rotation towards W. That is - each cross section of the 4D object lets you view the same object from a different angle.
 
 # Identify the shape
 ## Experiment
@@ -241,49 +266,71 @@ Given an un-rotated shape, move the hyper plane to identify the shape
 Present all shapes as options. Give 30 seconds or 1 minute per shapes.
 Select button to choose the shape, submit button the end the timer early.
 
-Ask about their confidence after each shape. - avoid saying if they are right or wrong to avoid effecting moral
-
 Given a rotated shape, move the hyper plane and rotate the shape to identify it
 Present all shapes as options. Give 2-3 minutes per shape
 Select button to choose the shape, submit button the end the timer early.
 
-Ask about their confidence after each shape. - avoid saying if they are right or wrong to avoid effecting moral
+Ask about their confidence after each shape.
+
+Randomly decided if oriented or not - in data record distance from (0,0,0,0,0,0)
 -->
+
+In this experiment you will be given an initially randomly oriented random 4D object, placed somewhere along the W axis. You can move the W axis slider on the right hand side of the screen to gain a better understanding of the object. Select which shape you are viewing.
 
 ## Survey 3
 <!--
-How did you feel you did
-
-How confident are you that you were able to identify x shapes 3D counter part correctly
-Comment about x shape: Did it behave how you expected.
- - after every shape?
+How confident are you that you were able to identify this shapes 3D counter part correctly
+Comment about this shape: Did the behaviour match what you would predict from this shape.
 -->
+
+How confident are you that you were able to identify this shapes 3D counter part correctly?
+ - Scale of 0 (not a clue - 0% sure) to 10 (100% sure)
+
+Did the behaviour match what you would predict from this shape?
+ - [ ] Yes
+ - [ ] No
 
 # Identify the Rotation
 ## Experiment
 <!-- 
-Have a shape continuously rotating in 1 axis, allow the user to move along the w axis
-Give 2-3 minutes for the user to identify the shape
+Shape List:
+Cone - extending into w
+Cone - extending into y
+Capsule - extended along w
+Capsule - extended along y
+Box
+torus - r1 in xy plane
+torus - r1 in xw plane
+Pentachoron
 
-Have a shape continuously rotating in 2 axis, allow the user to move along the w axis
-Give 2-3 minutes for the user to identify the shape
+Have an initially randomly oriented shape
 
-Do I get them to identify the rotation? is that to arbitrary?
+Have a shape continuously rotating in 1 plane, allow the user to move along the w axis
+Give 2-3 minutes for the user to identify the rotation
+
+Have a shape continuously rotating in 2 plane, allow the user to move along the w axis
+Give 2-3 minutes for the user to identify the rotation
 -->
+
+In this experiment you will be given an initially randomly oriented random 4D object, which will rotate about 1 or 2 axes continuously. You must check each plane of rotation you think the object is continuously rotating about.
 
 ## Survey 4
 <!--
-How did you feel you did
+How confident are you that you were able to identify the rotation of this object correctly
+Comment about the rotation: Did the rotation effect the object in the way you expected?.
 
-How confident are you that you were able to identify x shapes 3D counter part correctly
- - after every shape?
-
-Did the behaviour make sense? Do you feel you understood it?
- - after every shape?
+Does the behaviour make sense to you? Do you feel you understood it?
 
 Comments about why you think it behaved it did?
- - after every shape?
 -->
+
+How confident are you that you were able to identify the rotation of this object correctly?
+ - Scale of 0 (not a clue - 0% sure) to 10 (100% sure)
+
+Does the behaviour make sense to you? Can you relate it to a 2D cross section of a 3D?
+ - [ ] Yes
+ - [ ] Maybe
+ - [ ] No
 
 # Match the pose
 ## Experiment
@@ -295,13 +342,23 @@ Have a 4D shape on the right that is un-rotated
 Skip button after 5 or 10 mins?
 -->
 
+In this experiment you will have to match the 4D rotation of the object shown in the top left of your screen. Rotating along the YZ, XZ and XY planes (X, Y and Z axes) will also rotate the object in the top left. Therefore, your goal is to match the WX, WY and WZ rotation of your object, with the object shown in the top left of your screen.
+
 ## Survey 4
 <!--
 Do you know which shape you were manipulating?
- - after every shape?
 
 How difficult did you find matching the pose
- - after every shape?
 
 Comments: open question about how they found the task
 -->
+
+How confident are you in known which shape you were manipulating?
+ - Scale of 0 (not a clue - 0% sure) to 10 (100% sure)
+
+How difficult did you find it to match the pose of the object?
+ - Slider of 0 (Not a problem) to 100 (Impossible)
+
+<!-- After completing the section -->
+
+Open question: How did you find this task?

@@ -392,4 +392,8 @@
  - *1 hour* further investigation into rotors
    - found difference between local vs global rotation within rotor product. defined rotor product using "/" operator for global rotation - swiping
 
-## 30 Nov 2021
+## 01 Dec 2021
+
+ - *1.5 hours* checking tri-planar rotation does not refer to planes of rotation - 4D texturing textures X Y Z and W not the associated planes.
+ - *1.5 hours* more or less finished scripts
+ - *2.5 hours* creating explanation animation for planar rotation.
