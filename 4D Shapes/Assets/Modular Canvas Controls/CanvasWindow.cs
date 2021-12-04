@@ -10,16 +10,39 @@ public class CanvasWindow : MonoBehaviour
 
     private RectTransform canvas;
 
+    public Slider wSlider;
+    private RectTransform wSliderRect;
+    public RectTransform axesPanel;
+
+    private Vector2 resolution;
+
     // Start is called before the first frame update
     void Start()
     {
         canvas = GetComponent<RectTransform>();
+        wSliderRect = wSlider.GetComponent<RectTransform>();
+        
+        // Set scale for UI elements
+        resolution = new Vector2(Screen.width, Screen.height);
+        Rescale();
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Vector2 aspectRatio = new Vector2(16, 9);
+        // If screen has changed, rescale the UI elements
+        if (resolution.x != Screen.width || resolution.y != Screen.height)
+        {
+            Rescale();
+
+            resolution.x = Screen.width;
+            resolution.y = Screen.height;
+        }
+    }
+
+    private void Rescale()
+    {
+        // Maintain 4:3 ratio for MiniWindow
         Vector2 aspectRatio = new Vector2(4, 3);
 
         float x = canvas.sizeDelta.x / 2.5f;
@@ -29,31 +52,33 @@ public class CanvasWindow : MonoBehaviour
             y = canvas.sizeDelta.y / 3;
             x = ((y / aspectRatio.y) * aspectRatio.x);
         }
+        MiniWindow.sizeDelta = new Vector2(x, y);
 
-        Vector2 size = new Vector2(x, y);
-        MiniWindow.sizeDelta  = size;
+        // Maintain a 1:1 ratio for Match Window
+        aspectRatio = new Vector2(1, 1);
+        float scale = 2f;
 
-        //Position of 3D object
-        // Does not move when window is max size + constant offset - width of window when window scales with canvas
-        float X = -canvas.sizeDelta.x / 10f - (canvas.sizeDelta.x / 2.5f - x) + 60 - x / 2f;
-        // Moves with y - the scale of the window with a constant y + a constant
-        float Y = -(canvas.sizeDelta.y / 3f) - (canvas.sizeDelta.y / 3 - y) / 2 + 100;
-        // Move Z back as the window gets smaller
-        float Z = -(x / 9 + y / 16) / .3f;
-        Y -= (Z/3.5f) + 40;
-        MiniWindow.GetComponent<Image>().material.SetFloat("_X", X);
-        MiniWindow.GetComponent<Image>().material.SetFloat("_Y", Y);
-        MiniWindow.GetComponent<Image>().material.SetFloat("_Z", Z);
+        x = canvas.sizeDelta.x / scale;
+        y = ((x / aspectRatio.x) * aspectRatio.y);
+        if (y > canvas.sizeDelta.y / scale)
+        {
+            y = canvas.sizeDelta.y / scale;
+            x = ((y / aspectRatio.y) * aspectRatio.x);
+        }
+        MatchWindow.sizeDelta = new Vector2(x, y);
 
-        //Position of Randomly Posed Object
-        // Does not move when window is max size + constant offset - width of window when window scales with canvas
-        X = -canvas.sizeDelta.x / 10f - (canvas.sizeDelta.x / 2.5f - x) - x / 2f + 20;
-        // Moves with y - the scale of the window with a constant y + a constant
-        Y = (canvas.sizeDelta.y / 2.7f) + (canvas.sizeDelta.y / 3 - y) / 3 - 55;
-        // Move Z back as the window gets smaller
-        Z = -(x + y) / 3f -30;
-        MatchWindow.GetComponent<Image>().material.SetFloat("_X", X);
-        MatchWindow.GetComponent<Image>().material.SetFloat("_Y", Y);
-        MatchWindow.GetComponent<Image>().material.SetFloat("_Z", Z);
+        // Distance from edge of screen
+        float buffer = Mathf.Min(canvas.sizeDelta.x / 10, canvas.sizeDelta.y / 10);
+
+        MiniWindow.anchoredPosition = new Vector2(buffer, buffer);
+        MatchWindow.anchoredPosition = new Vector2(buffer
+                                                   + MiniWindow.sizeDelta.x / 2
+                                                   - MatchWindow.sizeDelta.x / 2,
+                                                   -buffer/2);
+
+        wSliderRect.sizeDelta = new Vector2(wSliderRect.sizeDelta.x, -2 * buffer);
+        wSliderRect.anchoredPosition = new Vector2(-(buffer + 10), 0);
+
+        axesPanel.anchoredPosition = new Vector2(-2*buffer, buffer);
     }
 }

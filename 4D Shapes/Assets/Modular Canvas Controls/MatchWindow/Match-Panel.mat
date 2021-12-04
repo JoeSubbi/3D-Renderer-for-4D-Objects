@@ -7,13 +7,13 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: MatchWindow
-  m_Shader: {fileID: 4800000, guid: 79c3a00cacfa2be40b13bffed76fa6ba, type: 3}
+  m_Name: Match-Panel
+  m_Shader: {fileID: 4800000, guid: df9b76b2fa5aca043a7d51aa2f1a6100, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 3000
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
@@ -40,7 +40,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 8400000, guid: 8bd19d32bc6c0f640ac33bbc28a59095, type: 2}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -68,7 +68,6 @@ Material:
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _Shading: 0
     - _Shape: 0
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
@@ -78,14 +77,13 @@ Material:
     - _X: -296.45483
     - _XW: 0
     - _XY: 0
-    - _XZ: 5.66
+    - _XZ: 0
     - _Y: 143.14815
-    - _Y2: 0
     - _YW: 0
     - _Z: -168.7037
     - _ZW: 0
     - _ZWrite: 1
-    - _ZY: -0.61
+    - _ZY: 0
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}

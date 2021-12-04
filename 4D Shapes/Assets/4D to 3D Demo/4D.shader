@@ -79,7 +79,6 @@
                 v2f o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
-                UNITY_TRANSFER_FOG(o,o.vertex);
 
                 // object space
                 o.ro = mul(unity_WorldToObject, float4(_WorldSpaceCameraPos, 1) - float4(_X,0,0,0));

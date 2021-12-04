@@ -408,3 +408,12 @@
    - stably incorrect - I think I have had same behaviour before, but the equations seem nicer than my most recent attempts, even if it appears to be working less
  - *1.5 hours* implement toggle for shape options
    - user can select which shape, and system can read selected shape
+ - *1 hour* retry objects on UI with a second camera in the scene
+
+## 04 Dec 2021
+
+ - *4 hours* tidy up the modular scene ALOT
+   - cameras for UI image displays
+   - redo all the UI positioning code
+   - set UI rescaling to only be called when the screen size changes - much less taxing
+   - create axis to show user what direction each of the 3 axes are pointing towards

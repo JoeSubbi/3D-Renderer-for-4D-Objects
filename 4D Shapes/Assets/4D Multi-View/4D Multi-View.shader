@@ -82,7 +82,7 @@
                 UNITY_TRANSFER_FOG(o,o.vertex);
 
                 // object space
-                o.ro = mul(unity_WorldToObject, float4(_WorldSpaceCameraPos, 1));
+                o.ro = mul(unity_WorldToObject, float4(_WorldSpaceCameraPos, 1) - float4(_X+1.5,-_Y-1.5,4,0));
                 o.hitPos = v.vertex; 
                 return o;
             }
