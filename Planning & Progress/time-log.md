@@ -396,4 +396,15 @@
 
  - *1.5 hours* checking tri-planar rotation does not refer to planes of rotation - 4D texturing textures X Y Z and W not the associated planes.
  - *1.5 hours* more or less finished scripts
- - *2.5 hours* creating explanation animation for planar rotation.
+ - *2.5 hours* creating explanation animation for planar rotation. 
+  
+## 02 Dec 2021
+
+ - *0.5 hours* Weekly meeting
+
+## 03 Dec 2021
+
+ - *2.5 hours* re-deriving rotor equations using Johns multiplication table
+   - stably incorrect - I think I have had same behaviour before, but the equations seem nicer than my most recent attempts, even if it appears to be working less
+ - *1.5 hours* implement toggle for shape options
+   - user can select which shape, and system can read selected shape

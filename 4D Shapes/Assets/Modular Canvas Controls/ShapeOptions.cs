@@ -10,6 +10,8 @@ public class ShapeOptions : MonoBehaviour
 
     private RectTransform canvas;
 
+    public ToggleGroup ToggleGroup;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -38,6 +40,17 @@ public class ShapeOptions : MonoBehaviour
         {
             options[i].sizeDelta = size;
             options[i].anchoredPosition = new Vector2(padxl, i*-y + (i+1) * -pady);
+        }
+
+        LogToggle();
+    }
+
+    private void LogToggle()
+    {
+        // May have several selected toggles
+        foreach (Toggle toggle in ToggleGroup.ActiveToggles())
+        {
+            Debug.Log(toggle);
         }
     }
 }

@@ -61,3 +61,7 @@ pick and choose what to experiment on. What is the question I am trying to answe
 textures - can be simple or complex, as long as it is easy for a user to find a landmark
 
 ## 01/12/2021
+
+john will take a look at rotors
+
+probably set end of december as deadline for rotors
