@@ -417,3 +417,4 @@
    - redo all the UI positioning code
    - set UI rescaling to only be called when the screen size changes - much less taxing
    - create axis to show user what direction each of the 3 axes are pointing towards
+ - *1 hour* implementing texturing in modular scene

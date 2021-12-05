@@ -15,6 +15,12 @@
         _ZW ("ZW Rotation", Float) = 0
 
         _Shape ("Shape", Int) = 0
+        _Effect ("ShadingType", Int) = 0
+
+        _TexX ("X Texture", 2D) = "red" {}
+        _TexY ("Y Texture", 2D) = "green" {}
+        _TexZ ("Z Texture", 2D) = "blue" {}
+        _TexW ("W Texture", 2D) = "white" {}
     }
     SubShader
     {
@@ -58,7 +64,6 @@
             CBUFFER_START(UnityPerMaterial)
                 // The following line declares the _BaseColor variable, so that you
                 // can use it in the fragment shader.
-                int _Effect;  
                 float _W;     
                 float _Z;
                 float _X;
@@ -72,7 +77,14 @@
                 float _XW;
                 float _YW;
                 float _ZW;   
+
+                int _Effect;
             CBUFFER_END
+
+            sampler2D _TexX;
+            sampler2D _TexY;
+            sampler2D _TexZ;
+            sampler2D _TexW;
 
             v2f vert (appdata v)
             {
@@ -227,9 +239,50 @@
                 else {
                     float4 p = ro + rd * d;
 
-                    float4 n = GetNormal(p);
-                    float dif = dot(n, normalize(float3(1,2,3))) * .5 +.5;
-                    col.rgb = float3(dif,dif,dif)*1.1 - 0.2;
+                    float3 colyzw = tex2D(_TexX, Rotate(p).yzw).rgb; // X
+                    float3 colzxw = tex2D(_TexY, Rotate(p).zxw).rgb; // Y
+                    float3 colxyw = tex2D(_TexZ, Rotate(p).xyw).rgb; // Z
+                    float3 colxyz = tex2D(_TexW, Rotate(p).xyz).rgb; // W
+
+                    float4 n = Rotate(GetNormal(p));
+                    float dif = dot(GetNormal(p), 
+                                    normalize(float3(1,2,3))) * .5 +.5;
+
+                    //Colours - RGBW
+                    if (_Effect == 1){
+                        float3 rgbw = clamp((n.xyz + n.w)/2, 0, 1);
+                        col.rgb = dif/2 + 2*rgbw;
+                    }
+                    //Textures - Directional
+                    else if (_Effect == 2){
+                        float4 np = pow(n,4);
+                        col.rgb = clamp(
+                                  colyzw * np.x + colzxw * np.y +
+                                  colxyw * np.z + colxyz * np.w,
+                                  0, 1);
+
+                        col.rgb += clamp(dif/3, 0, 1);
+
+                        //Colour based on direction
+                        if ( dot(float4(1,1,1,1), n) > 0)
+                            col.rgb *= float3(1,0.5,0.5);
+                        else if (dot(float4(1,1,1,1), n) < 0)
+                            col.rgb *= float3(0.5,0.5,1);
+                    }
+                    //Textures - RGBW
+                    else if (_Effect == 3){
+                        float4 np = abs(pow(n,3));
+                        col.rgb = clamp(
+                                  colyzw * np.x + colzxw * np.y +
+                                  colxyw * np.z + colxyz * np.w,
+                                  0, 1);
+
+                        col.rgb *= clamp(n.xyz + n.w, 0, 0.8)+0.2;
+                    }
+                    //Normal Diffuse
+                    else{
+                        col.rgb = dif;
+                    }
                 }
                 
                 return col;

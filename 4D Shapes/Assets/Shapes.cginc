@@ -324,6 +324,17 @@ float sdCapsuleZ(float3 p, float length, float r)
 }
 
 /**
+ * \brief   Signed distance function for an octohedron
+ *
+ * \param   p   center point of object
+ * \param   s   size of the object
+*/
+float sdOctahedron( float3 p, float s){
+    float c = sqrt(3);
+    return ((dot(abs(p), float3(1,1,1)) - s) / c);
+}
+
+/**
  * \brief   Signed Distance Function for a Tetrahedron
  *
  * \param   p   center point of object

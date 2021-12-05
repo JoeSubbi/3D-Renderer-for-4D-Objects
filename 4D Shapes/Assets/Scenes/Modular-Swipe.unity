@@ -1880,8 +1880,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Four_to_Three: 0
-  Multi_View: 1
-  Timeline: 0
+  Multi_View: 0
+  Timeline: 1
   Onion_Skin: 0
   Four_to_Three_Shader: {fileID: 4800000, guid: 88b31c6765007284db576fc8bf789a3e,
     type: 3}
@@ -1931,6 +1931,7 @@ MonoBehaviour:
   mini: {fileID: 891246201}
   match: {fileID: 356539880}
   shape: 1
+  effect: 0
   wSlider: {fileID: 585531722}
 --- !u!1 &1274336417
 GameObject:

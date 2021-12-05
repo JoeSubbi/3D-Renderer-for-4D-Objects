@@ -66,6 +66,7 @@ This project focuses on the development of a wide range of 4 Dimensional shapes 
      - 13. Blue & Red normal direction with pattern
      - 14. RGBW with pattern
    - Pentachoron is a bit funny, needs to have normal negated to show good results, shouldn't affect any other model whilst negative, just swipes direction of colours
+ - Implement texture in modular scene
 
 ## Problems and risks
 ### Problems
@@ -142,7 +143,7 @@ Week 9:
  - [x] Set up a new mode for shape pose matching.
 
 Week 10:  
- - [ ] Create an "Identify the shape" mode. 
+ - [x] Create an "Identify the shape" mode. 
  - [x] Add more shapes - 4D cylinder, ~~cone, capsule, pentachoron~~.
 
 Week 11:  

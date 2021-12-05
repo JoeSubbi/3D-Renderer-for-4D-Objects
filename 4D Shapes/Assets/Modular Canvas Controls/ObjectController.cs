@@ -14,6 +14,7 @@ public class ObjectController : MonoBehaviour
     private Renderer matchRenderer;
 
     public int shape;
+    public int effect;
     public Slider wSlider;
 
     //public Rotor4 matchRot;
@@ -37,6 +38,10 @@ public class ObjectController : MonoBehaviour
         mainRenderer.material.SetInt("_Shape", shape);
         miniRenderer.material.SetInt("_Shape", shape);
         matchRenderer.material.SetInt("_Shape", shape);
+
+        // Set object texture
+        mainRenderer.material.SetInt("_Effect", effect);
+        matchRenderer.material.SetInt("_Effect", effect);
 
         // Set object rotation
     }

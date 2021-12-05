@@ -137,6 +137,12 @@
                     p = Rotate(p);
                     return sdTetrahedron(p, 0.8);
                 }
+                if (_Shape == 8){
+                    
+                    p -= float3(0,0.4,0);
+                    p = Rotate(p);
+                    return sdOctahedron(p, 1);
+                }
                 p = Rotate(p);
                 return sdSphere(p, 1);
             }
