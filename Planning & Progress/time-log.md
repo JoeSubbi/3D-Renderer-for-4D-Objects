@@ -418,3 +418,5 @@
    - set UI rescaling to only be called when the screen size changes - much less taxing
    - create axis to show user what direction each of the 3 axes are pointing towards
  - *1 hour* implementing texturing in modular scene
+ - *4 hours* implementing procedural file generation and json read/write
+   - each new file has a new id and contains the json data for the tests

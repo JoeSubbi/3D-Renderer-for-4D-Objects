@@ -67,6 +67,8 @@ This project focuses on the development of a wide range of 4 Dimensional shapes 
      - 14. RGBW with pattern
    - Pentachoron is a bit funny, needs to have normal negated to show good results, shouldn't affect any other model whilst negative, just swipes direction of colours
  - Implement texture in modular scene
+ - Implement procedural file generation, so each new candidate gets a dedicated json file
+ - Implement read and write to the json file
 
 ## Problems and risks
 ### Problems

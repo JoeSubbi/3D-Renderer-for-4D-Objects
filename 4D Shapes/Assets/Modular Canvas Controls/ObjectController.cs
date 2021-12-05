@@ -44,5 +44,10 @@ public class ObjectController : MonoBehaviour
         matchRenderer.material.SetInt("_Effect", effect);
 
         // Set object rotation
+        // Main Object Rotation
+
+        // 3D Component into matchRenderer
+
+        // 4D Component as 3D Component into miniRenderer
     }
 }
