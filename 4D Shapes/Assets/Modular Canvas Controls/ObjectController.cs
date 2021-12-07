@@ -36,8 +36,11 @@ public class ObjectController : MonoBehaviour
 
         // Set object shape
         mainRenderer.material.SetInt("_Shape", shape);
-        miniRenderer.material.SetInt("_Shape", shape);
         matchRenderer.material.SetInt("_Shape", shape);
+        // Set 3D Representation to cube - Do not want it interfereing with experiments?
+        miniRenderer.material.SetInt("_Shape", 1);
+        // Set 3D Representation to main object - nullifies Shape_Match test
+        miniRenderer.material.SetInt("_Shape", shape);
 
         // Set object texture
         mainRenderer.material.SetInt("_Effect", effect);
@@ -49,5 +52,15 @@ public class ObjectController : MonoBehaviour
         // 3D Component into matchRenderer
 
         // 4D Component as 3D Component into miniRenderer
+    }
+
+    public void SetMainObjectRotation()
+    {
+
+    }
+
+    public void SetRandObjectRotation()
+    {
+
     }
 }

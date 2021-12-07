@@ -380,7 +380,7 @@
 
 ## Week 11
 
-## 29 Nov 2021
+### 29 Nov 2021
 
  - *1.5 hours* working texture patterns
    - Best Textures:
@@ -392,17 +392,17 @@
  - *1 hour* further investigation into rotors
    - found difference between local vs global rotation within rotor product. defined rotor product using "/" operator for global rotation - swiping
 
-## 01 Dec 2021
+### 01 Dec 2021
 
  - *1.5 hours* checking tri-planar rotation does not refer to planes of rotation - 4D texturing textures X Y Z and W not the associated planes.
  - *1.5 hours* more or less finished scripts
  - *2.5 hours* creating explanation animation for planar rotation. 
   
-## 02 Dec 2021
+### 02 Dec 2021
 
  - *0.5 hours* Weekly meeting
 
-## 03 Dec 2021
+### 03 Dec 2021
 
  - *2.5 hours* re-deriving rotor equations using Johns multiplication table
    - stably incorrect - I think I have had same behaviour before, but the equations seem nicer than my most recent attempts, even if it appears to be working less
@@ -410,7 +410,7 @@
    - user can select which shape, and system can read selected shape
  - *1 hour* retry objects on UI with a second camera in the scene
 
-## 04 Dec 2021
+### 04 Dec 2021
 
  - *4 hours* tidy up the modular scene ALOT
    - cameras for UI image displays
@@ -420,3 +420,12 @@
  - *1 hour* implementing texturing in modular scene
  - *4 hours* implementing procedural file generation and json read/write
    - each new file has a new id and contains the json data for the tests
+
+## Week 12
+
+### 07 Dec 2021
+
+ - *3 hours* Created a script that when triggered externally, will move the the next stage in the experiment.
+   - loop through representations
+     - loop through tests
+   - a lot of planning for how it will interact with other components i.e the object controller

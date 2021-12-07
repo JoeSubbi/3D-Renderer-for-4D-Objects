@@ -69,6 +69,7 @@ This project focuses on the development of a wide range of 4 Dimensional shapes 
  - Implement texture in modular scene
  - Implement procedural file generation, so each new candidate gets a dedicated json file
  - Implement read and write to the json file
+ - implement script to loop through experiment when a trigger is called externally
 
 ## Problems and risks
 ### Problems
