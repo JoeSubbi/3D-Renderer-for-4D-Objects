@@ -159,95 +159,110 @@
                 return d;
             }
 
-            float4 Rotate(float4 u){
+            float4 Rotate(float4 a){ 
 
-                
-                float be1 = u.x;
-                float be2 = u.y;
-                float be3 = u.z;
-                float be4 = u.w;
-
-                float ae = _A;
-                float ae12 = _XY;
-                float ae31 = -_XZ;
-                float ae23 = _YZ;
-                float ae41 = -_XW;
-                float ae42 = -_YW;
-                float ae43 = -_ZW;
-                float ae1234 = _XYZW;
-                
-                float4 q;
-                
-                /*/ Unsigned
-                q.x = ae * be1 + ae12 * be2 - ae31 * be3 + ae41 * be4;
-                q.y = ae * be2 - ae12 * be1 + ae23 * be3 - ae42 * be4;
-                q.z = ae * be3 + ae31 * be1 - ae23 * be2 + ae43 * be4;
-                q.w = ae * be4 - ae41 * be1 + ae42 * be2 - ae43 * be3;
-
-                float q123 =  ae12 * be3 + ae31 * be2 + ae23 * be1 + ae1234 * be4;
-                float q134 =  ae31 * be4 + ae41 * be3 - ae43 * be1 - ae1234 * be2;
-                float q142 = -ae12 * be4 + ae41 * be2 + ae42 * be1 + ae1234 * be3;
-                float q324 =  ae23 * be4 + ae42 * be3 + ae43 * be2 - ae1234 * be1;
-                */
-                // Signed
-                q.x = ae * be1 + ae12 * be2 + ae31 * be3 - ae41 * be4;
-                q.y = ae * be2 - ae12 * be1 + ae23 * be3 + ae42 * be4;
-                q.z = ae * be3 - ae31 * be1 - ae23 * be2 - ae43 * be4;
-                q.w = ae * be4 + ae41 * be1 - ae42 * be2 + ae43 * be3;
-
-                float q123 =   ae12 * be3 - ae31 * be2 + ae23 * be1 + ae1234 * be4;
-                float q142 = - ae12 * be4 - ae41 * be2 - ae42 * be1 + ae1234 * be3;
-                float q134 = - ae31 * be4 - ae41 * be3 + ae43 * be1 - ae1234 * be2;
-                float q324 =   ae23 * be4 - ae42 * be3 - ae43 * be2 - ae1234 * be1;
-                //*/
-                
-                float be = _A;
-                float be12 = _XY;
-                float be31 = -_XZ;
-                float be23 = _YZ;
-                float be41 = -_XW;
-                float be42 = -_YW;
-                float be43 = -_ZW;
-                float be1234 = _XYZW;
-
-                float ae1 = q.x;
-                float ae2 = q.y;
-                float ae3 = q.z;
-                float ae4 = q.w;
-                float ae123 = -q123;
-                float ae134 = -q134;
-                float ae142 = -q142;
-                float ae324 = -q324;
-
-                // r = qP*
+                float s = _A;
+                float bxy = _XY;
+                float bxz = _XZ;
+                float bxw = _XW;
+                float byz = _YZ;
+                float byw = _YW;
+                float bzw = _ZW;
+                float bxyzw = _XYZW;
 
                 float4 r;
                 
-                /*/ Unsigned 
-                r.x =   ae1 * be   - ae2 * be12 + ae3 * be31                           + ae123 * be23   + ae134 * be43   + ae142 * be42   + ae324 * be1234;
-                r.y =   ae1 * be12 + ae2 * be   - ae3 * be23 + ae4 * be42              + ae123 * be31   + ae134 * be1234 + ae142 * be41   - ae324 * be43;
-                r.z = - ae1 * be31 + ae2 * be23 + ae3 * be   - ae4 * be43              + ae123 * be12   - ae134 * be41   + ae142 * be1234 - ae324 * be42;
-                r.w =   ae1 * be41 - ae2 * be42 + ae3 * be43 + ae4 * be   - ae4 * be41 + ae123 * be1234 - ae134 * be31   - ae142 * be12   - ae324 * be23;
-                //*/
-                // Signed inc e1234
-                r.x =   ae1 * be   + ae2 * be12 + ae3 * be31                           - ae123 * be23   + ae142 * be42   + ae134 * be43   - ae324 * be1234;
-                r.y = - ae1 * be12 + ae2 * be   + ae3 * be23 + ae4 * be42              + ae123 * be31   + ae142 * be41   - ae134 * be1234 - ae324 * be43;
-                r.z = - ae1 * be31 - ae2 * be23 + ae3 * be   - ae4 * be43              - ae123 * be12   - ae142 * be1234 - ae134 * be41   - ae324 * be42;
-                r.w =   ae1 * be41 - ae2 * be42 + ae3 * be43 + ae4 * be   - ae4 * be41 - ae123 * be1234 + ae142 * be12   - ae134 * be31   + ae324 * be23;
-                //*/
-                /*/ Signed ex e1234
-                r.x =   ae1 * be   + ae2 * be12 + ae3 * be31                           - ae123 * be23   + ae142 * be42   + ae134 * be43   + ae324 * be1234;
-                r.y = - ae1 * be12 + ae2 * be   + ae3 * be23 + ae4 * be42              + ae123 * be31   + ae142 * be41   + ae134 * be1234 - ae324 * be43;
-                r.z = - ae1 * be31 - ae2 * be23 + ae3 * be   - ae4 * be43              - ae123 * be12   + ae142 * be1234 - ae134 * be41   - ae324 * be42;
-                r.w =   ae1 * be41 - ae2 * be42 + ae3 * be43 + ae4 * be   - ae4 * be41 + ae123 * be1234 + ae142 * be12   - ae134 * be31   + ae324 * be23;
-                //*/
-                /*/ Signed only e1234
-                r.x =   ae1 * be   - ae2 * be12 + ae3 * be31                           + ae123 * be23   + ae134 * be43   + ae142 * be42   - ae324 * be1234;
-                r.y =   ae1 * be12 + ae2 * be   - ae3 * be23 + ae4 * be42              + ae123 * be31   - ae134 * be1234 + ae142 * be41   - ae324 * be43;
-                r.z = - ae1 * be31 + ae2 * be23 + ae3 * be   - ae4 * be43              + ae123 * be12   - ae134 * be41   - ae142 * be1234 - ae324 * be42;
-                r.w =   ae1 * be41 - ae2 * be42 + ae3 * be43 + ae4 * be   - ae4 * be41 - ae123 * be1234 - ae134 * be31   - ae142 * be12   - ae324 * be23;
-                */
-            return r;
+                r.x = ( 
+                      2 * a.w * bxw * s
+                    + 2 * a.w * bxy * byw
+                    + 2 * a.w * bxz * bzw
+                    + 2 * a.w * byz * bxyzw
+                    - a.x * bxw * bxw
+                    - a.x * bxy * bxy
+                    - a.x * bxz * bxz
+                    + a.x * byw * byw
+                    + a.x * byz * byz
+                    + a.x * bzw * bzw
+                    - a.x * bxyzw * bxyzw
+                    + a.x * s * s
+                    - 2 * a.y * bxw * byw
+                    + 2 * a.y * bxy * s
+                    - 2 * a.y * bxz * byz
+                    + 2 * a.y * bzw * bxyzw
+                    - 2 * a.z * bxw * bzw
+                    + 2 * a.z * bxy * byz
+                    + 2 * a.z * bxz * s
+                    - 2 * a.z * byw * bxyzw
+                );
+                r.y = (
+                    - 2 * a.w * bxw * bxy
+                    - 2 * a.w * bxz * bxyzw
+                    + 2 * a.w * byw * s
+                    + 2 * a.w * byz * bzw
+                    - 2 * a.x * bxw * byw
+                    - 2 * a.x * bxy * s
+                    - 2 * a.x * bxz * byz
+                    - 2 * a.x * bzw * bxyzw
+                    + a.y * bxw * bxw
+                    - a.y * bxy * bxy
+                    + a.y * bxz * bxz
+                    - a.y * byw * byw
+                    - a.y * byz * byz
+                    + a.y * bzw * bzw
+                    - a.y * bxyzw * bxyzw
+                    + a.y * s * s
+                    + 2 * a.z * bxw * bxyzw
+                    - 2 * a.z * bxy * bxz
+                    - 2 * a.z * byw * bzw
+                    + 2 * a.z * byz * s
+                );
+                r.z = (
+                    - 2 * a.w * bxw * bxz
+                    + 2 * a.w * bxy * bxyzw
+                    - 2 * a.w * byw * byz
+                    + 2 * a.w * bzw * s
+                    - 2 * a.x * bxw * bzw
+                    + 2 * a.x * bxy * byz
+                    - 2 * a.x * bxz * s
+                    + 2 * a.x * byw * bxyzw
+                    - 2 * a.y * bxw * bxyzw
+                    - 2 * a.y * bxy * bxz
+                    - 2 * a.y * byw * bzw
+                    - 2 * a.y * byz * s
+                    + a.z * bxw * bxw
+                    + a.z * bxy * bxy
+                    - a.z * bxz * bxz
+                    + a.z * byw * byw
+                    - a.z * byz * byz
+                    - a.z * bzw * bzw
+                    - a.z * bxyzw * bxyzw
+                    + a.z * s * s
+                    
+                );
+                r.w = (
+                    - a.w * bxw * bxw
+                    + a.w * bxy * bxy
+                    + a.w * bxz * bxz
+                    - a.w * byw * byw
+                    + a.w * byz * byz
+                    - a.w * bzw * bzw
+                    - a.w * bxyzw * bxyzw
+                    + a.w * s * s
+                    - 2 * a.x * bxw * s
+                    + 2 * a.x * bxy * byw
+                    + 2 * a.x * bxz * bzw
+                    - 2 * a.x * byz * bxyzw
+                    - 2 * a.y * bxw * bxy
+                    + 2 * a.y * bxz * bxyzw
+                    - 2 * a.y * byw * s
+                    + 2 * a.y * byz * bzw
+                    - 2 * a.z * bxw * bxz
+                    - 2 * a.z * bxy * bxyzw
+                    - 2 * a.z * byw * byz
+                    - 2 * a.z * bzw * s
+                );
+
+                return r;
             }
 
             float GetDist(float4 p){

@@ -48,6 +48,17 @@ public class GrabRotation : MonoBehaviour
         total.Normalise();
         qTotal.Normalize();
 
+        if (Input.GetKeyDown("space")){
+            wRotation = !wRotation;
+        }
+
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            total = new Rotor4(1, 0, 0, 0, 0, 0, 0, 0);
+            qTotal = new Quaternion(1, 0, 0, 0);
+            transform.rotation = qTotal;
+        }
+
         // Colour the grab ball for 3D or 4D rotation
         if (!wRotation)
         {

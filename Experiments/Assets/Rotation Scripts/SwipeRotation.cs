@@ -76,7 +76,7 @@ public class SwipeRotation : MonoBehaviour
                     total /= r;
 
                     // Rotate with horizontal gesture around global XZ plane
-                    e1 = new Vector4( 1, 0, 0, 0);
+                    e1 = new Vector4(-1, 0, 0, 0);
                     e2 = new Vector4( 0, 0, 1, 0);
                     bv = Bivector4.Wedge(e1, e2);
                     r = new Rotor4(bv, x);

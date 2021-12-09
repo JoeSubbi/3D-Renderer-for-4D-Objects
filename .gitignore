@@ -10,7 +10,7 @@
 */[Ll]ogs/
 */[Mm]emoryCaptures/
 */TestOutput/
-TestOutput.meta
+*/TestOutput.meta
 *.blend1
 
 # Asset meta data should only be ignored when the corresponding asset is also ignored
