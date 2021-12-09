@@ -20,16 +20,19 @@ public class UIController : MonoBehaviour
 
     // Tests
     public bool Shape_Match;
+    public bool Rotation_Match;
     public bool Pose_Match;
 
     // UI Elements
     public GameObject MiniWindow;
     public GameObject MatchWindow;
-    public GameObject OptionContainer;
+    public GameObject ShapeOptionContainer;
+    public GameObject RotationOptionContainer;
 
     private RectTransform miniRect;
     private RectTransform matchRect;
-    private RectTransform optionRect;
+    private RectTransform shapeOptionRect;
+    private RectTransform rotationOptionRect;
     private RectTransform canvas;
 
     // Start is called before the first frame update
@@ -38,7 +41,8 @@ public class UIController : MonoBehaviour
         rend = Window.GetComponent<Renderer>();
         miniRect = MiniWindow.GetComponent<RectTransform>();
         matchRect = MatchWindow.GetComponent<RectTransform>();
-        optionRect = OptionContainer.GetComponent<RectTransform>();
+        shapeOptionRect = ShapeOptionContainer.GetComponent<RectTransform>();
+        rotationOptionRect = RotationOptionContainer.GetComponent<RectTransform>();
         canvas = GetComponent<RectTransform>();
     }
 
@@ -59,9 +63,9 @@ public class UIController : MonoBehaviour
 
             // If the shape match container exists, 
             // shift over the mini 3D window
-            if (Shape_Match)
+            if (Shape_Match || Rotation_Match)
             {
-                miniRect.anchoredPosition = new Vector2(optionRect.sizeDelta.x+buffer/2, buffer);
+                miniRect.anchoredPosition = new Vector2(shapeOptionRect.sizeDelta.x+buffer/2, buffer);
                 rend.material.SetFloat("_X", -1f);
             }
             else
@@ -86,7 +90,7 @@ public class UIController : MonoBehaviour
             rend.material.SetFloat("_Z", -3f);
             rend.material.SetFloat("_Y",  -0.35f);
 
-            if (Shape_Match)
+            if (Shape_Match || Rotation_Match)
                 rend.material.SetFloat("_X", -0.1f);
             if (Pose_Match)
             {
@@ -103,7 +107,7 @@ public class UIController : MonoBehaviour
             rend.material.shader = Timeline_Shader;
             rend.material.SetFloat("_Z", -5f);
             rend.material.SetFloat("_X", 0.6f);
-            if (Shape_Match)
+            if (Shape_Match || Rotation_Match)
             {
                 rend.material.SetFloat("_X", -0.4f);
                 rend.material.SetFloat("_Z", -7f);
@@ -144,9 +148,14 @@ public class UIController : MonoBehaviour
         // Mode
         // Select the correct shape menu
         if (Shape_Match) 
-            OptionContainer.SetActive(true);
+            ShapeOptionContainer.SetActive(true);
         else 
-            OptionContainer.SetActive(false);
+            ShapeOptionContainer.SetActive(false);
+        // Select the correct rotation menu
+        if (Rotation_Match)
+            RotationOptionContainer.SetActive(true);
+        else
+            RotationOptionContainer.SetActive(false);
         // Randomly Posed Object window
         if (Pose_Match)
             MatchWindow.SetActive(true);
