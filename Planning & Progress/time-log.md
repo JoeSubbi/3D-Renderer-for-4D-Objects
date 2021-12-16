@@ -429,3 +429,16 @@
    - loop through representations
      - loop through tests
    - a lot of planning for how it will interact with other components i.e the object controller
+
+### 08 Dec 2021
+
+ - *3 hours* improvements to how data is handled and stored - each sub test stores the results in a new dictionary
+
+### 09 Dec 2021
+
+ - *0.5 hours* Weekly Meeting
+ - *2 hours* implementing new closed equation for rotors - THEY WORK (but are a bit glitchy)
+
+### 10 Dec 2021
+
+ - *2 hours* reviewing rotor implementation to work out why it is glitchy. cannot find why. seems like it should work fine...

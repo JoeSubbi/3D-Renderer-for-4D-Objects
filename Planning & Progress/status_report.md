@@ -14,6 +14,14 @@
 
 This project focuses on the development of a wide range of 4 Dimensional shapes and a variety of ways to display these shapes in a way humans can best interpret them. As such the usability of each representation will be experimentally validated in order to find the most intuitive and effective way to represent higher dimensional shapes.
 
+The user will be asked to identify 4D objects, the rotations they undergo and to manipulate and match the pose of 2 shapes. The accuracy of which the user can identify these properties and act accordingly will be measured against the representation being shown to them.
+
+Representations include: 
+ - A control (standard 3D cross section of a 4D shape)
+ - A multi-rotational view of the object to see how it looks when viewing it from all 3 4D perpendicular angles of rotation
+ - A W-axis timeline to show how the objects cross-section changes moving forwards and backwards across the 4th dimension.
+ - A 3D view port of a 4D object to demonstrate 4D rotation with respect to 3D rotation
+
 ## Progress
 <!--[Briefly state your progress so far, as a bulleted list]-->
 
@@ -70,6 +78,7 @@ This project focuses on the development of a wide range of 4 Dimensional shapes 
  - Implement procedural file generation, so each new candidate gets a dedicated json file
  - Implement read and write to the json file
  - implement script to loop through experiment when a trigger is called externally
+ - implemented rotors! glitchy but work
 
 ## Problems and risks
 ### Problems
@@ -150,11 +159,11 @@ Week 10:
  - [x] Add more shapes - 4D cylinder, ~~cone, capsule, pentachoron~~.
 
 Week 11:  
- - [ ] Tutorial videos that explain why shapes behave they do, and traits to identify what the shape is.  
- - [ ] Polish the program to be a "final product".
+ - [x] Polish the program to be a "final product".
 
 Week 12:
- - [ ] Finishing polishing "final product"
+ - [ ] ~~Tutorial videos that explain why shapes behave they do, and traits to identify what the shape is.~~
+ - [ ] ~~Finishing polishing "final product"~~
 
 ### Stuff I hope to make consistent progress on:
 
@@ -170,11 +179,29 @@ quality of life polish
 
 ### Christmas
 
-Start planning for user experiments
+ - [ ] Record tutorial explanation videos
+ - [ ] Continue to develop and implement the rest of the test system
+   - [ ] Build survey scene
+   - [ ] Store current experiment status and load it between surveys
+   - [ ] Store answers of survey
+   - [ ] Implement random rotation mechanic in the modular scene
 
 ### Semester 2
 
- - Create some automated data analysis based on plan for user interaction
- - Run user tests
- - Write up results
- - Write dissertation
+Week 1 & Week 2  
+ - [ ] Finish implementing test system
+
+Week 3   
+ - [ ] Begin developing data analysis tools, most likely with a jupyter notebook
+ - [ ] run some preliminary tests to decide if there is any data or visualisations I want to cut
+
+Week 4 & Week 5 & Week 6  
+ - [ ] Run experiments
+ - [ ] Begin dissertation
+ - [ ] Further develop data analysis tools
+
+Week 7  
+ - [ ] Evaluation of experiments
+
+Week 8 & Week 9 & Week 10  
+ - [ ] Write up draft dissertation
