@@ -827,7 +827,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: 9d5690f9dd431434d9f675ad3b4828cd, type: 3}
+  m_Texture: {fileID: 2800000, guid: 1253156421d9fd647a23f61649187748, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -1237,7 +1237,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: bda9420309716374ab7c6dbee97c7dc8, type: 3}
+  m_Texture: {fileID: 2800000, guid: 9fb0cc46399b7ce479c183989eb7839e, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -2475,7 +2475,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: 1ad80cf26669af349a2eb44beccd5fe1, type: 3}
+  m_Texture: {fileID: 2800000, guid: a09ac472d77ff3f428b6ca892634bbab, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -2663,6 +2663,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   progression_graph: 0
   trigger: 0
+  accuracy: 0
+  time: 0
 --- !u!1 &1242216873
 GameObject:
   m_ObjectHideFlags: 0
@@ -3602,7 +3604,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: 8f3b30bf8b428544791d46d0c47ac033, type: 3}
+  m_Texture: {fileID: 2800000, guid: 88204988a3bf45f4f8fa35645315a27c, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -3723,7 +3725,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: bc078976a5bf3c44484be16789c52cb6, type: 3}
+  m_Texture: {fileID: 2800000, guid: d2a8fdc7a5691914fbd615a8ec79b04f, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -3989,7 +3991,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: 1e6ac823642d95d44ae0f4117fab6c70, type: 3}
+  m_Texture: {fileID: 2800000, guid: d402b1531aa515f47b1b2d3ed33d504e, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
