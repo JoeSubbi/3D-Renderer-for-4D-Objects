@@ -264,27 +264,6 @@
 
                 return r;
             }
-            
-            /*
-            float4 Rotate(float4 u){
-                // q = Px
-                float4 q;
-                q.x = _A * u.x + u.y * _XY + u.z * _XZ + u.w * _XW;
-                q.y = _A * u.y - u.x * _XY + u.z * _YZ + u.w * _YW;
-                q.z = _A * u.z - u.x * _XZ - u.y * _YZ + u.w * _ZW;
-                q.w = _A * u.w - u.x * _XW - u.y * _ZW + u.w * _YW;
-
-                float qxyz = u.x * _YZ - u.y * _XZ + u.z * _XY;
-                float bxyzw = u.x * _XW - u.y * _YW + u.z * _ZW + u.w * qxyz;
-
-                // r = qP*
-                float4 r;
-                r.x = _A * u.x + q.y  * _XY + q.z  * _XZ + qxyz * _YZ + q.w * _XW;
-                r.y = _A * u.y - q.x  * _XY - qxyz * _XZ + q.z  * _YZ + q.w * _YW;
-                r.z = _A * u.z + qxyz * _XY - q.x  * _XZ - q.y  * _YZ + q.w * _ZW;
-                r.w = _A * u.w + bxyzw * _XW + bxyzw * _YW + bxyzw * _ZW + bxyzw * qxyz;
-                return r;
-            }*/
 
             float GetDist(float4 p){
                 

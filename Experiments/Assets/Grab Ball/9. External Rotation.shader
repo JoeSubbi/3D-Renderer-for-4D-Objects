@@ -170,8 +170,87 @@
                 float bzw = _ZW;
                 float bxyzw = _XYZW;
 
+                /*
                 float4 r;
+
+                r.x = (
+                    + 2 * a.w * bxw * s
+                    + 2 * a.w * bxy * byw
+                    + 2 * a.w * bxz * bzw
+                    - a.x * bxw * bxw
+                    - a.x * bxy * bxy
+                    - a.x * bxz * bxz
+                    + a.x * byw * byw
+                    + a.x * byz * byz
+                    + a.x * bzw * bzw
+                    + a.x * s * s
+                    - 2 * a.y * bxw * byw
+                    + 2 * a.y * bxy * s
+                    - 2 * a.y * bxz * byz
+                    - 2 * a.z * bxz * bzw
+                    + 2 * a.z * bxy * byz
+                    + 2 * a.z * bxz * s 
+                );
+                r.y = (
+                    - 2 * a.w * bxw * bxy
+                    + 2 * a.w * byw * s
+                    + 2 * a.w * byz * bzw
+                    - 2 * a.x * bxw * byw
+                    - 2 * a.x * bxy * s
+                    - 2 * a.x * bxz * byz
+                    + a.y * bxw * bxw
+                    - a.y * bxy * bxy
+                    + a.y * bxz * bxz
+                    - a.y * byw * byw
+                    - a.y * byz * byz
+                    + a.y * bzw * bzw
+                    + a.y * s * s
+                    - 2 * a.z * bxy * bxz
+                    - 2 * a.z * byw * bzw
+                    + 2 * a.z * byz * s
+                );
+                r.z = (
+                    - 2 * a.w * bxw * bxz
+                    - 2 * a.w * byw * byz
+                    + 2 * a.w * bzw * s
+                    - 2 * a.x * bxw * bzw
+                    + 2 * a.x * bxy * byz
+                    - 2 * a.x * bxz * s
+                    - 2 * a.y * bxy * bxz
+                    - 2 * a.y * byw * bzw
+                    - 2 * a.y * byz * s
+                    + a.z * bxw * bxw
+                    + a.z * bxy * bxy
+                    - a.z * bxz * bxz
+                    + a.z * byw * byw
+                    - a.z * byz * byz
+                    - a.z * bzw * bzw
+                    + a.z * s * s
+                );
+                r.w = (
+                    - a.w * bxw * bxw
+                    + a.w * bxy * bxy
+                    + a.w * bxz * bxz
+                    - a.w * byw * byw
+                    + a.w * byz * byz
+                    - a.w * bzw * bzw
+                    + a.w * s * s
+                    - 2 * a.x * bxw * s
+                    + 2 * a.x * bxy * byw
+                    + 2 * a.x * bxz * bzw
+                    - 2 * a.y * bxw * bxy
+                    - 2 * a.y * byw * s
+                    + 2 * a.y * byz * bzw
+                    - 2 * a.z * bxw * bxz
+                    - 2 * a.z * byw * byz
+                    - 2 * a.z * bzw * s
+                );
+
+                return r;
+                */
                 
+                float4 r;
+
                 r.x = ( 
                       2 * a.w * bxw * s
                     + 2 * a.w * bxy * byw
@@ -263,6 +342,7 @@
                 );
 
                 return r;
+                
             }
 
             float GetDist(float4 p){

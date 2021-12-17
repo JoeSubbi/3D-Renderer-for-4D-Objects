@@ -12,13 +12,15 @@
 
         _Effect ("ShadingType", Int) = 2
         _W ("W Axis Cross Section", Range(-3,3)) = 0
-        // Rotation -pi to pi rad == -180 to 180 deg
-        _XZ ("X to Z Rotation", Range(-3.14159, 3.14159)) = 0
-        _XY ("X to Y Rotation", Range(-3.14159, 3.14159)) = 0
-        _YZ ("Y to Z Rotation", Range(-3.14159, 3.14159)) = 0
-        _WX ("W to X Rotation", Range(-3.14159, 3.14159)) = 0
-        _WY ("W to Y Rotation", Range(-3.14159, 3.14159)) = 0
-        _WZ ("W to Z Rotation", Range(-3.14159, 3.14159)) = 0
+        
+        _A ("A Scalar Rotation", Float) = 1
+        _XZ ("X to Z Rotation", Float) = 0
+        _XY ("X to Y Rotation", Float) = 0
+        _YZ ("Y to Z Rotation", Float) = 0
+        _XW ("W to X Rotation", Float) = 0
+        _YW ("W to Y Rotation", Float) = 0
+        _ZW ("W to Z Rotation", Float) = 0
+        _XYZW ("Quad-Vector", Float) = 0
     }
     SubShader
     {
@@ -75,13 +77,15 @@
                 // The following line declares the _BaseColor variable, so that you
                 // can use it in the fragment shader.
                 int _Effect;  
-                float _W;     
+                float _W;    
+                float _A; 
                 float _XZ;
                 float _XY;
                 float _YZ;
-                float _WX;
-                float _WY;
-                float _WZ;  
+                float _XW;
+                float _YW;
+                float _ZW;  
+                float _XYZW;
             CBUFFER_END
 
             v2f vert (appdata v)
@@ -182,6 +186,47 @@
                 return (max(max(max(a,b),max(c,d)), e)-s)/sqrt(5.);
             }
 
+            /**
+             * \brief   Shape distance function for a capsule
+             *
+             * \param   p   center point of object
+             * \param   a   origin of first sphere cap
+             * \param   b   origin of second sphere cap
+             * \param   r   radius of capsule
+             */
+            float sdCapsule( float4 p, float4 a, float4 b, float r )
+            {
+                float4 pa = p - a, ba = b - a;
+                float h = clamp( dot(pa,ba)/dot(ba,ba), 0.0, 1.0 );
+                return length( pa - ba*h ) - r;
+            }
+
+            /**
+             * \brief   Shape distance function for a cone
+             *
+             * \param   r   radius at base of cone
+             * \param   h   height of cone
+             */
+            float sdCone(float4 p, float r, float h) {
+                float2 q = float2(length(p.xyz), p.w);
+                float2 tip = q - float2(0, h);
+                float2 mantleDir = normalize(float2(h, r));
+                float mantle = dot(tip, mantleDir);
+                float d = max(mantle, -q.y);
+                float projected = dot(tip, float2(mantleDir.y, -mantleDir.x));
+                
+                // distance to tip
+                if ((q.y > h) && (projected < 0)) {
+                    d = max(d, length(tip));
+                }
+                
+                // distance to base ring
+                if ((q.x > r) && (projected > length(float2(h, r)))) {
+                    d = max(d, length(q - float2(r, 0)));
+                }
+                return d;
+            }
+
             float4 RotationMatrix(float a) {
                 float s = sin(a);
                 float c = cos(a);
@@ -201,6 +246,7 @@
                 return rot;
             }
 
+            /*
             float4 Rotate(float4 p){
                 float4 xz = RotationMatrix(_XZ);
                 float4 xy = RotationMatrix(_XY);
@@ -219,6 +265,111 @@
                 p.wz = RotMatMul(wz, p.w, p.z);
 
                 return p;
+            }*/
+            float4 Rotate(float4 a){ 
+
+                float s = _A;
+                float bxy = _XY;
+                float bxz = _XZ;
+                float bxw = _XW;
+                float byz = _YZ;
+                float byw = _YW;
+                float bzw = _ZW;
+                float bxyzw = _XYZW;
+                
+                float4 r;
+                
+                r.x = ( 
+                      2 * a.w * bxw * s
+                    + 2 * a.w * bxy * byw
+                    + 2 * a.w * bxz * bzw
+                    + 2 * a.w * byz * bxyzw
+                    - a.x * bxw * bxw
+                    - a.x * bxy * bxy
+                    - a.x * bxz * bxz
+                    + a.x * byw * byw
+                    + a.x * byz * byz
+                    + a.x * bzw * bzw
+                    - a.x * bxyzw * bxyzw
+                    + a.x * s * s
+                    - 2 * a.y * bxw * byw
+                    + 2 * a.y * bxy * s
+                    - 2 * a.y * bxz * byz
+                    + 2 * a.y * bzw * bxyzw
+                    - 2 * a.z * bxw * bzw
+                    + 2 * a.z * bxy * byz
+                    + 2 * a.z * bxz * s
+                    - 2 * a.z * byw * bxyzw
+                );
+                r.y = (
+                    - 2 * a.w * bxw * bxy
+                    - 2 * a.w * bxz * bxyzw
+                    + 2 * a.w * byw * s
+                    + 2 * a.w * byz * bzw
+                    - 2 * a.x * bxw * byw
+                    - 2 * a.x * bxy * s
+                    - 2 * a.x * bxz * byz
+                    - 2 * a.x * bzw * bxyzw
+                    + a.y * bxw * bxw
+                    - a.y * bxy * bxy
+                    + a.y * bxz * bxz
+                    - a.y * byw * byw
+                    - a.y * byz * byz
+                    + a.y * bzw * bzw
+                    - a.y * bxyzw * bxyzw
+                    + a.y * s * s
+                    + 2 * a.z * bxw * bxyzw
+                    - 2 * a.z * bxy * bxz
+                    - 2 * a.z * byw * bzw
+                    + 2 * a.z * byz * s
+                );
+                r.z = (
+                    - 2 * a.w * bxw * bxz
+                    + 2 * a.w * bxy * bxyzw
+                    - 2 * a.w * byw * byz
+                    + 2 * a.w * bzw * s
+                    - 2 * a.x * bxw * bzw
+                    + 2 * a.x * bxy * byz
+                    - 2 * a.x * bxz * s
+                    + 2 * a.x * byw * bxyzw
+                    - 2 * a.y * bxw * bxyzw
+                    - 2 * a.y * bxy * bxz
+                    - 2 * a.y * byw * bzw
+                    - 2 * a.y * byz * s
+                    + a.z * bxw * bxw
+                    + a.z * bxy * bxy
+                    - a.z * bxz * bxz
+                    + a.z * byw * byw
+                    - a.z * byz * byz
+                    - a.z * bzw * bzw
+                    - a.z * bxyzw * bxyzw
+                    + a.z * s * s
+                    
+                );
+                r.w = (
+                    - a.w * bxw * bxw
+                    + a.w * bxy * bxy
+                    + a.w * bxz * bxz
+                    - a.w * byw * byw
+                    + a.w * byz * byz
+                    - a.w * bzw * bzw
+                    - a.w * bxyzw * bxyzw
+                    + a.w * s * s
+                    - 2 * a.x * bxw * s
+                    + 2 * a.x * bxy * byw
+                    + 2 * a.x * bxz * bzw
+                    - 2 * a.x * byz * bxyzw
+                    - 2 * a.y * bxw * bxy
+                    + 2 * a.y * bxz * bxyzw
+                    - 2 * a.y * byw * s
+                    + 2 * a.y * byz * bzw
+                    - 2 * a.z * bxw * bxz
+                    - 2 * a.z * bxy * bxyzw
+                    - 2 * a.z * byw * byz
+                    - 2 * a.z * bzw * s
+                );
+
+                return r;
             }
 
             float GetDist(float4 p){
@@ -229,12 +380,13 @@
                 bp = Rotate(bp);
                 
                 //float d = sdSphere( p-float4(0,0,0,_W), 1);
-                float d = sdBox( bp, float4(1,1,1,1)) - 0.01;
+                //float d = sdBox( bp, float4(1,1,1,1)) - 0.01;
                 //float d = sdOctahedron(bp, 1) - 0.001;
                 //float d = sdTetrahedron(bp, 1) - 0.05;
                 //float d = sdTorus(bp, 1, 0.4, 0.1);
                 
                 //float d =  sdTetrahedron2(bp, 0.5); //pentachoron(bp, 0.5);  //sdTetrahedron2(bp, 1);
+                float d = sdCone(bp, 0.5, 1);
                 
                 return d;
             }

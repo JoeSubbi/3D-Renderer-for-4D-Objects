@@ -35,6 +35,9 @@ public class GrabRotation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        total.Normalise();
+        qTotal.Normalize();
+
         //Rotate 4D Object
         image.material.SetFloat("_A",  total.a);
         image.material.SetFloat("_XY", total.bxy);
@@ -44,9 +47,6 @@ public class GrabRotation : MonoBehaviour
         image.material.SetFloat("_YW", total.byw);
         image.material.SetFloat("_ZW", total.bzw);
         image.material.SetFloat("_XYZW", total.bxyzw);
-
-        total.Normalise();
-        qTotal.Normalize();
 
         if (Input.GetKeyDown("space")){
             wRotation = !wRotation;

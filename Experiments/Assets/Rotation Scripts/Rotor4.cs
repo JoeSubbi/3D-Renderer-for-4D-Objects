@@ -250,7 +250,7 @@ public class Rotor4
     private float LengthSquared()
     {
         return sq(a) + sq(bxy) + sq(bxz) + sq(byz) + 
-                       sq(bxw) + sq(byw) + sq(bzw);
+                       sq(bxw) + sq(byw) + sq(bzw) + sq(bxyzw);
     }
 
     // Length
@@ -270,6 +270,7 @@ public class Rotor4
         bxw /= l;
         byw /= l;
         bzw /= l;
+        bxyzw /= l;
     }
 
     // Normalised copy of a rotor
