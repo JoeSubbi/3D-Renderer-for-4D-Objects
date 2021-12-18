@@ -2801,10 +2801,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff3df30c52cd24c408760c641e8f5056, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Four_to_Three: 0
-  Multi_View: 0
-  Timeline: 1
-  Onion_Skin: 0
   Four_to_Three_Shader: {fileID: 4800000, guid: 88b31c6765007284db576fc8bf789a3e,
     type: 3}
   Multi_View_Shader: {fileID: 4800000, guid: f8d80405758e68244b875a4886808ac8, type: 3}
@@ -2812,8 +2808,8 @@ MonoBehaviour:
   Onion_Skin_Shader: {fileID: 4800000, guid: c34e9a050e6bd1c458572c8a5a52f825, type: 3}
   Window: {fileID: 34724911}
   Shape_Match: 0
-  Rotation_Match: 1
-  Pose_Match: 0
+  Rotation_Match: 0
+  Pose_Match: 1
   MiniWindow: {fileID: 1532300831}
   MatchWindow: {fileID: 1689266242}
   ShapeOptionContainer: {fileID: 733699344}
@@ -2863,7 +2859,7 @@ MonoBehaviour:
   mini: {fileID: 891246201}
   match: {fileID: 356539880}
   shape: 1
-  effect: 0
+  effect: 1
   wSlider: {fileID: 585531722}
 --- !u!1 &1274336417
 GameObject:

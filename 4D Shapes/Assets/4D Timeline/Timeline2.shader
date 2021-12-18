@@ -1,4 +1,4 @@
-﻿Shader "Unlit/Timeline"
+﻿Shader "Unlit/Timeline2"
 {
     Properties
     {
@@ -7,12 +7,14 @@
         _Y ("Y Canvas Position", Float) = 0
         _Z ("Z Canvas Position", Float) = 0
 
-        _ZY ("X Rotation", Float) = 0
-        _XZ ("Y Rotation", Float) = 0
-        _XY ("Z Rotation", Float) = 0
+        _A  ("A Rotor Scalar", Float) = 1
+        _YZ ("X Rotation", Float)  = 0
+        _XZ ("Y Rotation", Float)  = 0
+        _XY ("Z Rotation", Float)  = 0
         _XW ("XW Rotation", Float) = 0
         _YW ("YW Rotation", Float) = 0
         _ZW ("ZW Rotation", Float) = 0
+        _XYZW ("XYZW Rotation", Float) = 0
 
         _Shape ("Shape", Int) = 0
         _Effect ("ShadingType", Int) = 0
@@ -35,6 +37,7 @@
 
             #include "UnityCG.cginc"
             #include "../Shapes.cginc"
+            #include "../Rotation.cginc"
 
             #define MAX_STEPS 200
             #define MAX_DIST  100
@@ -71,12 +74,14 @@
 
                 int _Shape;
 
+                float _A;
+                float _YZ;
                 float _XZ;
-                float _ZY;
                 float _XY;  
                 float _XW;
                 float _YW;
-                float _ZW;
+                float _ZW;  
+                float _XYZW; 
 
                 int _Effect;   
             CBUFFER_END
@@ -98,57 +103,37 @@
                 return o;
             }
 
-            float4 Rotate(float4 p){
-                float a = _XZ;
-                float b = _ZY;
-                float c = _XY;
-                p.xz = mul(p.xz, float2x2(cos(a), sin(a), -sin(a), cos(a)));
-                p.zy = mul(p.zy, float2x2(cos(b), sin(b), -sin(b), cos(b)));
-                p.xy = mul(p.xy, float2x2(cos(c), sin(c), -sin(c), cos(c)));
-                a = _XW;
-                b = _YW;
-                c = _ZW;
-                p.xw = mul(p.xw, float2x2(cos(a), sin(a), -sin(a), cos(a)));
-                p.yw = mul(p.yw, float2x2(cos(b), sin(b), -sin(b), cos(b)));
-                p.zw = mul(p.zw, float2x2(cos(c), sin(c), -sin(c), cos(c)));
-                return p;
+            float4 Rotate(float4 a){
+                return RotorRotate(a, _A, _XY, _XZ, _XW, _YZ, _YW, _ZW, _XYZW);
             }
 
             // Pick a shape based on the integer property
             float Shape(float4 p){
+                //p.w *= -1;
+                p = Rotate(p);
                 if (_Shape == 1){
-                    p = Rotate(p);
                     return sdBox(p, float4(0.9,0.9,0.9,0.9))-0.01;
                 }
                 if (_Shape == 2){
-                    p.w *= -1;
-                    p = Rotate(p);
                     p.w += 1;
                     return sdConeW(p, 1, 2)-0.01;
                 }
                 if (_Shape == 3){
-                    p = Rotate(p);
                     p.y += 1;
                     return sdConeY(p, 1, 2)-0.01;
                 }
                 if (_Shape == 4){
-                    p = Rotate(p);
                     return sdTorus(p, 1, 0.5, 0.2);
                 }
                 if (_Shape == 5){
-                    p = Rotate(p);
                     return sdCapsuleW(p, 2, 0.6);
                 }
                 if (_Shape == 6){
-                    p = Rotate(p);
                     return sdCapsuleX(p, 2, 0.6);
                 }
                 if (_Shape == 7){
-                    p.w *= -1;
-                    p = Rotate(p);
                     return sdPentachoron(p, 0.7);
                 }
-                p = Rotate(p);
                 return sdSphere(p, 1);
             }
 
@@ -247,10 +232,11 @@
                 else {
                     float4 p = ro + rd * d;
                     
-                    float3 colyzw = tex2D(_TexX, Rotate(p).yzw).rgb; // X
-                    float3 colzxw = tex2D(_TexY, Rotate(p).zxw).rgb; // Y
-                    float3 colxyw = tex2D(_TexZ, Rotate(p).xyw).rgb; // Z
-                    float3 colxyz = tex2D(_TexW, Rotate(p).xyz).rgb; // W
+                    float4 offset = p-float4(_X, _Y, _Z, 0);
+                    float3 colyzw = tex2D(_TexX, Rotate(offset).yzw).rgb; // X
+                    float3 colzxw = tex2D(_TexY, Rotate(offset).zxw).rgb; // Y
+                    float3 colxyw = tex2D(_TexZ, Rotate(offset).xyw).rgb; // Z
+                    float3 colxyz = tex2D(_TexW, Rotate(offset).xyz).rgb; // W
 
                     float4 n = Rotate(GetNormal(p));
                     float dif = dot(GetNormal(p), 

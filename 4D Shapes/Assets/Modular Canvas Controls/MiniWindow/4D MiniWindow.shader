@@ -6,13 +6,15 @@
         _X ("X Canvas Position", Float) = 1
         _Y ("Y Canvas Position", Float) = 0
         _Z ("Z Canvas Position", Float) = 3
-
-        _ZY ("X Rotation", Float) = 0
-        _XZ ("Y Rotation", Float) = 0
-        _XY ("Z Rotation", Float) = 0
+        
+        _A  ("A Rotor Scalar", Float) = 1
+        _YZ ("X Rotation", Float)  = 0
+        _XZ ("Y Rotation", Float)  = 0
+        _XY ("Z Rotation", Float)  = 0
         _XW ("XW Rotation", Float) = 0
         _YW ("YW Rotation", Float) = 0
         _ZW ("ZW Rotation", Float) = 0
+        _XYZW ("XYZW Rotation", Float) = 0
 
         _Shape ("Shape", Int) = 0
     }
@@ -28,7 +30,8 @@
             #pragma fragment frag
 
             #include "UnityCG.cginc"
-            #include "../Shapes.cginc"
+            #include "../../Shapes.cginc"
+            #include "../../Rotation.cginc"
 
             #define MAX_STEPS 200
             #define MAX_DIST  100
@@ -66,12 +69,14 @@
 
                 int _Shape;
 
+                float _A;
+                float _YZ;
                 float _XZ;
-                float _ZY;
                 float _XY;  
                 float _XW;
                 float _YW;
-                float _ZW;   
+                float _ZW;  
+                float _XYZW; 
             CBUFFER_END
 
             v2f vert (appdata v)
@@ -87,19 +92,7 @@
             }
 
             float4 Rotate(float4 p){
-                float a = _XZ;
-                float b = _ZY;
-                float c = _XY;
-                p.xz = mul(p.xz, float2x2(cos(a), sin(a), -sin(a), cos(a)));
-                p.zy = mul(p.zy, float2x2(cos(b), sin(b), -sin(b), cos(b)));
-                p.xy = mul(p.xy, float2x2(cos(c), sin(c), -sin(c), cos(c)));
-                a = _XW;
-                b = _YW;
-                c = _ZW;
-                p.xw = mul(p.xw, float2x2(cos(a), sin(a), -sin(a), cos(a)));
-                p.yw = mul(p.yw, float2x2(cos(b), sin(b), -sin(b), cos(b)));
-                p.zw = mul(p.zw, float2x2(cos(c), sin(c), -sin(c), cos(c)));
-                return p;
+                return RotorRotate(p, _A, _XY, _XZ, _XW, _YZ, _YW, _ZW, _XYZW);
             }
 
             // Pick a shape based on the integer property

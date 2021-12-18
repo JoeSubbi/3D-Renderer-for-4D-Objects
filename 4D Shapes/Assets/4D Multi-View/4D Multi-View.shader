@@ -7,12 +7,14 @@
         _Y ("Y Canvas Position", Float) = 0
         _Z ("Z Canvas Position", Float) = 3
 
-        _ZY ("X Rotation", Float) = 0
-        _XZ ("Y Rotation", Float) = 0
-        _XY ("Z Rotation", Float) = 0
+        _A  ("A Rotor Scalar", Float) = 1
+        _YZ ("X Rotation", Float)  = 0
+        _XZ ("Y Rotation", Float)  = 0
+        _XY ("Z Rotation", Float)  = 0
         _XW ("XW Rotation", Float) = 0
         _YW ("YW Rotation", Float) = 0
         _ZW ("ZW Rotation", Float) = 0
+        _XYZW ("XYZW Rotation", Float) = 0
 
         _Shape ("Shape", Int) = 0
         _Effect ("ShadingType", Int) = 0
@@ -35,10 +37,12 @@
 
             #include "UnityCG.cginc"
             #include "../Shapes.cginc"
+            #include "../Rotation.cginc"
 
             #define MAX_STEPS 200
             #define MAX_DIST  100
             #define SURF_DIST 0.001
+            #define SEP 1.5
 
             struct appdata
             {
@@ -71,12 +75,14 @@
 
                 int _Shape;
 
+                float _A;
+                float _YZ;
                 float _XZ;
-                float _ZY;
                 float _XY;  
                 float _XW;
                 float _YW;
-                float _ZW;
+                float _ZW;  
+                float _XYZW; 
 
                 int _Effect; 
             CBUFFER_END
@@ -117,39 +123,25 @@
             }
 
             float4 Rotate(float4 p){
-                float a = _XZ;
-                float b = _ZY;
-                float c = _XY;
-                p.xz = mul(p.xz, float2x2(cos(a), sin(a), -sin(a), cos(a)));
-                p.zy = mul(p.zy, float2x2(cos(b), sin(b), -sin(b), cos(b)));
-                p.xy = mul(p.xy, float2x2(cos(c), sin(c), -sin(c), cos(c)));
-                a = _XW;
-                b = _YW;
-                c = _ZW;
-                p.xw = mul(p.xw, float2x2(cos(a), sin(a), -sin(a), cos(a)));
-                p.yw = mul(p.yw, float2x2(cos(b), sin(b), -sin(b), cos(b)));
-                p.zw = mul(p.zw, float2x2(cos(c), sin(c), -sin(c), cos(c)));
-                return p;
+                return RotorRotate(p, _A, _XY, _XZ, _XW, _YZ, _YW, _ZW, _XYZW);
             }
 
             float GetDist(float4 p){
                 p = p-float4(_X,_Y,_Z,_W);
-                
-                float dist = 1.5;
 
-                if (_Shape == 2) p.w *= -1;
+                //p.w *= -1;
 
                 //Split into 4 coordinates
-                float4 p1 = p-float4( dist, dist, 0, 0);
-                float4 p2 = p-float4(-dist, dist, 0, 0);
-                float4 p3 = p-float4(-dist,-dist, 0, 0);
-                float4 p4 = p-float4( dist,-dist, 0, 0);
+                float4 p1 = p-float4( SEP, SEP, 0, 0); // Top Left      Normal
+                float4 p2 = p-float4(-SEP, SEP, 0, 0); // Top Right     YW
+                float4 p3 = p-float4(-SEP,-SEP, 0, 0); // Bottom Right  ZW
+                float4 p4 = p-float4( SEP,-SEP, 0, 0); // Bottom left   XW
 
                 //Rotate each view in each w direction
                 float4 mat = RotateMat(3.14159/2);
-                p2.xw = RotMatMul(p2.xw, mat);
-                p3.yw = RotMatMul(p3.yw, mat);
-                p4.zw = RotMatMul(p4.zw, mat);
+                p2.yw = RotMatMul(p2.yw, mat);
+                p3.zw = RotMatMul(p3.zw, mat);
+                p4.xw = RotMatMul(p4.xw, mat);
 
                 //Globally rotate
                 p1 = Rotate(p1);
@@ -286,7 +278,6 @@
                     return d;
                 }
 
-
                 // Sphere
                 float r = 0.75;
 
@@ -305,19 +296,19 @@
             int GetMat(float4 p){
                 p = p-float4(_X,_Y,_Z,_W);
 
-                float dist = 1.5;
+                //p.w *= -1;
 
                 //Split into 4 coordinates
-                float4 p1 = p-float4( dist, dist, 0, 0);
-                float4 p2 = p-float4(-dist, dist, 0, 0);
-                float4 p3 = p-float4(-dist,-dist, 0, 0);
-                float4 p4 = p-float4( dist,-dist, 0, 0);
+                float4 p1 = p-float4( SEP, SEP, 0, 0); // Top Left      Normal
+                float4 p2 = p-float4(-SEP, SEP, 0, 0); // Top Right     YW
+                float4 p3 = p-float4(-SEP,-SEP, 0, 0); // Bottom Right  ZW
+                float4 p4 = p-float4( SEP,-SEP, 0, 0); // Bottom left   XW
 
                 //Rotate each view in each w direction
                 float4 mat = RotateMat(3.14159/2);
-                p2.xw = RotMatMul(p2.xw, mat);
-                p3.yw = RotMatMul(p3.yw, mat);
-                p4.zw = RotMatMul(p4.zw, mat);
+                p2.yw = RotMatMul(p2.yw, mat);
+                p3.zw = RotMatMul(p3.zw, mat);
+                p4.xw = RotMatMul(p4.xw, mat);
 
                 //Globally rotate
                 p1 = Rotate(p1);
@@ -496,10 +487,11 @@
                 else {
                     float4 p = ro + rd * d;
 
-                    float3 colyzw = tex2D(_TexX, Rotate(p).yzw).rgb; // X
-                    float3 colzxw = tex2D(_TexY, Rotate(p).zxw).rgb; // Y
-                    float3 colxyw = tex2D(_TexZ, Rotate(p).xyw).rgb; // Z
-                    float3 colxyz = tex2D(_TexW, Rotate(p).xyz).rgb; // W
+                    float4 offset = p-float4(SEP+_X, SEP+_Y, _Z, 0);
+                    float3 colyzw = tex2D(_TexX, Rotate(offset).yzw).rgb; // X
+                    float3 colzxw = tex2D(_TexY, Rotate(offset).zxw).rgb; // Y
+                    float3 colxyw = tex2D(_TexZ, Rotate(offset).xyw).rgb; // Z
+                    float3 colxyz = tex2D(_TexW, Rotate(offset).xyz).rgb; // W
 
                     float4 n = Rotate(GetNormal(p));
                     float dif = dot(GetNormal(p), 
@@ -542,9 +534,9 @@
                     }
 
                     int mat = GetMat(p);
-                    if (mat == 2) col.rgb = dif*float3(1,0,0);
-                    if (mat == 3) col.rgb = dif*float3(0,1,0);
-                    if (mat == 4) col.rgb = dif*float3(0,0,1);
+                    if (mat == 2) col.rgb = dif*float3(0,1,0);
+                    if (mat == 3) col.rgb = dif*float3(0,0,1);
+                    if (mat == 4) col.rgb = dif*float3(1,0,0);
                 }
 
                 return col;

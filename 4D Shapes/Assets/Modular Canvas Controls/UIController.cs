@@ -6,10 +6,10 @@ using UnityEngine.UI;
 public class UIController : MonoBehaviour
 {
     // Visualisations
-    public bool Four_to_Three;
-    public bool Multi_View;
-    public bool Timeline;
-    public bool Onion_Skin;
+    public static bool Four_to_Three = true;
+    public static bool Multi_View = false;
+    public static bool Timeline = false;
+    public static bool Onion_Skin = false;
 
     public Shader Four_to_Three_Shader;
     public Shader Multi_View_Shader;

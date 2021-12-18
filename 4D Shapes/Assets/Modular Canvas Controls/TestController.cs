@@ -5,7 +5,7 @@ using SimpleJSON;
 using System.IO;
 using System.Linq;
 
-public class Test : MonoBehaviour
+public class TestController : MonoBehaviour
 {
     // Datapath
     private string datapath;
@@ -57,6 +57,8 @@ public class Test : MonoBehaviour
     // External Triggers to load stuff between tests
     public bool progression_graph = false;
     public bool trigger = false;
+    public double accuracy = 0.0;
+    public double time = 0.0;
 
     // Dictionaries to easily convert IDs to JSON Keys
     private Dictionary<int, string> representations = new Dictionary<int, string>();
@@ -148,96 +150,24 @@ public class Test : MonoBehaviour
         File.WriteAllText(datapath + filename,
             @"{
     ""Control"":{
-        ""Shape_Match"":{
-            ""Shape"": 0,
-            ""Rotation"":[0,0,0,0,0,0],
-            ""Texture"": 0,
-            ""Time"": 0,
-            ""Accuracy"": 0
-        },
-        ""Rotation_Match"":{
-            ""Shape"": 0,
-            ""Rotation"":[0,0,0,0,0,0],
-            ""Texture"": 0,
-            ""Time"": 0,
-            ""Accuracy"": 0
-        },
-        ""Pose_Match"":{
-            ""Shape"": 0,
-            ""Rotation"":[0,0,0,0,0,0],
-            ""Texture"": 0,
-            ""Time"": 0,
-            ""Accuracy"": 0
-        }
+        ""Shape_Match"":{},
+        ""Rotation_Match"":{},
+        ""Pose_Match"":{}
     },
     ""Timeline"":{
-        ""Shape_Match"":{
-            ""Shape"": 0,
-            ""Rotation"":[0,0,0,0,0,0],
-            ""Texture"": 0,
-            ""Time"": 0,
-            ""Accuracy"": 0
-        },
-        ""Rotation_Match"":{
-            ""Shape"": 0,
-            ""Rotation"":[0,0,0,0,0,0],
-            ""Texture"": 0,
-            ""Time"": 0,
-            ""Accuracy"": 0
-        },
-        ""Pose_Match"":{
-            ""Shape"": 0,
-            ""Rotation"":[0,0,0,0,0,0],
-            ""Texture"": 0,
-            ""Time"": 0,
-            ""Accuracy"": 0
-        }
+        ""Shape_Match"":{},
+        ""Rotation_Match"":{},
+        ""Pose_Match"":{}
     },
     ""Multi-View"":{
-        ""Shape_Match"":{
-            ""Shape"": 0,
-            ""Rotation"":[0,0,0,0,0,0],
-            ""Texture"": 0,
-            ""Time"": 0,
-            ""Accuracy"": 0
-        },
-        ""Rotation_Match"":{
-            ""Shape"": 0,
-            ""Rotation"":[0,0,0,0,0,0],
-            ""Texture"": 0,
-            ""Time"": 0,
-            ""Accuracy"": 0
-        },
-        ""Pose_Match"":{
-            ""Shape"": 0,
-            ""Rotation"":[0,0,0,0,0,0],
-            ""Texture"": 0,
-            ""Time"": 0,
-            ""Accuracy"": 0
-        }
+        ""Shape_Match"":{},
+        ""Rotation_Match"":{},
+        ""Pose_Match"":{}
     },
     ""4D-3D"":{
-        ""Shape_Match"":{
-            ""Shape"": 0,
-            ""Rotation"":[0,0,0,0,0,0],
-            ""Texture"": 0,
-            ""Time"": 0,
-            ""Accuracy"": 0
-        },
-        ""Rotation_Match"":{
-            ""Shape"": 0,
-            ""Rotation"":[0,0,0,0,0,0],
-            ""Texture"": 0,
-            ""Time"": 0,
-            ""Accuracy"": 0
-        },
-        ""Pose_Match"":{
-            ""Shape"": 0,
-            ""Rotation"":[0,0,0,0,0,0],
-            ""Texture"": 0,
-            ""Time"": 0,
-            ""Accuracy"": 0
-        }
+        ""Shape_Match"":{},
+        ""Rotation_Match"":{},
+        ""Pose_Match"":{}
     }
 }"
         );
@@ -285,9 +215,66 @@ public class Test : MonoBehaviour
         //reformat the json into dictionary style convention
         node = JSON.Parse(json);
     }
-    Debug.Log(node["Control"]["Shape_Match"]["Rotation"]);
     File.WriteAllText(datapath + filename, node.ToString());
     */
+
+    /*
+    {
+        ""Shape"": 0,
+        ""Rotation"":[0,0,0,0,0,0],
+        ""Texture"": 0,
+        ""Time"": 0,
+        ""Accuracy"": 0
+    },
+    */
+
+    private void Save(double time, double accuracy)
+    {
+        JSONNode node;
+        using (StreamReader r = new StreamReader(Path.Combine(datapath, filename)))
+        {
+            //read in the json
+            var json = r.ReadToEnd();
+
+            //reformat the json into dictionary style convention
+            node = JSON.Parse(json);
+        }
+
+        // Get Representation
+        string rep_name = representations[rep_index];
+        // Get Test
+        string test_name = tests[test];
+
+        // Name Test
+        string test_name_id = test_name + test_count;
+
+        /*
+        Dictionary<string, int> str_int_test = new Dictionary<string, int>();
+        str_int_test.Add("Shape", shape);
+        str_int_test.Add("Texture", texture);
+
+        Dictionary<string, double> str_flo_test = new Dictionary<string, double>();
+        str_flo_test.Add("Time", time); 
+        str_flo_test.Add("Accuracy", accuracy);
+
+        Dictionary<string, bool[6]> rot_test = new Dictionary<string, bool[6]>();
+        rot_test.Add("Rotation", rotation);
+        */
+        JSONNode temp = JSON.Parse("{}");
+        node[rep_name][test_name].Add(test_name_id, temp);
+
+        JSONNode test_node = node[rep_name][test_name][test_name_id];
+        test_node.Add("Shape", shape);
+        test_node.Add("Texture", texture);
+        test_node.Add("Time", time);
+        test_node.Add("Accuracy", accuracy);
+        //JSONArray rot_json = rotation;
+        //node["Control"][test_name][-1]["Rotation"].put(rot_json);
+
+        Debug.Log(node[rep_name].ToString());
+
+        File.WriteAllText(datapath + filename, node.ToString());
+    }
 
     void ShapeMatch()
     {
@@ -303,6 +290,7 @@ public class Test : MonoBehaviour
         // call function from ObjectController to set random W
 
         // Load quiz
+        Save(0.1, 0.1);
 
         // If end of pose match tests, move on to next test
         if (test_count == MAX_TESTS)
