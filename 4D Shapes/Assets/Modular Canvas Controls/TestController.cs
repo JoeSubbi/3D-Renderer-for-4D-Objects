@@ -7,107 +7,36 @@ using System.Linq;
 
 public class TestController : MonoBehaviour
 {
-    // Datapath
-    private string datapath;
-    private string filename;
-
-    // Experiment Properties
-    /* Representations
-     * 0 - Control
-     * 1 - Multi-View
-     * 2 - Timeline
-     * 3 - 4D-3D
-     * 
-     * Tests
-     * 0 - Shape_Match
-     * 1 - Rotation_Match
-     * 2 - Pose_Match
-     * 
-     * Texture
-     * 0 - Diffuse Lighting
-     * 1 - RGBW
-     * 2 - Pattern Red+ Blue-
-     * 3 - RGBW Pattern
-     * 
-     * Shape
-     * 0 - Sphere
-     * 1 - Cube
-     * 2 - WCone
-     * 3 - YCone
-     * 4 - Torus
-     * 5 - WCapsule
-     * 6 - XCapsule
-     * 7 - Tetrahedron
-     */
-    private int test    = 0;
-    private int texture = 0;
-    private int shape   = 0;
-    // Array of the order representations will occur in
-    private int[] repOrder = new int[] { 0, 1, 2, 3 };
-
-    // Rotation
-    // Boolean Array for rotation in YZ, XZ, XY, XW, YW, ZW
-    private bool[] rotation = new bool[] { false, false, false, false, false, false };
-
-    // Experiment Status
-    private int rep_index  = 0;
-    private int test_count = 0;
-    private int MAX_TESTS  = 3;
-
     // External Triggers to load stuff between tests
     public bool progression_graph = false;
     public bool trigger = false;
-    public double accuracy = 0.0;
-    public double time = 0.0;
 
-    // Dictionaries to easily convert IDs to JSON Keys
-    private Dictionary<int, string> representations = new Dictionary<int, string>();
-    private Dictionary<int, string> tests = new Dictionary<int, string>();
+    // Test Parameters
+    public static int texture = 0;    // Current enabled texture
+    public static int shape = 0;      // Current shape
+
+    // Constant Rotation
+    // Boolean Array for rotation in YZ, XZ, XY, XW, YW, ZW
+    public static bool[] rotation = new bool[] { false, false, false, false, false, false };
+
+    // Test Results
+    public double accuracy = 0.0;     // Accuracy of user
+    public double time = 0.0;         // Time to complete the task
 
     // Start is called before the first frame update
     void Start()
     {
         // Initialise Experiment
-        representations.Add(0, "Control");
-        representations.Add(1, "Multi-View");
-        representations.Add(2, "Timeline");
-        representations.Add(3, "4D-3D");
-
-        tests.Add(0, "Shape_Match");
-        tests.Add(1, "Rotation_Match");
-        tests.Add(2, "Pose_Match");
-
-        // Shuffle representation order
-        for(int i=0; i<repOrder.Length -1; i++)
-        {
-            int j = Random.Range(0, repOrder.Length);
-            int temp = repOrder[i];
-            repOrder[i] = repOrder[j];
-            repOrder[j] = temp;
-        }
-
-        // Prepare datapath for test results
-        if (Application.isEditor)
-            datapath = "Assets/TestOutput/";
-        else
-            datapath = Application.persistentDataPath;
-
-        // Check for and or create persistent datapath
-        DirectoryInfo dir = CreateDataPath();
-
-        // Read existing file names to see who the next user is
-        int id = GetLastUser(dir)+1;
-
-        // Create File
-        FileStream file = CreateFile(id);
-        file.Close();
+        StateController.PopulateDictionaries();
+        StateController.ShuffleRepresentations();
+        StateController.BuildDatapath();
 
         // Build file
         BuildJsonTemplate();
 
         // Load JSON file
         JSONNode node;
-        using (StreamReader r = new StreamReader(Path.Combine(datapath, filename)))
+        using (StreamReader r = new StreamReader(Path.Combine(StateController.Datapath, StateController.Filename)))
         {
             //read in the json
             var json = r.ReadToEnd();
@@ -117,37 +46,9 @@ public class TestController : MonoBehaviour
         }
     }
 
-    private DirectoryInfo CreateDataPath()
-    {
-        if (!Directory.Exists(datapath))
-            return Directory.CreateDirectory(datapath);
-        return new DirectoryInfo(datapath);
-    }
-
-    private int GetLastUser(DirectoryInfo dir)
-    {
-        if (dir.GetFiles("*.json").Length == 0)
-            return 0;
-
-        int id = 0;
-        foreach (FileInfo file in dir.GetFiles("*.json"))
-        {
-            int id_temp = int.Parse(file.Name.Split('.')[0]);
-            if (id_temp > id) id = id_temp;
-        }
-        return id;
-    }
-    
-    private FileStream CreateFile(int id)
-    {
-        filename = id + ".json";
-        string file = Path.Combine(datapath, filename);
-        return File.Create(file);
-    }
-
     private void BuildJsonTemplate()
     {
-        File.WriteAllText(datapath + filename,
+        File.WriteAllText(StateController.Datapath + StateController.Filename,
             @"{
     ""Control"":{
         ""Shape_Match"":{},
@@ -179,11 +80,11 @@ public class TestController : MonoBehaviour
         if (trigger)
         {
             // Set Representation
-            int current_representation = repOrder[rep_index];
-            Debug.Log(representations[current_representation]);
+            int current_representation = StateController.repOrder[StateController.rep_index];
+            Debug.Log(StateController.representations[current_representation]);
 
             // Load Test
-            switch (test)
+            switch (StateController.test)
             {
                 case 0:
                     ShapeMatch();
@@ -231,7 +132,7 @@ public class TestController : MonoBehaviour
     private void Save(double time, double accuracy)
     {
         JSONNode node;
-        using (StreamReader r = new StreamReader(Path.Combine(datapath, filename)))
+        using (StreamReader r = new StreamReader(Path.Combine(StateController.Datapath, StateController.Filename)))
         {
             //read in the json
             var json = r.ReadToEnd();
@@ -241,12 +142,12 @@ public class TestController : MonoBehaviour
         }
 
         // Get Representation
-        string rep_name = representations[rep_index];
+        string rep_name = StateController.representations[StateController.rep_index];
         // Get Test
-        string test_name = tests[test];
+        string test_name = StateController.tests[StateController.test];
 
         // Name Test
-        string test_name_id = test_name + test_count;
+        string test_name_id = test_name + StateController.test_count;
 
         /*
         Dictionary<string, int> str_int_test = new Dictionary<string, int>();
@@ -273,14 +174,14 @@ public class TestController : MonoBehaviour
 
         Debug.Log(node[rep_name].ToString());
 
-        File.WriteAllText(datapath + filename, node.ToString());
+        File.WriteAllText(StateController.Datapath + StateController.Filename, node.ToString());
     }
 
     void ShapeMatch()
     {
         // Set up shape match
-        Debug.Log("Shape Match " + test_count);
-        test_count += 1;
+        Debug.Log("Shape Match " + StateController.test_count);
+        StateController.test_count += 1;
 
         // Set shape
         // Set texture
@@ -293,10 +194,10 @@ public class TestController : MonoBehaviour
         Save(0.1, 0.1);
 
         // If end of pose match tests, move on to next test
-        if (test_count == MAX_TESTS)
+        if (StateController.test_count == StateController.MAX_TESTS)
         {
-            test += 1;
-            test_count = 0;
+            StateController.test += 1;
+            StateController.test_count = 0;
         }
     }
 
@@ -308,8 +209,8 @@ public class TestController : MonoBehaviour
     void RotationMatch()
     {
         // Set up shape match
-        Debug.Log("Rotation Match " + test_count);
-        test_count += 1;
+        Debug.Log("Rotation Match " + StateController.test_count);
+        StateController.test_count += 1;
 
         // Set shape
         // Set texture
@@ -318,10 +219,10 @@ public class TestController : MonoBehaviour
         // Load quiz
 
         // If end of pose match tests, move on to next test
-        if (test_count == MAX_TESTS)
+        if (StateController.test_count == StateController.MAX_TESTS)
         {
-            test += 1;
-            test_count = 0;
+            StateController.test += 1;
+            StateController.test_count = 0;
         }
     }
 
@@ -333,8 +234,8 @@ public class TestController : MonoBehaviour
     void PoseMatch()
     {
         // Set up pose match
-        Debug.Log("Pose Match " + test_count);
-        test_count += 1;
+        Debug.Log("Pose Match " + StateController.test_count);
+        StateController.test_count += 1;
 
         // Set shape
         // Set texture
@@ -344,10 +245,10 @@ public class TestController : MonoBehaviour
         // Load quiz
 
         // If end of pose match tests, move on to next test
-        if (test_count == MAX_TESTS)
+        if (StateController.test_count == StateController.MAX_TESTS)
         {
-            test += 1;
-            test_count = 0;
+            StateController.test += 1;
+            StateController.test_count = 0;
         }
     }
 
@@ -361,10 +262,10 @@ public class TestController : MonoBehaviour
         // If there are still representations left to do, 
         // move to the next represention
         // Reset test to start from shape match again
-        if (rep_index != repOrder.Length - 1)
+        if (StateController.rep_index != StateController.repOrder.Length - 1)
         {
-            rep_index += 1;
-            test = 0;
+            StateController.rep_index += 1;
+            StateController.test = 0;
             Debug.Log("End of Representation");
         }
         else
@@ -374,21 +275,5 @@ public class TestController : MonoBehaviour
         }
 
         // Go to graph: progression_graph = true;
-    }
-
-    // Functions for external classes to access information
-    public int GetShape()
-    {
-        return shape;
-    }
-
-    public int GetTexture()
-    {
-        return texture;
-    }
-
-    public bool[] GetRotation()
-    {
-        return rotation;
     }
 }
