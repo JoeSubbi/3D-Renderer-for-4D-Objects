@@ -12,6 +12,7 @@ public class GenericManipulation : MonoBehaviour
     private Slider s2;
 
     private Toggle[] b;
+    private Rotor4 rotor = new Rotor4(1,0,0,0,0,0,0,0);
 
     // Start is called before the first frame update
     void Start()
@@ -43,7 +44,6 @@ public class GenericManipulation : MonoBehaviour
 
         //Rotation of the shapes
         Rotate();
-        //Time.time
 
         //Position 2D Object according to screen
         Vector2 canvasSize = GameObject.Find("Canvas").GetComponent<RectTransform>().sizeDelta;
@@ -56,22 +56,34 @@ public class GenericManipulation : MonoBehaviour
     {
         //Rotation of the shapes
         //YZ
-        if (b[0].isOn) rend4.material.SetFloat("_ZY", Time.time);
-        else           rend4.material.SetFloat("_ZY", 0);
+        if (b[0].isOn) buildRotor(new Vector4(0, 1, 0, 0), new Vector4(0, 0, 1, 0));
         //XZ
-        if (b[1].isOn) rend4.material.SetFloat("_XZ", Time.time);
-        else           rend4.material.SetFloat("_XZ", 0);
+        if (b[1].isOn) buildRotor(new Vector4(1, 0, 0, 0), new Vector4(0, 0, 1, 0));
         //XY
-        if (b[2].isOn) rend4.material.SetFloat("_XY", Time.time);
-        else           rend4.material.SetFloat("_XY", 0);
+        if (b[2].isOn) buildRotor(new Vector4(1, 0, 0, 0), new Vector4(0, 1, 0, 0));
         //XW
-        if (b[3].isOn) rend4.material.SetFloat("_XW", Time.time);
-        else           rend4.material.SetFloat("_XW", 0);
+        if (b[3].isOn) buildRotor(new Vector4(1, 0, 0, 0), new Vector4(0, 0, 0, 1));
         //YW
-        if (b[4].isOn) rend4.material.SetFloat("_YW", Time.time);
-        else           rend4.material.SetFloat("_YW", 0);
+        if (b[4].isOn) buildRotor(new Vector4(0, 1, 0, 0), new Vector4(0, 0, 0, 1));
         //ZW
-        if (b[5].isOn) rend4.material.SetFloat("_ZW", Time.time);
-        else           rend4.material.SetFloat("_ZW", 0);
+        if (b[5].isOn) buildRotor(new Vector4(0, 0, 1, 0), new Vector4(0, 0, 0, 1));
+
+        rend4.material.SetFloat("_A", rotor.a); 
+        rend4.material.SetFloat("_YZ", rotor.byz);
+        rend4.material.SetFloat("_XZ", rotor.bxz);
+        rend4.material.SetFloat("_XY", rotor.bxy);
+        rend4.material.SetFloat("_XW", rotor.bxw);
+        rend4.material.SetFloat("_YW", rotor.byw);
+        rend4.material.SetFloat("_ZW", rotor.bzw);
+        rend4.material.SetFloat("_XYZW", rotor.bxyzw);
+    }
+
+    private Rotor4 buildRotor(Vector4 e1, Vector4 e2)
+    {
+        Bivector4 bv = Bivector4.Wedge(e1, e2);
+        Rotor4 r = new Rotor4(bv, Time.deltaTime);
+        rotor /= r;
+        rotor.Normalise();
+        return rotor;
     }
 }
