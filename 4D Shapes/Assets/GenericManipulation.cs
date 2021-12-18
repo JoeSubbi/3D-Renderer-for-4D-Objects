@@ -82,7 +82,7 @@ public class GenericManipulation : MonoBehaviour
     {
         Bivector4 bv = Bivector4.Wedge(e1, e2);
         Rotor4 r = new Rotor4(bv, Time.deltaTime);
-        rotor /= r;
+        rotor *= r;
         rotor.Normalise();
         return rotor;
     }

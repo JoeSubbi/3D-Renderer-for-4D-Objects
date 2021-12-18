@@ -1072,7 +1072,7 @@ MeshCollider:
   serializedVersion: 4
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 7238664596135999558, guid: 63494effa247d65489638de46623bfbb, type: 3}
+  m_Mesh: {fileID: -8803937527578110353, guid: 63494effa247d65489638de46623bfbb, type: 3}
 --- !u!1001 &439798049
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1138,7 +1138,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 63494effa247d65489638de46623bfbb,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 200
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: 63494effa247d65489638de46623bfbb,
         type: 3}
@@ -1149,6 +1149,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: arc yz
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 63494effa247d65489638de46623bfbb,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 63494effa247d65489638de46623bfbb, type: 3}
@@ -1662,7 +1667,7 @@ MeshCollider:
   serializedVersion: 4
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 7238664596135999558, guid: 63494effa247d65489638de46623bfbb, type: 3}
+  m_Mesh: {fileID: -8803937527578110353, guid: 63494effa247d65489638de46623bfbb, type: 3}
 --- !u!1 &716903680
 GameObject:
   m_ObjectHideFlags: 0
@@ -2361,7 +2366,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 63494effa247d65489638de46623bfbb,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 200
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: 63494effa247d65489638de46623bfbb,
         type: 3}
@@ -2372,6 +2377,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: arc xy
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 63494effa247d65489638de46623bfbb,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 63494effa247d65489638de46623bfbb, type: 3}
@@ -2871,12 +2881,12 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 0
-  orthographic size: 5
+  orthographic: 1
+  orthographic size: 2.5
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 55
+    m_Bits: 4294967295
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -3059,8 +3069,10 @@ MonoBehaviour:
     type: 3}
   Multi_View_Shader: {fileID: 4800000, guid: f8d80405758e68244b875a4886808ac8, type: 3}
   Timeline_Shader: {fileID: 4800000, guid: 8c41bd58337df5b4cb44c1c44dad1f31, type: 3}
-  Onion_Skin_Shader: {fileID: 4800000, guid: c34e9a050e6bd1c458572c8a5a52f825, type: 3}
   Window: {fileID: 34724911}
+  grabBall: 1
+  GrabBall: {fileID: 1832959589}
+  SwipeEmpty: {fileID: 1071215870}
   MiniWindow: {fileID: 1532300831}
   MatchWindow: {fileID: 1689266242}
   ShapeOptionContainer: {fileID: 733699344}
@@ -3112,9 +3124,6 @@ MonoBehaviour:
   shape: 1
   effect: 1
   wSlider: {fileID: 585531722}
-  grabBall: 1
-  GrabBall: {fileID: 1832959589}
-  SwipeEmpty: {fileID: 1071215870}
 --- !u!1 &1274336417
 GameObject:
   m_ObjectHideFlags: 0
@@ -3170,7 +3179,7 @@ MeshCollider:
   serializedVersion: 4
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 7238664596135999558, guid: 63494effa247d65489638de46623bfbb, type: 3}
+  m_Mesh: {fileID: -8803937527578110353, guid: 63494effa247d65489638de46623bfbb, type: 3}
 --- !u!1 &1410124416
 GameObject:
   m_ObjectHideFlags: 0
@@ -5180,7 +5189,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 63494effa247d65489638de46623bfbb,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 200
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: 63494effa247d65489638de46623bfbb,
         type: 3}
@@ -5191,6 +5200,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: arc xz
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 63494effa247d65489638de46623bfbb,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 63494effa247d65489638de46623bfbb, type: 3}

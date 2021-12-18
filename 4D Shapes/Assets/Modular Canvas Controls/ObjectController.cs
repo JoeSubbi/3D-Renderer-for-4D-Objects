@@ -25,10 +25,6 @@ public class ObjectController : MonoBehaviour
     public static Rotor4 matchRot = new Rotor4(1, 0, 0, 0, 0, 0, 0, 0);
     public static Rotor4 miniRot  = new Rotor4(1, 0, 0, 0, 0, 0, 0, 0);
 
-    public bool grabBall;
-    public GameObject GrabBall;
-    public GameObject SwipeEmpty;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -37,8 +33,6 @@ public class ObjectController : MonoBehaviour
         matchRenderer = match.GetComponent<Renderer>();
 
         SetRandObjectRotation();
-
-        SwitchRotation(grabBall);
     }
 
     // Update is called once per frame
@@ -110,17 +104,4 @@ public class ObjectController : MonoBehaviour
         SetMatchObjectRotation();
     }
 
-    public void SwitchRotation(bool grabBall)
-    {
-        if (grabBall)
-        {
-            GrabBall.SetActive(true);
-            SwipeEmpty.SetActive(false);
-        }
-        else
-        {
-            GrabBall.SetActive(false);
-            SwipeEmpty.SetActive(true);
-        }
-    }
 }

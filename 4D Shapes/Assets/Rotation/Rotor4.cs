@@ -54,7 +54,7 @@ public class Rotor4
     }
 
     // Rotor4-Rotor4 Product - Global Axis
-    public static Rotor4 operator /(Rotor4 p, Rotor4 q)
+    public static Rotor4 operator *(Rotor4 p, Rotor4 q)
     {
 
         float a = p.a;
@@ -88,16 +88,17 @@ public class Rotor4
     }
 
     // Rotor4-Rotor4 Product - Local Axis
-    public static Rotor4 operator *(Rotor4 p, Rotor4 q)
+    public static Rotor4 operator /(Rotor4 p, Rotor4 q)
     {
-        float a = p.a;
+
+        float a = -p.a;
         float axy = p.bxy;
-        float axz = -p.bxz;
-        float axw = -p.bxw;
+        float axz = p.bxz;
+        float axw = p.bxw;
         float ayz = p.byz;
-        float ayw = -p.byw;
-        float azw = -p.bzw;
-        float axyzw = p.bxyzw;
+        float ayw = p.byw;
+        float azw = p.bzw;
+        float axyzw = -p.bxyzw;
 
         float b = q.a;
         float bxy = q.bxy;
@@ -117,23 +118,24 @@ public class Rotor4
         float ezw = axw * bxz - axy * bxyzw - axz * bxw + ayw * byz - ayz * byw + azw * b - axyzw * bxy + a * bzw;
         float exyzw = axw * byz + axy * bzw - axz * byw - ayw * bxz + ayz * bxw + azw * bxy + axyzw * b + a * bxyzw;
 
-        return new Rotor4(e, exy, -exz, eyz, -exw, -eyw, -ezw, exyzw);
+        return new Rotor4(-e, exy, exz, eyz, exw, eyw, ezw, -exyzw);
+    }
+
+    // Rotor4-Vector4 Product (Rotation)
+    public static Vector4 operator *(Rotor4 p, Vector4 a)
+    {
+        return p.Rotate(a);
+    }
+
+    public static Vector4 operator *(Vector4 a, Rotor4 p)
+    {
+        return p.Rotate(a);
     }
 
     // Rotate a Vector with a Rotor
     public Vector4 Rotate(Vector4 a)
     {
-        Rotor4 p = this;
-
-        float s = p.a;
-        float bxy = p.bxy;
-        float bxz = p.bxz;
-        float bxw = p.bxw;
-        float byz = p.byz;
-        float byw = p.byw;
-        float bzw = p.bzw;
-        float bxyzw = p.bxyzw;
-
+        float s = this.a;
         Vector4 r;
 
         r.x = (

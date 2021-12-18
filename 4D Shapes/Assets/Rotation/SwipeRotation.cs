@@ -9,7 +9,7 @@ public class SwipeRotation : MonoBehaviour
     private int speed = 50;
     private float x;
     private float y;
-    public  bool onUIElement;
+    public  bool onUIElement = false;
 
     // Rotor construction
     private Vector4 e1 = new Vector4(0, 0, 0, 0);
@@ -60,12 +60,12 @@ public class SwipeRotation : MonoBehaviour
                     e1 = new Vector4(-1, 0, 0, 0);
                     e2 = new Vector4(0, 0, 1, 0);
                     bv = Bivector4.Wedge(e1, e2);
-                    r /= new Rotor4(bv, x);
+                    r *= new Rotor4(bv, x);
                 }
-                ObjectController.mainRot /= r;
+                ObjectController.mainRot *= r;
 
                 if (UIController.Pose_Match)
-                    ObjectController.matchRot /= r;
+                    ObjectController.matchRot *= r;
             }
 
             // 4D Rotation - Right Click
@@ -82,7 +82,7 @@ public class SwipeRotation : MonoBehaviour
                     bv = Bivector4.Wedge(e1, e2);
                     r  = new Rotor4(bv, x + y);
 
-                    ObjectController.mainRot /= r;
+                    ObjectController.mainRot *= r;
 
                     // 3D Component
                     if (UIController.Four_to_Three)
@@ -92,7 +92,7 @@ public class SwipeRotation : MonoBehaviour
                         bv = Bivector4.Wedge(e1, e2);
                         r  = new Rotor4(bv, x + y);
 
-                        ObjectController.miniRot /= r;
+                        ObjectController.miniRot *= r;
                     }
                 }
                 else
@@ -107,9 +107,9 @@ public class SwipeRotation : MonoBehaviour
                     e1 = new Vector4(-1, 0, 0, 0);
                     e2 = new Vector4(0, 0, 0, 1);
                     bv = Bivector4.Wedge(e1, e2);
-                    r /= new Rotor4(bv, x);
+                    r *= new Rotor4(bv, x);
 
-                    ObjectController.mainRot /= r;
+                    ObjectController.mainRot *= r;
 
                     // 3D Component
                     if (UIController.Four_to_Three)
@@ -122,9 +122,9 @@ public class SwipeRotation : MonoBehaviour
                         e1 = new Vector4(0, 1, 0, 0);
                         e2 = new Vector4(0, 0, 1, 0);
                         bv = Bivector4.Wedge(e1, e2);
-                        r /= new Rotor4(bv, x);
+                        r *= new Rotor4(bv, x);
 
-                        ObjectController.miniRot /= r;
+                        ObjectController.miniRot *= r;
                     }
                 }
             }

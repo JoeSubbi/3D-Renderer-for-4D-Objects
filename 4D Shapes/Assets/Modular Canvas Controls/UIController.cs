@@ -6,24 +6,25 @@ using UnityEngine.UI;
 public class UIController : MonoBehaviour
 {
     // Visualisations
-    public static bool Four_to_Three = true;
-    public static bool Multi_View = false;
+    public static bool Four_to_Three = false;
+    public static bool Multi_View = true;
     public static bool Timeline = false;
-    public static bool Onion_Skin = false;
 
     public Shader Four_to_Three_Shader;
     public Shader Multi_View_Shader;
     public Shader Timeline_Shader;
-    public Shader Onion_Skin_Shader;
     public GameObject Window;
     private Renderer rend;
 
     // Tests
     public static bool Shape_Match = false;
-    public static bool Rotation_Match = true;
+    public static bool Rotation_Match = false;
     public static bool Pose_Match = false;
 
     // Method of rotation
+    public bool grabBall;
+    public GameObject GrabBall;
+    public GameObject SwipeEmpty;
 
     // UI Elements
     public GameObject MiniWindow;
@@ -40,12 +41,30 @@ public class UIController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Get components
         rend = Window.GetComponent<Renderer>();
         miniRect = MiniWindow.GetComponent<RectTransform>();
         matchRect = MatchWindow.GetComponent<RectTransform>();
         shapeOptionRect = ShapeOptionContainer.GetComponent<RectTransform>();
         rotationOptionRect = RotationOptionContainer.GetComponent<RectTransform>();
         canvas = GetComponent<RectTransform>();
+
+        // Set method of rotation
+        SwitchRotation(grabBall);
+    }
+
+    public void SwitchRotation(bool grabBall)
+    {
+        if (grabBall)
+        {
+            GrabBall.SetActive(true);
+            SwipeEmpty.SetActive(false);
+        }
+        else
+        {
+            GrabBall.SetActive(false);
+            SwipeEmpty.SetActive(true);
+        }
     }
 
     // Update is called once per frame
@@ -69,11 +88,13 @@ public class UIController : MonoBehaviour
             {
                 miniRect.anchoredPosition = new Vector2(shapeOptionRect.sizeDelta.x+buffer/2, buffer);
                 rend.material.SetFloat("_X", -1f);
+                GrabBall.transform.position = new Vector3(1, 0, 0);
             }
             else
             {
                 miniRect.anchoredPosition = new Vector2(buffer, buffer);
                 rend.material.SetFloat("_X", -0.75f);
+                GrabBall.transform.position = new Vector3(0.75f, 0, 0);
             }
             if (Pose_Match)
             {
@@ -85,6 +106,7 @@ public class UIController : MonoBehaviour
 
             // Set appropriate representation
             MiniWindow.SetActive(true);
+            GrabBall.transform.localScale = new Vector3(1, 1, 1);
         }
         else if (Multi_View)
         {
@@ -93,44 +115,51 @@ public class UIController : MonoBehaviour
             rend.material.SetFloat("_Y",  -0.35f);
 
             if (Shape_Match || Rotation_Match)
+            {
                 rend.material.SetFloat("_X", -0.1f);
-            if (Pose_Match)
+                GrabBall.transform.position = new Vector3(-1.4f, 1.15f, 0);
+            }
+            else if (Pose_Match)
             {
                 rend.material.SetFloat("_X", -0.4f);
-                matchRect.anchoredPosition = new Vector2(buffer/2 - buffer / 10, 
+                matchRect.anchoredPosition = new Vector2(buffer / 2 - buffer / 10,
                                                          0);
+                GrabBall.transform.position = new Vector3(-1.1f, 1.15f, 0);
+            }
+            else
+            {
+                GrabBall.transform.position = new Vector3(-1.5f, 1.15f, 0);
             }
 
             // Disable 3D counterpart
             MiniWindow.SetActive(false);
+            GrabBall.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
         }
         else if (Timeline)
         {
             rend.material.shader = Timeline_Shader;
             rend.material.SetFloat("_Z", -5f);
             rend.material.SetFloat("_X", 0.6f);
+
             if (Shape_Match || Rotation_Match)
             {
                 rend.material.SetFloat("_X", -0.4f);
                 rend.material.SetFloat("_Z", -7f);
+                GrabBall.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
+                GrabBall.transform.position = new Vector3(0.16f, 0, 0);
             }
+            else
+            {
+                GrabBall.transform.localScale = new Vector3(0.7f, 0.7f, 0.7f);
+                GrabBall.transform.position = new Vector3(-0.28f, 0, 0);
+            }
+
             if (Pose_Match)
             {
                 Vector2 position = new Vector2(canvas.sizeDelta.x / 2f - matchRect.sizeDelta.x / 2
                                                -50*canvas.sizeDelta.y/ canvas.sizeDelta.x, buffer/2);
                 matchRect.anchoredPosition = position;
             }
-
-            // Disable 3D counterpart
-            MiniWindow.SetActive(false);
-        }
-        else if (Onion_Skin)
-        {
-            rend.material.shader = Onion_Skin_Shader;
-
-            // Set match window positon
-            if (Pose_Match)
-                matchRect.anchoredPosition = new Vector2(buffer/2, -buffer/2);
 
             // Disable 3D counterpart
             MiniWindow.SetActive(false);
@@ -145,6 +174,8 @@ public class UIController : MonoBehaviour
 
             // Disable 3D counterpart
             MiniWindow.SetActive(false);
+            GrabBall.transform.position = new Vector3(0, 0, 0);
+            GrabBall.transform.localScale = new Vector3(1, 1, 1);
         }
 
         // Mode
