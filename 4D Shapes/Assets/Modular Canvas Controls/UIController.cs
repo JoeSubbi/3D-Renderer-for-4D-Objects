@@ -19,9 +19,11 @@ public class UIController : MonoBehaviour
     private Renderer rend;
 
     // Tests
-    public bool Shape_Match;
-    public bool Rotation_Match;
-    public bool Pose_Match;
+    public static bool Shape_Match = false;
+    public static bool Rotation_Match = true;
+    public static bool Pose_Match = false;
+
+    // Method of rotation
 
     // UI Elements
     public GameObject MiniWindow;

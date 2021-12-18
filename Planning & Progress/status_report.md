@@ -79,6 +79,8 @@ Representations include:
  - Implement read and write to the json file
  - implement script to loop through experiment when a trigger is called externally
  - implemented rotors! glitchy but work
+ - rotors now seem to work 98% of the time - occasionally object will grow for a specific angle, but not if you continue to rotate object repeatedly. not very reproducible so will leave for now.
+ - implemented grab ball and swipe rotation in modular scene
 
 ## Problems and risks
 ### Problems

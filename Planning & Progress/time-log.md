@@ -454,9 +454,18 @@
      - if the objects were shifted based on UI elements, textures would be offset and move across object
    - I now have working swipe rotation
 
-TODO:  
-Move rotation into children scenes so they can be changed easily  
-Make controller variables held by a static class for persistent variables  
-Implement grab ball rotation (after rotation in subscenes)  
+### 18 Dec 2021
+
+ - *0.5 hours* converting generic manipulation script to use rotor, as the scenes to showcase each representation no longer work
+   - Not that this will be used in the experiment
+ - *1.5 hours* create static class to contain game state between scenes.
+ - *1 hour* moved swipe rotation code to add the ability to enable and disable swipe and grab ball rotation
+ - *1 hour* implemented and improved grab ball rotation - was way over complicated before...
+
+
+TODO:
 Create survey scene  
+ - allow user to write answers
+ - create templates for questions per test
+
 Create trigger buttons to increment experiment between surveys
