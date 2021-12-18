@@ -184,7 +184,7 @@ quality of life polish
    - [ ] Build survey scene
    - [ ] Store current experiment status and load it between surveys
    - [ ] Store answers of survey
-   - [ ] Implement random rotation mechanic in the modular scene
+   - [x] Implement random rotation mechanic in the modular scene
 
 ### Semester 2
 

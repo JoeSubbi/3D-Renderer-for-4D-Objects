@@ -442,3 +442,21 @@
 ### 10 Dec 2021
 
  - *2 hours* reviewing rotor implementation to work out why it is glitchy. cannot find why. seems like it should work fine...
+
+## CHRISTMAS
+
+### 17 Dec 2021
+
+ - *2 hours* playing around with rotor to solve visual glitch - realised I was not normalising pseudo vector! IT WORKS - although sometimes shape scale up, but very rarely...
+ - *4 hours* implementing swipe rotation in the modular scene
+   - several issues arose
+     - compiler could not replace rotation functions as there is so much content. had to reduce calls to rotate, but should be fine
+     - if the objects were shifted based on UI elements, textures would be offset and move across object
+   - I now have working swipe rotation
+
+TODO:  
+Move rotation into children scenes so they can be changed easily  
+Make controller variables held by a static class for persistent variables  
+Implement grab ball rotation (after rotation in subscenes)  
+Create survey scene  
+Create trigger buttons to increment experiment between surveys
