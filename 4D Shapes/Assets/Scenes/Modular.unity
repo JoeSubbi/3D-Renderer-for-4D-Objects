@@ -1668,6 +1668,77 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -8803937527578110353, guid: 63494effa247d65489638de46623bfbb, type: 3}
+--- !u!1 &706749322
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 706749323}
+  - component: {fileID: 706749325}
+  - component: {fileID: 706749324}
+  m_Layer: 5
+  m_Name: CentralRotate
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &706749323
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 706749322}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1242216877}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 115.1}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &706749324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 706749322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.29803923}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Texture: {fileID: 2800000, guid: 917128944c51ea340a61874fba915baa, type: 3}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+--- !u!222 &706749325
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 706749322}
+  m_CullTransparentMesh: 0
 --- !u!1 &716903680
 GameObject:
   m_ObjectHideFlags: 0
@@ -2633,6 +2704,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   onUIElement: 0
+  icon: {fileID: 706749322}
 --- !u!1 &1076954351
 GameObject:
   m_ObjectHideFlags: 0
@@ -3029,6 +3101,7 @@ RectTransform:
   - {fileID: 585531721}
   - {fileID: 733699345}
   - {fileID: 1547019916}
+  - {fileID: 706749323}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3070,7 +3143,7 @@ MonoBehaviour:
   Multi_View_Shader: {fileID: 4800000, guid: f8d80405758e68244b875a4886808ac8, type: 3}
   Timeline_Shader: {fileID: 4800000, guid: 8c41bd58337df5b4cb44c1c44dad1f31, type: 3}
   Window: {fileID: 34724911}
-  grabBall: 1
+  grabBall: 0
   GrabBall: {fileID: 1832959589}
   SwipeEmpty: {fileID: 1071215870}
   MiniWindow: {fileID: 1532300831}
@@ -3121,7 +3194,7 @@ MonoBehaviour:
   main: {fileID: 34724911}
   mini: {fileID: 891246201}
   match: {fileID: 356539880}
-  shape: 1
+  shape: 7
   effect: 1
   wSlider: {fileID: 585531722}
 --- !u!1 &1274336417
@@ -4894,6 +4967,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onUIElement: 0
   wRotation: 0
+  icon: {fileID: 706749322}
 --- !u!1 &1899033825
 GameObject:
   m_ObjectHideFlags: 0

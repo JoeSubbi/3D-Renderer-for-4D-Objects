@@ -239,6 +239,8 @@
                     float3 colxyz = tex2D(_TexW, Rotate(offset).xyz).rgb; // W
 
                     float4 n = Rotate(GetNormal(p));
+                    if (_Shape == 7) n *= -1;
+
                     float dif = dot(GetNormal(p), 
                                     normalize(float3(1,2,3))) * .5 +.5;
 
@@ -258,9 +260,9 @@
                         col.rgb += clamp(dif/3, 0, 1);
 
                         //Colour based on direction
-                        if ( dot(float4(1,1,1,1), n) > 0)
+                        if ( dot(float4(1,1,1,1), n) > 0.5)
                             col.rgb *= float3(1,0.5,0.5);
-                        else if (dot(float4(1,1,1,1), n) < 0)
+                        else if (dot(float4(1,1,1,1), n) < 0.5)
                             col.rgb *= float3(0.5,0.5,1);
                     }
                     //Textures - RGBW

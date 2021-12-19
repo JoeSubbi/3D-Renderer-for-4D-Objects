@@ -6,8 +6,8 @@ using UnityEngine.UI;
 public class UIController : MonoBehaviour
 {
     // Visualisations
-    public static bool Four_to_Three = false;
-    public static bool Multi_View = true;
+    public static bool Four_to_Three = true;
+    public static bool Multi_View = false;
     public static bool Timeline = false;
 
     public Shader Four_to_Three_Shader;

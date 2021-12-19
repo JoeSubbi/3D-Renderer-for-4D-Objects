@@ -25,11 +25,14 @@ public class GrabBallRotation : MonoBehaviour
     private Quaternion qTotal = new Quaternion(1, 0, 0, 0);
     // rotation guide line
     private LineRenderer line;
-    private Vector3 normal = new Vector3(0, 0, 0);
-    private Vector3 point = new Vector3(0, 0, 0);
-    private Vector3 tangent = new Vector3(0, 0, 0);
+
+    // Ray information
+    private Vector3 point = new Vector3(0, 0, 0);  // Point of contact
+    private Vector3 normal = new Vector3(0, 0, 0); // Normal of surface at point
+    private Vector3 tangent = new Vector3(0, 0, 0);// Tangent to surface at point
 
     public bool wRotation = false;
+    public GameObject icon;
 
     // Start is called before the first frame update
     void Start()
@@ -40,6 +43,8 @@ public class GrabBallRotation : MonoBehaviour
         line.SetPositions(initLinePos);
         line.startWidth = 0.01f;
         line.endWidth = 0.01f;
+
+        icon.SetActive(false);
     }
 
     void Update()
@@ -87,8 +92,8 @@ public class GrabBallRotation : MonoBehaviour
                 tangent = Vector3.Cross(qTotal * axis, normal);
 
                 tangent.Normalize();
-                x *= -tangent.x;
-                y *= -tangent.y;
+                x *= tangent.x;
+                y *= tangent.y;
 
                 // Guide Line
                 line.enabled = true;

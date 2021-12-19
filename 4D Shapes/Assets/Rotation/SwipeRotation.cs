@@ -17,6 +17,17 @@ public class SwipeRotation : MonoBehaviour
     private Rotor4 r;
     private Bivector4 bv;
 
+    public GameObject icon;
+
+    void Update()
+    {
+        if (Input.GetKey(KeyCode.Space))
+        {
+            icon.SetActive(true);
+        }
+        else icon.SetActive(false);
+    }
+
     // Update rotor based on mouse manipulation
     void OnGUI()
     {        

@@ -41,7 +41,7 @@
 ### 25 Sep 2021
 
  - *1 hour* Researching and attempting to implement a 3D cone that would translate well to 4D. - Failure.
- -  - *2 hours* Researching existing SDFs for other shapes - namely an Octahedron and Tetrahedron.
+ - *2 hours* Researching existing SDFs for other shapes - namely an Octahedron and Tetrahedron.
  - *2 hours* Implementing a 4D octahedron and tetrahedron. - had to make some small tweaks but they work.
 
 ### 26 Sep 2021
@@ -461,7 +461,10 @@
  - *1.5 hours* create static class to contain game state between scenes.
  - *1 hour* moved swipe rotation code to add the ability to enable and disable swipe and grab ball rotation
  - *1 hour* implemented and improved grab ball rotation - was way over complicated before...
-
+ - *1 hours* improve local rotation
+   - it was scaling weirdly, played around with it, found negating scalar and pseudo vector produces a much much more stable local rotation
+ - *1 hour* make tetrahedron normals inside out to show pattern properly
+ - *1 hour* creating and including icon to show center of rotation when using the swipe rotation along the Z axis
 
 TODO:
 Create survey scene  
