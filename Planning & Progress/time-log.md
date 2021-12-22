@@ -466,6 +466,11 @@
  - *1 hour* make tetrahedron normals inside out to show pattern properly
  - *1 hour* creating and including icon to show center of rotation when using the swipe rotation along the Z axis
 
+### 19 Dec 2021
+
+ - *1 hour* Recording audio for opening tutorial
+ - *4 hours* editing and screen recording content to build up the intro tutorial video
+
 TODO:
 Create survey scene  
  - allow user to write answers

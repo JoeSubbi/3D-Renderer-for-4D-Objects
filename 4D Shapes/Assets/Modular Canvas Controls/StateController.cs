@@ -39,18 +39,26 @@ public static class StateController
      * 6 - XCapsule
      * 7 - Tetrahedron
      */
-    public static int test = 0;       // current experiment test
-    // Array of the order representations will occur in
-    public static int[] repOrder = new int[] { 0, 1, 2, 3 };
 
+    // Array of the order representations will occur in
+    public static int[] rep_order = new int[] { 0, 1, 2, 3 };
     // Experiment Status
-    public static int rep_index = 0;  // Index of repOrder - which representation is being shown
+    public static int test = 0;       // current experiment test
+    public static int rep_index = 0;  // Index of rep_order - used to index rep_order
     public static int test_count = 0; // How many iterations of a specific test
-    public const int MAX_TESTS = 3;  // Total number of iterations for each test
+    public const int MAX_TESTS = 3;   // Total number of iterations for each test
 
     // Dictionaries to easily convert IDs to JSON Keys
     public static Dictionary<int, string> representations = new Dictionary<int, string>();
     public static Dictionary<int, string> tests = new Dictionary<int, string>();
+
+    // Test Parameters
+    public static int shape = 0;      // Current shape
+    public static int texture = 0;    // Current enabled texture
+    // Boolean Array for planes of constant rotation in YZ, XZ, XY, XW, YW, ZW
+    public static bool[] rotations = new bool[] { false, false, false, false, false, false };
+
+
 
     // Populate dictionaries to easily convert IDs to JSON keys
     public static void PopulateDictionaries()
@@ -65,18 +73,19 @@ public static class StateController
         tests.Add(2, "Pose_Match");
     }
 
+    // Shuffle order the representations will occur in
     public static void ShuffleRepresentations()
     {
-        // Shuffle representation order
-        for (int i = 0; i < repOrder.Length - 1; i++)
+        for (int i = 0; i < rep_order.Length - 1; i++)
         {
-            int j = Random.Range(0, repOrder.Length);
-            int temp = repOrder[i];
-            repOrder[i] = repOrder[j];
-            repOrder[j] = temp;
+            int j = Random.Range(0, rep_order.Length);
+            int temp = rep_order[i];
+            rep_order[i] = rep_order[j];
+            rep_order[j] = temp;
         }
     }
 
+    // Set up datapath to test results file based on test ID
     public static void BuildDatapath()
     {
         // Prepare datapath for test results
@@ -123,6 +132,101 @@ public static class StateController
         Filename = id + ".json";
         string file = Path.Combine(Datapath, Filename);
         return File.Create(file);
+    }
+
+    // Trigger - Submit
+    // Bring user from test to survey page
+    public static void FinishTest()
+    {
+        // Save the test:
+        // If shape match
+            // what selected shape?
+            // what was actual shape?
+            // accuracy 1 if correct, 0 if not
+
+        // If rotation match
+            // What shape?
+            // what texture?
+            // What selected rotations? (bool array of toggles)
+            // What were actual rotations?
+            // accuracy +1 for each correct -1 for each incorrect?
+
+        // If pose match
+            // What shape?
+            // What texture?
+            // accuracy - difference between each component of the 2 rotors?
+            //          - minimum angle between the 2?
+
+        // Time Taken
+
+        // Load Survey Scene
+    }
+
+    // Trigger - Submit
+    // Bring user form survey page to scene with a graph to show accuracy improvement
+    public static void FinishSurvey()
+    {
+        // Load Graph Scene
+
+        // Build graph(s)?
+    }
+
+    // Trigger - Next
+    // Bring user to next test
+    public static void FinishGraph()
+    {
+        // Load Test Scene
+
+        // Set the object properties and prep UI properties
+        if (test == 0)
+        {
+            shape = Random.Range(0, 7);
+            texture = 0;
+
+            ObjectController.SetRandMainObjectRotation();
+
+            UIController.Shape_Match = true;
+            UIController.Rotation_Match = false;
+            UIController.Pose_Match = false;
+        }
+        else if (test == 1)
+        {
+            shape = Random.Range(1, 7);
+            texture = Random.Range(0, 3);
+
+            // Set which planes to rotate about
+            ObjectController.continuousRotation = true;
+            rotations = new bool[] {Random.value >= 0.3, Random.value >= 0.3,
+                                    Random.value >= 0.3,
+                                    Random.value >= 0.3, Random.value >= 0.3,
+                                    Random.value >= 0.3
+                                };
+            ObjectController.rotations = rotations;
+
+            UIController.Shape_Match = false;
+            UIController.Rotation_Match = true;
+            UIController.Pose_Match = false;
+        }
+        else if (test == 2)
+        {
+            shape = Random.Range(1, 7);
+            texture = Random.Range(1, 3);
+
+            ObjectController.SetRandMatchObjectRotation();
+
+            UIController.Shape_Match = false;
+            UIController.Rotation_Match = false;
+            UIController.Pose_Match = true;
+        }
+
+        ObjectController.SetObjectShape(shape);
+        ObjectController.SetObjectTexture(texture);
+
+        // Activate/Deactivate UI elements based on the mode
+        // UIController.ModeUI();
+
+        // Set the Representation
+        // UIController.SetRepresentation(rep_order[rep_index]);
     }
 
 }

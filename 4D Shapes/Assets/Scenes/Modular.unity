@@ -3194,8 +3194,8 @@ MonoBehaviour:
   main: {fileID: 34724911}
   mini: {fileID: 891246201}
   match: {fileID: 356539880}
-  shape: 7
-  effect: 1
+  shape: 1
+  effect: 0
   wSlider: {fileID: 585531722}
 --- !u!1 &1274336417
 GameObject:

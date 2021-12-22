@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ShapeOptions : MonoBehaviour
+public class MultipleChoiceOptions : MonoBehaviour
 {
     public RectTransform shapeContainer;
     public RectTransform[] shapeOptions;

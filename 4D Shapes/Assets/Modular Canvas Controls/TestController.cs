@@ -11,14 +11,6 @@ public class TestController : MonoBehaviour
     public bool progression_graph = false;
     public bool trigger = false;
 
-    // Test Parameters
-    public static int texture = 0;    // Current enabled texture
-    public static int shape = 0;      // Current shape
-
-    // Constant Rotation
-    // Boolean Array for rotation in YZ, XZ, XY, XW, YW, ZW
-    public static bool[] rotation = new bool[] { false, false, false, false, false, false };
-
     // Test Results
     public double accuracy = 0.0;     // Accuracy of user
     public double time = 0.0;         // Time to complete the task
@@ -80,7 +72,7 @@ public class TestController : MonoBehaviour
         if (trigger)
         {
             // Set Representation
-            int current_representation = StateController.repOrder[StateController.rep_index];
+            int current_representation = StateController.rep_order[StateController.rep_index];
             Debug.Log(StateController.representations[current_representation]);
 
             // Load Test
@@ -165,8 +157,8 @@ public class TestController : MonoBehaviour
         node[rep_name][test_name].Add(test_name_id, temp);
 
         JSONNode test_node = node[rep_name][test_name][test_name_id];
-        test_node.Add("Shape", shape);
-        test_node.Add("Texture", texture);
+        test_node.Add("Shape", StateController.shape);
+        test_node.Add("Texture", StateController.texture);
         test_node.Add("Time", time);
         test_node.Add("Accuracy", accuracy);
         //JSONArray rot_json = rotation;
@@ -262,7 +254,7 @@ public class TestController : MonoBehaviour
         // If there are still representations left to do, 
         // move to the next represention
         // Reset test to start from shape match again
-        if (StateController.rep_index != StateController.repOrder.Length - 1)
+        if (StateController.rep_index != StateController.rep_order.Length - 1)
         {
             StateController.rep_index += 1;
             StateController.test = 0;
