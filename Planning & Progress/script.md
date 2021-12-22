@@ -1,4 +1,5 @@
 - [Format](#format)
+- [Opening (Intro and Briefing)](#opening-intro-and-briefing)
 - [Survey 1](#survey-1)
 - [Introduction](#introduction)
   - [4D Shapes](#4d-shapes)
@@ -35,6 +36,68 @@ Interactions to include
  - grab ball
 -->
 
+# Opening (Intro and Briefing)
+
+Introduction
+
+-	state the general aim of the experiment
+-	explain why you need the involvement of other people
+-	describe what will happen in the experiment
+-	describe what data will be collected
+-	explain what interaction the participant may have with you during the experiment
+-	reassure the participant that this is not a test of ability
+-	state that the participant may withdraw at anytime
+-	seek explicit consent
+-	allow the participant to ask questions
+
+<!-- state the general aim of the experiment -->
+4 Dimensional objects are something that cannot be created physically and cannot be visualised in their true state. The motivation for this project is to further a persons understanding of high dimensional space and to test their understanding of geometry that cannot be wholely visualised.
+
+The aim of this experiment is to investigate the different ways in which higher dimensional objects can be represented and to evaluate the effectiveness of these representations.
+
+<!-- explain why you need the involvement of other people -->
+Whilst developing the system I have become quite familiar with four dimensional objects. As such the representations that I believe are superior may not be as effective or intuitive when it comes to teaching others about higher dimensional geometry. I need you as a participant, along side others with varying degrees of familiarity with geometry, to test out some of these representations to see if they really add any benefit to understanding higher dimensional shapes.
+
+<!-- describe what will happen in the experiment -->
+The experiment will begin with a tutorial video, briefly explaining the fourth dimension, four dimensional objects as well as how you manipulate these objects. The experiment is then broken down into stages. Each stage will present you with a new representation. There are four different representations in total and each will be explained to you before you have to use them. One of the representations is designed as a "Control" and does not provide any additional benefit. Each of the other three representation provide a piece of extra information to help you further understand the object you are handling. Whilst dealing with a representation you will be presented with a series of repeated tests. As with the representation, the rules of the test will be explained before they begin. Firstly you will have to identify the shape on your screen. You will be allowed to play with this object for a fixed amount of time, and you must submit your answer before the timer runs out. The second test will ask you to identify the way in which an object is rotating. It could be rotating on multiple axes. The final test will present you with a shape that is randomly oriented exclusively along the four dimensional planes of rotation (which will be described in the tutorial video). Your goal is to then match the orientation of your object with the randomly oriented one. After completing these tests for a representation, you will be shown a graph depicting your average accuracy for each test. Once each test has been completed for the representation, you will be progressed onto using another representation where you will complete the same tests.
+
+<!-- describe what data will be collected -->
+Collected data includes: time to submit and accuracy of submission, as well as the shape and rotations of any objects on screen. After each test you will be asked to fill out a short survey on paper describing how you felt that specific test went as well as any other information you choose to include.
+
+<!-- explain what interaction the participant may have with you during the experiment -->
+During the experiment I will leave you to complete the assigned challenges, however if you have any questions, I will be close by.
+
+<!-- reassure the participant that this is not a test of ability -->
+This experiment is not a test of your ability or intellect. It is purely an evaluation of the effectiveness of each included way to represent four dimensional objects. Some of these tasks can be very challenging, and you should not feel disheartened if you find it so.
+
+<!-- state that the participant may withdraw at anytime -->
+You as a participant may withdraw from the experiment at any time, even after it has began.
+
+<!-- seek explicit consent -->
+By clicking the continue button, you are consenting to the recording of your performance throughout these tests. If you decide that this data may not be used, whether that is after or during the experiment, the recorded data will be deleted. After the experiment you will be asked to sign a short form providing your explicit consent to use and analyse your data alongside that of other participants.
+
+<!-- allow the participant to ask questions -->
+You are allowed to ask questions at any time before, during and after the experiment.
+
+Briefing
+
+-	restate the main aim of the experiment
+-	if applicable, explain any other, related aims of the experiment, and any particular data collected
+-	allow the participant to ask comment or ask questions
+-	give contact details, and encourage further comments
+-	thank the participant
+
+<!-- restate the main aim of the experiment -->
+4 Dimensional objects are something that cannot be created physically and cannot be visualised in their true state. The motivation for this project is to further a persons understanding of high dimensional space and to test their understanding of geometry that cannot be wholely visualised.
+
+The aim of this experiment is to investigate the different ways in which higher dimensional objects can be represented and to evaluate the effectiveness of these representations.
+
+As mentioned above, feel free to make any comments or ask any questions, before, during or after the experiment.
+You can contact me at:
+
+  joe.subbiani@gmail.com or 2377990s@student.gla.ac.uk
+
+Thank you for your participation
 
 # Survey 1
 <!-- 
@@ -44,6 +107,8 @@ What way do you think
 
 Have you heard of 4D shapes
 -->
+
+Do you have any visual impairment that may effect you comprehension of shapes or colours? (i.e colour blindness)
 
 How do you learn best?
  - [ ] Visual Learning (graphs or diagrams)

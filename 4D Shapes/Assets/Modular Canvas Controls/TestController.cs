@@ -1,12 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using SimpleJSON;
 using System.IO;
 using System.Linq;
 
 public class TestController : MonoBehaviour
 {
+    // StateController requirements that need to be set externally
+    public string ModularScene;
+    public Canvas ModularSceneCanvas;
+
     // External Triggers to load stuff between tests
     public bool progression_graph = false;
     public bool trigger = false;
@@ -15,9 +20,14 @@ public class TestController : MonoBehaviour
     public double accuracy = 0.0;     // Accuracy of user
     public double time = 0.0;         // Time to complete the task
 
+
     // Start is called before the first frame update
     void Start()
     {
+        // Initialise StatController parameters
+        StateController.ModularScene = ModularScene;
+        StateController.ModularSceneCanvas = ModularSceneCanvas;
+
         // Initialise Experiment
         StateController.PopulateDictionaries();
         StateController.ShuffleRepresentations();

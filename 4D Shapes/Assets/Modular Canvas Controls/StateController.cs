@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using SimpleJSON;
 using System.IO;
 using System.Linq;
@@ -57,6 +59,11 @@ public static class StateController
     public static int texture = 0;    // Current enabled texture
     // Boolean Array for planes of constant rotation in YZ, XZ, XY, XW, YW, ZW
     public static bool[] rotations = new bool[] { false, false, false, false, false, false };
+
+    // Externally set parameters
+    public static string ModularScene;
+    //public static string SurveyScene;
+    public static Canvas ModularSceneCanvas;
 
 
 
@@ -176,8 +183,10 @@ public static class StateController
     public static void FinishGraph()
     {
         // Load Test Scene
+        SceneManager.LoadScene(ModularScene);
 
         // Set the object properties and prep UI properties
+        // Shape Match
         if (test == 0)
         {
             shape = Random.Range(0, 7);
@@ -189,6 +198,7 @@ public static class StateController
             UIController.Rotation_Match = false;
             UIController.Pose_Match = false;
         }
+        // Rotation Match
         else if (test == 1)
         {
             shape = Random.Range(1, 7);
@@ -207,6 +217,7 @@ public static class StateController
             UIController.Rotation_Match = true;
             UIController.Pose_Match = false;
         }
+        // Pose Match
         else if (test == 2)
         {
             shape = Random.Range(1, 7);
@@ -218,15 +229,15 @@ public static class StateController
             UIController.Rotation_Match = false;
             UIController.Pose_Match = true;
         }
-
+        // Set object properties
         ObjectController.SetObjectShape(shape);
         ObjectController.SetObjectTexture(texture);
 
         // Activate/Deactivate UI elements based on the mode
-        // UIController.ModeUI();
+        ModularSceneCanvas.GetComponent<UIController>().ModeUI();
 
         // Set the Representation
-        // UIController.SetRepresentation(rep_order[rep_index]);
+        ModularSceneCanvas.GetComponent<UIController>().SetRepresentation(rep_order[rep_index]);
     }
 
 }
