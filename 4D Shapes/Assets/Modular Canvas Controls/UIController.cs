@@ -6,8 +6,8 @@ using UnityEngine.UI;
 public class UIController : MonoBehaviour
 {
     // Visualisations
-    public static bool Four_to_Three = false;
-    public static bool Multi_View = true;
+    public static bool Four_to_Three = true;
+    public static bool Multi_View = false;
     public static bool Timeline = false;
 
     public Shader Control_Shader;
@@ -38,7 +38,16 @@ public class UIController : MonoBehaviour
     private RectTransform rotationOptionRect;
     private RectTransform canvas;
 
+    public Slider wSlider;
+    private RectTransform wSliderRect;
+    public RectTransform axesPanel;
+
+    // Resolution of Screen
+    private Vector2 resolution;
+
+    // Padding between UI elements and edge of screen
     private float buffer;
+
 
     // Start is called before the first frame update
     void Start()
@@ -50,9 +59,11 @@ public class UIController : MonoBehaviour
         matchRect = MatchWindow.GetComponent<RectTransform>();
         shapeOptionRect = ShapeOptionContainer.GetComponent<RectTransform>();
         rotationOptionRect = RotationOptionContainer.GetComponent<RectTransform>();
+        wSliderRect = wSlider.GetComponent<RectTransform>();
 
-        // padding between UI elements and the edge
-        buffer = Mathf.Min(canvas.sizeDelta.x / 10, canvas.sizeDelta.y / 10);
+        // Set scale for UI elements
+        resolution = new Vector2(Screen.width, Screen.height);
+        Rescale();
 
         // Set method of rotation
         SwitchRotation(grabBall);
@@ -73,7 +84,17 @@ public class UIController : MonoBehaviour
 
         // Set up test UI features
         ModeUI();
+
+        // Rescale UI if screen size has changed
+        if (resolution.x != Screen.width || resolution.y != Screen.height)
+        {
+            Rescale();
+
+            resolution.x = Screen.width;
+            resolution.y = Screen.height;
+        }
     }
+
 
     public void SwitchRotation(bool grabBall)
     {
@@ -280,5 +301,43 @@ public class UIController : MonoBehaviour
                 ControlRepresentation();
                 break;
         }
+    }
+
+
+    // Scale UI
+    private void Rescale()
+    {
+        // Set padding between UI elements and edge of screen
+        buffer = Mathf.Min(canvas.sizeDelta.x / 10, canvas.sizeDelta.y / 10);
+
+        // Maintain 4:3 ratio for MiniWindow (3D-4D)
+        Vector2 aspectRatio = new Vector2(4, 3);
+
+        float x = canvas.sizeDelta.x / 2.5f;
+        float y = ((x / aspectRatio.x) * aspectRatio.y);
+        if (y > canvas.sizeDelta.y / 3)
+        {
+            y = canvas.sizeDelta.y / 3;
+            x = ((y / aspectRatio.y) * aspectRatio.x);
+        }
+        miniRect.sizeDelta = new Vector2(x, y);
+
+        // Maintain a 1:1 ratio for Match Window (Pose_Match)
+        aspectRatio = new Vector2(1, 1);
+        float scale = 2f;
+
+        x = canvas.sizeDelta.x / scale;
+        y = ((x / aspectRatio.x) * aspectRatio.y);
+        if (y > canvas.sizeDelta.y / scale)
+        {
+            y = canvas.sizeDelta.y / scale;
+            x = ((y / aspectRatio.y) * aspectRatio.x);
+        }
+        matchRect.sizeDelta = new Vector2(x, y);
+
+        wSliderRect.sizeDelta = new Vector2(wSliderRect.sizeDelta.x, -2 * buffer);
+        wSliderRect.anchoredPosition = new Vector2(-(buffer + 10), 0);
+
+        axesPanel.anchoredPosition = new Vector2(-2 * buffer, buffer);
     }
 }

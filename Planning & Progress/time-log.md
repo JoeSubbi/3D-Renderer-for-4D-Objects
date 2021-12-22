@@ -471,6 +471,29 @@
  - *1 hour* Recording audio for opening tutorial
  - *4 hours* editing and screen recording content to build up the intro tutorial video
 
+### 20 Dec 2021
+
+ - *3 hours* realised local rotation still had issues and tried to solve them
+   - played around with it. I understand the problem but cannot yet come up with a solution
+   - may have to ditch the grab ball... Will keep trying though
+
+### 21 Dec 2021
+
+ - *0.5 hours* realised rotation between 3D-2D and 4D cross section for YZ and XZ rotation was different in tutorial video...
+   - turns out if you base the rotation as a single rotation over `Time.time`, the order of rotation actually matters even with rotors  - so rather than a combined rotation it will do YZ THEN XZ.
+   - by multiplying rotations over `Time.deltaTime`, the order of rotations does not matter
+ - *1.5 hours* began plans to move TestController content to StateController - does not need to be checked every frame, much more robust, and can be checked between scenes.
+ - *0.5 hours* rearranging UI controller into representation specific functions, with the plan to call them externally rather than every frame
+ - *0.5 hours* Adding continuous rotation functionality to object controller
+ - *1 hour* implementing test loading function in state controller
+   - still need to call UIController functions which are not static
+
+### 22 Dec 2021
+
+ - *1 hour* experimenting with minimum angle between rotors
+   - `2 * Acos( (p * q.Reverse()).a )` does not seem to work on normalised or un-normalised rotors...
+ - *1.5 hours* moving the canvas scalar script into UI controller (simpler and more efficient)
+
 TODO:
 Create survey scene  
  - allow user to write answers
