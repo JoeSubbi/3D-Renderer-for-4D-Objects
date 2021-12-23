@@ -492,7 +492,16 @@
 
  - *1 hour* experimenting with minimum angle between rotors
    - `2 * Acos( (p * q.Reverse()).a )` does not seem to work on normalised or un-normalised rotors...
- - *1.5 hours* moving the canvas scalar script into UI controller (simpler and more efficient)
+ - *0.5 hours* moving the canvas scalar script into UI controller (simpler and more efficient)
+ - *0.5 hours* adding initialisation of external non-static variables to static state controller class via another script.
+   - this will probably have to be moved around at a later date when I start actually loading and unloading scenes
+ - *2 hours* Wrote up intro briefing for experiment using old main menu background. Added button to tutorial video - need to add start/pause buttons
+ - *0.5 hours* rearranged project structure as a lot of directories with only a couple of files was making the project cluttered
+ - *2 hours* building up tutorial video scene to have working scrub timeline and pause and play.
+   - You can now:
+     - read the experiment briefing, which takes you to
+     - tutorial video which you can pause and rewind, which takes you to
+     - modular scene to begin tests (this will be changed for an explanation scene)
 
 TODO:
 Create survey scene  

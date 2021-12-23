@@ -1164,7 +1164,16 @@ MonoBehaviour:
 
 
     You are allowed to ask
-    questions at any time before, during and after the experiment.'
+    questions at any time before, during and after the experiment.
+
+    You are provided
+    with a sheet of paper to draw or note anything down that you think may be of
+    value.
+
+
+    When you click the "continue to tutorial" button, a video will play
+    that will try to explain the concept of 4D shapes. You can pause this at any
+    time to make notes.'
 --- !u!222 &1546049401
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1242,7 +1251,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Continue
+  m_Text: Continue to Tutorial
 --- !u!222 &1577585402
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1288,7 +1297,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: -10}
-  m_SizeDelta: {x: 800, y: 1240}
+  m_SizeDelta: {x: 800, y: 1530}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &2025304545
 MonoBehaviour:

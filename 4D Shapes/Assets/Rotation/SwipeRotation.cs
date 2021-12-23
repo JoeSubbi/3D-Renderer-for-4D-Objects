@@ -17,15 +17,20 @@ public class SwipeRotation : MonoBehaviour
     private Rotor4 r;
     private Bivector4 bv;
 
+    // UX
     public GameObject icon;
+    private bool x_only = false;
+    private bool y_only = false;
+    private bool z = false;
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.Space))
-        {
-            icon.SetActive(true);
-        }
-        else icon.SetActive(false);
+        x_only = Input.GetKey("x");
+        y_only = Input.GetKey("y");
+
+        z = (Input.GetKey(KeyCode.LeftShift) || Input.GetKey("z"));
+        icon.SetActive(z);
+
     }
 
     // Update rotor based on mouse manipulation
@@ -42,13 +47,17 @@ public class SwipeRotation : MonoBehaviour
         if (e.isMouse && !onUIElement)
         {
             // Get Mouse Movement
-            x = e.delta.x / speed;
-            y = e.delta.y / speed;
+            if (y_only)
+                x = 0;
+            else x = (e.delta.x / speed); 
+            if (x_only)
+                y = 0;
+            else y = (e.delta.y / speed);
 
             // 3D Rotation - Left Click
             if (Input.GetMouseButton(0))
             {
-                if (Input.GetKey(KeyCode.Space))
+                if (z)
                 {
                     // Rotate with a circular gesture around global XY plane
                     if (Input.mousePosition.y < Screen.height / 2) x *= -0.5f;
@@ -82,7 +91,7 @@ public class SwipeRotation : MonoBehaviour
             // 4D Rotation - Right Click
             else if (Input.GetMouseButton(1))
             {
-                if (Input.GetKey(KeyCode.Space))
+                if (z)
                 {
                     // Rotate with a circular gesture around global zw plane
                     if (Input.mousePosition.y < Screen.height / 2) x *= -0.5f;

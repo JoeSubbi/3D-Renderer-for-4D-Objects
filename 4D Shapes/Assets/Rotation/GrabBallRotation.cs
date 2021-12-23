@@ -103,25 +103,37 @@ public class GrabBallRotation : MonoBehaviour
                 //Rotate object
                 bv = Bivector4.Wedge(e1, e2);
                 r = new Rotor4(bv, x + y);
-                ObjectController.mainRot /= r;
+                ObjectController.mainRot = ObjectController.mainRot * r;
                 ObjectController.mainRot.Normalise();
                 ObjectController.SetMainObjectRotation();
 
-                //Rotate grab ball
                 if (!wRotation)
                 {
+                    //Rotate grab ball
                     qTotal *= Quaternion.AngleAxis(RadToDeg(x + y), axis);
                     transform.rotation = qTotal;
+
+                    //Move pose match object
+                    if (UIController.Pose_Match)
+                    {
+                        ObjectController.matchRot = ObjectController.matchRot * r;
+                        ObjectController.matchRot.Normalise();
+                        ObjectController.SetMatchObjectRotation();
+                    }
                 }
-                // Rotate 3D counterpart
-                if (UIController.Four_to_Three)
+                else
                 {
-                    bv = Bivector4.Wedge(e3, e4);
-                    r = new Rotor4(bv, x + y);
-                    ObjectController.miniRot /= r;
-                    ObjectController.miniRot.Normalise();
-                    ObjectController.SetMiniObjectRotation();
+                    // Rotate 3D counterpart
+                    if (UIController.Four_to_Three)
+                    {
+                        bv = Bivector4.Wedge(e3, e4);
+                        r = new Rotor4(bv, x + y);
+                        ObjectController.miniRot = ObjectController.miniRot * r;
+                        ObjectController.miniRot.Normalise();
+                        ObjectController.SetMiniObjectRotation();
+                    }
                 }
+                
             }
 
             //If not dragging mouse, disbale specified plane of rotation
@@ -146,14 +158,14 @@ public class GrabBallRotation : MonoBehaviour
                 switch (hit.collider.name)
                 {
                     case "arc xy":
-                        e1 = new Vector4(1, 0, 0, 0);
+                        e1 = new Vector4(-1, 0, 0, 0);
                         e2 = new Vector4(0, 1, 0, 0);
 
                         axis = new Vector3(0, 0, 1);
                         line.material = GameObject.Find("arc xy").GetComponent<Renderer>().material;
                         break;
                     case "arc xz":
-                        e1 = new Vector4(1, 0, 0, 0);
+                        e1 = new Vector4(-1, 0, 0, 0);
                         e2 = new Vector4(0, 0, 1, 0);
 
                         axis = new Vector3(0, 1, 0);
@@ -163,7 +175,7 @@ public class GrabBallRotation : MonoBehaviour
                         e1 = new Vector4(0,-1, 0, 0);
                         e2 = new Vector4(0, 0, 1, 0);
 
-                        axis = new Vector3(1, 0, 0);
+                        axis = new Vector3(-1, 0, 0);
                         line.material = GameObject.Find("arc yz").GetComponent<Renderer>().material;
                         break;
                     default:
