@@ -503,6 +503,17 @@
      - tutorial video which you can pause and rewind, which takes you to
      - modular scene to begin tests (this will be changed for an explanation scene)
 
+### 23 Dec 2021
+
+ - *0.5 hours* test questionaire on paper - too many pages per participant
+ - *2 hours* build survey scene where user can fill out answers between a test
+ - *1 hours* add scripts for survey scene to read data
+
+### 24 Dec 2021
+
+ - *0.5 hour* Create small script to initialise StateController on start up
+ - *1 hour* Moving and modifying save functionality to state controller
+
 TODO:
 Create survey scene  
  - allow user to write answers

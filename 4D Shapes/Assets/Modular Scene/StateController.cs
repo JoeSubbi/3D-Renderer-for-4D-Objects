@@ -59,6 +59,8 @@ public static class StateController
     public static int texture = 0;    // Current enabled texture
     // Boolean Array for planes of constant rotation in YZ, XZ, XY, XW, YW, ZW
     public static bool[] rotations = new bool[] { false, false, false, false, false, false };
+    // Test Performance
+    private static ulong time = 0;
 
     // Externally set parameters
     public static string ModularScene;
@@ -143,48 +145,143 @@ public static class StateController
 
     // Trigger - Submit
     // Bring user from test to survey page
-    public static void FinishTest()
+    public static void SaveTest()
     {
-        // Save the test:
-        // If shape match
-            // what selected shape?
-            // what was actual shape?
-            // accuracy 1 if correct, 0 if not
+        // Check type of test to know what to save
+        switch (test)
+        {
+            case 0:
+                SaveShapeMatchTest();
+                break;
+            case 1:
+                SaveRotationMatchTest();
+                break;
+            case 2:
+                SavePoseMatchTest();
+                break;
+            default:
+                break;
+        }
+    }
 
-        // If rotation match
-            // What shape?
-            // what texture?
-            // What selected rotations? (bool array of toggles)
-            // What were actual rotations?
-            // accuracy +1 for each correct -1 for each incorrect?
+    public static void SaveShapeMatchTest()
+    {
+        // Set up JSON Node
+        JSONNode node;
+        using (StreamReader r = new StreamReader(Path.Combine(Datapath, Filename)))
+        {
+            //read in the json
+            var json = r.ReadToEnd();
 
-        // If pose match
-            // What shape?
-            // What texture?
-            // accuracy - difference between each component of the 2 rotors?
-            //          - minimum angle between the 2?
+            //reformat the json into dictionary style convention
+            node = JSON.Parse(json);
+        }
 
-        // Time Taken
+        // Get Representation
+        string rep_name = representations[rep_index];
+        // Get Test
+        string test_name = tests[test];
+        // Combine Test with iteration of test e.g ShapeMatch7
+        string test_name_id = test_name + test_count;
 
-        // Load Survey Scene
+        // Build Dictionary of test parameters and performance
+        JSONNode temp = JSON.Parse("{}");
+        node[rep_name][test_name].Add(test_name_id, temp);
+
+        JSONNode test_node = node[rep_name][test_name][test_name_id];
+        test_node.Add("Loaded Shape", shape);
+        test_node.Add("Selected Shape", 0);
+
+        test_node.Add("Texture", texture);
+        test_node.Add("Time", time);
+        
+        // Write out JSON with new test parameters and performance
+        File.WriteAllText(Datapath + Filename, node.ToString());
+    }
+
+    public static void SaveRotationMatchTest()
+    {
+        // Set up JSON Node
+        JSONNode node;
+        using (StreamReader r = new StreamReader(Path.Combine(Datapath, Filename)))
+        {
+            //read in the json
+            var json = r.ReadToEnd();
+
+            //reformat the json into dictionary style convention
+            node = JSON.Parse(json);
+        }
+
+        // Get Representation
+        string rep_name = representations[rep_index];
+        // Get Test
+        string test_name = tests[test];
+        // Combine Test with iteration of test e.g ShapeMatch7
+        string test_name_id = test_name + test_count;
+
+        // Build Dictionary of test parameters and performance
+        JSONNode temp = JSON.Parse("{}");
+        node[rep_name][test_name].Add(test_name_id, temp);
+
+        JSONNode test_node = node[rep_name][test_name][test_name_id];
+        test_node.Add("Shape", shape);
+        test_node.Add("Texture", texture);
+
+        test_node.Add("Loaded Rotation", 0);
+        test_node.Add("Selected Rotation", 0);
+
+        test_node.Add("Time", time);
+
+        // Write out JSON with new test parameters and performance
+        File.WriteAllText(Datapath + Filename, node.ToString());
+    }
+
+    public static void SavePoseMatchTest()
+    {
+        // Set up JSON Node
+        JSONNode node;
+        using (StreamReader r = new StreamReader(Path.Combine(Datapath, Filename)))
+        {
+            //read in the json
+            var json = r.ReadToEnd();
+
+            //reformat the json into dictionary style convention
+            node = JSON.Parse(json);
+        }
+
+        // Get Representation
+        string rep_name = representations[rep_index];
+        // Get Test
+        string test_name = tests[test];
+        // Combine Test with iteration of test e.g ShapeMatch7
+        string test_name_id = test_name + test_count;
+
+        // Build Dictionary of test parameters and performance
+        JSONNode temp = JSON.Parse("{}");
+        node[rep_name][test_name].Add(test_name_id, temp);
+
+        JSONNode test_node = node[rep_name][test_name][test_name_id];
+        test_node.Add("Shape", shape);
+        test_node.Add("Texture", texture);
+        test_node.Add("Time", time);
+
+        test_node.Add("Accuracy", 0);
+
+        // Write out JSON with new test parameters and performance
+        File.WriteAllText(Datapath + Filename, node.ToString());
     }
 
     // Trigger - Submit
     // Bring user form survey page to scene with a graph to show accuracy improvement
-    public static void FinishSurvey()
+    public static void BuildGraphs()
     {
-        // Load Graph Scene
-
         // Build graph(s)?
     }
 
     // Trigger - Next
     // Bring user to next test
-    public static void FinishGraph()
+    public static void SetupTest()
     {
-        // Load Test Scene
-        SceneManager.LoadScene(ModularScene);
-
         // Set the object properties and prep UI properties
         // Shape Match
         if (test == 0)

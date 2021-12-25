@@ -24,17 +24,9 @@ public class TestController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // Initialise StatController parameters
+        // Initialise StateController parameters
         StateController.ModularScene = ModularScene;
         StateController.ModularSceneCanvas = ModularSceneCanvas;
-
-        // Initialise Experiment
-        StateController.PopulateDictionaries();
-        StateController.ShuffleRepresentations();
-        StateController.BuildDatapath();
-
-        // Build file
-        BuildJsonTemplate();
 
         // Load JSON file
         JSONNode node;
@@ -48,34 +40,6 @@ public class TestController : MonoBehaviour
         }
     }
 
-    private void BuildJsonTemplate()
-    {
-        File.WriteAllText(StateController.Datapath + StateController.Filename,
-            @"{
-    ""Control"":{
-        ""Shape_Match"":{},
-        ""Rotation_Match"":{},
-        ""Pose_Match"":{}
-    },
-    ""Timeline"":{
-        ""Shape_Match"":{},
-        ""Rotation_Match"":{},
-        ""Pose_Match"":{}
-    },
-    ""Multi-View"":{
-        ""Shape_Match"":{},
-        ""Rotation_Match"":{},
-        ""Pose_Match"":{}
-    },
-    ""4D-3D"":{
-        ""Shape_Match"":{},
-        ""Rotation_Match"":{},
-        ""Pose_Match"":{}
-    }
-}"
-        );
-    }
-    
     void Update()
     {
         // Trigger - a change should occur, because the user has triggered the next stage
@@ -107,78 +71,6 @@ public class TestController : MonoBehaviour
         trigger = false;
     }
 
-    /* JSON STUFF
-    // Load JSON file
-    JSONNode node;
-    using (StreamReader r = new StreamReader(Path.Combine(datapath, filename)))
-    {
-        //read in the json
-        var json = r.ReadToEnd();
-
-        //reformat the json into dictionary style convention
-        node = JSON.Parse(json);
-    }
-    File.WriteAllText(datapath + filename, node.ToString());
-    */
-
-    /*
-    {
-        ""Shape"": 0,
-        ""Rotation"":[0,0,0,0,0,0],
-        ""Texture"": 0,
-        ""Time"": 0,
-        ""Accuracy"": 0
-    },
-    */
-
-    private void Save(double time, double accuracy)
-    {
-        JSONNode node;
-        using (StreamReader r = new StreamReader(Path.Combine(StateController.Datapath, StateController.Filename)))
-        {
-            //read in the json
-            var json = r.ReadToEnd();
-
-            //reformat the json into dictionary style convention
-            node = JSON.Parse(json);
-        }
-
-        // Get Representation
-        string rep_name = StateController.representations[StateController.rep_index];
-        // Get Test
-        string test_name = StateController.tests[StateController.test];
-
-        // Name Test
-        string test_name_id = test_name + StateController.test_count;
-
-        /*
-        Dictionary<string, int> str_int_test = new Dictionary<string, int>();
-        str_int_test.Add("Shape", shape);
-        str_int_test.Add("Texture", texture);
-
-        Dictionary<string, double> str_flo_test = new Dictionary<string, double>();
-        str_flo_test.Add("Time", time); 
-        str_flo_test.Add("Accuracy", accuracy);
-
-        Dictionary<string, bool[6]> rot_test = new Dictionary<string, bool[6]>();
-        rot_test.Add("Rotation", rotation);
-        */
-        JSONNode temp = JSON.Parse("{}");
-        node[rep_name][test_name].Add(test_name_id, temp);
-
-        JSONNode test_node = node[rep_name][test_name][test_name_id];
-        test_node.Add("Shape", StateController.shape);
-        test_node.Add("Texture", StateController.texture);
-        test_node.Add("Time", time);
-        test_node.Add("Accuracy", accuracy);
-        //JSONArray rot_json = rotation;
-        //node["Control"][test_name][-1]["Rotation"].put(rot_json);
-
-        Debug.Log(node[rep_name].ToString());
-
-        File.WriteAllText(StateController.Datapath + StateController.Filename, node.ToString());
-    }
-
     void ShapeMatch()
     {
         // Set up shape match
@@ -193,7 +85,7 @@ public class TestController : MonoBehaviour
         // call function from ObjectController to set random W
 
         // Load quiz
-        Save(0.1, 0.1);
+        //Save(0.1, 0.1);
 
         // If end of pose match tests, move on to next test
         if (StateController.test_count == StateController.MAX_TESTS)
