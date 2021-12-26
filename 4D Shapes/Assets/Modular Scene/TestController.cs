@@ -8,10 +8,6 @@ using System.Linq;
 
 public class TestController : MonoBehaviour
 {
-    // StateController requirements that need to be set externally
-    public string ModularScene;
-    public Canvas ModularSceneCanvas;
-
     // External Triggers to load stuff between tests
     public bool progression_graph = false;
     public bool trigger = false;
@@ -24,20 +20,7 @@ public class TestController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // Initialise StateController parameters
-        StateController.ModularScene = ModularScene;
-        StateController.ModularSceneCanvas = ModularSceneCanvas;
 
-        // Load JSON file
-        JSONNode node;
-        using (StreamReader r = new StreamReader(Path.Combine(StateController.Datapath, StateController.Filename)))
-        {
-            //read in the json
-            var json = r.ReadToEnd();
-
-            //reformat the json into dictionary style convention
-            node = JSON.Parse(json);
-        }
     }
 
     void Update()
@@ -95,11 +78,6 @@ public class TestController : MonoBehaviour
         }
     }
 
-    void ShapeMatchQuiz()
-    {
-
-    }
-
     void RotationMatch()
     {
         // Set up shape match
@@ -118,11 +96,6 @@ public class TestController : MonoBehaviour
             StateController.test += 1;
             StateController.test_count = 0;
         }
-    }
-
-    void RotationMatchQuiz()
-    {
-
     }
 
     void PoseMatch()
@@ -144,11 +117,6 @@ public class TestController : MonoBehaviour
             StateController.test += 1;
             StateController.test_count = 0;
         }
-    }
-
-    void PoseMatchQuiz()
-    {
-
     }
 
     void EndRepresentation()

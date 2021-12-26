@@ -11,4 +11,9 @@ public class SceneLoader : MonoBehaviour
     {
         SceneManager.LoadScene(next_scene);
     }
+
+    public void SaveTest()
+    {
+        StateController.SaveTest();
+    }
 }

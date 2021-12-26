@@ -13,7 +13,7 @@ public class MultipleChoiceOptions : MonoBehaviour
 
     private RectTransform canvas;
 
-    public ToggleGroup ToggleGroup;
+    public ToggleGroup ShapeToggleGroup;
 
     private Vector2 resolution;
 
@@ -38,17 +38,30 @@ public class MultipleChoiceOptions : MonoBehaviour
             resolution.x = Screen.width;
             resolution.y = Screen.height;
         }
-
-        LogToggle();
     }
 
-    private void LogToggle()
+    public string LogShape()
     {
+        string log = "None";
+
         // May have several selected toggles
-        foreach (Toggle toggle in ToggleGroup.ActiveToggles())
-        {
-            Debug.Log(toggle);
+        foreach (Toggle toggle in ShapeToggleGroup.ActiveToggles())
+            log = toggle.name;
+
+        return log;
+    }
+
+    public bool[] LogRotation()
+    {
+        // Get selected rotations, 
+        // combine them into a boolean array,
+
+        bool[] rotation = new bool[] { false, false, false, false, false, false };
+        for (int i=0; i<rotationOptions.Length; i++){
+            Toggle t = rotationOptions[i].GetComponent<Toggle>();
+            rotation[i] = t.isOn;
         }
+        return rotation;
     }
 
     //Rescale and position UI elements

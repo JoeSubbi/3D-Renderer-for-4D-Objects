@@ -19,7 +19,7 @@ public class UIController : MonoBehaviour
     // Tests
     public static bool Shape_Match = false;
     public static bool Rotation_Match = false;
-    public static bool Pose_Match = true;
+    public static bool Pose_Match = false;
 
     // Method of rotation
     public bool grabBall;
@@ -41,6 +41,7 @@ public class UIController : MonoBehaviour
     public Slider wSlider;
     private RectTransform wSliderRect;
     public RectTransform axesPanel;
+    public RectTransform submitButton;
 
     // Resolution of Screen
     private Vector2 resolution;
@@ -48,10 +49,10 @@ public class UIController : MonoBehaviour
     // Padding between UI elements and edge of screen
     private float buffer;
 
-
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
+
         // Get components
         canvas = GetComponent<RectTransform>();
         mainRenderer = Window.GetComponent<Renderer>();
@@ -65,8 +66,14 @@ public class UIController : MonoBehaviour
         resolution = new Vector2(Screen.width, Screen.height);
         Rescale();
 
+        // Initialise StateController parameters
+        StateController.ModularSceneCanvas = GetComponent<Canvas>();
+
         // Set method of rotation
         SwitchRotation(grabBall);
+
+        // Set up booleans describing which test is enabled
+        SetTest();
     }
 
     // Update is called once per frame
@@ -128,6 +135,34 @@ public class UIController : MonoBehaviour
             MatchWindow.SetActive(true);
         else
             MatchWindow.SetActive(false);
+    }
+
+    // Set test booleans
+    public void SetTest()
+    {
+        switch (StateController.test)
+        {
+            case 0:
+                Shape_Match = true;
+                Rotation_Match = false;
+                Pose_Match = false;
+                break;
+            case 1:
+                Shape_Match = false;
+                Rotation_Match = true;
+                Pose_Match = false;
+                break;
+            case 2:
+                Shape_Match = false;
+                Rotation_Match = false;
+                Pose_Match = true;
+                break;
+            default:
+                Shape_Match = false;
+                Rotation_Match = false;
+                Pose_Match = false;
+                break;
+        }
     }
 
     // Set up representations
@@ -339,5 +374,8 @@ public class UIController : MonoBehaviour
         wSliderRect.anchoredPosition = new Vector2(-(buffer + 10), 0);
 
         axesPanel.anchoredPosition = new Vector2(-2 * buffer, buffer);
+
+        submitButton.sizeDelta = new Vector2(2 * buffer, buffer);
+        submitButton.anchoredPosition = new Vector2(-2 * buffer, -buffer);
     }
 }

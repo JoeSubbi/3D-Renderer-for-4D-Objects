@@ -11,17 +11,12 @@ public class ObjectController : MonoBehaviour
     public GameObject mini;
     public GameObject match;
 
-    public static Renderer mainRenderer;
-    public static Renderer miniRenderer;
-    public static Renderer matchRenderer;
+    private static Renderer mainRenderer;
+    private static Renderer miniRenderer;
+    private static Renderer matchRenderer;
 
     // Object Controls
-    public int shape;
-    public int effect;
     public static float w = 0;
-    public static bool continuousRotation = false;
-    // Boolean Array for rotation in YZ, XZ, XY, XW, YW, ZW
-    public static bool[] rotations = new bool[] { false, false, false, false, false, false };
     public Slider wSlider;
 
     // Rotors for the main object and randomly posed object
@@ -30,13 +25,16 @@ public class ObjectController : MonoBehaviour
     public static Rotor4 miniRot  = new Rotor4(1, 0, 0, 0, 0, 0, 0, 0);
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         mainRenderer = main.GetComponent<Renderer>();
         miniRenderer = mini.GetComponent<Renderer>();
         matchRenderer = match.GetComponent<Renderer>();
 
         SetRandMatchObjectRotation();
+
+        // Set test parameters
+        StateController.SetupTest();
     }
 
     // Update is called once per frame
@@ -45,11 +43,8 @@ public class ObjectController : MonoBehaviour
         // Set object W position
         mainRenderer.material.SetFloat("_W", wSlider.value + w);
 
-        SetObjectShape(shape);
-        SetObjectTexture(effect);
-
-        if (continuousRotation)
-            TimedRotor(rotations);
+        if (StateController.test == 1)
+            TimedRotor(StateController.rotations);
     }
 
     // Set shape
@@ -108,39 +103,69 @@ public class ObjectController : MonoBehaviour
         float a = 3.14159f; // Rotor has double coverage - a full rotation is 4pi
                             // If I specify rotation of pi it is doubled to 2pi
 
+        // 3D Rotation
+        float a1 = Random.Range(0, a);
+        float a2 = Random.Range(0, a);
+        float a3 = Random.Range(0, a);
+
         e1 = new Vector4(0, 1, 0, 0);
         e2 = new Vector4(0, 0, 1, 0);
         bv = Bivector4.Wedge(e1, e2);
-        r = new Rotor4(bv, Random.Range(0, a));
+        r = new Rotor4(bv, a1);
 
         e1 = new Vector4(1, 0, 0, 0);
         e2 = new Vector4(0, 0, 1, 0);
         bv = Bivector4.Wedge(e1, e2);
-        r *= new Rotor4(bv, Random.Range(0, a));
+        r *= new Rotor4(bv, Random.Range(0, a2));
 
         e1 = new Vector4(1, 0, 0, 0);
         e2 = new Vector4(0, 1, 0, 0);
         bv = Bivector4.Wedge(e1, e2);
-        r *= new Rotor4(bv, Random.Range(0, a));
+        r *= new Rotor4(bv, Random.Range(0, a3));
+
+        // 4D Rotation
+        a1 = Random.Range(0, a);
+        a2 = Random.Range(0, a);
+        a3 = Random.Range(0, a);
 
         e1 = new Vector4(1, 0, 0, 0);
         e2 = new Vector4(0, 0, 0, 1);
         bv = Bivector4.Wedge(e1, e2);
-        r = new Rotor4(bv, Random.Range(0, a));
+        r *= new Rotor4(bv, Random.Range(0, a1));
 
         e1 = new Vector4(0, 1, 0, 0);
         e2 = new Vector4(0, 0, 0, 1);
         bv = Bivector4.Wedge(e1, e2);
-        r *= new Rotor4(bv, Random.Range(0, a));
+        r *= new Rotor4(bv, Random.Range(0, a2));
 
         e1 = new Vector4(0, 0, 1, 0);
         e2 = new Vector4(0, 0, 0, 1);
         bv = Bivector4.Wedge(e1, e2);
-        r *= new Rotor4(bv, Random.Range(0, a));
+        r *= new Rotor4(bv, Random.Range(0, a3));
 
         mainRot *= r;
         mainRot.Normalise();
-        SetMatchObjectRotation();
+        SetMainObjectRotation(); 
+
+        // 4D-3D
+        e1 = new Vector4(0, 1, 0, 0);
+        e2 = new Vector4(0, 0, 1, 0);
+        bv = Bivector4.Wedge(e1, e2);
+        r = new Rotor4(bv, Random.Range(0, a1));
+
+        e1 = new Vector4(1, 0, 0, 0);
+        e2 = new Vector4(0, 0, 1, 0);
+        bv = Bivector4.Wedge(e1, e2);
+        r *= new Rotor4(bv, Random.Range(0, a2));
+
+        e1 = new Vector4(1, 0, 0, 0);
+        e2 = new Vector4(0, 1, 0, 0);
+        bv = Bivector4.Wedge(e1, e2);
+        r *= new Rotor4(bv, Random.Range(0, a3));
+
+        miniRot *= r;
+        miniRot.Normalise();
+        SetMiniObjectRotation();
     }
 
     // Set random rotation for the match pose object

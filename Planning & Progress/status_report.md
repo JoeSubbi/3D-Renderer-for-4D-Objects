@@ -81,6 +81,9 @@ Representations include:
  - implemented rotors! glitchy but work
  - rotors now seem to work 98% of the time - occasionally object will grow for a specific angle, but not if you continue to rotate object repeatedly. not very reproducible so will leave for now.
  - implemented grab ball and swipe rotation in modular scene
+ - created tutorial video
+ - implemented survey scene which can save data
+ - implemented save data after submitting modular scene
 
 ## Problems and risks
 ### Problems
@@ -181,12 +184,13 @@ quality of life polish
 
 ### Christmas
 
- - [ ] Record tutorial explanation videos
- - [ ] Continue to develop and implement the rest of the test system
-   - [ ] Build survey scene
-   - [ ] Store current experiment status and load it between surveys
-   - [ ] Store answers of survey
+ - [x] Record tutorial explanation videos
+ - [x] Continue to develop and implement the rest of the test system
+   - [x] Build survey scene
+   - [x] Store current experiment status and load it between surveys
+   - [x] Store answers of survey
    - [x] Implement random rotation mechanic in the modular scene
+ - [ ] Have experiment loop through everything without TestController
 
 ### Semester 2
 

@@ -514,9 +514,13 @@
  - *0.5 hour* Create small script to initialise StateController on start up
  - *1 hour* Moving and modifying save functionality to state controller
 
-TODO:
-Create survey scene  
- - allow user to write answers
- - create templates for questions per test
+### 26 Dec 2021
 
-Create trigger buttons to increment experiment between surveys
+ - *4 hours*
+   - Added button to go from survey scene to modular scene and save data
+   - Added button to go from modular scene to survey scene and save data
+   - Save selected shape and rotation data
+   - Solved issue with order of initialisation for StaticController
+   - Made 4D-3D counterpart also randomly rotated with main object
+
+Have trigger buttons to increment experiment between surveys
