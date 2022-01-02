@@ -45,10 +45,10 @@ public static class StateController
     // Array of the order representations will occur in
     public static int[] rep_order = new int[] { 0, 1, 2, 3 };
     // Experiment Status
-    public static int test = 1;       // current experiment test
+    public static int test = 0;       // current experiment test
     public static int rep_index = 0;  // Index of rep_order - used to index rep_order
     public static int test_count = 0; // How many iterations of a specific test
-    public const int MAX_TESTS = 3;   // Total number of iterations for each test
+    public const int MAX_TESTS = 2;   // Total number of iterations for each test
 
     // Dictionaries to easily convert IDs to JSON Keys
     public static Dictionary<int, string> representations = new Dictionary<int, string>();
@@ -60,7 +60,7 @@ public static class StateController
     // Boolean Array for planes of constant rotation in YZ, XZ, XY, XW, YW, ZW
     public static bool[] rotations = new bool[] { false, false, false, false, false, false };
     // Test Performance
-    private static ulong time = 0;
+    public static ulong time = 0;
 
     // Externally set parameters
     public static Canvas ModularSceneCanvas;
@@ -145,22 +145,22 @@ public static class StateController
     {
         File.WriteAllText(StateController.Datapath + StateController.Filename,
             @"{
-    ""Control"":{
+    """+ representations[rep_order[0]]+@""":{
         ""Shape_Match"":{},
         ""Rotation_Match"":{},
         ""Pose_Match"":{}
     },
-    ""Timeline"":{
+    """+ representations[rep_order[1]]+@""":{
         ""Shape_Match"":{},
         ""Rotation_Match"":{},
         ""Pose_Match"":{}
     },
-    ""Multi-View"":{
+    """+ representations[rep_order[2]]+@""":{
         ""Shape_Match"":{},
         ""Rotation_Match"":{},
         ""Pose_Match"":{}
     },
-    ""4D-3D"":{
+    """+ representations[rep_order[3]]+@""":{
         ""Shape_Match"":{},
         ""Rotation_Match"":{},
         ""Pose_Match"":{}
@@ -173,9 +173,9 @@ public static class StateController
     public static void Initialise()
     {
         // Initialise Experiment
-        StateController.PopulateDictionaries();
-        StateController.ShuffleRepresentations();
-        StateController.BuildDatapath();
+        PopulateDictionaries();
+        ShuffleRepresentations();
+        BuildDatapath();
 
         // Build file
         BuildJsonTemplate();
@@ -188,7 +188,9 @@ public static class StateController
     {
         // Check datapath was initialised
         if (Datapath == null)
+        {
             Initialise();
+        }
 
         // Check type of test to know what to save
         switch (test)
@@ -205,6 +207,7 @@ public static class StateController
             default:
                 break;
         }
+
     }
 
     public static void SaveShapeMatchTest()
@@ -333,6 +336,9 @@ public static class StateController
     // Bring user to next test
     public static void SetupTest()
     {
+        // Reset all objects rotations from previous test
+        ObjectController.Reset();
+
         // Set the object properties and prep UI properties
         // Shape Match
         if (test == 0)
@@ -348,12 +354,20 @@ public static class StateController
             shape = Random.Range(1, 7);
             texture = Random.Range(0, 3);
 
+            rotations = new bool[] { false, false, false, false, false, false };
+
             // Set which planes to rotate about
-            rotations = new bool[] {Random.value >= 0.3, Random.value >= 0.3,
-                                    Random.value >= 0.3,
-                                    Random.value >= 0.3, Random.value >= 0.3,
-                                    Random.value >= 0.3
-                                };
+            // Select 1 3D rotation
+            // 3D rotation has 50% chance to occur
+            rotations[Random.Range(0, 3)] = Random.value >= 0.6;
+
+            // Select 2 4D rotations
+            // 1st 4D rotation will always occur
+            // 2nd 4D rotation has 50% chance to occur
+            rotations[Random.Range(3, 6)] = Random.value >= 0.6;
+            rotations[Random.Range(3, 6)] = true;
+
+            ///Debug.Log(RotationToString(rotations));
         }
         // Pose Match
         else if (test == 2)
@@ -372,6 +386,32 @@ public static class StateController
 
         // Set the Representation
         ModularSceneCanvas.GetComponent<UIController>().SetRepresentation(rep_order[rep_index]);
+    }
+
+    // Set the test and representation. 
+    // must be called after the survey as the survey uses the data
+    public static void SetTestParameters()
+    {
+        // increment test number
+        test_count++;
+        // if 10 it must move onto the next representation
+        if (test_count >= MAX_TESTS)
+        {
+            test_count = 0;
+            test++;
+
+            if (test >= 3)
+            {
+                test = 0;
+                rep_index++;
+
+                // If every representation has been explored, show end screen
+                if (rep_index >= rep_order.Length)
+                    // Load thank you
+                    SceneManager.LoadScene("EndScene");
+            }
+        }
+
     }
 
 }

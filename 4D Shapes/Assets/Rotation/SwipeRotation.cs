@@ -107,7 +107,7 @@ public class SwipeRotation : MonoBehaviour
                     // 3D Component
                     if (UIController.Four_to_Three)
                     {
-                        e1 = new Vector4(-1, 0, 0, 0);
+                        e1 = new Vector4( 1, 0, 0, 0);
                         e2 = new Vector4( 0, 1, 0, 0);
                         bv = Bivector4.Wedge(e1, e2);
                         r  = new Rotor4(bv, x + y);
@@ -124,7 +124,7 @@ public class SwipeRotation : MonoBehaviour
                     r  = new Rotor4(bv, y);
 
                     // Rotate with horizontal gesture around global xw plane
-                    e1 = new Vector4(-1, 0, 0, 0);
+                    e1 = new Vector4(1, 0, 0, 0);
                     e2 = new Vector4(0, 0, 0, 1);
                     bv = Bivector4.Wedge(e1, e2);
                     r *= new Rotor4(bv, x);

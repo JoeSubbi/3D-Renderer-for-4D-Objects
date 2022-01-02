@@ -49,10 +49,8 @@ public class UIController : MonoBehaviour
     // Padding between UI elements and edge of screen
     private float buffer;
 
-    // Start is called before the first frame update
     void Awake()
     {
-
         // Get components
         canvas = GetComponent<RectTransform>();
         mainRenderer = Window.GetComponent<Renderer>();
@@ -79,19 +77,6 @@ public class UIController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Set up representation
-        if (Four_to_Three)
-            FourToThreeRepresentation();
-        else if (Multi_View)
-            MultiViewRepresentation();
-        else if (Timeline)
-            TimelineRepresentation();
-        else
-            ControlRepresentation();
-
-        // Set up test UI features
-        ModeUI();
-
         // Rescale UI if screen size has changed
         if (resolution.x != Screen.width || resolution.y != Screen.height)
         {
@@ -101,7 +86,6 @@ public class UIController : MonoBehaviour
             resolution.y = Screen.height;
         }
     }
-
 
     public void SwitchRotation(bool grabBall)
     {
@@ -116,29 +100,9 @@ public class UIController : MonoBehaviour
             SwipeEmpty.SetActive(true);
         }
     }
-
-    // Set up test UI features
-    public void ModeUI()
-    {
-        // shape menu
-        if (Shape_Match)
-            ShapeOptionContainer.SetActive(true);
-        else
-            ShapeOptionContainer.SetActive(false);
-        // rotation menu
-        if (Rotation_Match)
-            RotationOptionContainer.SetActive(true);
-        else
-            RotationOptionContainer.SetActive(false);
-        // Randomly Posed Object window
-        if (Pose_Match)
-            MatchWindow.SetActive(true);
-        else
-            MatchWindow.SetActive(false);
-    }
-
+    
     // Set test booleans
-    public void SetTest()
+    private void SetTest()
     {
         switch (StateController.test)
         {
@@ -163,6 +127,29 @@ public class UIController : MonoBehaviour
                 Pose_Match = false;
                 break;
         }
+    }
+
+    // Set up test UI features
+    public void ModeUI()
+    {
+        // Set booleans to appropriate test
+        SetTest();
+
+        // shape menu
+        if (Shape_Match)
+            ShapeOptionContainer.SetActive(true);
+        else
+            ShapeOptionContainer.SetActive(false);
+        // rotation menu
+        if (Rotation_Match)
+            RotationOptionContainer.SetActive(true);
+        else
+            RotationOptionContainer.SetActive(false);
+        // Randomly Posed Object window
+        if (Pose_Match)
+            MatchWindow.SetActive(true);
+        else
+            MatchWindow.SetActive(false);
     }
 
     // Set up representations
@@ -321,18 +308,49 @@ public class UIController : MonoBehaviour
 
     public void SetRepresentation(int r)
     {
+        // Set booleans to appropriate test
+        SetTest();
+
+        //load intro to new rep if it is the beginning
+        GameObject intro = canvas.transform.Find("RepIntro").gameObject;
+        if (StateController.test == 0 && StateController.test_count == 0)
+            intro.SetActive(true);
+        else
+            intro.SetActive(false) ;
+
+        GameObject c = intro.transform.Find("Control").gameObject;
+        GameObject mv = intro.transform.Find("MultiView").gameObject;
+        GameObject t = intro.transform.Find("Timeline").gameObject;
+        GameObject ftt = intro.transform.Find("FourToThree").gameObject;
+
         switch (r)
         {
             case 1:
-                FourToThreeRepresentation();
-                break;
-            case 2:
+                c.SetActive(false);
+                mv.SetActive(true);
+                t.SetActive(false);
+                ftt.SetActive(false);
                 MultiViewRepresentation();
                 break;
-            case 3:
+            case 2:
+                c.SetActive(false);
+                mv.SetActive(false);
+                t.SetActive(true);
+                ftt.SetActive(false);
                 TimelineRepresentation();
                 break;
+            case 3:
+                c.SetActive(false);
+                mv.SetActive(false);
+                t.SetActive(false);
+                ftt.SetActive(true);
+                FourToThreeRepresentation();
+                break;
             default:
+                c.SetActive(true);
+                ftt.SetActive(false);
+                mv.SetActive(false);
+                t.SetActive(false);
                 ControlRepresentation();
                 break;
         }

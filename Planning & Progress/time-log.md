@@ -523,4 +523,21 @@
    - Solved issue with order of initialisation for StaticController
    - Made 4D-3D counterpart also randomly rotated with main object
 
-Have trigger buttons to increment experiment between surveys
+### 01 Jan 2021
+
+ - *3 hours* implementing progression from each test to each representation
+
+### 02 Jan 2021
+
+ - *0.5 hours* implemented a better random rotation for rotation match
+   - 60% chance of 3D rotation
+   - 60% chance 1 of 4D rotation
+   - 100% chance of a 2nd 4D rotation
+ - *1.5 hours* trying to find issue where the object continuously grows...
+   - xy and zw rotation together seems to cause the expansion, maybe I have copied something incorrectly - same behaviour has local rotation and part of the reason I needed to ditch it
+ - *0.5 hours* implementing intro card when user is given a new representation
+ - *1 hour* testing and improving
+
+TODO:
+fix rotation... 
+ - check every equation

@@ -43,8 +43,9 @@ public class ObjectController : MonoBehaviour
         // Set object W position
         mainRenderer.material.SetFloat("_W", wSlider.value + w);
 
-        if (StateController.test == 1)
+        if (UIController.Rotation_Match)
             TimedRotor(StateController.rotations);
+        //TimedRotor(new bool[] { false, false, true, false, false, true });
     }
 
     // Set shape
@@ -63,6 +64,19 @@ public class ObjectController : MonoBehaviour
     {
         mainRenderer.material.SetInt("_Effect", t);
         matchRenderer.material.SetInt("_Effect", t);
+    }
+
+    public static void Reset()
+    {
+        w = 0;
+
+        mainRot  = new Rotor4(1, 0, 0, 0, 0, 0, 0, 0);
+        matchRot = new Rotor4(1, 0, 0, 0, 0, 0, 0, 0);
+        miniRot  = new Rotor4(1, 0, 0, 0, 0, 0, 0, 0);
+
+        SetMainObjectRotation();
+        SetMatchObjectRotation();
+        SetMiniObjectRotation();
     }
 
     // Set rotation for each  object
@@ -204,55 +218,89 @@ public class ObjectController : MonoBehaviour
         Vector4 e1;
         Vector4 e2;
         Bivector4 bv;
-        Rotor4 r = new Rotor4(1, 0, 0, 0, 0, 0, 0, 0);
         float a = Time.deltaTime;
 
+        // 3D
         if (rotations[0])
         {
             e1 = new Vector4(0, 1, 0, 0);
-            e2 = new Vector4(0, 0, 0, 1);
+            e2 = new Vector4(0, 0, 1, 0);
             bv = Bivector4.Wedge(e1, e2);
-            r *= new Rotor4(bv, a);
+            mainRot *= new Rotor4(bv, a);
         }
         if (rotations[1])
         {
             e1 = new Vector4(1, 0, 0, 0);
-            e2 = new Vector4(0, 0, 0, 1);
-            bv = Bivector4.Wedge(e1, e2);
-            r *= new Rotor4(bv, a);
-        }
-        if (rotations[2])
-        {
-            e1 = new Vector4(0, 0, 1, 0);
-            e2 = new Vector4(0, 0, 0, 1);
-            bv = Bivector4.Wedge(e1, e2);
-            r *= new Rotor4(bv, a);
-        }
-        if (rotations[3])
-        {
-            e1 = new Vector4(0, 1, 0, 0);
             e2 = new Vector4(0, 0, 1, 0);
             bv = Bivector4.Wedge(e1, e2);
-            r *= new Rotor4(bv, a);
+            mainRot *= new Rotor4(bv, a);
         }
-        if (rotations[4])
+        if (rotations[2])
         {
             e1 = new Vector4(1, 0, 0, 0);
             e2 = new Vector4(0, 1, 0, 0);
             bv = Bivector4.Wedge(e1, e2);
-            r *= new Rotor4(bv, a);
+            mainRot *= new Rotor4(bv, a);
+        }
+
+        // 4D
+        if (rotations[3])
+        {
+            e1 = new Vector4(1, 0, 0, 0);
+            e2 = new Vector4(0, 0, 0, 1);
+            bv = Bivector4.Wedge(e1, e2);
+            mainRot *= new Rotor4(bv, a);
+
+            if (UIController.Four_to_Three)
+            {
+                e1 = new Vector4(0, 1, 0, 0);
+                e2 = new Vector4(0, 0, 1, 0);
+                bv = Bivector4.Wedge(e1, e2);
+
+                miniRot *= new Rotor4(bv, a);
+            }
+        }
+        if (rotations[4])
+        {
+            e1 = new Vector4(0, 1, 0, 0);
+            e2 = new Vector4(0, 0, 0, 1);
+            bv = Bivector4.Wedge(e1, e2);
+            mainRot *= new Rotor4(bv, a);
+
+            if (UIController.Four_to_Three)
+            {
+                e1 = new Vector4(1, 0, 0, 0);
+                e2 = new Vector4(0, 0, 1, 0);
+                bv = Bivector4.Wedge(e1, e2);
+
+                miniRot *= new Rotor4(bv, a);
+            }
         }
         if (rotations[5])
         {
-            e1 = new Vector4(1, 0, 0, 0);
-            e2 = new Vector4(0, 0, 1, 0);
+            e1 = new Vector4(0, 0, 1, 0);
+            e2 = new Vector4(0, 0, 0, 1);
             bv = Bivector4.Wedge(e1, e2);
-            r *= new Rotor4(bv, a);
+            mainRot *= new Rotor4(bv, a);
+
+            if (UIController.Four_to_Three)
+            {
+                e1 = new Vector4(1, 0, 0, 0);
+                e2 = new Vector4(0, 1, 0, 0);
+                bv = Bivector4.Wedge(e1, e2);
+
+                miniRot *= new Rotor4(bv, a);
+            }
         }
 
-        mainRot *= r;
         mainRot.Normalise();
         SetMainObjectRotation();
+
+        if (UIController.Four_to_Three)
+        {
+            miniRot.Normalise();
+            SetMiniObjectRotation();
+        }
     }
 
 }

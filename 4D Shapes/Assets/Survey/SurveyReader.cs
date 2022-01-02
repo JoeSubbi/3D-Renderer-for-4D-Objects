@@ -23,7 +23,6 @@ public class SurveyReader : MonoBehaviour
 
     void Awake()
     {
-        Debug.Log("Loaded Survey Scene");
         // Set survey based on test
         switch (StateController.test)
         {
@@ -47,6 +46,7 @@ public class SurveyReader : MonoBehaviour
         }
     }
 
+    // Save the current content of the survey scene depending on what representation is used
     public void Save()
     {
         // Set up JSON Node
@@ -94,6 +94,9 @@ public class SurveyReader : MonoBehaviour
 
         // Write out JSON with new test parameters and performance
         File.WriteAllText(StateController.Datapath + StateController.Filename, node.ToString());
+
+        // Set test parameters
+        StateController.SetTestParameters();
     }
 
     public Dictionary<string, string> GetShapeMatchContent()
