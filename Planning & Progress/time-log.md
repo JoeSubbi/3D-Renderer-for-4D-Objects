@@ -537,6 +537,7 @@
    - xy and zw rotation together seems to cause the expansion, maybe I have copied something incorrectly - same behaviour has local rotation and part of the reason I needed to ditch it
  - *0.5 hours* implementing intro card when user is given a new representation
  - *1 hour* testing and improving
+ - *1.5 hours* build project, fix issues with persistent data path + filename not combining properly
 
 TODO:
 fix rotation... 

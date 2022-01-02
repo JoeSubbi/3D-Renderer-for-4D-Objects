@@ -143,7 +143,7 @@ public static class StateController
 
     private static void BuildJsonTemplate()
     {
-        File.WriteAllText(StateController.Datapath + StateController.Filename,
+        File.WriteAllText(Path.Combine(Datapath, Filename),
             @"{
     """+ representations[rep_order[0]]+@""":{
         ""Shape_Match"":{},
@@ -243,7 +243,7 @@ public static class StateController
         test_node.Add("Time", time);
         
         // Write out JSON with new test parameters and performance
-        File.WriteAllText(Datapath + Filename, node.ToString());
+        File.WriteAllText(Path.Combine(Datapath, Filename), node.ToString());
     }
 
     public static void SaveRotationMatchTest()
@@ -281,7 +281,7 @@ public static class StateController
         test_node.Add("Time", time);
 
         // Write out JSON with new test parameters and performance
-        File.WriteAllText(Datapath + Filename, node.ToString());
+        File.WriteAllText(Path.Combine(Datapath, Filename), node.ToString());
     }
 
     private static string RotationToString(bool[] rotation)
@@ -322,7 +322,7 @@ public static class StateController
         test_node.Add("Accuracy", 0);
 
         // Write out JSON with new test parameters and performance
-        File.WriteAllText(Datapath + Filename, node.ToString());
+        File.WriteAllText(Path.Combine(Datapath, Filename), node.ToString());
     }
 
     // Trigger - Submit
@@ -359,15 +359,21 @@ public static class StateController
             // Set which planes to rotate about
             // Select 1 3D rotation
             // 3D rotation has 50% chance to occur
-            rotations[Random.Range(0, 3)] = Random.value >= 0.6;
+            rotations[Random.Range(0, 3)] = Random.value >= 0.5;
 
             // Select 2 4D rotations
             // 1st 4D rotation will always occur
-            // 2nd 4D rotation has 50% chance to occur
-            rotations[Random.Range(3, 6)] = Random.value >= 0.6;
+            // 2nd 4D rotation has 70% chance to occur
+            rotations[Random.Range(3, 6)] = Random.value >= 0.7;
             rotations[Random.Range(3, 6)] = true;
 
-            ///Debug.Log(RotationToString(rotations));
+            //if rotations = new bool[] { false, false, true, false, false, true };
+            //do something else: xy & zw rotation is broken...
+            if (rotations[5] && rotations[2])
+            {
+                rotations[2] = false;
+                rotations[Random.Range(0, 2)] = true;
+            }
         }
         // Pose Match
         else if (test == 2)

@@ -23,6 +23,21 @@ public class SwipeRotation : MonoBehaviour
     private bool y_only = false;
     private bool z = false;
 
+    /*
+    // rotation guide line
+    private LineRenderer line;
+
+    void Awake()
+    {
+        //Guide line when rotating grab ball
+        line = gameObject.AddComponent<LineRenderer>();
+        Vector3[] initLinePos = new Vector3[2] { Vector3.zero, Vector3.zero };
+        line.SetPositions(initLinePos);
+        line.startWidth = 0.01f;
+        line.endWidth = 0.01f;
+    }
+    */
+
     void Update()
     {
         x_only = Input.GetKey("x");

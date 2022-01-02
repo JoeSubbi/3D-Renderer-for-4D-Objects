@@ -93,7 +93,7 @@ public class SurveyReader : MonoBehaviour
             survey_node.Add(entry.Key, entry.Value);
 
         // Write out JSON with new test parameters and performance
-        File.WriteAllText(StateController.Datapath + StateController.Filename, node.ToString());
+        File.WriteAllText(Path.Combine(StateController.Datapath, StateController.Filename), node.ToString());
 
         // Set test parameters
         StateController.SetTestParameters();

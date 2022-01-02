@@ -127,7 +127,7 @@ public class Rotor4
             - 2 * a.z * byw * bxyzw
         );
         r.y = (
-            -2 * a.w * bxw * bxy
+            - 2 * a.w * bxw * bxy
             - 2 * a.w * bxz * bxyzw
             + 2 * a.w * byw * s
             + 2 * a.w * byz * bzw
@@ -149,7 +149,7 @@ public class Rotor4
             + 2 * a.z * byz * s
         );
         r.z = (
-            -2 * a.w * bxw * bxz
+            - 2 * a.w * bxw * bxz
             + 2 * a.w * bxy * bxyzw
             - 2 * a.w * byw * byz
             + 2 * a.w * bzw * s
@@ -172,7 +172,7 @@ public class Rotor4
 
         );
         r.w = (
-            -a.w * bxw * bxw
+            - a.w * bxw * bxw
             + a.w * bxy * bxy
             + a.w * bxz * bxz
             - a.w * byw * byw

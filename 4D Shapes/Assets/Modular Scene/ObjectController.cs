@@ -45,7 +45,6 @@ public class ObjectController : MonoBehaviour
 
         if (UIController.Rotation_Match)
             TimedRotor(StateController.rotations);
-        //TimedRotor(new bool[] { false, false, true, false, false, true });
     }
 
     // Set shape
