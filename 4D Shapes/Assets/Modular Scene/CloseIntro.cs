@@ -6,7 +6,7 @@ public class CloseIntro : MonoBehaviour
 {
     public void Begin()
     {
-        StateController.time = 0;
+        StateController.start_time = Time.time;
         transform.parent.gameObject.SetActive(false);
     }
 }

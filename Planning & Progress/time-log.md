@@ -539,6 +539,13 @@
  - *1 hour* testing and improving
  - *1.5 hours* build project, fix issues with persistent data path + filename not combining properly
 
+### 03 Jan 2021
+
+ - *0.5 hours* implemented timer
+   - if new representation it resets the timer when they finish reading the description of the representation
+
 TODO:
 fix rotation... 
  - check every equation
+add accuracy of pose match
+add time limit

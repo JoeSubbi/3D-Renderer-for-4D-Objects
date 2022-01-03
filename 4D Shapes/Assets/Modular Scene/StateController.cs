@@ -60,7 +60,8 @@ public static class StateController
     // Boolean Array for planes of constant rotation in YZ, XZ, XY, XW, YW, ZW
     public static bool[] rotations = new bool[] { false, false, false, false, false, false };
     // Test Performance
-    public static ulong time = 0;
+    public static float start_time = 0;
+    public static float end_time = 0;
 
     // Externally set parameters
     public static Canvas ModularSceneCanvas;
@@ -186,6 +187,10 @@ public static class StateController
     // Bring user from test to survey page
     public static void SaveTest()
     {
+        // Mark end time
+        end_time = Time.time;
+        Debug.Log(end_time - start_time);
+
         // Check datapath was initialised
         if (Datapath == null)
         {
@@ -240,7 +245,7 @@ public static class StateController
         test_node.Add("Selected Shape", selectedShape);
 
         test_node.Add("Texture", texture);
-        test_node.Add("Time", time);
+        test_node.Add("Time", end_time - start_time);
         
         // Write out JSON with new test parameters and performance
         File.WriteAllText(Path.Combine(Datapath, Filename), node.ToString());
@@ -278,7 +283,7 @@ public static class StateController
         bool[] rotation = ModularSceneCanvas.GetComponent<MultipleChoiceOptions>().LogRotation();
         test_node.Add("Selected Rotation", JSON.Parse(RotationToString(rotation)) );
 
-        test_node.Add("Time", time);
+        test_node.Add("Time", end_time - start_time);
 
         // Write out JSON with new test parameters and performance
         File.WriteAllText(Path.Combine(Datapath, Filename), node.ToString());
@@ -317,7 +322,7 @@ public static class StateController
         JSONNode test_node = node[rep_name][test_name][test_name_id];
         test_node.Add("Shape", shape);
         test_node.Add("Texture", texture);
-        test_node.Add("Time", time);
+        test_node.Add("Time", end_time - start_time);
 
         test_node.Add("Accuracy", 0);
 
@@ -392,6 +397,9 @@ public static class StateController
 
         // Set the Representation
         ModularSceneCanvas.GetComponent<UIController>().SetRepresentation(rep_order[rep_index]);
+
+        // Set Start Time
+        start_time = Time.time;
     }
 
     // Set the test and representation. 
