@@ -262,6 +262,11 @@ public class Rotor4
         return a + " + " + bxy + " + " + bxz + " + " + byz + " + " + bxw + " + " + byw + " + " + bzw + " + " + bxyzw;
     }
 
+    public float[] ToArray()
+    {
+        return new float[] { a, bxy, bxz, byz, bxw, byw, bzw, bxyzw };
+    }
+
     // Equal
     public static bool equal(Rotor4 p, Rotor4 q)
     {
@@ -295,5 +300,12 @@ public class Rotor4
     {
         if (Mathf.Abs(a) - Mathf.Abs(b) <= epsilon) return true;
         return false;
+    }
+
+    // Difference between 2 rotors
+    public static float Difference(Rotor4 p, Rotor4 q)
+    {
+        Rotor4 dif = p * q.Reverse();
+        return Mathf.Acos(dif.a);
     }
 }

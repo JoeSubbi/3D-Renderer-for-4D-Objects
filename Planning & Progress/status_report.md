@@ -190,12 +190,15 @@ quality of life polish
    - [x] Store current experiment status and load it between surveys
    - [x] Store answers of survey
    - [x] Implement random rotation mechanic in the modular scene
- - [ ] Have experiment loop through everything without TestController
+ - [x] Have experiment loop through everything without TestController
 
 ### Semester 2
 
 Week 1 & Week 2  
  - [ ] Finish implementing test system
+   - [ ] graphs between representations
+   - [ ] fix rotor rotation
+   - [ ] add time limit
 
 Week 3   
  - [ ] Begin developing data analysis tools, most likely with a jupyter notebook

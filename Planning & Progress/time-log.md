@@ -544,6 +544,14 @@
  - *0.5 hours* implemented timer
    - if new representation it resets the timer when they finish reading the description of the representation
 
+### 07 Jan 2021
+
+ - *1 hour* creating graph scene
+
+### 08 Jan 2021
+
+ - *1 hour* improving graph scene to separate pose match
+
 TODO:
 fix rotation... 
  - check every equation

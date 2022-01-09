@@ -48,7 +48,7 @@ public static class StateController
     public static int test = 0;       // current experiment test
     public static int rep_index = 0;  // Index of rep_order - used to index rep_order
     public static int test_count = 0; // How many iterations of a specific test
-    public const int MAX_TESTS = 2;   // Total number of iterations for each test
+    public const int MAX_TESTS = 3;   // Total number of iterations for each test
 
     // Dictionaries to easily convert IDs to JSON Keys
     public static Dictionary<int, string> representations = new Dictionary<int, string>();
@@ -189,7 +189,6 @@ public static class StateController
     {
         // Mark end time
         end_time = Time.time;
-        Debug.Log(end_time - start_time);
 
         // Check datapath was initialised
         if (Datapath == null)
@@ -324,17 +323,19 @@ public static class StateController
         test_node.Add("Texture", texture);
         test_node.Add("Time", end_time - start_time);
 
-        test_node.Add("Accuracy", 0);
+        //test_node.Add("Accuracy", Rotor4.Difference(ObjectController.mainRot, ObjectController.matchRot) );
+        test_node.Add("Main Rotor", JSON.Parse(RotorToString(ObjectController.mainRot)));
+        test_node.Add("Match Rotor", JSON.Parse(RotorToString(ObjectController.matchRot)));
 
         // Write out JSON with new test parameters and performance
         File.WriteAllText(Path.Combine(Datapath, Filename), node.ToString());
     }
 
-    // Trigger - Submit
-    // Bring user form survey page to scene with a graph to show accuracy improvement
-    public static void BuildGraphs()
+    private static string RotorToString(Rotor4 rotor)
     {
-        // Build graph(s)?
+        return "[" + rotor.a + "," + rotor.bxy + "," + rotor.bxz +
+               "," + rotor.byz + "," + rotor.bxw + "," + rotor.byw + 
+               "," + rotor.bzw + "," + rotor.bxyzw + "]";
     }
 
     // Trigger - Next
@@ -348,7 +349,7 @@ public static class StateController
         // Shape Match
         if (test == 0)
         {
-            shape = Random.Range(0, 7);
+            shape = Random.Range(0, 8);
             texture = 0;
             ObjectController.w = Random.Range(-0.8f, 0.8f);
             ObjectController.SetRandMainObjectRotation();
@@ -356,8 +357,8 @@ public static class StateController
         // Rotation Match
         else if (test == 1)
         {
-            shape = Random.Range(1, 7);
-            texture = Random.Range(0, 3);
+            shape = Random.Range(1, 8);
+            texture = Random.Range(0, 4);
 
             rotations = new bool[] { false, false, false, false, false, false };
 
@@ -383,8 +384,8 @@ public static class StateController
         // Pose Match
         else if (test == 2)
         {
-            shape = Random.Range(1, 7);
-            texture = Random.Range(1, 3);
+            shape = Random.Range(1, 8);
+            texture = Random.Range(1, 4);
 
             ObjectController.SetRandMatchObjectRotation();
         }
@@ -425,7 +426,6 @@ public static class StateController
                     SceneManager.LoadScene("EndScene");
             }
         }
-
     }
 
 }
