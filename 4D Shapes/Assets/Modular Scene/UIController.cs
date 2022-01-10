@@ -393,7 +393,7 @@ public class UIController : MonoBehaviour
 
         axesPanel.anchoredPosition = new Vector2(-2 * buffer, buffer);
 
-        submitButton.sizeDelta = new Vector2(2 * buffer, buffer);
-        submitButton.anchoredPosition = new Vector2(-2 * buffer, -buffer);
+        submitButton.sizeDelta = new Vector2(1.6f * buffer, 0.8f * buffer);
+        submitButton.anchoredPosition = new Vector2(-1.8f * buffer, -buffer);
     }
 }

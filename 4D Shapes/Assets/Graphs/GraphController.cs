@@ -22,11 +22,13 @@ public class GraphController : MonoBehaviour
                     // result columns[rep][shape_match] height +=  1 (33)
             // loop through node[rep][rotation_match]
                 // get node[test_id]
-                // percentage of correct rotations
-                    // result columns[rep][shape_match] height +=  10 (330) * %
+                // loop through each loaded rotation
+                    // if equal to selected rotation
+                        //result columns[rep][rotation_match] height +=  (1/6) (5.5)
             // loop through node[rep][pose_match]
                 // get node[test_id]
-                // average accuracy of pose match?
+                // result columns[rep][pose_match] height += accuracy percentage
+            // result columns[rep][pose_match] height /= MAX_TESTS
     }
 
 }

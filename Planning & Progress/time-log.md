@@ -551,6 +551,13 @@
 ### 08 Jan 2021
 
  - *1 hour* improving graph scene to separate pose match
+ - *0.5 hours* Weekly presentation
+
+### 10 Jan 2021
+
+ - *0.5 hour* adding timer
+ - *1 hour* running tests
+ - *1 hour* polishing various components
 
 TODO:
 fix rotation... 

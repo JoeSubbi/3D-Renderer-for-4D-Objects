@@ -493,7 +493,7 @@
                     float3 colxyw = tex2D(_TexZ, Rotate(offset).xyw).rgb; // Z
                     float3 colxyz = tex2D(_TexW, Rotate(offset).xyz).rgb; // W
 
-                    float4 n = Rotate(-GetNormal(p));
+                    float4 n = Rotate(GetNormal(p));
                     if (_Shape == 7) n *= -1;
 
                     float dif = dot(GetNormal(p), 

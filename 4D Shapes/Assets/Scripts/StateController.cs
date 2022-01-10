@@ -53,6 +53,7 @@ public static class StateController
     // Dictionaries to easily convert IDs to JSON Keys
     public static Dictionary<int, string> representations = new Dictionary<int, string>();
     public static Dictionary<int, string> tests = new Dictionary<int, string>();
+    public static Dictionary<int, string> shapes = new Dictionary<int, string>();
 
     // Test Parameters
     public static int shape = 0;      // Current shape
@@ -79,6 +80,15 @@ public static class StateController
         tests.Add(0, "Shape_Match");
         tests.Add(1, "Rotation_Match");
         tests.Add(2, "Pose_Match");
+
+        shapes.Add(0, "Sphere");
+        shapes.Add(1, "Box");
+        shapes.Add(2, "Cone");
+        shapes.Add(3, "Cone");
+        shapes.Add(4, "Torus");
+        shapes.Add(5, "Capsule");
+        shapes.Add(6, "Capsule");
+        shapes.Add(7, "Pentachoron");
     }
 
     // Shuffle order the representations will occur in
@@ -239,7 +249,7 @@ public static class StateController
         node[rep_name][test_name].Add(test_name_id, temp);
 
         JSONNode test_node = node[rep_name][test_name][test_name_id];
-        test_node.Add("Loaded Shape", shape);
+        test_node.Add("Loaded Shape", shapes[shape]);
         string selectedShape = ModularSceneCanvas.GetComponent<MultipleChoiceOptions>().LogShape();
         test_node.Add("Selected Shape", selectedShape);
 
@@ -275,7 +285,7 @@ public static class StateController
         node[rep_name][test_name].Add(test_name_id, temp);
 
         JSONNode test_node = node[rep_name][test_name][test_name_id];
-        test_node.Add("Shape", shape);
+        test_node.Add("Shape", shapes[shape]);
         test_node.Add("Texture", texture);
 
         test_node.Add("Loaded Rotation", JSON.Parse(RotationToString(rotations)) );
@@ -319,7 +329,7 @@ public static class StateController
         node[rep_name][test_name].Add(test_name_id, temp);
 
         JSONNode test_node = node[rep_name][test_name][test_name_id];
-        test_node.Add("Shape", shape);
+        test_node.Add("Shape", shapes[shape]);
         test_node.Add("Texture", texture);
         test_node.Add("Time", end_time - start_time);
 
@@ -345,11 +355,17 @@ public static class StateController
         // Reset all objects rotations from previous test
         ObjectController.Reset();
 
+        // Pick Random Shape
+        // As there are variations for Cone and Capsule, increase
+        // chances of the other shapes (Torus is obvious so decrease that)
+        // Refer to population of shapes dictionary
+        int[] shape_list = new int[11]{ 0,0, 1,1, 2,3, 4, 5,6, 7,7 };
+
         // Set the object properties and prep UI properties
         // Shape Match
         if (test == 0)
         {
-            shape = Random.Range(0, 8);
+            shape = shape_list[Random.Range(0, 11)];
             texture = 0;
             ObjectController.w = Random.Range(-0.8f, 0.8f);
             ObjectController.SetRandMainObjectRotation();
@@ -357,7 +373,8 @@ public static class StateController
         // Rotation Match
         else if (test == 1)
         {
-            shape = Random.Range(1, 8);
+            // don't include sphere
+            shape = shape_list[Random.Range(2, 11)];
             texture = Random.Range(0, 4);
 
             rotations = new bool[] { false, false, false, false, false, false };
@@ -384,7 +401,8 @@ public static class StateController
         // Pose Match
         else if (test == 2)
         {
-            shape = Random.Range(1, 8);
+            // don't include sphere
+            shape = shape_list[Random.Range(2, 11)];
             texture = Random.Range(1, 4);
 
             ObjectController.SetRandMatchObjectRotation();
