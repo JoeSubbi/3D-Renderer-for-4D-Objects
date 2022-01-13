@@ -134,7 +134,7 @@
                 }
                 if (_Shape == 7){
                     p = Rotate(p);
-                    return sdPentachoron(p, 0.7);
+                    return sdPentachoron(p, 0.5);
                 }
                 p = Rotate(p);
                 return sdSphere(p, 1);

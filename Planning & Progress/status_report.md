@@ -198,7 +198,7 @@ Week 1 & Week 2
  - [ ] Finish implementing test system
    - [ ] graphs between representations
    - [ ] fix rotor rotation
-   - [ ] add time limit
+   - [x] add time limit
    - [x] angle between rotors
 
 Week 3   
