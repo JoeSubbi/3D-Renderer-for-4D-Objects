@@ -333,9 +333,9 @@ public static class StateController
         test_node.Add("Texture", texture);
         test_node.Add("Time", end_time - start_time);
 
-        //test_node.Add("Accuracy", Rotor4.Difference(ObjectController.mainRot, ObjectController.matchRot) );
-        test_node.Add("Main Rotor", JSON.Parse(RotorToString(ObjectController.mainRot)));
-        test_node.Add("Match Rotor", JSON.Parse(RotorToString(ObjectController.matchRot)));
+        test_node.Add("Accuracy", Rotor4.Difference(ObjectController.mainRot, ObjectController.matchRot) );
+        test_node.Add("Main Rotor", JSON.Parse(RotorToString(ObjectController.mainRot)) );
+        test_node.Add("Match Rotor", JSON.Parse(RotorToString(ObjectController.matchRot)) );
 
         // Write out JSON with new test parameters and performance
         File.WriteAllText(Path.Combine(Datapath, Filename), node.ToString());

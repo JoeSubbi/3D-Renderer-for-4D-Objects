@@ -199,6 +199,7 @@ Week 1 & Week 2
    - [ ] graphs between representations
    - [ ] fix rotor rotation
    - [ ] add time limit
+   - [x] angle between rotors
 
 Week 3   
  - [ ] Begin developing data analysis tools, most likely with a jupyter notebook

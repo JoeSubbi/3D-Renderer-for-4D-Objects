@@ -10,6 +10,7 @@
   - [25/11/2021](#25112021)
   - [02/12/2021](#02122021)
   - [09/12/2021](#09122021)
+  - [13/01/2021](#13012021)
 
 # Semester 1
 ## 07/10/2021
@@ -72,3 +73,13 @@ probably set end of december as deadline for rotors
 discussion of plan for next term
 
 more discussion about rotors
+
+## 13/01/2021
+
+angle between rotors - just take dot product of random vectors rotated by the 2 rotors DUHHH...
+
+experiments - try an online thing - webGL or screen share
+
+discussion of road map - make as much time as possible so i don't loose time with AEs etc
+
+length of test - 50minutes best for an hour slot - don't spend too much time in experiment

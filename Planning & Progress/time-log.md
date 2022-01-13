@@ -555,12 +555,22 @@
 
 ### 10 Jan 2021
 
- - *0.5 hour* adding timer
+ - *0.5 hours* adding timer
  - *1 hour* running tests
  - *1 hour* polishing various components
 
+### 13 Jan 2021
+
+ - *0.5 hours* weekly meeting
+ - *0.5 hours* working angle between rotors
+ - *0.5 hours* set up pop-up cards for each type of test
+
 TODO:
-fix rotation... 
- - check every equation
-add accuracy of pose match
-add time limit
+ - fix rotation... 
+   - check every equation
+ - add time limit
+ - don't have timer run whilst pop up cards are visible
+ - test explanation pop up card functionality
+ - between rep graph functionality
+ - navigation to between rep graphs
+

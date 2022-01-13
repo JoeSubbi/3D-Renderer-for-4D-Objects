@@ -305,7 +305,17 @@ public class Rotor4
     // Difference between 2 rotors
     public static float Difference(Rotor4 p, Rotor4 q)
     {
-        Rotor4 dif = p * q.Reverse();
-        return Mathf.Acos(dif.a);
+        //Rotor4 dif = p * q.Reverse();
+        //return Mathf.Acos(dif.a);
+
+        // Take a random vector, create 2 copies rotated it by both Rotors
+        // Use the dot product to find the angle between the two vectors
+        Vector4 randomVector = new Vector4(Random.Range(-10.0f, 10.0f), Random.Range(-10.0f, 10.0f), 
+                                           Random.Range(-10.0f, 10.0f), Random.Range(-10.0f, 10.0f));
+        Vector4 randomVectorP = p.Rotate(randomVector);
+        Vector4 randomVectorQ = q.Rotate(randomVector);
+
+        return Mathf.Acos((Vector4.Dot(randomVectorP, randomVectorQ)) / 
+                          (randomVectorP.magnitude * randomVectorQ.magnitude));
     }
 }
