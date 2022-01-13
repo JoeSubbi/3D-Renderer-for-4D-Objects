@@ -48,7 +48,8 @@ public static class StateController
     public static int test = 0;       // current experiment test
     public static int rep_index = 0;  // Index of rep_order - used to index rep_order
     public static int test_count = 0; // How many iterations of a specific test
-    public const int MAX_TESTS = 3;   // Total number of iterations for each test
+    private static int[] MAX_TESTS = new int[] { 5, 5, 3};   // Total number of iterations for each test
+    private static int[] TIME_LIMIT = new int[] { 20, 60, 180 }; // Max time for each test
 
     // Dictionaries to easily convert IDs to JSON Keys
     public static Dictionary<int, string> representations = new Dictionary<int, string>();
@@ -361,12 +362,13 @@ public static class StateController
         // Refer to population of shapes dictionary
         int[] shape_list = new int[11]{ 0,0, 1,1, 2,3, 4, 5,6, 7,7 };
 
+        // Time limit to complete task
+        Timer.limit = TIME_LIMIT[test];
+
         // Set the object properties and prep UI properties
         // Shape Match
         if (test == 0)
         {
-            // Time limit to complete task
-            Timer.limit = 30;
             
             shape = shape_list[Random.Range(0, 11)];
             texture = 0;
@@ -376,9 +378,6 @@ public static class StateController
         // Rotation Match
         else if (test == 1)
         {
-            // Time limit to complete task
-            Timer.limit = 90;
-
             // don't include sphere
             shape = shape_list[Random.Range(2, 11)];
             texture = Random.Range(0, 4);
@@ -407,9 +406,6 @@ public static class StateController
         // Pose Match
         else if (test == 2)
         {
-            // Time limit to complete task
-            Timer.limit = 240;
-
             // don't include sphere
             shape = shape_list[Random.Range(2, 11)];
             texture = Random.Range(1, 4);
@@ -437,7 +433,7 @@ public static class StateController
         // increment test number
         test_count++;
         // if 10 it must move onto the next representation
-        if (test_count >= MAX_TESTS)
+        if (test_count >= MAX_TESTS[test])
         {
             test_count = 0;
             test++;
