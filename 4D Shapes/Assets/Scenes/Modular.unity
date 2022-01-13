@@ -1935,6 +1935,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74b2b55405c618149ad161af7ad7c1a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TaskIntro: {fileID: 0}
 --- !u!114 &632686451
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4532,7 +4533,7 @@ GameObject:
   - component: {fileID: 1322466346}
   - component: {fileID: 1322466349}
   m_Layer: 5
-  m_Name: Begin
+  m_Name: Next
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4602,7 +4603,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1322466349}
-        m_MethodName: Begin
+        m_MethodName: Next
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4661,6 +4662,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74b2b55405c618149ad161af7ad7c1a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TaskIntro: {fileID: 1814439629}
 --- !u!1 &1373720468 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 63494effa247d65489638de46623bfbb,

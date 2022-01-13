@@ -365,6 +365,9 @@ public static class StateController
         // Shape Match
         if (test == 0)
         {
+            // Time limit to complete task
+            Timer.limit = 30;
+            
             shape = shape_list[Random.Range(0, 11)];
             texture = 0;
             ObjectController.w = Random.Range(-0.8f, 0.8f);
@@ -373,6 +376,9 @@ public static class StateController
         // Rotation Match
         else if (test == 1)
         {
+            // Time limit to complete task
+            Timer.limit = 90;
+
             // don't include sphere
             shape = shape_list[Random.Range(2, 11)];
             texture = Random.Range(0, 4);
@@ -401,6 +407,9 @@ public static class StateController
         // Pose Match
         else if (test == 2)
         {
+            // Time limit to complete task
+            Timer.limit = 240;
+
             // don't include sphere
             shape = shape_list[Random.Range(2, 11)];
             texture = Random.Range(1, 4);
