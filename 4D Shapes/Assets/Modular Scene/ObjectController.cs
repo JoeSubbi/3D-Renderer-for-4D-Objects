@@ -217,7 +217,10 @@ public class ObjectController : MonoBehaviour
         Vector4 e1;
         Vector4 e2;
         Bivector4 bv;
-        float a = Time.deltaTime;
+        float a = 0;
+        if (Timer.running)
+            a = Time.deltaTime;
+
 
         // 3D
         if (rotations[0])

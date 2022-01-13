@@ -104,27 +104,58 @@ public class UIController : MonoBehaviour
     // Set test booleans
     private void SetTest()
     {
+        //load intro to new test if it is the beginning
+        GameObject intro = canvas.transform.Find("TaskIntro").gameObject;
+        if (StateController.test_count == 0 && StateController.test > 0)
+            intro.SetActive(true);
+        else
+            intro.SetActive(false);
+
+        GameObject s = intro.transform.Find("ShapeMatch").gameObject;
+        GameObject r = intro.transform.Find("RotateMatch").gameObject;
+        GameObject p = intro.transform.Find("PoseMatch").gameObject;
+
         switch (StateController.test)
         {
             case 0:
+                // Set test booleans for later comparisons
                 Shape_Match = true;
                 Rotation_Match = false;
                 Pose_Match = false;
+                // Set active test intro panel
+                s.SetActive(true);
+                r.SetActive(false);
+                p.SetActive(false);
                 break;
             case 1:
+                // Set test booleans for later comparisons
                 Shape_Match = false;
                 Rotation_Match = true;
                 Pose_Match = false;
+                // Set active test intro panel
+                s.SetActive(false);
+                r.SetActive(true);
+                p.SetActive(false);
                 break;
             case 2:
+                // Set test booleans for later comparisons
                 Shape_Match = false;
                 Rotation_Match = false;
                 Pose_Match = true;
+                // Set active test intro panel
+                s.SetActive(false);
+                r.SetActive(false);
+                p.SetActive(true);
                 break;
             default:
+                // Set test booleans for later comparisons
                 Shape_Match = false;
                 Rotation_Match = false;
                 Pose_Match = false;
+                // Set active test intro panel
+                s.SetActive(false);
+                r.SetActive(false);
+                p.SetActive(false);
                 break;
         }
     }
@@ -326,31 +357,39 @@ public class UIController : MonoBehaviour
         switch (r)
         {
             case 1:
+                // Set active representation intro panel
                 c.SetActive(false);
                 mv.SetActive(true);
                 t.SetActive(false);
                 ftt.SetActive(false);
+                // Set Representation
                 MultiViewRepresentation();
                 break;
             case 2:
+                // Set active representation intro panel
                 c.SetActive(false);
                 mv.SetActive(false);
                 t.SetActive(true);
                 ftt.SetActive(false);
+                // Set Representation
                 TimelineRepresentation();
                 break;
             case 3:
+                // Set active representation intro panel
                 c.SetActive(false);
                 mv.SetActive(false);
                 t.SetActive(false);
                 ftt.SetActive(true);
+                // Set Representation
                 FourToThreeRepresentation();
                 break;
             default:
+                // Set active representation intro panel
                 c.SetActive(true);
                 ftt.SetActive(false);
                 mv.SetActive(false);
                 t.SetActive(false);
+                // Set Representation
                 ControlRepresentation();
                 break;
         }
