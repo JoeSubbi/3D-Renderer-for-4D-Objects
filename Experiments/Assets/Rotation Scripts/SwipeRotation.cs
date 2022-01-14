@@ -7,7 +7,7 @@ public class SwipeRotation : MonoBehaviour
     private Vector4 e1 = new Vector4(0, 0, 0, 0);
     private Vector4 e2 = new Vector4(0, 0, 0, 0);
     //public Rotor3 total = new Rotor3(1, 0, 0, 0);
-    public Rotor4 total = new Rotor4(1, 0, 0, 0, 0, 0, 0, 0);
+    public static Rotor4 total = new Rotor4(1, 0, 0, 0, 0, 0, 0, 0);
 
     private Renderer rend;
     public float speed = 50;

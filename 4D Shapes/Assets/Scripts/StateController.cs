@@ -89,7 +89,7 @@ public static class StateController
         shapes.Add(4, "Torus");
         shapes.Add(5, "Capsule");
         shapes.Add(6, "Capsule");
-        shapes.Add(7, "Pentachoron");
+        shapes.Add(7, "Tetrahedron");
     }
 
     // Shuffle order the representations will occur in

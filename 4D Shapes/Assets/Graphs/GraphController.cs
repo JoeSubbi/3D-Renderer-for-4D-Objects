@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using SimpleJSON;
+using System.IO;
+using System.Linq;
 
 public class GraphController : MonoBehaviour
 {
@@ -10,25 +13,91 @@ public class GraphController : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        // Read JSON file
+        // Set up JSON Node
+        JSONNode node;
+        //using (StreamReader r = new StreamReader(Path.Combine(StateController.Datapath, StateController.Filename)))
+        using (StreamReader r = new StreamReader("Assets/TestOutput/1.json"))
+        {
+            //read in the json
+            var json = r.ReadToEnd();
 
-        // set height of all result columns to 0
-        // dictionary of all result columns
+            //reformat the json into dictionary style convention
+            node = JSON.Parse(json);
+        }
 
-        // loop through each node[rep]
-            // loop through node[rep][shape_match]
-                // get node[test_id]
-                // if shape == shape
-                    // result columns[rep][shape_match] height +=  1 (33)
-            // loop through node[rep][rotation_match]
-                // get node[test_id]
-                // loop through each loaded rotation
-                    // if equal to selected rotation
-                        //result columns[rep][rotation_match] height +=  (1/6) (5.5)
-            // loop through node[rep][pose_match]
-                // get node[test_id]
-                // result columns[rep][pose_match] height += accuracy percentage
-            // result columns[rep][pose_match] height /= MAX_TESTS
+        // Loop through every representation
+        foreach (KeyValuePair<string, JSONNode> representation in node)
+        {
+            string representationObject;
+            
+            // Relate representation to barchart bar gameobjects
+            switch (representation.Key)
+            {
+                case "Multi-View":
+                    representationObject = "Multi";
+                    break;
+                case "Control":
+                    representationObject = "Control";
+                    break;
+                case "Timeline":
+                    representationObject = "Timeline";
+                    break;
+                case "4D-3D":
+                    representationObject = "3-4";
+                    break;
+                default:
+                    representationObject = "";
+                    break;
+            }
+
+            float shape_match = 0;
+            foreach (KeyValuePair<string, JSONNode> test in representation.Value["Shape_Match"])
+            {
+                if ( !test.Key.Contains("_Survey"))
+                {
+                    if (test.Value["Loaded Shape"] == test.Value["Selected Shape"])
+                    {
+                        shape_match++;
+                    }
+                }
+            }
+
+            float rotate_match = 0;
+            foreach (KeyValuePair<string, JSONNode> test in representation.Value["Rotation_Match"])
+            {
+                if (!test.Key.Contains("_Survey"))
+                {
+                    for (int i = 0; i < 6; i++)
+                    {
+                        if ((bool)test.Value["Loaded Rotation"][i] == (bool)test.Value["Selected Rotation"][i])
+                            rotate_match ++;
+                    }
+                }
+            }
+
+            float pose_match = 0;
+            foreach (KeyValuePair<string, JSONNode> test in representation.Value["Pose_Match"])
+            {
+                if (!test.Key.Contains("_Survey"))
+                {
+                    pose_match += ( test.Value["Accuracy"] / 3.14159f ) * 360;
+                }
+            }
+            pose_match /= 3;
+
+            // Set the heights of the bar charts
+            OptionResults.transform.Find(representationObject).gameObject
+                .transform.Find(representationObject + "-S").gameObject
+                .GetComponent<RectTransform>().sizeDelta = new Vector2(30, shape_match * 66); 
+            
+            OptionResults.transform.Find(representationObject).gameObject
+                .transform.Find(representationObject + "-R").gameObject
+                .GetComponent<RectTransform>().sizeDelta = new Vector2(30, rotate_match * 11f);
+            
+            PoseResults.transform.Find(representationObject).gameObject
+                .transform.Find(representationObject + "-P").gameObject
+                .GetComponent<RectTransform>().sizeDelta = new Vector2(60, pose_match * 33/18);
+        }
     }
 
 }

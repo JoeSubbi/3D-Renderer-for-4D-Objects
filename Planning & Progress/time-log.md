@@ -566,10 +566,12 @@
  - *0.5 hours* set up pop-up cards for each type of test
  - *1.5 hours* pause timer when pop up card is visible and activate/disable cards explaining the test at the beginning of each test
  - *1 hour* add time limit for each test, and set a different number of iterations for each type of test
+ - *1.5 hours* implement graph functionality based on JSON data
 
 TODO:
  - fix rotation... 
    - check every equation
- - between rep graph functionality
  - navigation to between rep graphs
+
+ - add patterns to multi-view and timeline objects if in effect
 
