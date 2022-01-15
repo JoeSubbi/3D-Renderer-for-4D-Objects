@@ -380,7 +380,13 @@ public static class StateController
         {
             // don't include sphere
             shape = shape_list[Random.Range(2, 11)];
-            texture = Random.Range(0, 4);
+
+            // Texture 3 is very messy on the tetrahedron, 
+            // and for the continuous rotations seems like a hinderance
+            if (shape != 7)
+                texture = Random.Range(1, 4);
+            else
+                texture = Random.Range(1, 3);
 
             rotations = new bool[] { false, false, false, false, false, false };
 
@@ -395,13 +401,10 @@ public static class StateController
             rotations[Random.Range(3, 6)] = Random.value >= 0.7;
             rotations[Random.Range(3, 6)] = true;
 
-            //if rotations = new bool[] { false, false, true, false, false, true };
-            //do something else: xy & zw rotation is broken...
-            if (rotations[5] && rotations[2])
-            {
-                rotations[2] = false;
-                rotations[Random.Range(0, 2)] = true;
-            }
+            //BROKEN ROTATIONS
+            //rotations = new bool[] { false, false, true, false, false, true };
+            //rotations = new bool[] { false, true, false, false, true, true };
+            //rotations = new bool[] { true, false, false, true, false, true };
         }
         // Pose Match
         else if (test == 2)

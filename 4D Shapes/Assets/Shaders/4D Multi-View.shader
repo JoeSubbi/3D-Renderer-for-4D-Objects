@@ -129,8 +129,6 @@
             float GetDist(float4 p){
                 p = p-float4(_X,_Y,_Z,_W);
 
-                //p.w *= -1;
-
                 //Split into 4 coordinates
                 float4 p1 = p-float4( SEP, SEP, 0, 0); // Top Left      Normal
                 float4 p2 = p-float4(-SEP, SEP, 0, 0); // Top Right     YW
@@ -296,8 +294,6 @@
             int GetMat(float4 p){
                 p = p-float4(_X,_Y,_Z,_W);
 
-                //p.w *= -1;
-
                 //Split into 4 coordinates
                 float4 p1 = p-float4( SEP, SEP, 0, 0); // Top Left      Normal
                 float4 p2 = p-float4(-SEP, SEP, 0, 0); // Top Right     YW
@@ -371,6 +367,7 @@
                         d = min(d, s2);
                         d = min(d, s3);
                         d = min(d, s4);
+
                 }
 
                 // Torus
@@ -422,6 +419,21 @@
                           d = min(d, s4);
                 }
 
+                //Pentachoron
+                if (_Shape == 7){
+                    float s = 0.5;
+                    
+                    float s1 = sdPentachoron(p1, s);
+                    float s2 = sdPentachoron(p2, s);
+                    float s3 = sdPentachoron(p3, s);
+                    float s4 = sdPentachoron(p4, s);
+                    
+                    float d = s1;
+                          d = min(d, s2);
+                          d = min(d, s3);
+                          d = min(d, s4);
+                }
+
                 // Sphere
                 float r = 0.75;
 
@@ -438,9 +450,9 @@
                 // ASSIGN MATERIAL
                 int m = 0;
                 if (d == s1)    m = 1;
-                if (d == s2)    m = 2;
-                if (d == s3)    m = 3;                
-                if (d == s4)    m = 4;
+                else if (d == s2)    m = 2;
+                else if (d == s3)    m = 3;                
+                else if (d == s4)    m = 4;
                 return m;
             }
 
@@ -487,7 +499,7 @@
                 else {
                     float4 p = ro + rd * d;
 
-                    float4 offset = p-float4(SEP+_X, SEP+_Y, _Z, 0);
+                    float4 offset = p-float4(_X+SEP, _Y+SEP, _Z, 0);
                     float3 colyzw = tex2D(_TexX, Rotate(offset).yzw).rgb; // X
                     float3 colzxw = tex2D(_TexY, Rotate(offset).zxw).rgb; // Y
                     float3 colxyw = tex2D(_TexZ, Rotate(offset).xyw).rgb; // Z
@@ -535,10 +547,80 @@
                         col.rgb = dif;
                     }
 
-                    int mat = GetMat(p);
-                    if (mat == 2) col.rgb = dif*float3(0,1,0);
-                    if (mat == 3) col.rgb = dif*float3(0,0,1);
-                    if (mat == 4) col.rgb = dif*float3(1,0,0);
+                    float2x2 mat = RotateMat(3.14159/2);
+                    int material = GetMat(p);
+                    if (material == 2) {
+                        
+                        if (_Effect == 2 || _Effect == 3){
+                            
+                            float4 offset = p-float4(_X-SEP, _Y+SEP, _Z, 0);
+                            offset.yw = RotMatMul(offset.yw, mat);
+                            float3 colyzw = tex2D(_TexX, Rotate(offset).yzw).rgb; // X
+                            float3 colzxw = tex2D(_TexY, Rotate(offset).zxw).rgb; // Y
+                            float3 colxyw = tex2D(_TexZ, Rotate(offset).xyw).rgb; // Z
+                            //float3 colxyz = tex2D(_TexW, Rotate(offset).xyz).rgb; // W
+
+                            col.rgb = clamp(                                  
+                                  colyzw * p.x *0.2 - colzxw * p.y *0.2 -
+                                  colxyw * p.z *0.2 - colxyz * p.w *0.2,
+                                  0, 1);
+                            col.rgb = (col.rgb/2) +0.5;
+                            col.rgb *= float3(0,1,0) * dif;
+                        }
+                        else{
+                            col.rgb = dif*float3(0,1,0);
+                        }
+                        
+                        //col.rgb = dif*float3(0,1,0);
+                    }
+                    if (material == 3) {
+                        
+                        if (_Effect == 2 || _Effect == 3){
+                            float4 offset = p-float4(_X-SEP, _Y-SEP, _Z, 0);
+                            offset.zw = RotMatMul(offset.zw, mat);
+                            float3 colyzw = tex2D(_TexX, Rotate(offset).yzw).rgb; // X
+                            float3 colzxw = tex2D(_TexY, Rotate(offset).zxw).rgb; // Y
+                            float3 colxyw = tex2D(_TexZ, Rotate(offset).xyw).rgb; // Z
+                            float3 colxyz = tex2D(_TexW, Rotate(offset).xyz).rgb; // W
+
+                            col.rgb = clamp(                                  
+                                  colyzw * p.x *0.2 - colzxw * p.y *0.2 -
+                                  colxyw * p.z *0.2 - colxyz * p.w *0.2,
+                                  0, 1);
+                            col.rgb = (col.rgb/2) +0.5;
+                            col.rgb *= float3(0.1,0.2,1) * dif;
+                        }
+                        else{
+                            col.rgb = dif*float3(0,0,1);
+                        }
+                        
+                        //col.rgb = dif*float3(0,0,1);
+                    }
+                    if (material == 4) 
+                    {
+                        
+                        if (_Effect == 2 || _Effect == 3){
+                            float4 offset = p-float4(_X+SEP, _Y-SEP, _Z, 0);
+                            offset.xw = RotMatMul(offset.xw, mat);
+                            float3 colyzw = tex2D(_TexX, Rotate(offset).yzw).rgb; // X
+                            float3 colzxw = tex2D(_TexY, Rotate(offset).zxw).rgb; // Y
+                            float3 colxyw = tex2D(_TexZ, Rotate(offset).xyw).rgb; // Z
+                            float3 colxyz = tex2D(_TexW, Rotate(offset).xyz).rgb; // W
+
+                            col.rgb = clamp(                                  
+                                  colyzw * p.x *0.2 - colzxw * p.y *0.2 -
+                                  colxyw * p.z *0.2 - colxyz * p.w *0.2,
+                                  0, 1);
+                            col.rgb = (col.rgb/3) +0.66;
+                            col.rgb *= float3(1,0,0) * dif;
+                        }
+                        else{
+                            col.rgb = dif*float3(1,0,0);
+                        }
+                        
+                        //col.rgb = dif*float3(1,0,0);
+                    }
+
                 }
 
                 return col;
