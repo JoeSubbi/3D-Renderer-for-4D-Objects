@@ -12,7 +12,7 @@
 * This timelog should be filled out honestly, regularly (daily) and accurately. It is for *your* benefit.
 * Follow the structure provided, grouping time by weeks.  Quantise time to the half hour.
 
-## Week 1
+## SEMESTER 1 Week 1
 
 ### 21 Sep 2021
 
@@ -553,6 +553,8 @@
  - *1 hour* improving graph scene to separate pose match
  - *0.5 hours* Weekly presentation
 
+## SEMESTER 2 Week 13
+
 ### 10 Jan 2021
 
  - *0.5 hours* adding timer
@@ -568,10 +570,17 @@
  - *1 hour* add time limit for each test, and set a different number of iterations for each type of test
  - *1.5 hours* implement graph functionality based on JSON data
 
+### 14 Jan 2021
+
+ - *3 hours* experimenting with pattern texture on all elements of multi-view
+   - very chaotic, but does provide extra information
+ - *0.5 hours* creating new logo
+
 TODO:
  - fix rotation... 
    - check every equation
  - navigation to between rep graphs
 
- - add patterns to multi-view and timeline objects if in effect
+ - add patterns to timeline objects if in effect
+ - practice scene with cube to test controls
 

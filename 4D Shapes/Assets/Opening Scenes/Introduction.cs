@@ -13,6 +13,7 @@ public class Introduction : MonoBehaviour
     private float max;
     private int direction;
     private float y = -10;
+    public float speed = 10;
 
     // Start is called before the first frame update
     void Start()
@@ -32,7 +33,7 @@ public class Introduction : MonoBehaviour
 
     void OnGUI()
     {
-        y -= Input.mouseScrollDelta.y * 20;
+        y -= Input.mouseScrollDelta.y * speed;
         if (intro_script.anchoredPosition.y > max && Input.mouseScrollDelta.y < 0)
             y = max;
         else if (intro_script.anchoredPosition.y < 10 && Input.mouseScrollDelta.y > 0)
