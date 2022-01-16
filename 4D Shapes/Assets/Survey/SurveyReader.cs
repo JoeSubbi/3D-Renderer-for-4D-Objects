@@ -21,6 +21,9 @@ public class SurveyReader : MonoBehaviour
     // Pose Match
     public Slider PoseConfidance;
 
+    // Next Scene button
+    public GameObject Button;
+
     void Awake()
     {
         // Set survey based on test
@@ -44,6 +47,11 @@ public class SurveyReader : MonoBehaviour
             default:
                 break;
         }
+
+        if (StateController.LoadGraphScene())
+            Button.GetComponent<SceneLoader>().next_scene = "Graph";
+        else
+            Button.GetComponent<SceneLoader>().next_scene = "Modular";
     }
 
     // Save the current content of the survey scene depending on what representation is used

@@ -138,7 +138,7 @@ public class ObjectController : MonoBehaviour
 
         // 4D Rotation
         // If the shape looks like a sphere but is not a sphere, consider not rotating it
-        if (StateController.shape == 2 || StateController.shape == 5)
+        if (StateController.shape == 2 || StateController.shape == 6)
             if (Random.value >= 0.3) a = 0;
 
         a1 = Random.Range(0, a);

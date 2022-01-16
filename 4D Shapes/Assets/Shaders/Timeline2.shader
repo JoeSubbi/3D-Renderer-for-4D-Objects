@@ -126,12 +126,15 @@
                     return sdTorus(p, 1, 0.5, 0.2);
                 }
                 if (_Shape == 5){
-                    return sdCapsuleW(p, 2, 0.6);
+                    return sdTorus(p, 0.8, 0, 0.4);
                 }
                 if (_Shape == 6){
-                    return sdCapsuleX(p, 2, 0.6);
+                    return sdCapsuleW(p, 2.5, 0.6);
                 }
                 if (_Shape == 7){
+                    return sdCapsuleX(p, 2.5, 0.6);
+                }
+                if (_Shape == 8){
                     return sdPentachoron(p, 0.5);
                 }
                 return sdSphere(p, 1);

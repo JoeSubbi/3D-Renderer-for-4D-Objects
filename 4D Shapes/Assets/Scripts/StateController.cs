@@ -84,12 +84,13 @@ public static class StateController
 
         shapes.Add(0, "Sphere");
         shapes.Add(1, "Box");
-        shapes.Add(2, "Cone");
-        shapes.Add(3, "Cone");
-        shapes.Add(4, "Torus");
-        shapes.Add(5, "Capsule");
-        shapes.Add(6, "Capsule");
-        shapes.Add(7, "Tetrahedron");
+        shapes.Add(2, "ConeW");
+        shapes.Add(3, "ConeY");
+        shapes.Add(4, "TorusR123");
+        shapes.Add(5, "TorusR13");
+        shapes.Add(6, "CapsuleW");
+        shapes.Add(7, "CapsuleX");
+        shapes.Add(8, "Tetrahedron");
     }
 
     // Shuffle order the representations will occur in
@@ -360,7 +361,7 @@ public static class StateController
         // As there are variations for Cone and Capsule, increase
         // chances of the other shapes (Torus is obvious so decrease that)
         // Refer to population of shapes dictionary
-        int[] shape_list = new int[11]{ 0,0, 1,1, 2,3, 4, 5,6, 7,7 };
+        int[] shape_list = new int[12]{ 0,0, 1,1, 2,3, 4,5, 6,7, 8,8 };
 
         // Time limit to complete task
         Timer.limit = TIME_LIMIT[test];
@@ -370,7 +371,7 @@ public static class StateController
         if (test == 0)
         {
             
-            shape = shape_list[Random.Range(0, 11)];
+            shape = shape_list[Random.Range(0, shape_list.Length)];
             texture = 0;
             ObjectController.w = Random.Range(-0.8f, 0.8f);
             ObjectController.SetRandMainObjectRotation();
@@ -379,7 +380,7 @@ public static class StateController
         else if (test == 1)
         {
             // don't include sphere
-            shape = shape_list[Random.Range(2, 11)];
+            shape = shape_list[Random.Range(2, shape_list.Length)];
 
             // Texture 3 is very messy on the tetrahedron, 
             // and for the continuous rotations seems like a hinderance
@@ -405,7 +406,7 @@ public static class StateController
         else if (test == 2)
         {
             // don't include sphere
-            shape = shape_list[Random.Range(2, 11)];
+            shape = shape_list[Random.Range(2, shape_list.Length)];
             texture = Random.Range(1, 4);
 
             ObjectController.SetRandMatchObjectRotation();
@@ -430,7 +431,7 @@ public static class StateController
     {
         // increment test number
         test_count++;
-        // if 10 it must move onto the next representation
+        // if 10 it must move onto the next test
         if (test_count >= MAX_TESTS[test])
         {
             test_count = 0;
@@ -447,6 +448,30 @@ public static class StateController
                     SceneManager.LoadScene("EndScene");
             }
         }
+    }
+
+    public static bool LoadGraphScene()
+    {
+        // if 10 it must move onto the next test
+        // if the next test is after the pose test, its time for
+        // the new representation
+        if (test_count + 1 >= MAX_TESTS[test] && test + 1 >= 3)
+            return true;
+        return false;
+    }
+
+    public static void SetPractice()
+    {
+        // shape = 1
+        // texture = 3
+        // disable all test features
+        // - shape/rotation options & match window
+        // representation = control
+        // set test/representation index to -1
+        // change submit button to "Begin"
+        // set timer to 60sec
+        // ENABLE LARGE CONTROLS PANEL
+        // DISBALE SMALL CONTROLS PANEL
     }
 
 }

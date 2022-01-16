@@ -196,8 +196,8 @@ quality of life polish
 
 Week 1 & Week 2  
  - [ ] Finish implementing test system
-   - [ ] graphs between representations
-   - [ ] fix rotor rotation
+   - [x] graphs between representations
+   - [x] fix rotor rotation
    - [x] add time limit
    - [x] angle between rotors
 

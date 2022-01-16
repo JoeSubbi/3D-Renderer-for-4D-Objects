@@ -208,7 +208,7 @@
                     return d;
                 }
 
-                // Torus
+                // Torus with Torus cross sections
                 if (_Shape == 4){
                     float r1 = 0.5;
                     float r2 = 0.2;
@@ -226,8 +226,26 @@
                     return d;
                 }
 
-                // Capsule along X
+                // Torus with Sphere cross sections
                 if (_Shape == 5){
+                    float r1 = 0.5;
+                    float r2 = 0;
+                    float r3 = 0.1;
+
+                    float s1 = sdTorus(p1, r1, r2, r3);
+                    float s2 = sdTorus(p2, r1, r2, r3);
+                    float s3 = sdTorus(p3, r1, r2, r3);
+                    float s4 = sdTorus(p4, r1, r2, r3);
+                    
+                    float d = s1;
+                          d = min(d, s2);
+                          d = min(d, s3);
+                          d = min(d, s4);
+                    return d;
+                }
+
+                // Capsule along X
+                if (_Shape == 6){
                     float l = 1.8;
                     float r = 0.5;
 
@@ -244,7 +262,7 @@
                 }
 
                 //Capsule along W
-                if (_Shape == 6){
+                if (_Shape == 7){
                     float l = 1.8;
                     float r = 0.5;
 
@@ -261,7 +279,7 @@
                 }
 
                 //Pentachoron
-                if (_Shape == 7){
+                if (_Shape == 8){
                     float s = 0.5;
                     
                     float s1 = sdPentachoron(p1, s);

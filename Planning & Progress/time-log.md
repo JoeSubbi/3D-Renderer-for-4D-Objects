@@ -576,11 +576,15 @@
    - very chaotic, but does provide extra information
  - *0.5 hours* creating new logo
 
+### 16 Jan 2021
+
+ - *1.5 hours* trying to find problem with rotors AND FIXING THEM
+   - Rotors seem to 100% work now!
+ - *0.5 hours* Added torus with spherical crossSection to 
+ - *1 hour* Navigation from Survey to Graph scene when new representation
+
 TODO:
- - fix rotation... 
-   - check every equation
- - navigation to between rep graphs
 
  - add patterns to timeline objects if in effect
- - practice scene with cube to test controls
+ - if non selected, save result and reload test - don't take to survey
 

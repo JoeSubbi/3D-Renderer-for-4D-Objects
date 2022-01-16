@@ -15,8 +15,7 @@ public class GraphController : MonoBehaviour
     {
         // Set up JSON Node
         JSONNode node;
-        //using (StreamReader r = new StreamReader(Path.Combine(StateController.Datapath, StateController.Filename)))
-        using (StreamReader r = new StreamReader("Assets/TestOutput/1.json"))
+        using (StreamReader r = new StreamReader(Path.Combine(StateController.Datapath, StateController.Filename)))
         {
             //read in the json
             var json = r.ReadToEnd();
@@ -55,10 +54,9 @@ public class GraphController : MonoBehaviour
             {
                 if ( !test.Key.Contains("_Survey"))
                 {
-                    if (test.Value["Loaded Shape"] == test.Value["Selected Shape"])
-                    {
+                    string shape = test.Value["Loaded Shape"];
+                    if (shape.Contains(test.Value["Selected Shape"]))
                         shape_match++;
-                    }
                 }
             }
 
@@ -79,9 +77,7 @@ public class GraphController : MonoBehaviour
             foreach (KeyValuePair<string, JSONNode> test in representation.Value["Pose_Match"])
             {
                 if (!test.Key.Contains("_Survey"))
-                {
                     pose_match += ( test.Value["Accuracy"] / 3.14159f ) * 360;
-                }
             }
             pose_match /= 3;
 
