@@ -56,7 +56,6 @@ public class Rotor4
     // Rotor4-Rotor4 Product
     public static Rotor4 operator *(Rotor4 p, Rotor4 q)
     {
-
         float a = p.a;
         float axy = p.bxy;
         float axz = p.bxz;
@@ -76,7 +75,7 @@ public class Rotor4
         float bxyzw = q.bxyzw;
 
         float e     = -axw * bxw   - axy * bxy   - axz * bxz   - ayw * byw   - ayz * byz   - azw * bzw   + axyzw * bxyzw + a * b;
-        float exy   = -axw * byw   + axy * b     - axz * byz   + ayw * bxw   + ayz * bxz   - azw * bxyzw - bxyzw * bzw   + a * bxy;
+        float exy   = -axw * byw   + axy * b     - axz * byz   + ayw * bxw   + ayz * bxz   - azw * bxyzw - axyzw * bzw   + a * bxy;
         float exz   = -axw * bzw   + axy * byz   + axz * b     + ayw * bxyzw - ayz * bxy   + azw * bxw   + axyzw * byw   + a * bxz;
         float exw   =  axw * b     + axy * byw   + axz * bzw   - ayw * bxy   - ayz * bxyzw - azw * bxz   - axyzw * byz   + a * bxw;
         float eyz   = -axw * bxyzw - axy * bxz   + axz * bxy   - ayw * bzw   + ayz * b     + azw * byw   - axyzw * bxw   + a * byz;

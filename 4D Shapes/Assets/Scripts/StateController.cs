@@ -400,11 +400,6 @@ public static class StateController
             // 2nd 4D rotation has 70% chance to occur
             rotations[Random.Range(3, 6)] = Random.value >= 0.7;
             rotations[Random.Range(3, 6)] = true;
-
-            //BROKEN ROTATIONS
-            //rotations = new bool[] { false, false, true, false, false, true };
-            //rotations = new bool[] { false, true, false, false, true, true };
-            //rotations = new bool[] { true, false, false, true, false, true };
         }
         // Pose Match
         else if (test == 2)
