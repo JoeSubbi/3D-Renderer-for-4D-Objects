@@ -23,6 +23,7 @@ public class ObjectController : MonoBehaviour
     public static Rotor4 mainRot  = new Rotor4(1, 0, 0, 0, 0, 0, 0, 0);
     public static Rotor4 matchRot = new Rotor4(1, 0, 0, 0, 0, 0, 0, 0);
     public static Rotor4 miniRot  = new Rotor4(1, 0, 0, 0, 0, 0, 0, 0);
+    public static Rotor4 initialMatch;
 
     // Start is called before the first frame update
     void Awake()
@@ -213,6 +214,7 @@ public class ObjectController : MonoBehaviour
         matchRot *= r;
         matchRot.Normalise();
         SetMatchObjectRotation();
+        initialMatch = matchRot;
     }
 
     // Set continuous rotation of the main object

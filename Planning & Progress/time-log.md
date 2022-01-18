@@ -593,7 +593,13 @@
 
  - *2.5 hours* finally finished getting pattern on timeline and multi-view correctly
    - was using W separation for ages rather than X separation between objects
+ - *1 hour* debugging why it was not saving correct file
 
+### 19 Jan 2021
+
+TODO: Test system
+
+<!--
 TODO:
-
  - if non selected, give option to select item in survey, then overwrite "None" with "{Shape}" or "Not Sure"
+-->

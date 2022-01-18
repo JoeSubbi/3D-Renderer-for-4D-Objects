@@ -239,8 +239,9 @@ public static class StateController
             node = JSON.Parse(json);
         }
 
+        Debug.Log(representations[rep_order[rep_index]]);
         // Get Representation
-        string rep_name = representations[rep_index];
+        string rep_name = representations[rep_order[rep_index]];
         // Get Test
         string test_name = tests[test];
         // Combine Test with iteration of test e.g ShapeMatch7
@@ -276,7 +277,7 @@ public static class StateController
         }
 
         // Get Representation
-        string rep_name = representations[rep_index];
+        string rep_name = representations[rep_order[rep_index]];
         // Get Test
         string test_name = tests[test];
         // Combine Test with iteration of test e.g ShapeMatch7
@@ -320,7 +321,7 @@ public static class StateController
         }
 
         // Get Representation
-        string rep_name = representations[rep_index];
+        string rep_name = representations[rep_order[rep_index]];
         // Get Test
         string test_name = tests[test];
         // Combine Test with iteration of test e.g ShapeMatch7
@@ -338,6 +339,7 @@ public static class StateController
         test_node.Add("Accuracy", Rotor4.Difference(ObjectController.mainRot, ObjectController.matchRot) );
         test_node.Add("Main Rotor", JSON.Parse(RotorToString(ObjectController.mainRot)) );
         test_node.Add("Match Rotor", JSON.Parse(RotorToString(ObjectController.matchRot)) );
+        test_node.Add("Initial Match Rotor", JSON.Parse(RotorToString(ObjectController.initialMatch)) );
 
         // Write out JSON with new test parameters and performance
         File.WriteAllText(Path.Combine(Datapath, Filename), node.ToString());

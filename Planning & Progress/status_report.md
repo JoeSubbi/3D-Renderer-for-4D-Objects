@@ -195,7 +195,7 @@ quality of life polish
 ### Semester 2
 
 Week 1 & Week 2  
- - [ ] Finish implementing test system
+ - [x] Finish implementing test system
    - [x] graphs between representations
    - [x] fix rotor rotation
    - [x] add time limit

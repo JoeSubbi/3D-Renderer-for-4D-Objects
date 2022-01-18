@@ -69,7 +69,7 @@ public class SurveyReader : MonoBehaviour
         }
 
         // Get Representation
-        string rep_name = StateController.representations[StateController.rep_index];
+        string rep_name = StateController.representations[StateController.rep_order[StateController.rep_index]];
         // Get Test
         string test_name = StateController.tests[StateController.test];
         // Combine Test with iteration of test e.g ShapeMatch7

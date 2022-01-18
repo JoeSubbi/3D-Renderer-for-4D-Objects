@@ -69,6 +69,8 @@ public class GraphController : MonoBehaviour
                     {
                         if ((bool)test.Value["Loaded Rotation"][i] == (bool)test.Value["Selected Rotation"][i])
                             rotate_match ++;
+                        else
+                            rotate_match --;
                     }
                 }
             }
@@ -92,7 +94,7 @@ public class GraphController : MonoBehaviour
             
             PoseResults.transform.Find(representationObject).gameObject
                 .transform.Find(representationObject + "-P").gameObject
-                .GetComponent<RectTransform>().sizeDelta = new Vector2(60, pose_match * 33/18);
+                .GetComponent<RectTransform>().sizeDelta = new Vector2(60, pose_match * 33/36);
         }
     }
 
