@@ -210,9 +210,9 @@
 
                 // Torus with Torus cross sections
                 if (_Shape == 4){
-                    float r1 = 0.5;
-                    float r2 = 0.2;
-                    float r3 = 0.1;
+                    float r1 = 0.6;
+                    float r2 = 0.25;
+                    float r3 = 0.15;
 
                     float s1 = sdTorus(p1, r1, r2, r3);
                     float s2 = sdTorus(p2, r1, r2, r3);
@@ -228,9 +228,9 @@
 
                 // Torus with Sphere cross sections
                 if (_Shape == 5){
-                    float r1 = 0.5;
+                    float r1 = 0.6;
                     float r2 = 0;
-                    float r3 = 0.1;
+                    float r3 = 0.4;
 
                     float s1 = sdTorus(p1, r1, r2, r3);
                     float s2 = sdTorus(p2, r1, r2, r3);
@@ -385,14 +385,30 @@
                         d = min(d, s2);
                         d = min(d, s3);
                         d = min(d, s4);
-
                 }
 
-                // Torus
+                // Torus with Torus cross sections
                 if (_Shape == 4){
-                    float r1 = 0.5;
-                    float r2 = 0.2;
-                    float r3 = 0.1;
+                    float r1 = 0.6;
+                    float r2 = 0.25;
+                    float r3 = 0.15;
+
+                    float s1 = sdTorus(p1, r1, r2, r3);
+                    float s2 = sdTorus(p2, r1, r2, r3);
+                    float s3 = sdTorus(p3, r1, r2, r3);
+                    float s4 = sdTorus(p4, r1, r2, r3);
+                    
+                    float d = s1;
+                          d = min(d, s2);
+                          d = min(d, s3);
+                          d = min(d, s4);
+                }
+
+                // Torus with Sphere cross sections
+                if (_Shape == 5){
+                    float r1 = 0.6;
+                    float r2 = 0;
+                    float r3 = 0.4;
 
                     float s1 = sdTorus(p1, r1, r2, r3);
                     float s2 = sdTorus(p2, r1, r2, r3);
@@ -406,7 +422,7 @@
                 }
 
                 // Capsule along X
-                if (_Shape == 5){
+                if (_Shape == 6){
                     float l = 1.8;
                     float r = 0.5;
 
@@ -422,7 +438,7 @@
                 }
 
                 //Capsule along W
-                if (_Shape == 6){
+                if (_Shape == 7){
                     float l = 1.8;
                     float r = 0.5;
 
@@ -438,7 +454,7 @@
                 }
 
                 //Pentachoron
-                if (_Shape == 7){
+                if (_Shape == 8){
                     float s = 0.5;
                     
                     float s1 = sdPentachoron(p1, s);
@@ -524,7 +540,7 @@
                     float3 colxyz = tex2D(_TexW, Rotate(offset).xyz).rgb; // W
 
                     float4 n = Rotate(GetNormal(p));
-                    if (_Shape == 7) n *= -1;
+                    if (_Shape == 8) n *= -1;
 
                     float dif = dot(GetNormal(p), 
                                     normalize(float3(1,2,3))) * .5 +.5;
@@ -571,72 +587,65 @@
                         
                         if (_Effect == 2 || _Effect == 3){
                             
+                            n = abs(n);
                             float4 offset = p-float4(_X-SEP, _Y+SEP, _Z, 0);
-                            offset.yw = RotMatMul(offset.yw, mat);
                             float3 colyzw = tex2D(_TexX, Rotate(offset).yzw).rgb; // X
                             float3 colzxw = tex2D(_TexY, Rotate(offset).zxw).rgb; // Y
                             float3 colxyw = tex2D(_TexZ, Rotate(offset).xyw).rgb; // Z
-                            //float3 colxyz = tex2D(_TexW, Rotate(offset).xyz).rgb; // W
-
+                            
                             col.rgb = clamp(                                  
-                                  colyzw * p.x *0.2 - colzxw * p.y *0.2 -
-                                  colxyw * p.z *0.2 - colxyz * p.w *0.2,
+                                  colyzw * n.x + colzxw * n.y +
+                                  colxyw * n.z,
                                   0, 1);
-                            col.rgb = (col.rgb/2) +0.5;
+                            col.rgb = (col.rgb/2)+0.5;
                             col.rgb *= float3(0,1,0) * dif;
                         }
                         else{
                             col.rgb = dif*float3(0,1,0);
                         }
-                        
-                        //col.rgb = dif*float3(0,1,0);
                     }
-                    if (material == 3) {
+                    else if (material == 3) {
                         
                         if (_Effect == 2 || _Effect == 3){
+                            
+                            n = abs(n);
                             float4 offset = p-float4(_X-SEP, _Y-SEP, _Z, 0);
-                            offset.zw = RotMatMul(offset.zw, mat);
                             float3 colyzw = tex2D(_TexX, Rotate(offset).yzw).rgb; // X
                             float3 colzxw = tex2D(_TexY, Rotate(offset).zxw).rgb; // Y
                             float3 colxyw = tex2D(_TexZ, Rotate(offset).xyw).rgb; // Z
-                            float3 colxyz = tex2D(_TexW, Rotate(offset).xyz).rgb; // W
 
                             col.rgb = clamp(                                  
-                                  colyzw * p.x *0.2 - colzxw * p.y *0.2 -
-                                  colxyw * p.z *0.2 - colxyz * p.w *0.2,
+                                  colyzw * n.x + colzxw * n.y +
+                                  colxyw * n.z,
                                   0, 1);
-                            col.rgb = (col.rgb/2) +0.5;
+                            col.rgb = (col.rgb/2)+0.5;
                             col.rgb *= float3(0.1,0.2,1) * dif;
                         }
                         else{
                             col.rgb = dif*float3(0,0,1);
                         }
-                        
-                        //col.rgb = dif*float3(0,0,1);
                     }
-                    if (material == 4) 
+                    else if (material == 4) 
                     {
                         
                         if (_Effect == 2 || _Effect == 3){
+                            
+                            n = abs(n);
                             float4 offset = p-float4(_X+SEP, _Y-SEP, _Z, 0);
-                            offset.xw = RotMatMul(offset.xw, mat);
                             float3 colyzw = tex2D(_TexX, Rotate(offset).yzw).rgb; // X
                             float3 colzxw = tex2D(_TexY, Rotate(offset).zxw).rgb; // Y
                             float3 colxyw = tex2D(_TexZ, Rotate(offset).xyw).rgb; // Z
-                            float3 colxyz = tex2D(_TexW, Rotate(offset).xyz).rgb; // W
 
                             col.rgb = clamp(                                  
-                                  colyzw * p.x *0.2 - colzxw * p.y *0.2 -
-                                  colxyw * p.z *0.2 - colxyz * p.w *0.2,
+                                  colyzw * n.x + colzxw * n.y +
+                                  colxyw * n.z,
                                   0, 1);
-                            col.rgb = (col.rgb/3) +0.66;
+                            col.rgb = (col.rgb/2)+0.5;
                             col.rgb *= float3(1,0,0) * dif;
                         }
                         else{
                             col.rgb = dif*float3(1,0,0);
                         }
-                        
-                        //col.rgb = dif*float3(1,0,0);
                     }
 
                 }

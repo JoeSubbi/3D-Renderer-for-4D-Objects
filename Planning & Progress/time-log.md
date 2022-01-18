@@ -582,9 +582,18 @@
    - Rotors seem to 100% work now!
  - *0.5 hours* Added torus with spherical crossSection to 
  - *1 hour* Navigation from Survey to Graph scene when new representation
+ - *2.5 hours* playing with patterns on multi-view and timeline (multi-view was actually wrong)
+
+### 17 Jan 2021
+
+ - *3 hours* playing around with patterns on multi-view and timeline trying to fit the patterns in the right place
+   - super slow as compiling the complex shaders takes ages
+
+### 18 Jan 2021
+
+ - *2.5 hours* finally finished getting pattern on timeline and multi-view correctly
+   - was using W separation for ages rather than X separation between objects
 
 TODO:
 
- - add patterns to timeline objects if in effect
- - if non selected, save result and reload test - don't take to survey
-
+ - if non selected, give option to select item in survey, then overwrite "None" with "{Shape}" or "Not Sure"

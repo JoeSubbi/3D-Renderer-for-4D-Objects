@@ -42,6 +42,10 @@
             #define MAX_STEPS 200
             #define MAX_DIST  100
             #define SURF_DIST 0.001
+            #define WSEP1 0.4
+            #define WSEP2 WSEP1 * 2
+            #define XSEP1 3
+            #define XSEP2 XSEP1 * 2
 
             struct appdata
             {
@@ -123,16 +127,16 @@
                     return sdConeY(p, 1, 2)-0.01;
                 }
                 if (_Shape == 4){
-                    return sdTorus(p, 1, 0.5, 0.2);
+                    return sdTorus(p, 0.8, 0.35, 0.15);
                 }
                 if (_Shape == 5){
-                    return sdTorus(p, 0.8, 0, 0.4);
+                    return sdTorus(p, 0.8, 0, 0.5);
                 }
                 if (_Shape == 6){
-                    return sdCapsuleW(p, 2.5, 0.6);
+                    return sdCapsuleW(p, 2, 0.6);
                 }
                 if (_Shape == 7){
-                    return sdCapsuleX(p, 2.5, 0.6);
+                    return sdCapsuleX(p, 2, 0.6);
                 }
                 if (_Shape == 8){
                     return sdPentachoron(p, 0.5);
@@ -143,16 +147,15 @@
             float GetDist(float4 p){
                 p -= float4(_X,_Y,_Z,_W);
                 
-                // 3D COMPONENT
                 float shape = Shape(p);
 
                 // Foward
-                float shape_f1 = Shape(p-float4(-3,0,0,-0.4));
-                float shape_f2 = Shape(p-float4(-6,0,0,-0.8));
+                float shape_f1 = Shape(p-float4(-XSEP1,0,0,-WSEP1));
+                float shape_f2 = Shape(p-float4(-XSEP2,0,0,-WSEP2));
 
                 // Backward
-                float shape_b1 = Shape(p-float4( 3,0,0, 0.4));
-                float shape_b2 = Shape(p-float4( 6,0,0, 0.8));
+                float shape_b1 = Shape(p-float4( XSEP1,0,0, WSEP1));
+                float shape_b2 = Shape(p-float4( XSEP2,0,0, WSEP2));
                 
                 // BUILD SCENE
                 float d = shape;
@@ -167,16 +170,15 @@
             int GetMat(float4 p){
                 p -= float4(_X,_Y,_Z,_W);
                 
-                // 3D COMPONENT
                 float shape = Shape(p);
 
                 // Foward
-                float shape_f1 = Shape(p-float4(-3,0,0,-0.4));
-                float shape_f2 = Shape(p-float4(-6,0,0,-0.8));
+                float shape_f1 = Shape(p-float4(-XSEP1,0,0,-WSEP1));
+                float shape_f2 = Shape(p-float4(-XSEP2,0,0,-WSEP2));
 
                 // Backward
-                float shape_b1 = Shape(p-float4( 3,0,0, 0.4));
-                float shape_b2 = Shape(p-float4( 6,0,0, 0.8));
+                float shape_b1 = Shape(p-float4( XSEP1,0,0, WSEP1));
+                float shape_b2 = Shape(p-float4( XSEP2,0,0, WSEP2));
                 
                 // BUILD SCENE
                 float d = shape;
@@ -187,8 +189,12 @@
 
                 int mat=0;
                 if (d == shape) mat=0;
-                if (d == shape_f1 || d == shape_f2) mat = 1;
-                if (d == shape_b1 || d == shape_b2) mat = 2;
+                //if (d == shape_f1 || d == shape_f2) mat = 1;
+                if (d == shape_f1) mat = 1;
+                if (d == shape_f2) mat = 2;
+                //if (d == shape_b1 || d == shape_b2) mat = 2;
+                if (d == shape_b1) mat = 3;
+                if (d == shape_b2) mat = 4;
                 return mat;
             }
 
@@ -242,7 +248,7 @@
                     float3 colxyz = tex2D(_TexW, Rotate(offset).xyz).rgb; // W
 
                     float4 n = Rotate(GetNormal(p));
-                    if (_Shape == 7) n *= -1;
+                    if (_Shape == 8) n *= -1;
 
                     float dif = dot(GetNormal(p), 
                                     normalize(float3(1,2,3))) * .5 +.5;
@@ -284,8 +290,92 @@
                     }
 
                     int mat = GetMat(p);
-                    if (mat == 1) col.rgb = dif * float3(0,0,1);
-                    if (mat == 2) col.rgb = dif * float3(1,0,0);
+                    n = abs(n);
+                    if (mat == 1) {
+                        if (_Effect == 2 || _Effect == 3){
+                            
+                            float4 offset = p-float4(_X-XSEP1, _Y, _Z, 0);
+                            float3 colyzw = tex2D(_TexX, Rotate(offset).yzw).rgb; // X
+                            float3 colzxw = tex2D(_TexY, Rotate(offset).zxw).rgb; // Y
+                            float3 colxyw = tex2D(_TexZ, Rotate(offset).xyw).rgb; // Z
+                        
+                            n = abs(n);
+                            col.rgb = clamp(                                  
+                                  colyzw * n.x + colzxw * n.y +
+                                  colxyw * n.z,
+                                  0, 1);
+                            col.rgb = (col.rgb/2) +0.5;
+                            
+                            col.rgb *= dif * float3(0,0,1);
+                        }
+                        else{
+                            col.rgb = dif * float3(0,0,1);
+                        }
+                    }
+                    else if (mat == 2) {
+                        if (_Effect == 2 || _Effect == 3){
+                            
+                            float4 offset = p-float4(_X-XSEP2, _Y, _Z, 0);
+                            float3 colyzw = tex2D(_TexX, Rotate(offset).yzw).rgb; // X
+                            float3 colzxw = tex2D(_TexY, Rotate(offset).zxw).rgb; // Y
+                            float3 colxyw = tex2D(_TexZ, Rotate(offset).xyw).rgb; // Z
+
+                            //n = abs(n);
+                            col.rgb = clamp(                                  
+                                  colyzw * n.x + colzxw * n.y +
+                                  colxyw * n.z,
+                                  0, 1);
+                            col.rgb = (col.rgb/2) +0.5;
+                            
+                            col.rgb *= dif * float3(0,0,1);
+                        }
+                        else{
+                            col.rgb = dif * float3(0,0,1);
+                        }
+                    }
+                    
+                    else if (mat == 3) {
+                        if (_Effect == 2 || _Effect == 3){
+                            
+                            float4 offset = p-float4(_X+XSEP1, _Y, _Z, 0);
+                            float3 colyzw = tex2D(_TexX, Rotate(offset).yzw).rgb; // X
+                            float3 colzxw = tex2D(_TexY, Rotate(offset).zxw).rgb; // Y
+                            float3 colxyw = tex2D(_TexZ, Rotate(offset).xyw).rgb; // Z
+
+                            //n = abs(n);
+                            col.rgb = clamp(                                  
+                                  colyzw * n.x + colzxw * n.y +
+                                  colxyw * n.z,
+                                  0, 1);
+                            col.rgb = (col.rgb/2) +0.5;
+                            
+                            col.rgb *= dif * float3(1,0,0);
+                        }
+                        else{
+                            col.rgb = dif * float3(1,0,0);
+                        }
+                    }
+                    else if (mat == 4) {
+                        if (_Effect == 2 || _Effect == 3){
+                            
+                            float4 offset = p-float4(_X+XSEP2, _Y, _Z, 0);
+                            float3 colyzw = tex2D(_TexX, Rotate(offset).yzw).rgb; // X
+                            float3 colzxw = tex2D(_TexY, Rotate(offset).zxw).rgb; // Y
+                            float3 colxyw = tex2D(_TexZ, Rotate(offset).xyw).rgb; // Z
+
+                            //n = abs(n);
+                            col.rgb = clamp(                                  
+                                  colyzw * n.x + colzxw * n.y +
+                                  colxyw * n.z,
+                                  0, 1);
+                            col.rgb = (col.rgb/2) +0.5;
+                            
+                            col.rgb *= dif * float3(1,0,0);
+                        }
+                        else{
+                            col.rgb = dif * float3(1,0,0);
+                        }
+                    }
                 }
 
                 return col;

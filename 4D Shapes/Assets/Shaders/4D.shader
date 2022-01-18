@@ -123,10 +123,10 @@
                     return sdConeY(p, 1, 2)-0.01;
                 }
                 if (_Shape == 4){
-                    return sdTorus(p, 0.8, 0.4, 0.1);
+                    return sdTorus(p, 0.8, 0.35, 0.15);
                 }
                 if (_Shape == 5){
-                    return sdTorus(p, 0.8, 0, 0.4);
+                    return sdTorus(p, 0.8, 0, 0.5);
                 }
                 if (_Shape == 6){
                     return sdCapsuleW(p, 2.5, 0.6);
@@ -235,7 +235,7 @@
                     float3 colxyz = tex2D(_TexW, Rotate(offset).xyz).rgb; // W
 
                     float4 n = Rotate(GetNormal(p));
-                    if (_Shape == 7) n *= -1;
+                    if (_Shape == 8) n *= -1;
 
                     float dif = dot(GetNormal(p), 
                                     normalize(float3(1,2,3))) * .5 +.5;
