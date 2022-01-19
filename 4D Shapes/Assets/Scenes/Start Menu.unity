@@ -565,6 +565,7 @@ MonoBehaviour:
   intro_script: {fileID: 2025304544}
   background: {fileID: 633475745}
   scroll_bar: {fileID: 670946923}
+  speed: 10
 --- !u!1001 &633475742
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1092,8 +1093,8 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: "Introduction\n\n4 Dimensional objects are something that cannot be created
     physically and cannot be visualised in their true state. The motivation for this
-    project is to further a persons understanding of high dimensional space and to
-    test their understanding of geometry that cannot be wholely visualised.\n\n\nThe
+    project is to try to further a persons understanding of higher dimensional space
+    and to test their understanding of geometry that cannot be wholely visualised.\n\nThe
     aim of this experiment is to investigate the different ways in which higher dimensional
     objects can be represented and to evaluate the effectiveness of these representations.\n\nWhilst
     developing the system I have become quite familiar with four dimensional objects.
@@ -1102,36 +1103,37 @@ MonoBehaviour:
     I need you as a participant, along side others with varying degrees of familiarity
     with geometry, to test out some of these representations to see if they really
     add any benefit to understanding higher dimensional shapes.\n\nThe experiment
-    will begin with a tutorial video, briefly explaining the fourth dimension, four
-    dimensional objects as well as how you manipulate these objects. The experiment
-    is then broken down into stages. Each stage will present you with a new representation.
-    There are four different representations in total and each will be explained
-    to you before you have to use them. One of the representations is designed as
-    a \"Control\" and does not provide any additional benefit. Each of the other
-    three representation provide a piece of extra information to help you further
-    understand the object you are handling. \n\tWhilst dealing with a representation
-    you will be presented with a series of repeated tests. As with the representation,
-    the rules of the test will be explained before they begin. Firstly you will have
-    to identify the shape on your screen. You will be allowed to play with this object
-    for a fixed amount of time, and you must submit your answer before the timer
-    runs out. The second test will ask you to identify all the ways in which an object
-    is rotating. It could be rotating on multiple axes. The final test will present
-    you with a shape that is randomly oriented exclusively along the four dimensional
-    planes of rotation (which will be described in the tutorial video). Your goal
-    is to then match the orientation of your object with the randomly oriented one.
-    After completing these tests for a representation, you will be shown a graph
-    depicting your average accuracy for each test. Once each test has been completed
-    for the representation, you will be progressed onto using another representation
-    where you will complete the same tests.\n\nCollected data includes: time to submit
-    and accuracy of submission, as well as the shape and rotations of any objects
-    on screen. After each test you will be asked to fill out a short survey describing
-    how you felt that specific test went as well as any other information you choose
-    to include.\n\nDuring the experiment I will leave you to complete the assigned
-    challenges, however if you have any questions, I will be close by.\n\nThis experiment
-    is not a test of your ability or intellect. It is purely an evaluation of the
-    effectiveness of each included way to represent four dimensional objects. Some
-    of these tasks can be very challenging, and you should not feel disheartened
-    if you find it so.\n\nYou as a participant may withdraw from the experiment at
+    will begin with a tutorial video, briefly explaining the fourth dimension, 4D
+    objects as well as how you manipulate these objects. After watching the tutorial
+    video you will be given a short amount of time to play around with a 4D Cube.
+    \n\tThe experiment is broken down into stages. Each stage will present you with
+    a new representation. There are 4 different representations in total and each
+    will be explained to you before you have to use them. One of the representations
+    is designed as a \"Control\" and does not provide any additional benefit. Each
+    of the other three representation provide a piece of extra information to help
+    you further understand the object you are handling. \n\tWhilst dealing with a
+    representation you will be presented with a series of repeated tests. As with
+    the representation, the rules of the test will be explained before they begin.
+    \n\tFirstly you will have to identify the shape on your screen. You will be allowed
+    to play with this object for a fixed amount of time, and you must submit your
+    answer before the timer runs out. \n\tThe second test will ask you to identify
+    all the ways in which an object is rotating. It could be rotating on multiple
+    axes. \n\tThe final test will present you with a second shape that is randomly
+    oriented exclusively along the 4 dimensional planes of rotation (which will be
+    described in the tutorial video). Your goal is to then match the orientation
+    of your object with the randomly oriented one. \n\tAfter completing these tests
+    for a representation, you will be shown a graph depicting your average accuracy
+    for each test. Once each test has been completed for the representation, you
+    will be progressed to using another representation where you will complete the
+    same tests again.\n\nCollected data includes the time to submit and accuracy
+    of submission, as well as the shape and rotations of any objects on screen. After
+    each test you will be asked to fill out a short survey describing how you felt
+    that specific test went.\n\nDuring the experiment I will leave you to complete
+    the assigned challenges, however if you have any questions, I will be close by.\n\nThis
+    experiment is not a test of your ability or intellect. It is an evaluation of
+    the effectiveness of each included way to represent four dimensional objects.
+    Some of these tasks can be very challenging, and you should not feel disheartened
+    if you find it so.\n\nAs a participant you may withdraw from the experiment at
     any time, even after it has began.\n\nBy clicking the continue button, you are
     consenting to the recording of your performance throughout these tests. If you
     decide that this data may not be used, whether that is after or during the experiment,
@@ -1141,7 +1143,8 @@ MonoBehaviour:
     any time before, during and after the experiment.\nYou are provided with a sheet
     of paper to draw or note anything down that you think may be of value.\n\nWhen
     you click the \"continue to tutorial\" button, a video will play that will try
-    to explain the concept of 4D shapes. You can pause this at any time to make notes."
+    to explain the concept of 4D shapes. You can pause and rewind this video at any
+    time."
 --- !u!222 &1546049401
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1265,7 +1268,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: -10}
-  m_SizeDelta: {x: 800, y: 1369.04}
+  m_SizeDelta: {x: 800, y: 1400}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &2025304545
 MonoBehaviour:

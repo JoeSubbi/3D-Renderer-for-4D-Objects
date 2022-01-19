@@ -13,6 +13,9 @@ public static class StateController
     public static string Datapath;
     public static string Filename;
 
+    // Practice
+    public static bool Practice = true;
+
     // Experiment State Properties
     /* Representations
      * 0 - Control
@@ -239,7 +242,6 @@ public static class StateController
             node = JSON.Parse(json);
         }
 
-        Debug.Log(representations[rep_order[rep_index]]);
         // Get Representation
         string rep_name = representations[rep_order[rep_index]];
         // Get Test
@@ -460,20 +462,6 @@ public static class StateController
         if (test_count + 1 >= MAX_TESTS[test] && test + 1 >= 3)
             return true;
         return false;
-    }
-
-    public static void SetPractice()
-    {
-        // shape = 1
-        // texture = 3
-        // disable all test features
-        // - shape/rotation options & match window
-        // representation = control
-        // set test/representation index to -1
-        // change submit button to "Begin"
-        // set timer to 60sec
-        // ENABLE LARGE CONTROLS PANEL
-        // DISBALE SMALL CONTROLS PANEL
     }
 
 }

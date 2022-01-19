@@ -33,9 +33,6 @@ public class ObjectController : MonoBehaviour
         matchRenderer = match.GetComponent<Renderer>();
 
         SetRandMatchObjectRotation();
-
-        // Set test parameters
-        StateController.SetupTest();
     }
 
     // Update is called once per frame
@@ -46,6 +43,9 @@ public class ObjectController : MonoBehaviour
 
         if (UIController.Rotation_Match)
             TimedRotor(StateController.rotations);
+        if ((!UIController.Shape_Match) && Input.GetKeyDown("space"))
+            SoftReset();
+
     }
 
     // Set shape
@@ -73,6 +73,19 @@ public class ObjectController : MonoBehaviour
         mainRot  = new Rotor4(1, 0, 0, 0, 0, 0, 0, 0);
         matchRot = new Rotor4(1, 0, 0, 0, 0, 0, 0, 0);
         miniRot  = new Rotor4(1, 0, 0, 0, 0, 0, 0, 0);
+
+        SetMainObjectRotation();
+        SetMatchObjectRotation();
+        SetMiniObjectRotation();
+    }
+
+    public static void SoftReset()
+    {
+        w = 0;
+
+        mainRot = new Rotor4(1, 0, 0, 0, 0, 0, 0, 0);
+        miniRot = new Rotor4(1, 0, 0, 0, 0, 0, 0, 0);
+        matchRot = initialMatch;
 
         SetMainObjectRotation();
         SetMatchObjectRotation();

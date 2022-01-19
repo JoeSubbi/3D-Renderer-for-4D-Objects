@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class UIController : MonoBehaviour
 {
     // Visualisations
-    public static bool Four_to_Three = true;
+    public static bool Four_to_Three = false;
     public static bool Multi_View = false;
     public static bool Timeline = false;
 
@@ -42,6 +42,7 @@ public class UIController : MonoBehaviour
     private RectTransform wSliderRect;
     public RectTransform axesPanel;
     public RectTransform submitButton;
+    public RectTransform continueButton;
 
     // Resolution of Screen
     private Vector2 resolution;
@@ -49,7 +50,8 @@ public class UIController : MonoBehaviour
     // Padding between UI elements and edge of screen
     private float buffer;
 
-    void Awake()
+
+    void Start()
     {
         // Get components
         canvas = GetComponent<RectTransform>();
@@ -68,10 +70,15 @@ public class UIController : MonoBehaviour
         StateController.ModularSceneCanvas = GetComponent<Canvas>();
 
         // Set method of rotation
-        SwitchRotation(grabBall);
+        //SwitchRotation(grabBall);
 
-        // Set up booleans describing which test is enabled
-        SetTest();
+        if (!StateController.Practice)
+        {
+            // Set test parameters
+            StateController.SetupTest();
+        }
+        else
+            SetPractice();
     }
 
     // Update is called once per frame
@@ -101,6 +108,12 @@ public class UIController : MonoBehaviour
         }
     }
     
+    // SetUpTest Externally
+    public void SetupTest()
+    {
+        StateController.SetupTest();
+    }
+
     // Set test booleans
     private void SetTest()
     {
@@ -395,6 +408,56 @@ public class UIController : MonoBehaviour
         }
     }
 
+    // Set up Practice
+    public void SetPractice()
+    {
+        // Set object properties
+        ObjectController.SetObjectShape(1);
+        ObjectController.SetObjectTexture(1);
+        ObjectController.Reset();
+
+        // Disable any UI elements related to the tests
+        Shape_Match = false;
+        Rotation_Match = false;
+        Pose_Match = false;
+
+        ShapeOptionContainer.SetActive(false);
+        RotationOptionContainer.SetActive(false);
+        MatchWindow.SetActive(false);
+
+        // Use the control representation
+        Timeline = false;
+        Multi_View = false;
+        Four_to_Three = false;
+        ControlRepresentation();
+        // Set time limit
+        Timer.limit = 60;
+        StateController.start_time = Time.time;
+        //Timer.pause = true;
+
+        // Enable/Disable Appropriate Buttons
+        submitButton.gameObject.SetActive(false);
+        continueButton.gameObject.SetActive(true);
+
+        // Enable/Disable Appropriate Control Info
+        transform.Find("Controls").gameObject.SetActive(false);
+        transform.Find("BigControls").gameObject.SetActive(true);
+
+        StateController.Practice = false;
+
+    }
+
+    public void EndPractice()
+    {
+        // Enable/Disable Appropriate Buttons
+        submitButton.gameObject.SetActive(true);
+        continueButton.gameObject.SetActive(false);
+
+        // Enable/Disable Appropriate Control Info
+        transform.Find("Controls").gameObject.SetActive(true);
+        transform.Find("BigControls").gameObject.SetActive(false);
+
+    }
 
     // Scale UI
     private void Rescale()
@@ -432,7 +495,14 @@ public class UIController : MonoBehaviour
 
         axesPanel.anchoredPosition = new Vector2(-2 * buffer, buffer);
 
-        submitButton.sizeDelta = new Vector2(1.6f * buffer, 0.8f * buffer);
-        submitButton.anchoredPosition = new Vector2(-1.8f * buffer, -buffer);
+        x = 1.6f * buffer;
+        y = 0.8f * buffer;
+        submitButton.sizeDelta = new Vector2(x, y);
+        continueButton.sizeDelta = new Vector2(x, y);
+
+        x = -1.8f * buffer;
+        y = -buffer;
+        submitButton.anchoredPosition = new Vector2(x, y);
+        continueButton.anchoredPosition = new Vector2(x, y);
     }
 }

@@ -597,6 +597,10 @@
 
 ### 19 Jan 2021
 
+ - *3.5 hours* Implemented Practice Scene
+ - *0.5 hours* Added Play Icon on play button for video
+ - *2.5 hours* Fixing bug where practice was skipped
+
 TODO: Test system
 
 <!--
