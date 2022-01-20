@@ -622,6 +622,7 @@
  - *1 hour* testing out itch.io - video player doesn't work...
  - *0.5 hours* weekly meeting
  - *0.5 hours* polishing - adding copy to clipboard and improving intro scene
+ - *1 hour* writing up rotor in python and creating data analysis jupyter notebook
 
 <!--
 TODO:
