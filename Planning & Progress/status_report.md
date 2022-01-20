@@ -202,10 +202,15 @@ Week 1 & Week 2
    - [x] angle between rotors
 
 Week 3   
- - [ ] Begin developing data analysis tools, most likely with a jupyter notebook
- - [ ] run some preliminary tests to decide if there is any data or visualisations I want to cut
+ - [x] Begin developing data analysis tools, most likely with a jupyter notebook
+ - [x] run some preliminary tests to decide if there is any data or visualisations I want to cut
  - [ ] begin dissertation
  - [ ] begin presentation
+ - [ ] Improve Tutorial Video
+ - [ ] Tests with itch.io hosting
+ - [ ] Add more data to json
+   - shape match rotor
+   - pose match best accuracy & timestamp
 
 Week 4 & Week 5 & Week 6  
  - [ ] Run experiments

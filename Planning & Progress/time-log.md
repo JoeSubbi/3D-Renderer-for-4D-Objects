@@ -604,7 +604,7 @@
  - *2.5 hours* Fixing bug where practice was skipped
  - *1.5 hours* Running practice with Sophie and making improvements
    - [x] reword some of intro
-   - not enough focus on object cross section in video
+   - [ ] not enough focus on object cross section in video
    - [x] space bar not explained in practice scene
    - [x] space bar removing selected option through automatic navigation 
    - [x] not enough time in practice (add 30 secs)
@@ -623,8 +623,17 @@
  - *0.5 hours* weekly meeting
  - *0.5 hours* polishing - adding copy to clipboard and improving intro scene
  - *1 hour* writing up rotor in python and creating data analysis jupyter notebook
+ - *1 hours* writing up data analysis tool
 
-<!--
 TODO:
- - if non selected, give option to select item in survey, then overwrite "None" with "{Shape}" or "Not Sure"
--->
+ 1. Read and reword Johns Intro 
+ 2. Better Tutorial Explanations of rotation
+   - 2 planes of rotation at once
+   - 2D vs 3D, 3D vs 4D rotations
+ 3. Variant of Program without Tutorial
+   - Test if WebGL can Email me with eduroam
+ 4. Test entire system properly
+ 5. Calender booking thing
+ 6. Advertise Experiment
+ 7. Start Dissertation
+ 8. Data Analysis
