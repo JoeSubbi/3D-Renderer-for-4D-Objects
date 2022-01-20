@@ -59,7 +59,7 @@ public class SwipeRotation : MonoBehaviour
         else onUIElement = false;
 
         Event e = Event.current;
-        if (e.isMouse && !onUIElement)
+        if (e.isMouse && !onUIElement && !UIController.Rotation_Match)
         {
             // Get Mouse Movement
             if (y_only)

@@ -600,8 +600,18 @@
  - *3.5 hours* Implemented Practice Scene
  - *0.5 hours* Added Play Icon on play button for video
  - *2.5 hours* Fixing bug where practice was skipped
-
-TODO: Test system
+ - *1.5 hours* Running practice with Sophie and making improvements
+   - [x] reword some of intro
+   - not enough focus on object cross section in video
+   - [x] space bar not explained in practice scene
+   - [x] space bar removing selected option through automatic navigation 
+   - [x] not enough time in practice (add 30 secs)
+   - [x] hard to understand 4D Multi-view description - add example
+   - [x] improve wording in rotation_match intro
+   - [ ] explain within plane 2D rotation
+   - [ ] better 2x 4D planes of rotation explanation
+   - [x] reword pose_match survey
+   - [x] disable movement in rotation_match
 
 <!--
 TODO:

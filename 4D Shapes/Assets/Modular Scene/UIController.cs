@@ -186,9 +186,15 @@ public class UIController : MonoBehaviour
             ShapeOptionContainer.SetActive(false);
         // rotation menu
         if (Rotation_Match)
+        {
             RotationOptionContainer.SetActive(true);
+            transform.Find("Controls").gameObject.SetActive(false);
+        }
         else
+        {
             RotationOptionContainer.SetActive(false);
+            transform.Find("Controls").gameObject.SetActive(true);
+        }
         // Randomly Posed Object window
         if (Pose_Match)
             MatchWindow.SetActive(true);
@@ -376,6 +382,9 @@ public class UIController : MonoBehaviour
                 t.SetActive(false);
                 ftt.SetActive(false);
                 // Set Representation
+                Four_to_Three = false;
+                Multi_View = true;
+                Timeline = false;
                 MultiViewRepresentation();
                 break;
             case 2:
@@ -385,6 +394,9 @@ public class UIController : MonoBehaviour
                 t.SetActive(true);
                 ftt.SetActive(false);
                 // Set Representation
+                Four_to_Three = false;
+                Multi_View = false;
+                Timeline = true;
                 TimelineRepresentation();
                 break;
             case 3:
@@ -394,6 +406,9 @@ public class UIController : MonoBehaviour
                 t.SetActive(false);
                 ftt.SetActive(true);
                 // Set Representation
+                Four_to_Three = true;
+                Multi_View = false;
+                Timeline = false;
                 FourToThreeRepresentation();
                 break;
             default:
@@ -403,6 +418,9 @@ public class UIController : MonoBehaviour
                 mv.SetActive(false);
                 t.SetActive(false);
                 // Set Representation
+                Four_to_Three = false;
+                Multi_View = false;
+                Timeline = false;
                 ControlRepresentation();
                 break;
         }
@@ -431,7 +449,7 @@ public class UIController : MonoBehaviour
         Four_to_Three = false;
         ControlRepresentation();
         // Set time limit
-        Timer.limit = 60;
+        Timer.limit = 90;
         StateController.start_time = Time.time;
         //Timer.pause = true;
 

@@ -971,7 +971,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -1569,7 +1569,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -1812,7 +1812,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -2117,7 +2117,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &639087933
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3477,7 +3477,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &971680748
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3668,7 +3668,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -3956,7 +3956,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -4039,7 +4039,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1105918790
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4909,16 +4909,16 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 'Use the [Left Mouse Button] to control 3 Dimensional Rotation (YZ, XZ
-    and XY)
+    and XY).
 
 
-    Hold the X, Y and Z Keys to restrict the plane of rotation to the
-    [Key] axis. e.g Holding the X Key will restrict the object to rotate around the
-    YZ plane.
+    Hold the X, Y and Z Keys to restrict the plane of rotation to
+    the [Key] axis. e.g Holding the X Key will restrict the object to rotate around
+    the YZ plane.
 
 
     Use the [Right Mouse Button] to control 4 Dimensional Rotation
-    (XW, YW and ZW)
+    (XW, YW and ZW).
 
 
     Hold the X, Y and Z Keys to limit the plane of rotation
@@ -4927,7 +4927,11 @@ MonoBehaviour:
 
 
     Unless you press the Z key, you will only
-    be able to interact with the X and Y directions of the screen'
+    be able to interact with the X and Y directions of the screen.
+
+
+    You can
+    use the [Space Bar] key to reset the orientation of the object.'
 --- !u!222 &1380987490
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5145,7 +5149,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 800, y: 200}
+  m_SizeDelta: {x: 850, y: 200}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1423285805
 MonoBehaviour:
@@ -5183,7 +5187,9 @@ MonoBehaviour:
     next series of tests will be a 3D cross section of a 4 dimensional object, accompanied
     with 3 more 4D objects. Each of the other 4D objects are rotated 90 degrees about
     each plane of rotation towards W. That is - each cross section of the 4D object
-    lets you view the same object from a different angle in 4D.
+    lets you view the same object from a different angle in 4D. Imagine a cylinder
+    in 3D. If you look at that from either side it will look like a rectangle or 
+    a circle. A 4D object will also look different from different angles.
 --- !u!222 &1423285806
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5446,7 +5452,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -6097,7 +6103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -6296,7 +6302,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -6562,7 +6568,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -7037,7 +7043,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -7157,7 +7163,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -7860,7 +7866,8 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "In this experiment you will be given a random 4D object, which will rotate
-    about 1 to 3 planes continuously. There may be up to 1 plane of 3D continuous
+    continuously. It will rotate about at least 1 plane of 4D rotation, but could
+    be as many as 3 planes of rotation. There may be up to 1 plane of 3D continuous
     rotation, and 2 planes of 4D continuous rotation at a given time. \n\nYou must
     select each plane of rotation you think the object is continuously rotating about,
     using the panel on the left hand side."
@@ -8300,7 +8307,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
