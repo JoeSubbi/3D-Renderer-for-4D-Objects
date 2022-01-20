@@ -11,6 +11,7 @@
   - [02/12/2021](#02122021)
   - [09/12/2021](#09122021)
   - [13/01/2021](#13012021)
+  - [20/01/2021](#20012021)
 
 # Semester 1
 ## 07/10/2021
@@ -83,3 +84,13 @@ experiments - try an online thing - webGL or screen share
 discussion of road map - make as much time as possible so i don't loose time with AEs etc
 
 length of test - 50minutes best for an hour slot - don't spend too much time in experiment
+
+## 20/01/2021
+
+don't email entire university
+
+port is blocked on eduroam - use copy to clipboard as backup
+
+have tutorial as youtube video if not working on itch.io
+
+proper analysis with some analysis tools before opening experiment applications

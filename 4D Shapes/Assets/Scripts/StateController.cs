@@ -71,6 +71,9 @@ public static class StateController
     // Externally set parameters
     public static Canvas ModularSceneCanvas;
 
+    // End of Experiment
+    public static bool end = false;
+
 
 
     // Populate dictionaries to easily convert IDs to JSON keys
@@ -388,7 +391,7 @@ public static class StateController
 
             // Texture 3 is very messy on the tetrahedron, 
             // and for the continuous rotations seems like a hinderance
-            if (shape != 7)
+            if (shape != 8)
                 texture = Random.Range(1, 4);
             else
                 texture = Random.Range(1, 3);
@@ -448,8 +451,7 @@ public static class StateController
 
                 // If every representation has been explored, show end screen
                 if (rep_index >= rep_order.Length)
-                    // Load thank you
-                    SceneManager.LoadScene("EndScene");
+                    end = true;
             }
         }
     }

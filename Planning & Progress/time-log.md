@@ -584,6 +584,8 @@
  - *1 hour* Navigation from Survey to Graph scene when new representation
  - *2.5 hours* playing with patterns on multi-view and timeline (multi-view was actually wrong)
 
+## Week 14
+
 ### 17 Jan 2021
 
  - *3 hours* playing around with patterns on multi-view and timeline trying to fit the patterns in the right place
@@ -612,6 +614,14 @@
    - [ ] better 2x 4D planes of rotation explanation
    - [x] reword pose_match survey
    - [x] disable movement in rotation_match
+
+### 20 Jan 2021
+
+ - *0.5 hours* Show graph at end, before thank you
+ - *2 hours* implementing saving results via email as WebGL does not have a file system, it is temporary
+ - *1 hour* testing out itch.io - video player doesn't work...
+ - *0.5 hours* weekly meeting
+ - *0.5 hours* polishing - adding copy to clipboard and improving intro scene
 
 <!--
 TODO:

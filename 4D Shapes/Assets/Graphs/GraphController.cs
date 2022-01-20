@@ -96,6 +96,11 @@ public class GraphController : MonoBehaviour
                 .transform.Find(representationObject + "-P").gameObject
                 .GetComponent<RectTransform>().sizeDelta = new Vector2(60, pose_match * 33/36);
         }
+
+        if (StateController.end)
+            transform.Find("Button").gameObject.GetComponent<SceneLoader>().next_scene = "EndScene";
+        else
+            transform.Find("Button").gameObject.GetComponent<SceneLoader>().next_scene = "Modular";
     }
 
 }

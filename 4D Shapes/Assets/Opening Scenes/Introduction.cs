@@ -19,27 +19,20 @@ public class Introduction : MonoBehaviour
     void Start()
     {
         canvas = GetComponent<RectTransform>();
-        if (intro_script.sizeDelta.y > canvas.sizeDelta.y)
-        {
-            max = intro_script.sizeDelta.y - canvas.sizeDelta.y/2;
-        }
+        max = intro_script.sizeDelta.y/2;
     }
 
     void Update()
     {
-        y = (scroll_bar.value * (max-10))-10;
-        intro_script.anchoredPosition = new Vector2(intro_script.anchoredPosition.x, y);
+        if (y / max != scroll_bar.value)
+            y = scroll_bar.value * max;
+        intro_script.anchoredPosition = new Vector2(intro_script.anchoredPosition.x, scroll_bar.value * max - 10);
     }
 
     void OnGUI()
     {
         y -= Input.mouseScrollDelta.y * speed;
-        if (intro_script.anchoredPosition.y > max && Input.mouseScrollDelta.y < 0)
-            y = max;
-        else if (intro_script.anchoredPosition.y < 10 && Input.mouseScrollDelta.y > 0)
-            y = 10;
-        scroll_bar.value = (y+10)/(max-10);
-
-        background.material.SetFloat("_W", 5.5f * (y / max)-3);
+        scroll_bar.value = y / max;
+        background.material.SetFloat("_W", 5.5f * (scroll_bar.value)-3);
     }
 }

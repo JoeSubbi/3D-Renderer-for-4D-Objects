@@ -204,10 +204,11 @@ Week 1 & Week 2
 Week 3   
  - [ ] Begin developing data analysis tools, most likely with a jupyter notebook
  - [ ] run some preliminary tests to decide if there is any data or visualisations I want to cut
+ - [ ] begin dissertation
+ - [ ] begin presentation
 
 Week 4 & Week 5 & Week 6  
  - [ ] Run experiments
- - [ ] Begin dissertation
  - [ ] Further develop data analysis tools
 
 Week 7  
