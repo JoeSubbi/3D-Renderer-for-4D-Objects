@@ -48,7 +48,6 @@ public class ObjectController : MonoBehaviour
             TimedRotor(StateController.rotations);
         if ((!UIController.Shape_Match) && Input.GetKeyDown("space"))
             SoftReset();
-
     }
 
     // Set shape

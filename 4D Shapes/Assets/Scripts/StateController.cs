@@ -264,8 +264,14 @@ public static class StateController
         test_node.Add("Texture", texture);
         test_node.Add("Time", end_time - start_time);
 
-        test_node.Add("InitialRotation", JSON.Parse(RotorToString(ObjectController.initialMain)) );
-        
+        test_node.Add("Initial Rotation", JSON.Parse(RotorToString(ObjectController.initialMain)) );
+        test_node.Add("Final Rotation", JSON.Parse(RotorToString(ObjectController.mainRot)) ); // to check if shape was rotated
+
+        if (ModularSceneCanvas.transform.Find("HyperPlanePosition").gameObject.GetComponent<Slider>().value != 0)
+            test_node.Add("Used W", true);
+        else
+            test_node.Add("Used W", false);
+
         // Write out JSON with new test parameters and performance
         File.WriteAllText(Path.Combine(Datapath, Filename), node.ToString());
     }
@@ -386,6 +392,7 @@ public static class StateController
             texture = 0;
             ObjectController.w = Random.Range(-0.8f, 0.8f);
             ObjectController.SetRandMainObjectRotation();
+            ModularSceneCanvas.transform.Find("HyperPlanePosition").gameObject.GetComponent<Slider>().value = 0;
         }
         // Rotation Match
         else if (test == 1)

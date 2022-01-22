@@ -254,24 +254,24 @@ Once again, the same principles apply to 4D
 ---
 
 <!-- Rotate along XZ -->
-If we rotate the cube along the XZ plane it can be considered a rotation within 2 dimensional space
+If we rotate the cube about the XY plane it can be considered a rotation within 2 dimensional space.
 
 Within 2 dimensional rotation, the object stays the same size and shape
 
 <!-- 3D rotation -->
-If we rotate the cube along either the XY or YZ planes, the object rotates within 3 dimensional space. Because of this, the 2D cross section changes size or shape
+If we rotate the cube along either the XZ or YZ planes, the object rotates within 3 dimensional space. Because of this, the 2D cross section changes size or shape
 
 <!-- 3D rotation of 4D object -->
 Rotating a 4D object in 3D space leads to the rotations we are familiar with
-3D space includes the XY, XZ and YZ planes
+3D space includes the XY, XZ and YZ planes. Like the 2D cross section rotating in 2D space, the object stays the same size and same shape.
 
 <!-- 4D rotation of a 4D object -->
-however when we rotate the hyper cube in 4D space, it changes size or shape in a very similar way as to the 2D cross section of a 3D cube rotating in 3D space
+however when we rotate the hyper cube in 4D space, for example on the XW plane, as we are only seeing a 3D cross section, it changes size and shape in a very similar way as to the 2D cross section of a 3D cube rotating in 3D space
 
 4 dimensional rotations include the XW, YW and ZW planes
 
 <!-- Multiple Rotations -->
-When rotating a 3D cube in 3D planes of rotation, the shape of the cross section changes further. The same concepts apply in 4D with multiple planes of 4D rotation
+When rotating a 3D cube in 3D planes of rotation, the shape of the cross section changes further. The same concepts apply in 4D when rotating about multiple planes of 4D rotation
 
 ## The Experiment
 <!--

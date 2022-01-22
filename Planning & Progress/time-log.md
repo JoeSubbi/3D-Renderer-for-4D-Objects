@@ -641,16 +641,26 @@
  - *0.5 hours* transferring questionnaire from google docs to google forms and creating a checklist for when running the experiment
  - *0.5 hours* rewriting script for tutorial covering rotation
 
+### 22 Jan 2022
+
+ - *1 hour* implementing working copy and paste input box using someone elses plugin
+ - *1.5 hours* testing copy and paste works
+   - copy and paste doesn't work in full screen for some reason
+   - email still doesn't work on eduroam - but i have copy/paste backup
+ - *2 hours* recording improvements to tutorial video
+ - *1 hour* editing
+ - *1 hour* handwriting captions
+
 TODO:
  1. ~~Read and reword Johns Intro~~
- 2. Better Tutorial Explanations of rotation
-   - 2 planes of rotation at once
-   - 2D vs 3D, 3D vs 4D rotations
+ 2. ~~Better Tutorial Explanations of rotation~~
+   - ~~2 planes of rotation at once~~
+   - ~~2D vs 3D, 3D vs 4D rotations~~
  3. ~~Variant of Program without Tutorial~~
    - ~~Test if WebGL can Email me with eduroam~~
-   - Test if NewGrounds can Email me with eduroam
-   - Get working WebGL copy to clipboard
- 4. Test entire system properly
+   - ~~Test if NewGrounds can Email me with eduroam~~
+   - ~~Get working WebGL copy to clipboard~~
+ 4. ~~Test entire system properly~~
  5. ~~Calender booking thing~~
  6. Advertise Experiment
  7. Start Dissertation

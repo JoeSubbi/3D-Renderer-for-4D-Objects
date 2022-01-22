@@ -4,13 +4,14 @@
 
  - [ ] Provide [Link to Google Form](https://forms.gle/MTmAE4m4N8t6KnAV7)
  - [ ] Fill out Google Form Before Test
- - [ ] Provide [Link to Video](https://www.youtube.com/)
+ - [ ] Provide [Link to Video](https://youtu.be/fhnhK7w67_s)
  - [ ] Watch Video
  - [ ] Fill out Google Form After Video
  - [ ] Provide [Link to Game](https://www.newgrounds.com/projects/games/1821075/preview) (Password: `l4-tesseract`)
  - [ ] Do Experiment
  - [ ] Fill out Google Form After Experiment
  - [ ] Check data has been sent
+ - [ ] Copy and Paste Data
 
 # Introduction
 
@@ -35,8 +36,12 @@
 
 # End
 
- - Thank you very much
+ - how was it?
  - data
    - if you decide you no longer want it to be used
    - can delete it
-
+ - any questions?
+ - contact details
+   - 2377990s@student.gla.ac.uk
+   - Teams chat
+ - thanks!
