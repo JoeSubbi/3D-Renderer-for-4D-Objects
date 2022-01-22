@@ -10,6 +10,8 @@ using System.Security.Cryptography.X509Certificates;
 using System.IO;
 using UnityEngine.UI;
 
+using UE.Email;
+
 public class SendData : MonoBehaviour
 {
 
@@ -20,6 +22,32 @@ public class SendData : MonoBehaviour
     }
 
     public void SendResults(string toAddress, string subjectText, string bodyText)
+    {
+        if (Application.platform == RuntimePlatform.WebGLPlayer)
+            Email.SendEmail("joe.subbiani@gmail.com",
+                            toAddress,
+                            subjectText,
+                            GetData(),
+                            "smtp.elasticemail.com",
+                            "joe.subbiani@gmail.com",
+                            "BFCAFF9594B5EB3990094F53A260D8F013DC");
+        else
+            SendEmail(toAddress, subjectText, bodyText);
+    }
+
+    public void CopyToClipboard()
+    {
+        string data = GetData();
+        GUIUtility.systemCopyBuffer = data;
+    }
+
+    public string GetData()
+    {
+        string path = Path.Combine(StateController.Datapath, StateController.Filename);
+        return new StreamReader(path).ReadToEnd();
+    }
+
+    private void SendEmail(string toAddress, string subjectText, string bodyText)
     {
         try
         {
@@ -48,14 +76,5 @@ public class SendData : MonoBehaviour
         {
             Debug.Log(e);
         }
-    }
-
-    public void CopyToClipboard()
-    {
-        string path = Path.Combine(StateController.Datapath, StateController.Filename);
-     
-        //Read the text from directly from the file
-        StreamReader reader = new StreamReader(path);
-        GUIUtility.systemCopyBuffer = reader.ReadToEnd();
     }
 }

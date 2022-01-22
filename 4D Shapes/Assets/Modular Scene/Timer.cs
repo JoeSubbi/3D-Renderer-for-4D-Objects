@@ -10,6 +10,7 @@ public class Timer : MonoBehaviour
     public GameObject TestIntro;
     public static bool running = false;
     public static float limit = 30;
+    public static float time;
 
     // Update is called once per frame
     void Update()
@@ -22,7 +23,7 @@ public class Timer : MonoBehaviour
         }
         else
         {
-            float time = limit - (Time.time - StateController.start_time);
+            time = limit - (Time.time - StateController.start_time);
             timer.text = FormatTime(time);
             TimeLimit(time);
             running = true;

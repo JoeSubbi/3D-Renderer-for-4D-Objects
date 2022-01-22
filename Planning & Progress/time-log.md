@@ -523,11 +523,11 @@
    - Solved issue with order of initialisation for StaticController
    - Made 4D-3D counterpart also randomly rotated with main object
 
-### 01 Jan 2021
+### 01 Jan 2022
 
  - *3 hours* implementing progression from each test to each representation
 
-### 02 Jan 2021
+### 02 Jan 2022
 
  - *0.5 hours* implemented a better random rotation for rotation match
    - 60% chance of 3D rotation
@@ -539,29 +539,29 @@
  - *1 hour* testing and improving
  - *1.5 hours* build project, fix issues with persistent data path + filename not combining properly
 
-### 03 Jan 2021
+### 03 Jan 2022
 
  - *0.5 hours* implemented timer
    - if new representation it resets the timer when they finish reading the description of the representation
 
-### 07 Jan 2021
+### 07 Jan 2022
 
  - *1 hour* creating graph scene
 
-### 08 Jan 2021
+### 08 Jan 2022
 
  - *1 hour* improving graph scene to separate pose match
  - *0.5 hours* Weekly presentation
 
 ## SEMESTER 2 Week 13
 
-### 10 Jan 2021
+### 10 Jan 2022
 
  - *0.5 hours* adding timer
  - *1 hour* running tests
  - *1 hour* polishing various components
 
-### 13 Jan 2021
+### 13 Jan 2022
 
  - *0.5 hours* weekly meeting
  - *0.5 hours* working angle between rotors
@@ -570,13 +570,13 @@
  - *1 hour* add time limit for each test, and set a different number of iterations for each type of test
  - *1.5 hours* implement graph functionality based on JSON data
 
-### 14 Jan 2021
+### 14 Jan 2022
 
  - *3 hours* experimenting with pattern texture on all elements of multi-view
    - very chaotic, but does provide extra information
  - *0.5 hours* creating new logo
 
-### 16 Jan 2021
+### 16 Jan 2022
 
  - *1.5 hours* trying to find problem with rotors AND FIXING THEM
    - Rotors seem to 100% work now!
@@ -586,18 +586,18 @@
 
 ## Week 14
 
-### 17 Jan 2021
+### 17 Jan 2022
 
  - *3 hours* playing around with patterns on multi-view and timeline trying to fit the patterns in the right place
    - super slow as compiling the complex shaders takes ages
 
-### 18 Jan 2021
+### 18 Jan 2022
 
  - *2.5 hours* finally finished getting pattern on timeline and multi-view correctly
    - was using W separation for ages rather than X separation between objects
  - *1 hour* debugging why it was not saving correct file
 
-### 19 Jan 2021
+### 19 Jan 2022
 
  - *3.5 hours* Implemented Practice Scene
  - *0.5 hours* Added Play Icon on play button for video
@@ -615,7 +615,7 @@
    - [x] reword pose_match survey
    - [x] disable movement in rotation_match
 
-### 20 Jan 2021
+### 20 Jan 2022
 
  - *0.5 hours* Show graph at end, before thank you
  - *2 hours* implementing saving results via email as WebGL does not have a file system, it is temporary
@@ -625,15 +625,33 @@
  - *1 hour* writing up rotor in python and creating data analysis jupyter notebook
  - *1 hours* writing up data analysis tool
 
+### 21 Jan 2022
+
+ - *1.5 hour* Adding data to be saved and creating a variant of the app without the tutorial video
+ - *0.5 hours* setting up calender booking with *calendly*
+ - *1 hour* testing WebGL without video
+   - works great except... 
+   - cannot copy to clipboard
+   - cannot email
+   - Overlapping UI Element in Graph scene - fixed
+ - *1 hour* alternative WebGL specific emailing
+   - still does not work with itch.io
+ - *1.5 hours* researching other places to host game
+   - new grounds - email works
+ - *0.5 hours* transferring questionnaire from google docs to google forms and creating a checklist for when running the experiment
+ - *0.5 hours* rewriting script for tutorial covering rotation
+
 TODO:
- 1. Read and reword Johns Intro 
+ 1. ~~Read and reword Johns Intro~~
  2. Better Tutorial Explanations of rotation
    - 2 planes of rotation at once
    - 2D vs 3D, 3D vs 4D rotations
- 3. Variant of Program without Tutorial
-   - Test if WebGL can Email me with eduroam
+ 3. ~~Variant of Program without Tutorial~~
+   - ~~Test if WebGL can Email me with eduroam~~
+   - Test if NewGrounds can Email me with eduroam
+   - Get working WebGL copy to clipboard
  4. Test entire system properly
- 5. Calender booking thing
+ 5. ~~Calender booking thing~~
  6. Advertise Experiment
  7. Start Dissertation
  8. Data Analysis

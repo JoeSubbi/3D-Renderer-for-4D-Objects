@@ -263,6 +263,8 @@ public static class StateController
 
         test_node.Add("Texture", texture);
         test_node.Add("Time", end_time - start_time);
+
+        test_node.Add("InitialRotation", JSON.Parse(RotorToString(ObjectController.initialMain)) );
         
         // Write out JSON with new test parameters and performance
         File.WriteAllText(Path.Combine(Datapath, Filename), node.ToString());
@@ -345,6 +347,8 @@ public static class StateController
         test_node.Add("Main Rotor", JSON.Parse(RotorToString(ObjectController.mainRot)) );
         test_node.Add("Match Rotor", JSON.Parse(RotorToString(ObjectController.matchRot)) );
         test_node.Add("Initial Match Rotor", JSON.Parse(RotorToString(ObjectController.initialMatch)) );
+        test_node.Add("Best Accuracy", ObjectController.bestAccuracy);
+        test_node.Add("Best Accuracy Time", ObjectController.timeStamp);
 
         // Write out JSON with new test parameters and performance
         File.WriteAllText(Path.Combine(Datapath, Filename), node.ToString());

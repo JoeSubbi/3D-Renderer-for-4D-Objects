@@ -24,6 +24,9 @@ public class ObjectController : MonoBehaviour
     public static Rotor4 matchRot = new Rotor4(1, 0, 0, 0, 0, 0, 0, 0);
     public static Rotor4 miniRot  = new Rotor4(1, 0, 0, 0, 0, 0, 0, 0);
     public static Rotor4 initialMatch;
+    public static Rotor4 initialMain = new Rotor4(1, 0, 0, 0, 0, 0, 0, 0);
+    public static float bestAccuracy = 10;
+    public static float timeStamp = 0;
 
     // Start is called before the first frame update
     void Awake()
@@ -106,6 +109,13 @@ public class ObjectController : MonoBehaviour
     public static void SetMatchObjectRotation()
     {
         SetObjectRotation(matchRenderer, matchRot);
+        float accuracy = Rotor4.Difference(mainRot, matchRot);
+
+        if (accuracy < bestAccuracy)
+        {
+            timeStamp = Timer.time;
+            bestAccuracy = accuracy;
+        }
     }
 
     private static void SetObjectRotation(Renderer rend, Rotor4 rot)
@@ -176,7 +186,8 @@ public class ObjectController : MonoBehaviour
 
         mainRot *= r;
         mainRot.Normalise();
-        SetMainObjectRotation(); 
+        SetMainObjectRotation();
+        initialMain = mainRot;
 
         // 4D-3D
         e1 = new Vector4(0, 1, 0, 0);

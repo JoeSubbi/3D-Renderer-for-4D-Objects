@@ -263,8 +263,9 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1577585400}
+  - {fileID: 1071298291}
   m_Father: {fileID: 2025304544}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -374,7 +375,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 699483d537b77854cb51395f3f5b7fe7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  next_scene: Video
+  next_scene: Modular
 --- !u!1 &355715681
 GameObject:
   m_ObjectHideFlags: 0
@@ -566,6 +567,84 @@ MonoBehaviour:
   background: {fileID: 633475745}
   scroll_bar: {fileID: 670946923}
   speed: 2
+--- !u!1 &609902901
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 609902902}
+  - component: {fileID: 609902904}
+  - component: {fileID: 609902903}
+  m_Layer: 5
+  m_Name: Tutorial Video
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &609902902
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 609902901}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1546049399}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 0, y: -549.1}
+  m_SizeDelta: {x: 760, y: 100}
+  m_Pivot: {x: 0, y: 1}
+--- !u!114 &609902903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 609902901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 22
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 2
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: Click the "Continue to Tutorial" button to start the tutorial.
+--- !u!222 &609902904
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 609902901}
+  m_CullTransparentMesh: 0
 --- !u!1001 &633475742
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -890,6 +969,167 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 910769964}
   m_CullTransparentMesh: 0
+--- !u!1 &1071298290
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1071298291}
+  - component: {fileID: 1071298293}
+  - component: {fileID: 1071298292}
+  m_Layer: 5
+  m_Name: Practice
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1071298291
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1071298290}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 309953738}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1071298292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1071298290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 20
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 2
+    m_MaxSize: 40
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: Continue to Pratice
+--- !u!222 &1071298293
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1071298290}
+  m_CullTransparentMesh: 0
+--- !u!1 &1145913753
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1145913754}
+  - component: {fileID: 1145913756}
+  - component: {fileID: 1145913755}
+  m_Layer: 5
+  m_Name: Practice
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1145913754
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1145913753}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1546049399}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 0, y: -549.1}
+  m_SizeDelta: {x: 760, y: 100}
+  m_Pivot: {x: 0, y: 1}
+--- !u!114 &1145913755
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1145913753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 22
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 2
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 'Please watch the video describing 4D Shapes before continuing.
+
+
+    Once
+    you have completed the Video, Click the "Continue to Practice" button to start
+    the tutorial.'
+--- !u!222 &1145913756
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1145913753}
+  m_CullTransparentMesh: 0
 --- !u!1 &1188550542
 GameObject:
   m_ObjectHideFlags: 0
@@ -1022,6 +1262,84 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 5}
   m_SizeDelta: {x: 0, y: -20}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1441073378
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1441073379}
+  - component: {fileID: 1441073381}
+  - component: {fileID: 1441073380}
+  m_Layer: 5
+  m_Name: Title
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1441073379
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1441073378}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2025304544}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 20, y: -20}
+  m_SizeDelta: {x: -40, y: 60}
+  m_Pivot: {x: 0, y: 1}
+--- !u!114 &1441073380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1441073378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 36
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 3
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: Experiment Briefing
+--- !u!222 &1441073381
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1441073378}
+  m_CullTransparentMesh: 0
 --- !u!1 &1546049398
 GameObject:
   m_ObjectHideFlags: 0
@@ -1050,14 +1368,16 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 609902902}
+  - {fileID: 1145913754}
   m_Father: {fileID: 2025304544}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 20, y: -20}
-  m_SizeDelta: {x: -40, y: -40}
+  m_AnchoredPosition: {x: 20, y: -80}
+  m_SizeDelta: {x: -40, y: -99.99997}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1546049400
 MonoBehaviour:
@@ -1080,7 +1400,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 18
+    m_FontSize: 22
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -1091,41 +1411,33 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Introduction\n\n4 Dimensional objects are something that cannot be created
-    physically and cannot be visualised in their true state. The motivation for this
-    project is to try to further a persons understanding of higher dimensional space
-    and to test their understanding of geometry that cannot be wholely visualised.\n\nThe
-    aim of this experiment is to investigate the different ways in which higher dimensional
-    objects can be represented and to evaluate the effectiveness of these representations.\n\nThe
+  m_Text: 'The motivation for this project is to try to further understanding of
+    4D space and to test understanding of geometry that cannot be directly visualised.
+
+
+    The
     experiment will begin with a tutorial video, briefly explaining the fourth dimension,
-    4D objects as well as how you manipulate these objects. After watching the tutorial
-    video you will be given a short amount of time to play around with a 4D Cube,
-    before the tests begin.\n\tThere are 4 different representations in total and
-    each will be explained to you before you have to use them. One of the representations
-    is designed as a \"Control\" and does not provide any additional benefit. Each
-    of the other three representation provide a piece of extra information to help
-    you further understand the object you are handling. \n\tWhilst dealing with a
-    representation you will be presented with a series of repeated tests. As with
-    the representation, the rules of the test will be explained before it begins. 
-    \n\tAfter completing these tests for each representation, you will be shown a
-    graph depicting your accuracy for each test.\n\nCollected data includes the time
-    to submit and accuracy of submission, as well as the shape and rotations of any
-    objects on screen. After each test you will be asked to fill out a short survey
-    describing how you felt that specific test went.\n\nThis experiment is not a
-    test of your ability or intellect. It is an evaluation of the effectiveness of
-    each included way to represent four dimensional objects. Some of these tasks
-    can be very challenging, and you should not feel disheartened if you find it
-    so.\n\nAs a participant you may withdraw from the experiment at any time, even
-    after it has began.\n\nBy clicking the continue button, you are consenting to
-    the recording of your performance throughout these tests. If you decide that
-    this data may not be used, whether that is after or during the experiment, the
-    recorded data will be deleted. After the experiment you will be asked to sign
-    a short form providing your explicit consent to use and analyse your data alongside
-    that of other participants.\n\nYou are allowed to ask questions at any time before,
-    during and after the experiment.\nYou are provided with a sheet of paper to draw
-    or note anything down that you think may be of value.\n\nWhen you click the \"continue
-    to tutorial\" button, a video will play that will try to explain the concept
-    of 4D shapes. You can pause and rewind this video at any time."
+    and show you how to manipulate these objects. After watching the tutorial video
+    you will be given a short demo to play with a 4D Cube. The experiment is broken
+    down into stages. Each stage will be explained to you before you start it.
+
+
+    Collected
+    data includes the time to submit and accuracy of submission, as well as the shape
+    and rotations of any objects on screen. After each test you will be asked to
+    fill out a short survey.
+
+
+    You may withdraw from the experiment at any time.
+    You may ask questions at any time. This experiment is not a test of your ability
+    or intellect. Some of these tasks can be challenging, and you should not feel
+    disheartened if you find it so.
+
+
+    By clicking the continue button, you are
+    consenting to the recording of your performance. If you decide that this data
+    may not be used, your data will be deleted. After the experiment you will be
+    asked to provide explicit consent to use and analyse your data.'
 --- !u!222 &1546049401
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1146,12 +1458,12 @@ GameObject:
   - component: {fileID: 1577585402}
   - component: {fileID: 1577585401}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Tutorial
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1577585400
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1241,6 +1553,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 1441073379}
   - {fileID: 1546049399}
   - {fileID: 309953738}
   m_Father: {fileID: 440251271}
@@ -1249,7 +1562,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: -10}
-  m_SizeDelta: {x: 800, y: 970}
+  m_SizeDelta: {x: 800, y: 750}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &2025304545
 MonoBehaviour:

@@ -1,5 +1,8 @@
 - [Format](#format)
 - [Opening (Intro and Briefing)](#opening-intro-and-briefing)
+  - [Draft 1](#draft-1)
+  - [Draft 2](#draft-2)
+  - [Draft 3](#draft-3)
 - [Survey 1](#survey-1)
 - [Introduction](#introduction)
   - [4D Shapes](#4d-shapes)
@@ -50,6 +53,7 @@ Introduction
 -	seek explicit consent
 -	allow the participant to ask questions
 
+## Draft 1
 <!-- state the general aim of the experiment -->
 4 Dimensional objects are something that cannot be created physically and cannot be visualised in their true state. The motivation for this project is to further a persons understanding of high dimensional space and to test their understanding of geometry that cannot be wholely visualised.
 
@@ -98,6 +102,47 @@ You can contact me at:
   joe.subbiani@gmail.com or 2377990s@student.gla.ac.uk
 
 Thank you for your participation
+
+## Draft 2
+
+Introduction
+
+4 Dimensional objects are something that cannot be created physically and cannot be visualised in their true state. The motivation for this project is to try to further a persons understanding of higher dimensional space and to test their understanding of geometry that cannot be wholely visualised.
+
+The aim of this experiment is to investigate the different ways in which higher dimensional objects can be represented and to evaluate the effectiveness of these representations.
+
+The experiment will begin with a tutorial video, briefly explaining the fourth dimension, 4D objects as well as how you manipulate these objects. After watching the tutorial video you will be given a short amount of time to play around with a 4D Cube, before the tests begin.
+There are 4 different representations in total and each will be explained to you before you have to use them. One of the representations is designed as a "Control" and does not provide any additional benefit. Each of the other three representation provide a piece of extra information to help you further understand the object you are handling. 
+Whilst dealing with a representation you will be presented with a series of repeated tests. As with the representation, the rules of the test will be explained before it begins.  
+After completing these tests for each representation, you will be shown a graph depicting your accuracy for each test.
+
+Collected data includes the time to submit and accuracy of submission, as well as the shape and rotations of any objects on screen. After each test you will be asked to fill out a short survey describing how you felt that specific test went.
+
+This experiment is not a test of your ability or intellect. It is an evaluation of the effectiveness of each included way to represent four dimensional objects. Some of these tasks can be very challenging, and you should not feel disheartened if you find it so.
+
+As a participant you may withdraw from the experiment at any time, even after it has began.
+
+By clicking the continue button, you are consenting to the recording of your performance throughout these tests. If you decide that this data may not be used, whether that is after or during the experiment, the recorded data will be deleted. After the experiment you will be asked to sign a short form providing your explicit consent to use and analyse your data alongside that of other participants.
+
+You are allowed to ask questions at any time before, during and after the experiment.
+You are provided with a sheet of paper to draw or note anything down that you think may be of value.
+
+When you click the "continue to tutorial" button, a video will play that will try to explain the concept of 4D shapes. You can pause and rewind this video at any time.
+
+
+## Draft 3
+
+The motivation for this project is to try to further understanding of 4D space and to test understanding of geometry that cannot be directly visualised.
+
+The experiment will begin with a tutorial video, briefly explaining the fourth dimension, and show you how to manipulate these objects. After watching the tutorial video you will be given a short demo to play with a 4D Cube. The experiment is broken down into stages. Each stage will be explained to you before you start it.
+
+Collected data includes the time to submit and accuracy of submission, as well as the shape and rotations of any objects on screen. After each test you will be asked to fill out a short survey.
+
+You may withdraw from the experiment at any time. You may ask questions at any time. This experiment is not a test of your ability or intellect. Some of these tasks can be challenging, and you should not feel disheartened if you find it so.
+
+By clicking the continue button, you are consenting to the recording of your performance. If you decide that this data may not be used, your data will be deleted. After the experiment you will be asked to provide explicit consent to use and analyse your data.
+
+Click the "continue to tutorial" button to start the tutorial.
 
 # Survey 1
 <!-- 
@@ -185,24 +230,48 @@ Whilst you should think of rotation in terms of rotating about a plane, it can h
 
 Lets look at the rotation of a cube.
 
-<!-- Rotating 3D Cube -->
+---
+
+<!-- Rotating 3D Cube --
 If we take a look at the 2D cross section of the 3D cube, we can get a hint at what will happen in 4D.
 
 When rotating the cube along the XZ plane we can see the cross section looks like it gets wider and then retracts to a square again.
 
-<!-- Rotating a 4D Cube -->
+<!-- Rotating a 4D Cube --
 Now when we rotate the hyper cube along the XW plane, we can see it does more or less the same thing.
 
-<!-- Rotating in multiple planes 4D Cube -->
+<!-- Rotating in multiple planes 4D Cube --
 If we rotate along multiple axes in 3D you can see it gets a bit confusing,
 
 but it is still similar to that in 4D
 
-<!-- Rotated 3D cube along W -->
+<!-- Rotated 3D cube along W --
 You can see also, that a rotated cube in 3D will produce cross section that may not look like a square
 
-<!-- Rotated 4D cube along W -->
+<!-- Rotated 4D cube along W --
 Once again, the same principles apply to 4D
+
+---
+
+<!-- Rotate along XZ -->
+If we rotate the cube along the XZ plane it can be considered a rotation within 2 dimensional space
+
+Within 2 dimensional rotation, the object stays the same size and shape
+
+<!-- 3D rotation -->
+If we rotate the cube along either the XY or YZ planes, the object rotates within 3 dimensional space. Because of this, the 2D cross section changes size or shape
+
+<!-- 3D rotation of 4D object -->
+Rotating a 4D object in 3D space leads to the rotations we are familiar with
+3D space includes the XY, XZ and YZ planes
+
+<!-- 4D rotation of a 4D object -->
+however when we rotate the hyper cube in 4D space, it changes size or shape in a very similar way as to the 2D cross section of a 3D cube rotating in 3D space
+
+4 dimensional rotations include the XW, YW and ZW planes
+
+<!-- Multiple Rotations -->
+When rotating a 3D cube in 3D planes of rotation, the shape of the cross section changes further. The same concepts apply in 4D with multiple planes of 4D rotation
 
 ## The Experiment
 <!--
