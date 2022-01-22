@@ -15,9 +15,12 @@ using UE.Email;
 public class SendData : MonoBehaviour
 {
 
+    public InputField inputField;
+
     // Start is called before the first frame update
     void Start()
     {
+        inputField.text = GetData();
         SendResults("joe.subbiani@gmail.com", "4D Shape Results" + StateController.Filename, StateController.Datapath);
     }
 
