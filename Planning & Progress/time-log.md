@@ -651,17 +651,17 @@
  - *1 hour* editing
  - *1 hour* handwriting captions
 
+### 23 Jan 2022
+
+ - *2 hours* reading other dissertations and structure my dissertation
+   - created a separate repo for final stuff + dissertation
+
+### 24 Jan 2022
+
+ - *2 hours* adding more to dissertations
+ - *1 hour* writing up weekly meeting slides mostly for noting down questions about idssertation
+ - *0.5 hours* begin presentation
+
 TODO:
- 1. ~~Read and reword Johns Intro~~
- 2. ~~Better Tutorial Explanations of rotation~~
-   - ~~2 planes of rotation at once~~
-   - ~~2D vs 3D, 3D vs 4D rotations~~
- 3. ~~Variant of Program without Tutorial~~
-   - ~~Test if WebGL can Email me with eduroam~~
-   - ~~Test if NewGrounds can Email me with eduroam~~
-   - ~~Get working WebGL copy to clipboard~~
- 4. ~~Test entire system properly~~
- 5. ~~Calender booking thing~~
- 6. Advertise Experiment
- 7. Start Dissertation
- 8. Data Analysis
+ 1. Advertise Experiment
+ 2. Data Analysis

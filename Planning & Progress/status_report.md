@@ -204,13 +204,11 @@ Week 1 & Week 2
 Week 3   
  - [x] Begin developing data analysis tools, most likely with a jupyter notebook
  - [x] run some preliminary tests to decide if there is any data or visualisations I want to cut
- - [ ] begin dissertation
- - [ ] begin presentation
- - [ ] Improve Tutorial Video
- - [ ] Tests with itch.io hosting
- - [ ] Add more data to json
-   - shape match rotor
-   - pose match best accuracy & timestamp
+ - [x] begin dissertation
+ - [x] begin presentation
+ - [x] Improve Tutorial Video
+ - [x] ~~Tests with itch.io hosting~~ Test with NewGrounds Hosting
+ - [x] Add more data to json
 
 Week 4 & Week 5 & Week 6  
  - [ ] Run experiments
