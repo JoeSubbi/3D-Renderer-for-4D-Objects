@@ -61,13 +61,9 @@ public class SwipeRotation : MonoBehaviour
         Event e = Event.current;
         if (e.isMouse && !onUIElement && !UIController.Rotation_Match)
         {
-            // Get Mouse Movement
-            if (y_only)
-                x = 0;
-            else x = (e.delta.x / speed); 
-            if (x_only)
-                y = 0;
-            else y = (e.delta.y / speed);
+
+            x = (e.delta.x / speed);
+            y = (e.delta.y / speed);
 
             // 3D Rotation - Left Click
             if (Input.GetMouseButton(0))
@@ -85,6 +81,12 @@ public class SwipeRotation : MonoBehaviour
                 }
                 else
                 {
+                    // Get Mouse Movement
+                    if (y_only)
+                        y = 0;
+                    if (x_only)
+                        x = 0;
+
                     // Rotate with vertical gesture around global YZ plane
                     e1 = new Vector4(0,-1, 0, 0);
                     e2 = new Vector4(0, 0, 1, 0);
@@ -132,6 +134,12 @@ public class SwipeRotation : MonoBehaviour
                 }
                 else
                 {
+                    // Get Mouse Movement
+                    if (y_only)
+                        x = 0;
+                    if (x_only)
+                        y = 0;
+
                     // Rotate with vertical gesture around global yw plane
                     e1 = new Vector4(0, 1, 0, 0);
                     e2 = new Vector4(0, 0, 0, 1);

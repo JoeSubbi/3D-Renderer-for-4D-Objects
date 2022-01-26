@@ -659,8 +659,20 @@
 ### 24 Jan 2022
 
  - *2 hours* adding more to dissertations
- - *1 hour* writing up weekly meeting slides mostly for noting down questions about idssertation
- - *0.5 hours* begin presentation
+ - *1 hour* writing up weekly meeting slides mostly for noting down questions about dissertation
+ - *2.5 hours* begin presentation outline
+
+### 25 Jan 2022
+
+ - *1 hour* Test system twice and save data
+ - *1.5 hours* Adding gifs to presentation
+ - *0.5 hours* Change lock rotation keys around for x and y in 3D
+
+### 26 Jan 2022
+
+ - *1 hour* port Google Slides presentation to power point to have an actual source file
+   - changed theme and moved things around with it
+ - *0.5 hours* redo lock rotation keys as it was wrong before and I hadn't uploaded it to newgrounds
 
 TODO:
  1. Advertise Experiment
