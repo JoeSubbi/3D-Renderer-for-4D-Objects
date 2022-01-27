@@ -25,8 +25,10 @@ public class ObjectController : MonoBehaviour
     public static Rotor4 miniRot  = new Rotor4(1, 0, 0, 0, 0, 0, 0, 0);
     public static Rotor4 initialMatch;
     public static Rotor4 initialMain = new Rotor4(1, 0, 0, 0, 0, 0, 0, 0);
-    public static float bestAccuracy = 10;
-    public static float timeStamp = 0;
+
+    // Listners
+    public static int wCount = 0;
+    public static int swipeCount = 0;
 
     // Start is called before the first frame update
     void Awake()
@@ -41,6 +43,8 @@ public class ObjectController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(wCount + " " + swipeCount);
+
         // Set object W position
         mainRenderer.material.SetFloat("_W", wSlider.value + w);
 
@@ -71,6 +75,8 @@ public class ObjectController : MonoBehaviour
     public static void Reset()
     {
         w = 0;
+        wCount = 0;
+        swipeCount = 0;
 
         mainRot  = new Rotor4(1, 0, 0, 0, 0, 0, 0, 0);
         matchRot = new Rotor4(1, 0, 0, 0, 0, 0, 0, 0);
@@ -94,6 +100,12 @@ public class ObjectController : MonoBehaviour
         SetMiniObjectRotation();
     }
 
+    public void ResetCounters()
+    {
+        wCount = 0;
+        swipeCount = 0;
+    }
+
     // Set rotation for each  object
     public static void SetMainObjectRotation()
     {
@@ -109,12 +121,6 @@ public class ObjectController : MonoBehaviour
     {
         SetObjectRotation(matchRenderer, matchRot);
         float accuracy = Rotor4.Difference(mainRot, matchRot);
-
-        if (accuracy < bestAccuracy)
-        {
-            timeStamp = Timer.time;
-            bestAccuracy = accuracy;
-        }
     }
 
     private static void SetObjectRotation(Renderer rend, Rotor4 rot)
@@ -334,4 +340,9 @@ public class ObjectController : MonoBehaviour
         }
     }
 
+    // Increment w
+    public void IncWCount()
+    {
+        wCount++;
+    }
 }

@@ -265,12 +265,10 @@ public static class StateController
         test_node.Add("Time", end_time - start_time);
 
         test_node.Add("Initial Rotation", JSON.Parse(RotorToString(ObjectController.initialMain)) );
-        test_node.Add("Final Rotation", JSON.Parse(RotorToString(ObjectController.mainRot)) ); // to check if shape was rotated
+        test_node.Add("Final Rotation", JSON.Parse(RotorToString(ObjectController.mainRot)) );
 
-        if (ModularSceneCanvas.transform.Find("HyperPlanePosition").gameObject.GetComponent<Slider>().value != 0)
-            test_node.Add("Used W", true);
-        else
-            test_node.Add("Used W", false);
+        test_node.Add("W Count", ObjectController.wCount);
+        test_node.Add("Swipe Count", ObjectController.swipeCount);
 
         // Write out JSON with new test parameters and performance
         File.WriteAllText(Path.Combine(Datapath, Filename), node.ToString());
@@ -353,8 +351,9 @@ public static class StateController
         test_node.Add("Main Rotor", JSON.Parse(RotorToString(ObjectController.mainRot)) );
         test_node.Add("Match Rotor", JSON.Parse(RotorToString(ObjectController.matchRot)) );
         test_node.Add("Initial Match Rotor", JSON.Parse(RotorToString(ObjectController.initialMatch)) );
-        test_node.Add("Best Accuracy", ObjectController.bestAccuracy);
-        test_node.Add("Best Accuracy Time", ObjectController.timeStamp);
+
+        test_node.Add("W Count", ObjectController.wCount);
+        test_node.Add("Swipe Count", ObjectController.swipeCount);
 
         // Write out JSON with new test parameters and performance
         File.WriteAllText(Path.Combine(Datapath, Filename), node.ToString());

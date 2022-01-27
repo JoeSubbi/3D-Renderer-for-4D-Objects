@@ -184,6 +184,9 @@ public class SwipeRotation : MonoBehaviour
                 ObjectController.matchRot.Normalise();
                 ObjectController.SetMatchObjectRotation();
             }
+
+            if (Input.GetMouseButtonUp(0) || Input.GetMouseButtonUp(1))
+                ObjectController.swipeCount ++;
         }
     }
 

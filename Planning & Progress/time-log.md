@@ -675,6 +675,12 @@
  - *0.5 hours* redo lock rotation keys as it was wrong before and I hadn't uploaded it to newgrounds
  - *3 hours* writing up shape match data analysis functions
 
+### 27 jan 2022
+
+ - *0.5 hours* Weekly meeting
+ - *1 hour* adding additional data to experiment
+   - count use of w and use of swipe
+
 TODO:
  1. Advertise Experiment
  2. Data Analysis

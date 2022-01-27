@@ -12,6 +12,7 @@
   - [09/12/2021](#09122021)
   - [13/01/2021](#13012021)
   - [20/01/2021](#20012021)
+    - [27/01/2021](#27012021)
 
 # Semester 1
 ## 07/10/2021
@@ -94,3 +95,15 @@ port is blocked on eduroam - use copy to clipboard as backup
 have tutorial as youtube video if not working on itch.io
 
 proper analysis with some analysis tools before opening experiment applications
+
+### 27/01/2021
+
+do not need proofs - just explain laws of geometric algebra and derivation using sympy
+ - anti commute, add multivectors etc
+
+include code/algorithm for ray marching
+
+rule of thumb - write word for numbers if < 12 (except for abbreviations like 4D)
+
+Summer directory has no use - its old
+
