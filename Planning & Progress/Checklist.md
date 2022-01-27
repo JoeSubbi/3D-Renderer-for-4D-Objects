@@ -1,3 +1,15 @@
+# Invite
+
+Hey everyone! I am looking for people to participate in an experiment for my 4th year project about 4D shapes.
+
+The goal of the experiment is to evaluate the effectiveness of a series of representations of 4D objects.
+In the experiment you will have to complete a series of challenges involving 4D shapes, from guessing the shape to matching the orientation of two 4D objects.
+
+The experiment will be run online and should take at most 1.5 hours but generally it should be closer to 1 hour.
+
+If you are interested just check your browser that supports WebGL: https://get.webgl.org/
+and you can book a time slot with me here https://calendly.com/joe-subbiani/4d-shapes-experiment or email me at 2377990s@student.gla.ac.uk or message me on discord
+
 # Checklist
 
 [Calander](https://calendly.com/joe-subbiani/4d-shapes-experiment?month=2022-01)

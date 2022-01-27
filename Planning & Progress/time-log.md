@@ -673,6 +673,7 @@
  - *1 hour* port Google Slides presentation to power point to have an actual source file
    - changed theme and moved things around with it
  - *0.5 hours* redo lock rotation keys as it was wrong before and I hadn't uploaded it to newgrounds
+ - *3 hours* writing up shape match data analysis functions
 
 TODO:
  1. Advertise Experiment

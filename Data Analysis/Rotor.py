@@ -10,10 +10,20 @@ class Vector4:
         self.w = w
 
     def magnitude(self):
-        math.sqrt(self.x**2 + self.y**2 + self.z**2 + self.w**2)
+        return math.sqrt(self.x**2 + self.y**2 + self.z**2 + self.w**2)
 
     def dot(a, b):
-        a.x * b.x + a.y * b.y + a.z * b.z
+        return (a.x * b.x + a.y * b.y + a.z * b.z + a.w * b.w)
+
+    def norm(self):
+        mag = self.magnitude()
+        self.x /= mag
+        self.y /= mag
+        self.z /= mag
+        self.w /= mag
+
+    def __str__(self):
+        return str(self.x) + ", " + str(self.y) + ", " + str(self.z) + ", " + str(self.w) + ", "
 
 class Bivector4:
     
@@ -51,7 +61,17 @@ class Rotor4:
         # Pseudo Scalar
         self.bxyzw = 0
 
-    def constructor(self, bv, angle):
+    def constructor(self, a, bxy, bxz, byz, bxw, byw, bzw, bxyzw):
+        self.a = a
+        self.bxy = bxy
+        self.bxz = bxz
+        self.byz = byz
+        self.bxw = bxw
+        self.byw = byw
+        self.bzw = bzw
+        self.bxyzw = bxyzw
+
+    def bv_constructor(self, bv, angle):
         sina = math.sin(angle/2)
         self.a = math.cos(angle/2)
         self.bxy = -sina * bv.bxy
@@ -170,6 +190,7 @@ class Rotor4:
             - 2 * a.z * byw * byz
             - 2 * a.z * bzw * s
         )
+        return r
 
     def rotorRotate(self, r):
         return self * r * self.reverse()
@@ -201,16 +222,20 @@ class Rotor4:
         r.normalise()
         return r
 
+    @staticmethod
     def GeoProd(a, b):
         bv = Bivector4.wedge(a, b)
-        return Rotor4.constructor(Vector4.dot(a, b), 
+        return Rotor4.bv_constructor(Vector4.dot(a, b), 
             bv.bxy, bv.bxz, bv.byz, bv.bxw, bv.byw, bv.bzw, 0)
 
+    @staticmethod
     def difference(a, b):
-        randomVec = Vector4(random.Range(-10.0, 10.0), random.Range(-10.0, 10.0),
-                            random.Range(-10.0, 10.0), random.Range(-10.0, 10.0))
+        randomVec = Vector4(random.uniform(0, 10.0), random.uniform(0, 10.0),
+                            random.uniform(0, 10.0), random.uniform(0, 10.0))
         randomVecA = a.rotate(randomVec)
         randomVecB = b.rotate(randomVec)
 
-        return math.acos( (Vector4.dot(randomVecA, randomVecB))/
-                        (randomVecA.magnitude, randomVecB.magnitude) )
+        t = (Vector4.dot(randomVecA, randomVecB)) / (randomVecA.magnitude() * randomVecB.magnitude())
+        if t > 1: t = 1
+        elif t < -1: t = -1
+        return math.acos( t )
