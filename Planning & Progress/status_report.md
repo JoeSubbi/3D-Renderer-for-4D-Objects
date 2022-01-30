@@ -211,8 +211,8 @@ Week 3
  - [x] Add more data to json
 
 Week 4 & Week 5 & Week 6  
- - [ ] Run experiments
- - [ ] Further develop data analysis tools
+ - [x] Run experiments
+ - [x] Further develop data analysis tools
 
 Week 7  
  - [ ] Evaluation of experiments

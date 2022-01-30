@@ -230,8 +230,10 @@ class Rotor4:
 
     @staticmethod
     def difference(a, b):
-        randomVec = Vector4(random.uniform(0, 10.0), random.uniform(0, 10.0),
-                            random.uniform(0, 10.0), random.uniform(0, 10.0))
+        #randomVec = Vector4(random.uniform(0, 10.0), random.uniform(0, 10.0),
+        #                    random.uniform(0, 10.0), random.uniform(0, 10.0))
+        randomVec = Vector4(1,1,1,1)
+        randomVec.norm()
         randomVecA = a.rotate(randomVec)
         randomVecB = b.rotate(randomVec)
 

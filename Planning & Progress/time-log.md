@@ -675,11 +675,27 @@
  - *0.5 hours* redo lock rotation keys as it was wrong before and I hadn't uploaded it to newgrounds
  - *3 hours* writing up shape match data analysis functions
 
-### 27 jan 2022
+### 27 Jan 2022
 
  - *0.5 hours* Weekly meeting
  - *1 hour* adding additional data to experiment
    - count use of w and use of swipe
+
+### 29 Jan 2022
+
+ - *1.5 hours* Experiment 1
+   - went smoothly, on schedule
+   - worked on data analysis too
+ - *1 hour* Data analysis
+   - generic functions to understand data
+
+### 30 Jan 2022
+
+ - *1.5 hours* Experiment 2
+   - went smoothly, on schedule
+   - worked on data analysis too
+ - *1.5 hours* Data analysis
+   - more generic functions plus some graphs - box and whisker plot for pose match, will probably use for the other tests, it is very informative
 
 TODO:
  1. Advertise Experiment
