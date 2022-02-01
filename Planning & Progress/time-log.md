@@ -656,6 +656,8 @@
  - *2 hours* reading other dissertations and structure my dissertation
    - created a separate repo for final stuff + dissertation
 
+## Week 15
+
 ### 24 Jan 2022
 
  - *2 hours* adding more to dissertations
@@ -691,12 +693,25 @@
 
 ### 30 Jan 2022
 
- - *1.5 hours* Experiment 2
+ - *4 hours* Experiment 2 and 3
    - went smoothly, on schedule
    - worked on data analysis too
- - *1.5 hours* Data analysis
-   - more generic functions plus some graphs - box and whisker plot for pose match, will probably use for the other tests, it is very informative
+ - *5 hours* Data analysis
+   - more generic functions plus graphs - box and whisker plots for correctness/accuracy and time
 
-TODO:
- 1. Advertise Experiment
- 2. Data Analysis
+## Week 16
+
+### 31 Jan 2021
+
+ - *2 hours* Experiment 4
+   - seemingly more laggy from the sounds of it
+ - *4 hours* Data Analysis
+   - covariance matrix / correlation coefficient matrices to interpret shape data
+
+### 01 Feb 2021
+
+ - *1.5 hour* Extending correlation coefficient matrices for shape match data and copy the same process to rotation match data
+ - *0.5 hour* Splitting up separate data analysis files
+   - single file
+   - multiple file
+   - rotor derivation
