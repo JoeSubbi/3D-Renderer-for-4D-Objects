@@ -230,8 +230,22 @@ class Rotor4:
 
     @staticmethod
     def difference(a, b):
-        #randomVec = Vector4(random.uniform(0, 10.0), random.uniform(0, 10.0),
-        #                    random.uniform(0, 10.0), random.uniform(0, 10.0))
+        sum = 0
+        for i in range(100):
+            randomVec = Vector4(random.uniform(-10.0, 10.0), random.uniform(-10.0, 10.0),
+                                random.uniform(-10.0, 10.0), random.uniform(-10.0, 10.0))
+                                
+            randomVec.norm()
+            randomVecA = a.rotate(randomVec)
+            randomVecB = b.rotate(randomVec)
+            t = (Vector4.dot(randomVecA, randomVecB)) / (randomVecA.magnitude() * randomVecB.magnitude())
+            if t > 1: t = 1
+            elif t < -1: t = -1
+            sum += math.acos( t )
+        return sum/100
+
+
+        """
         randomVec = Vector4(1,1,1,1)
         randomVec.norm()
         randomVecA = a.rotate(randomVec)
@@ -241,3 +255,4 @@ class Rotor4:
         if t > 1: t = 1
         elif t < -1: t = -1
         return math.acos( t )
+        """

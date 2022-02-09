@@ -10,9 +10,10 @@
   - [25/11/2021](#25112021)
   - [02/12/2021](#02122021)
   - [09/12/2021](#09122021)
-  - [13/01/2021](#13012021)
-  - [20/01/2021](#20012021)
-    - [27/01/2021](#27012021)
+  - [13/01/2022](#13012022)
+  - [20/01/2022](#20012022)
+    - [27/01/2022](#27012022)
+    - [03/02/2022](#03022022)
 
 # Semester 1
 ## 07/10/2021
@@ -76,7 +77,7 @@ discussion of plan for next term
 
 more discussion about rotors
 
-## 13/01/2021
+## 13/01/2022
 
 angle between rotors - just take dot product of random vectors rotated by the 2 rotors DUHHH...
 
@@ -86,7 +87,7 @@ discussion of road map - make as much time as possible so i don't loose time wit
 
 length of test - 50minutes best for an hour slot - don't spend too much time in experiment
 
-## 20/01/2021
+## 20/01/2022
 
 don't email entire university
 
@@ -96,7 +97,7 @@ have tutorial as youtube video if not working on itch.io
 
 proper analysis with some analysis tools before opening experiment applications
 
-### 27/01/2021
+### 27/01/2022
 
 do not need proofs - just explain laws of geometric algebra and derivation using sympy
  - anti commute, add multivectors etc
@@ -107,3 +108,6 @@ rule of thumb - write word for numbers if < 12 (except for abbreviations like 4D
 
 Summer directory has no use - its old
 
+### 03/02/2022
+
+try take multiple random vectors and take the average minimum angle between rotated vectors

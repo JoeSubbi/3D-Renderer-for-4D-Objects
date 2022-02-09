@@ -701,17 +701,47 @@
 
 ## Week 16
 
-### 31 Jan 2021
+### 31 Jan 2022
 
  - *2 hours* Experiment 4
    - seemingly more laggy from the sounds of it
  - *4 hours* Data Analysis
    - covariance matrix / correlation coefficient matrices to interpret shape data
 
-### 01 Feb 2021
+### 01 Feb 2022
 
  - *1.5 hour* Extending correlation coefficient matrices for shape match data and copy the same process to rotation match data
  - *0.5 hour* Splitting up separate data analysis files
    - single file
    - multiple file
    - rotor derivation
+
+### 02 Feb 2022
+
+ - *2.5 hours* building multi-file analysis by compiling each file into one well formatted file
+
+### 03 Feb 2022
+
+ - *0.5 hours* weekly meeting
+
+### 05 Feb 2022
+
+ - *2 hours* Experiment 5
+ - *3 hours* Data analysis on multiple files for shape match
+   - all but correlation
+
+## Week 17
+
+### 07 Feb 2022
+
+ - *1 hour* Writing up intro to dissertation and adding citations for stuff to include
+
+### 08 Feb 2022
+
+ - *0.5 hours* Adding to data analysis
+
+### 09 Feb 2022
+
+ - *0.5 hours* making weekly presentation slides
+ - *2 hours* finish implementing non-correlation based data for multiple files
+   - also created an averaging system for difference between rotors
