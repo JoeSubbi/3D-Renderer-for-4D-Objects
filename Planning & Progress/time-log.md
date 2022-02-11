@@ -745,3 +745,8 @@
  - *0.5 hours* making weekly presentation slides
  - *2 hours* finish implementing non-correlation based data for multiple files
    - also created an averaging system for difference between rotors
+
+### 11 Feb 2022
+ - *0.5 hours* weekly meeting
+ - *5 hours* shape matching correlation matrices
+   - had to redo as accidently deleted

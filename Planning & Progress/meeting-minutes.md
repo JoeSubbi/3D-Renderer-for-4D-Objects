@@ -14,6 +14,7 @@
   - [20/01/2022](#20012022)
     - [27/01/2022](#27012022)
     - [03/02/2022](#03022022)
+    - [10/02/2022](#10022022)
 
 # Semester 1
 ## 07/10/2021
@@ -111,3 +112,10 @@ Summer directory has no use - its old
 ### 03/02/2022
 
 try take multiple random vectors and take the average minimum angle between rotated vectors
+
+### 10/02/2022
+
+dont delve to deep into data due to not enough of it
+ - mention stuff i would like to explore but couldn't
+
+can send bits of dissertation whenever
