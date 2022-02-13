@@ -63,3 +63,4 @@ crashlytics-build.properties
 
 # Python meta files
 */__pycache__/
+*/SingleFileAnalysis.ipynb
