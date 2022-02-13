@@ -760,3 +760,4 @@
 
  - *1 hour* Experiment - technical difficulties will reschedule
  - *1.5 hours* implement correlation graphs for rotation matching
+ - *1 hour* implement correlation for pose matching
