@@ -761,3 +761,23 @@
  - *1 hour* Experiment - technical difficulties will reschedule
  - *1.5 hours* implement correlation graphs for rotation matching
  - *1 hour* implement correlation for pose matching
+
+### 13 Feb 2022
+
+ - *1 hour* improvements to data analysis
+
+## Week 18
+
+### 14 Feb 2022
+
+ - *2 hours* Experiment 6
+ - *2 hours* Discussion of problems with rotation in the dissertation
+
+### 15 Feb 2022
+
+ - *2.5 hours* Explanation of geometric algebra in dissertation
+
+### 16 Feb 2022
+
+ - *1.5 hours* discussing the different approaches to rendering 3d objects
+ - *2 hours* Experiment 7
