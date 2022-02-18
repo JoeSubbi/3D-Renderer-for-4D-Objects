@@ -781,3 +781,8 @@
 
  - *1.5 hours* discussing the different approaches to rendering 3d objects
  - *2 hours* Experiment 7
+
+### 17 Feb 2022
+
+ - *2 hours* Experiment 8
+ - *1 hour* Rsearching stereographic projection
