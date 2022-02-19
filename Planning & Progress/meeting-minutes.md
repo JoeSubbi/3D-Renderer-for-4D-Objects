@@ -15,6 +15,7 @@
     - [27/01/2022](#27012022)
     - [03/02/2022](#03022022)
     - [10/02/2022](#10022022)
+    - [18/02/2022](#18022022)
 
 # Semester 1
 ## 07/10/2021
@@ -115,7 +116,37 @@ try take multiple random vectors and take the average minimum angle between rota
 
 ### 10/02/2022
 
-dont delve to deep into data due to not enough of it
+don't delve to deep into data due to not enough of it
  - mention stuff i would like to explore but couldn't
 
 can send bits of dissertation whenever
+
+### 18/02/2022
+
+aims:
+ - list research questions
+ - discussion of potential implication of results
+
+evaluation
+ - discussion of implication of results
+ - 0.5-1 page tie into aims
+
+background
+ - argue other peoples work
+   - good and bad - limitations etc
+
+motivation
+ - being able to understand 4D
+   - very high nD spaces - lots of corners short distance apart
+   - some things just don't behave as intuition predicts
+   - introduction without being to jarring to new people
+ - interactive exploration - value of learning this way
+ - bringing intuition of 3D world to 4D
+
+to get high grade
+ - good argument throughout whole dissertation and in evaluation
+ - good questions
+ - good presentation of results and their implications
+ - implementation - credit for everything that I have done (they wont look at source code)
+ - high quality diagrams
+ - do not jump from high level to implementation

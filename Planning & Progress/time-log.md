@@ -786,3 +786,8 @@
 
  - *2 hours* Experiment 8
  - *1 hour* Rsearching stereographic projection
+
+### 18 Feb 2022
+
+ - *0.5 hours* weekly meeting
+ - *1.5 hours* discuss achievements and shortcomings of previous works
