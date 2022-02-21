@@ -791,3 +791,11 @@
 
  - *0.5 hours* weekly meeting
  - *1.5 hours* discuss achievements and shortcomings of previous works
+
+### 20 Feb 20222
+
+ - *3 hours* dissertation ray marching
+
+## Week 19
+
+ - *2 hours* creating ray marching figures with blender and illustrator
