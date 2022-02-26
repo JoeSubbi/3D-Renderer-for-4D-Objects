@@ -798,11 +798,19 @@
 
 ## Week 19
 
-## 21 Feb 2022
+### 21 Feb 2022
 
  - *2.5 hours* creating ray marching figures with blender and illustrator
 
-## 22 Feb 2022
+### 22 Feb 2022
 
  - *1 hour* write about mesh vs ray march cross section
  - *0.5 hours* adding questionnaire pdf
+
+### 24 Feb 2022
+
+ - *0.5 hours* weekly meeting
+
+### 25 Feb 2022
+
+ - *1.5 hours* experiment 9

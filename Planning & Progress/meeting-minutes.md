@@ -144,9 +144,43 @@ motivation
  - bringing intuition of 3D world to 4D
 
 to get high grade
- - good argument throughout whole dissertation and in evaluation
- - good questions
- - good presentation of results and their implications
+ - **good argument throughout whole dissertation and in evaluation**
+ - **good questions**
+ - good presentation of results and their **implications**
  - implementation - credit for everything that I have done (they wont look at source code)
  - high quality diagrams
  - do not jump from high level to implementation
+
+###
+
+Research Questions:
+ - what representation is most effective for representing surface type of 4D object
+ - what rep most effective for conveying rotational pose
+ - increase in interaction increase understanding of 4D shapes
+   - what is understanding
+     - pose
+     - shape
+     - confidence and accuracy
+
+how does interactive visualisation effect how people understand 4d geometry
+ - benefits of interaction
+ - drawbacks of interaction
+
+Textures - representations couldn't take full advantage
+ - looked into but requires more investigation
+
+3D rotation
+ - https://dl.acm.org/doi/pdf/10.1145/258549.258778
+ - https://dl.acm.org/doi/pdf/10.1145/263407.263408
+ - https://scholar.google.co.uk/scholar?cites=3287387963043952182&as_sdt=2005&sciodt=0,5&hl=en
+
+Writing:
+ - no personal opinion
+   - hypothesis - longer use, more familiarity, more useful
+ - def of net? sub-mesh is a weird term
+ - don't use "of course"
+
+**common criteria to apply to different papers**
+ - discuss variation between object over space/time? object in animation
+ - imagine table of ways it could be done, and reference where i fit compared to everyone else
+ - e.g kageyama rotation with keys and kageyama ovular display
