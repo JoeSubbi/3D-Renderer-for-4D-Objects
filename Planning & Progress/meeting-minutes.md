@@ -16,6 +16,7 @@
     - [03/02/2022](#03022022)
     - [10/02/2022](#10022022)
     - [18/02/2022](#18022022)
+    - [24/02/2022](#24022022)
 
 # Semester 1
 ## 07/10/2021
@@ -151,7 +152,7 @@ to get high grade
  - high quality diagrams
  - do not jump from high level to implementation
 
-###
+### 24/02/2022
 
 Research Questions:
  - what representation is most effective for representing surface type of 4D object
@@ -184,3 +185,5 @@ Writing:
  - discuss variation between object over space/time? object in animation
  - imagine table of ways it could be done, and reference where i fit compared to everyone else
  - e.g kageyama rotation with keys and kageyama ovular display
+
+*Add labels to ray marching diagram*

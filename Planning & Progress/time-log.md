@@ -814,3 +814,13 @@
 ### 25 Feb 2022
 
  - *1.5 hours* experiment 9
+
+### 26 Feb 2022
+
+ - *1 hour* improve aims in dissertation
+ - *1 hour* discuss drawbacks and qualities of polyvision, and other improvements
+ - *0.5 hours* improve ray marching diagram with labels
+
+### 27 Feb 2022
+
+## Week 20
