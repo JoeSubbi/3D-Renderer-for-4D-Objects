@@ -823,4 +823,19 @@
 
 ### 27 Feb 2022
 
+ - *1 hours* summarise 5 levels of geometric understanding
+ - *1 hour* explain moscow
+ - *0.5 hours* correct mistake on ray marching diagram
+ - *1 hour* read some papers on 3D interaction
+ - *1 hour* improvements around MoSCoW
+
 ## Week 20
+
+### 28 Feb 2022
+
+ - *1.5 hours* summarise limitations of project and must haves
+ - *1.5 hours* create figures for timeline and multi-view for dissertation
+
+### 1 March 2022
+
+ - *1 hour* add labels to figures and add them to the dissertation
