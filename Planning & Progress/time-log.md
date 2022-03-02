@@ -839,3 +839,12 @@
 ### 1 March 2022
 
  - *1 hour* add labels to figures and add them to the dissertation
+ - *1.5 hours* finish analysis and requirements chapter 
+ - *1 hour* add draft rotor derivations to implementation section
+ - *0.5 hours* data analysis stacked bar charts for shape match
+ - *0.5 hours* initial rotation distance from 90 degrees
+ - *1 hour* preliminary evaluation for shape match
+
+### 2 March 2022
+
+ - *2 hours* preliminary evaluation for rotation and pose matching
