@@ -13,6 +13,11 @@
   - [Change with Iteration](#change-with-iteration-2)
   - [Performance per Representation](#performance-per-representation-2)
   - [Correlations](#correlations-2)
+- [User opinions of representations](#user-opinions-of-representations)
+- [Summary](#summary)
+  - [Representations](#representations)
+  - [Iteration](#iteration)
+  - [Correlations](#correlations-3)
 
 # Shape Matching
 
@@ -43,7 +48,6 @@ time
 
 between numerical features
  - confidence and understanding increase with correctness
- - confidence and correctness decrease with confidence
  - correctness decreases with an increase in time taken
    - running out of time
  - if the initial rotation is further away from a 90 degree interval, the participant interacts with the object more often
@@ -172,3 +176,94 @@ between representations
  - time taken increased with more info on screen
  - interaction increased with more info on screen
  - 4D-3D used w slider a lot more than anything else - *weird*
+
+# User opinions of representations
+
+Timeline
+ - positives
+   - simple presentation of geometry
+   - indication of what will occur before interacting with slider
+   - saved time identifying shapes like the sphere
+ - negatives
+   - hard to understand in small time frame
+   - did lag in browser
+   - no helpful for rotation
+
+Multi-rotational view
+ - positives
+   - helpful for understanding which planes of rotation ocurred
+   - interesting in way of showcasing 4D
+ - negatives
+   - too much information
+   - can lag a bit in browser
+   - new users can misinterpret rotations - i.e 3D rotation will look like 4D from other perspectives and visa versa
+
+4D-3D abstraction
+ - positives
+   - easy to work with
+   - helps with rotation a lot
+   - easier to differentiate multiple rotations
+ - negatives
+   - people often didn't pay attention to it except for animated rotation matching
+
+# Summary
+
+## Representations
+
+New users don't have enough experience to take advantage of extensions
+ - more information that is on the screen, more likely to identify the correct shape
+ - less information the less time is taken
+ - confidence increased with less information on screen
+ 
+specifics of representations
+ - 3D-4D is nice introduction to differentiate 3D and 4D rotations to new users but is kind of cheat-y
+ - Timeline and Multi-view tended to perform worse
+   - sometimes lag-y in browser
+   - mostly too much info for new users given a limited time
+
+not much benefit when trying to directly manipulate the shape
+ - focus on the main object, ignore extensions
+
+## Iteration
+
+correctness would generally increase over time
+ - less so for pose matching
+
+answers would be submitted faster over time
+ - no notable increase in confidence over time
+
+## Correlations
+
+between numerical features
+ - interactions with the objects increased accuracy/correctness
+ - spending more time increased accuracy
+   - time limits too short - trade off argument
+   - except when running out of time - shape match
+ - confidence / understanding and correctness were well correlated
+   - not just blind guessing
+ - less correct if more happening on screen - increased complexity
+   - expected
+     - rotation match
+   - representations
+
+between shapes
+ - general
+   - increased time to answer - pentachoron
+   - less confidence / harder - pentachoron
+   - box is hard to manipulate
+   - circular shapes behave more as expected to new users
+ - shape match
+   - less correct with cone
+     - can often look like sphere or capsule
+   - a lot more interaction with sphere
+     - verify it is actually a sphere
+   - less time to answer - torus
+ - rotation match
+   - correctness highest with capsule
+   - correctness lowest with pentachoron
+   - less time to answer - capsule and cone
+ - pose match
+   - worst accuracy - box
+   - more accurate - torus
+   - longer time - box
+   - most interaction with pentachoron and box

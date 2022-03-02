@@ -848,3 +848,4 @@
 ### 2 March 2022
 
  - *2 hours* preliminary evaluation for rotation and pose matching
+ - *0.5 hours* Summary for preliminary evaluation
