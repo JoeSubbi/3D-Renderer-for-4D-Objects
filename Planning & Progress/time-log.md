@@ -849,3 +849,11 @@
 
  - *2 hours* preliminary evaluation for rotation and pose matching
  - *0.5 hours* Summary for preliminary evaluation
+ - *1 hour* tidying rotor equations in dissertation
+ - *0.5 hours* weekly meeting presentation
+
+### 3 March 2022
+
+ - *0.5 hours* weekly meeting
+ - *1 hour* making tense consistent
+ - *0.5 hours* make correlation red to blue

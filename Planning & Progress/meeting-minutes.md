@@ -10,13 +10,15 @@
   - [25/11/2021](#25112021)
   - [02/12/2021](#02122021)
   - [09/12/2021](#09122021)
+- [Semester 2](#semester-2)
   - [13/01/2022](#13012022)
   - [20/01/2022](#20012022)
-    - [27/01/2022](#27012022)
-    - [03/02/2022](#03022022)
-    - [10/02/2022](#10022022)
-    - [18/02/2022](#18022022)
-    - [24/02/2022](#24022022)
+  - [27/01/2022](#27012022)
+  - [03/02/2022](#03022022)
+  - [10/02/2022](#10022022)
+  - [18/02/2022](#18022022)
+  - [24/02/2022](#24022022)
+  - [03/03/2022](#03032022)
 
 # Semester 1
 ## 07/10/2021
@@ -80,6 +82,8 @@ discussion of plan for next term
 
 more discussion about rotors
 
+# Semester 2
+
 ## 13/01/2022
 
 angle between rotors - just take dot product of random vectors rotated by the 2 rotors DUHHH...
@@ -100,7 +104,7 @@ have tutorial as youtube video if not working on itch.io
 
 proper analysis with some analysis tools before opening experiment applications
 
-### 27/01/2022
+## 27/01/2022
 
 do not need proofs - just explain laws of geometric algebra and derivation using sympy
  - anti commute, add multivectors etc
@@ -111,18 +115,18 @@ rule of thumb - write word for numbers if < 12 (except for abbreviations like 4D
 
 Summer directory has no use - its old
 
-### 03/02/2022
+## 03/02/2022
 
 try take multiple random vectors and take the average minimum angle between rotated vectors
 
-### 10/02/2022
+## 10/02/2022
 
 don't delve to deep into data due to not enough of it
  - mention stuff i would like to explore but couldn't
 
 can send bits of dissertation whenever
 
-### 18/02/2022
+## 18/02/2022
 
 aims:
  - list research questions
@@ -152,7 +156,7 @@ to get high grade
  - high quality diagrams
  - do not jump from high level to implementation
 
-### 24/02/2022
+## 24/02/2022
 
 Research Questions:
  - what representation is most effective for representing surface type of 4D object
@@ -187,3 +191,36 @@ Writing:
  - e.g kageyama rotation with keys and kageyama ovular display
 
 *Add labels to ray marching diagram*
+
+## 03/03/2022
+
+don't write in future tense
+ - consistent passive past tense
+  
+unity
+ - needed to build project
+ - host online given pandimic
+
+aims: discuss
+ - build system for interactive rendering of 4D objects
+ - evaluate effectiveness to visualise 4D spaces
+ - different ways of rendering
+ - logical ordering
+
+stats
+ - bootstrap
+ - randomly take sample from it - 100 samples
+   - repeat 1000s of times
+   - distribution of statistics
+ - distribution of statistic to see if correlation is relevant
+
+diverging colour map - red-blue
+ - correlation with signs
+
+pose match - ease vs accuracy
+ - looks to be evidence
+ - strong unintuitive results - seek other correlations
+ - small data - coincidence
+
+timeline - unanswered
+ - less time talking about less sure conclusions
