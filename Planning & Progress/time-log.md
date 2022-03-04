@@ -857,3 +857,8 @@
  - *0.5 hours* weekly meeting
  - *1 hour* making tense consistent
  - *0.5 hours* make correlation red to blue
+
+### 4 March 2022
+
+ - *1.5 hours* experiment 10
+ - *0.5 hours* reviewing more of dissertation for wording and correct tense
