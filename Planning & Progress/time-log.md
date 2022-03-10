@@ -862,3 +862,35 @@
 
  - *1.5 hours* experiment 10
  - *0.5 hours* reviewing more of dissertation for wording and correct tense
+
+### 5 March 2022
+
+ - *1.5 hours* writing up the 5 stages of the learning process
+
+### 6 March 2022
+
+ - *1.5 hours* complete section on van hiele model
+ - *0.5 hours* revise ordering of aims
+ - *0.5 hours* move rotor equations to appendix
+ - *1.5 hours* add graphs and rotors to presentation slides
+ - *0.5 hours* use clever references
+
+## Week 21
+
+### 7 March 2022
+
+ - *2 hours* describe SDF shadows and lighting
+ - *0.5 hours* add custom data types to listing syntax highlighting
+
+### 8 March 2022
+
+ - *4 hours* derivation of 4D shapes SDFs
+ - *3 hours* Explain projection and components of multi-vectors
+
+### 9 March 2022
+
+ - *2 hours* explain derivation of rotor equations
+ - *2 hours* create figures for projections
+ - *6 hours* explain timeline, multi-view and onion skin + add figures
+
+### 10 March 2022
