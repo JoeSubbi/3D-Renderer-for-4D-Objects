@@ -19,6 +19,7 @@
   - [18/02/2022](#18022022)
   - [24/02/2022](#24022022)
   - [03/03/2022](#03032022)
+  - [10/03/2022](#10032022)
 
 # Semester 1
 ## 07/10/2021
@@ -199,7 +200,7 @@ don't write in future tense
   
 unity
  - needed to build project
- - host online given pandimic
+ - host online given pandemic
 
 aims: discuss
  - build system for interactive rendering of 4D objects
@@ -224,3 +225,17 @@ pose match - ease vs accuracy
 
 timeline - unanswered
  - less time talking about less sure conclusions
+
+## 10/03/2022
+
+bold name of shapes - bring attention
+
+equation for each sdf?
+
+subsections for reps
+
+design should discuss high level issues of interacting with 4D objects
+ - how to represent
+ - how to manipulate
+   - build system to freely rotate 4D object via UI
+   - high level overview

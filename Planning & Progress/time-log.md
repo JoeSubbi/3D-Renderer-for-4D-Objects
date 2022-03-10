@@ -894,3 +894,9 @@
  - *6 hours* explain timeline, multi-view and onion skin + add figures
 
 ### 10 March 2022
+
+ - *1.5 hours* finish talking about 3D-4D
+ - *0.5 hours* weekly meeting
+ - *0.5 hours* restructuring
+ - *1 hour* figures for 4D-3D
+ - *2 hours* experiment 11
