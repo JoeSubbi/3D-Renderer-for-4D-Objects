@@ -836,7 +836,7 @@
  - *1.5 hours* summarise limitations of project and must haves
  - *1.5 hours* create figures for timeline and multi-view for dissertation
 
-### 1 March 2022
+### 1 Mar 2022
 
  - *1 hour* add labels to figures and add them to the dissertation
  - *1.5 hours* finish analysis and requirements chapter 
@@ -845,29 +845,29 @@
  - *0.5 hours* initial rotation distance from 90 degrees
  - *1 hour* preliminary evaluation for shape match
 
-### 2 March 2022
+### 2 Mar 2022
 
  - *2 hours* preliminary evaluation for rotation and pose matching
  - *0.5 hours* Summary for preliminary evaluation
  - *1 hour* tidying rotor equations in dissertation
  - *0.5 hours* weekly meeting presentation
 
-### 3 March 2022
+### 3 Mar 2022
 
  - *0.5 hours* weekly meeting
  - *1 hour* making tense consistent
  - *0.5 hours* make correlation red to blue
 
-### 4 March 2022
+### 4 Mar 2022
 
  - *1.5 hours* experiment 10
  - *0.5 hours* reviewing more of dissertation for wording and correct tense
 
-### 5 March 2022
+### 5 Mar 2022
 
  - *1.5 hours* writing up the 5 stages of the learning process
 
-### 6 March 2022
+### 6 Mar 2022
 
  - *1.5 hours* complete section on van hiele model
  - *0.5 hours* revise ordering of aims
@@ -877,26 +877,57 @@
 
 ## Week 21
 
-### 7 March 2022
+### 7 Mar 2022
 
  - *2 hours* describe SDF shadows and lighting
  - *0.5 hours* add custom data types to listing syntax highlighting
 
-### 8 March 2022
+### 8 Mar 2022
 
  - *4 hours* derivation of 4D shapes SDFs
  - *3 hours* Explain projection and components of multi-vectors
 
-### 9 March 2022
+### 9 Mar 2022
 
  - *2 hours* explain derivation of rotor equations
  - *2 hours* create figures for projections
  - *6 hours* explain timeline, multi-view and onion skin + add figures
 
-### 10 March 2022
+### 10 Mar 2022
 
- - *1.5 hours* finish talking about 3D-4D
+ - *1.5 hours* finish talking about 4D-3D
  - *0.5 hours* weekly meeting
  - *0.5 hours* restructuring
  - *1 hour* figures for 4D-3D
  - *2 hours* experiment 11
+
+### 11 Mar 2022
+
+ - *1 hour* add figures for 4D - 3D
+ - *0.5 hours* begin design chapter
+
+## Week 22
+
+### 14 Mar 2022
+
+ - *2 hours* discussion of tutorial video
+
+### 15 Mar 2022
+
+ - 2.5 hours* discuss experimental design
+
+### 16 Mar 2022
+
+ - *2.5 hours* discuss design of manipulation
+ - *3 hours* texturing of objects section
+
+### 17 Mar 2022
+
+ - *2 hours* data collection section
+ - *0.5 hours* weekly meeting
+ - *3.5 hours* improvements to implementation section
+   - design json data
+   - compact language
+   - explain choice of 4D primitives
+   - explanation of components of project
+ - *1.5 hours* Begin presentation script

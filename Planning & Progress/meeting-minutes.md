@@ -20,6 +20,7 @@
   - [24/02/2022](#24022022)
   - [03/03/2022](#03032022)
   - [10/03/2022](#10032022)
+  - [17/03/2022](#17032022)
 
 # Semester 1
 ## 07/10/2021
@@ -239,3 +240,32 @@ design should discuss high level issues of interacting with 4D objects
  - how to manipulate
    - build system to freely rotate 4D object via UI
    - high level overview
+
+## 17/03/2022
+
+describe json data
+ - what it represents and what it stores
+ - schema in appendix
+
+sub headings
+ - email, copy paste etc
+
+implementation chapter:
+ - explain the moving parts before everything else
+   - diagram of different things involved
+     - renderer
+     - manipulation
+     - experimental platform
+ - cut some fluff out
+   - 5.1 - compact radius of sphere
+ - lambertian diffuse elimination
+ - subjective judgments
+   - controversial -> risky or exploratory
+ - explanation of why I chose simple 4D geometry
+   - simple things before hard things
+   - lack of predefined objects - 4D machine parts
+   - 4D fractals - complicated hard to explain
+
+readme.md
+ - build
+ - open jupyter nb
