@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Object
-  m_Shader: {fileID: 4800000, guid: 33135cc25d6e50e4a940fec054b251c8, type: 3}
+  m_Shader: {fileID: 4800000, guid: f1b4de2c9b0b39d41b5e4ade8e9867b3, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -56,6 +56,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - _A: 1
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
@@ -78,12 +79,17 @@ Material:
     - _WY: 0
     - _WZ: 0
     - _X: 0
+    - _XW: 0
     - _XY: 0
+    - _XYZW: 0
     - _XZ: 0
     - _Y: 0
+    - _YW: 0
     - _YZ: 0
     - _Z: 0
+    - _ZW: 0
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+  m_BuildTextureStacks: []

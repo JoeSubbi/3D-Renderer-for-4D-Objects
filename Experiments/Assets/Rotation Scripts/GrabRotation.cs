@@ -114,7 +114,7 @@ public class GrabRotation : MonoBehaviour
                 //Rotate object
                 Bivector4 bv = Bivector4.Wedge(e1, e2);
                 Rotor4 r = new Rotor4(bv, x+y);
-                total *= r;
+                total /= r;
 
                 //Rotate grab ball
                 if (!wRotation)

@@ -155,9 +155,20 @@
                                 length( 
                                 float2(length(p.zx) - r1, p.y)
                                         ) - r2, p.w
-                                )) - 0.2;
+                                )) - r3;
                 return d;
             }
+
+            float sdTorusYW(float4 p, float r1, float r2, float r3){
+                float d = length(
+                          float2(
+                                length( 
+                                float2(length(p.yw) - r1, p.x)
+                                        ) - r2, p.z
+                                )) - r3;
+                return d;
+            }
+
 
             float4 Rotate(float4 a){ 
 
@@ -173,7 +184,7 @@
                 float4 r;
                 
                 r.x = ( 
-                      2 * a.w * bxw * s
+                    + 2 * a.w * bxw * s
                     + 2 * a.w * bxy * byw
                     + 2 * a.w * bxz * bzw
                     + 2 * a.w * byz * bxyzw
@@ -266,30 +277,91 @@
             }
 
             float GetDist(float4 p){
-                
-                //Box 3D rotation
 
                 //Translate box
                 float4 bp = p-float4(0,0,0,_W);
                 //Rotate box according to shader parameters
                 bp = Rotate(bp);
-                
-                //float d = sdSphere( p-float4(0,0,0,_W), 1);
-                //float d = sdBox( bp, float4(1,1,1,1)) - 0.05;
-                //float d = sdOctahedron(bp, 1) - 0.001;
-                //float d = sdTetrahedron(bp, 1) - 0.05;
+
+                float r1 = 1;
+                float r3 = 0.05;
 
                 float a = 3.14159/2;
-                float d = sdTorus(bp, 1, 0, 0.1);
+                float2x2 mat = float2x2(cos(a), -sin(a), sin(a), cos(a));
+                
+                float txz = sdTorus(bp, 1, 0, r3);
+                float d = txz;
+
                 float4 bp2 = bp;
-                bp2.xy = mul(float2x2(cos(a), -sin(a), sin(a), cos(a)), bp2.xy );
-                d = min(d, sdTorus(bp2, 1, 0, 0.1));
+                bp2.xy = mul(mat, bp2.xy );
+                float txy = sdTorus(bp2, 1, 0, r3);
+                d = min(d, txy);
+
                 bp2 = bp;
-                bp2.yz = mul(float2x2(cos(a), -sin(a), sin(a), cos(a)), bp2.yz );
-                d = min(d, sdTorus(bp2, 1, 0, 0.1));
+                bp2.yz = mul(mat, bp2.yz );
+                float tyz = sdTorus(bp2, 1, 0, r3);
+                d = min(d, tyz);
+
                 bp2 = bp;
+                bp2.xw = mul(mat, bp2.xw );
+                float txw = sdTorus(bp2, 1, 0, r3);
+                d = min(d, txw);
+                
+                float tyw = sdTorusYW(bp, 1, 0, r3);
+                d = min(d, tyw);
+                
+                bp2 = bp;
+                bp2.zw = mul(mat, bp2.zw );
+                float tzw = sdTorus(bp2, 1, 0, r3);
+                d = min(d, tzw);
                 
                 return d;
+            }
+
+            int GetMat(float4 p){
+                //Translate box
+                float4 bp = p-float4(0,0,0,_W);
+                //Rotate box according to shader parameters
+                bp = Rotate(bp);
+
+                float r1 = 1;
+                float r3 = 0.05;
+
+                float a = 3.14159/2;
+                float2x2 mat = float2x2(cos(a), -sin(a), sin(a), cos(a));
+                float txz = sdTorus(bp, 1, 0, r3);
+                float d = txz;
+
+                float4 bp2 = bp;
+                bp2.xy = mul(mat, bp2.xy );
+                float txy = sdTorus(bp2, 1, 0, r3);
+                d = min(d, txy);
+
+                bp2 = bp;
+                bp2.yz = mul(mat, bp2.yz );
+                float tyz = sdTorus(bp2, 1, 0, r3);
+                d = min(d, tyz);
+
+                bp2 = bp;
+                bp2.xw = mul(mat, bp2.xw );
+                float txw = sdTorus(bp2, 1, 0, r3);
+                d = min(d, txw);
+                
+                float tyw = sdTorusYW(bp, 1, 0, r3);
+                d = min(d, tyw);
+                
+                bp2 = bp;
+                bp2.zw = mul(mat, bp2.zw );
+                float tzw = sdTorus(bp2, 1, 0, r3);
+                d = min(d, tzw);
+                
+                if (d == txz) return 1;
+                if (d == tyz) return 2;
+                if (d == txy) return 3;
+                if (d == txw) return 4;
+                if (d == tyw) return 5;
+                if (d == tzw) return 6;
+                return 0;
             }
 
             float Raymarch(float4 ro, float4 rd){
@@ -361,13 +433,21 @@
                     
                     float3 n = RotatedNormals(p);             // Normal
                     float3 l = GetLight(p);              // Light
-                    float3 c = RotatedNormals(p)*GetLight(p); //Lit Normal
 
-                    int effect = _Effect;
-                    if (effect == 2) col.rgb = c;
-                    else if (effect > 2) col.rgb = l;
-                    else if (effect < 2) col.rgb = n;
-                    //col.rgb = l;
+                    col.rgb = l;
+                    int mat = GetMat(p);
+                    if (mat == 1)
+                        col.rgb = (col.rgb/2+0.5)*float3(0,1,0);
+                    if (mat == 2)
+                        col.rgb = (col.rgb/2+0.5)*float3(1,0,0);
+                    if (mat == 3)
+                        col.rgb = (col.rgb/2+0.5)*float3(0,0,1);
+                    if (mat == 4)
+                        col.rgb = (col.rgb/2+0.5)*float3(1,0.5,0.5);//float3(0,1,1);
+                    if (mat == 5)
+                        col.rgb = (col.rgb/2+0.5)*float3(0.5,1,0.5);//float3(1,0,1);
+                    if (mat == 6)
+                        col.rgb = (col.rgb/2+0.5)*float3(0.5,0.5,1);//float3(1,1,0);
                 }
 
                 return col;

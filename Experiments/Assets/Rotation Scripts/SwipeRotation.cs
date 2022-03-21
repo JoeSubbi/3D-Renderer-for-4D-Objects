@@ -23,11 +23,6 @@ public class SwipeRotation : MonoBehaviour
     void Update()
     {        
         rend.material.SetFloat("_A",  total.a);
-
-        //rend.material.SetFloat("_YZ", total.b12);
-        //rend.material.SetFloat("_XZ", total.b02);
-        //rend.material.SetFloat("_XY", total.b01);
-
         rend.material.SetFloat("_YZ", total.byz);
         rend.material.SetFloat("_XZ", total.bxz);
         rend.material.SetFloat("_XY", total.bxy);
@@ -63,7 +58,7 @@ public class SwipeRotation : MonoBehaviour
                     bv = Bivector4.Wedge(e1, e2);
                     r = new Rotor4(bv, x+y);
 
-                    total /= r;
+                    total *= r;
                 }
                 else
                 {
@@ -73,7 +68,7 @@ public class SwipeRotation : MonoBehaviour
                     bv = Bivector4.Wedge(e1, e2);
                     r = new Rotor4(bv, y);
 
-                    total /= r;
+                    total *= r;
 
                     // Rotate with horizontal gesture around global XZ plane
                     e1 = new Vector4(-1, 0, 0, 0);
@@ -81,7 +76,7 @@ public class SwipeRotation : MonoBehaviour
                     bv = Bivector4.Wedge(e1, e2);
                     r = new Rotor4(bv, x);
 
-                    total /= r;
+                    total *= r;
                 }
 
             }
@@ -102,7 +97,7 @@ public class SwipeRotation : MonoBehaviour
                     bv = Bivector4.Wedge(e1, e2);
                     r = new Rotor4(bv, x + y);
 
-                    total /= r;
+                    total *= r;
                 }
                 else
                 {
@@ -112,7 +107,7 @@ public class SwipeRotation : MonoBehaviour
                     bv = Bivector4.Wedge(e1, e2);
                     r = new Rotor4(bv, y);
 
-                    total /= r;
+                    total *= r;
 
                     // Rotate with horizontal gesture around global yw plane
                     e1 = new Vector4(0, 1, 0, 0);
@@ -120,7 +115,7 @@ public class SwipeRotation : MonoBehaviour
                     bv = Bivector4.Wedge(e1, e2);
                     r = new Rotor4(bv, x);
 
-                    total /= r;
+                    total *= r;
                 }
             }
         }

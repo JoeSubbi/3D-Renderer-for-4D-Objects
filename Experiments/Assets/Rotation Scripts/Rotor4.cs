@@ -56,40 +56,7 @@ public class Rotor4
     // Rotor4-Rotor4 Product - Global Axis
     public static Rotor4 operator /(Rotor4 p, Rotor4 q)
     {
-        
-        float a = p.a;
-        float axy = p.bxy;
-        float axz = p.bxz;
-        float axw = p.bxw;
-        float ayz = p.byz;
-        float ayw = p.byw;
-        float azw = p.bzw;
-        float axyzw = p.bxyzw;
 
-        float b = q.a;
-        float bxy = q.bxy;
-        float bxz = q.bxz;
-        float bxw = q.bxw;
-        float byz = q.byz;
-        float byw = q.byw;
-        float bzw = q.bzw;
-        float bxyzw = q.bxyzw;
-
-        float e =    -axw * bxw   - axy * bxy   - axz * bxz   - ayw * byw   - ayz * byz   - azw * bzw   + axyzw * bxyzw + a * b;
-        float exy =  -axw * byw   + axy * b     - axz * byz   + ayw * bxw   + ayz * bxz   - azw * bxyzw - bxyzw * bzw   + a * bxy;
-        float exz =  -axw * bzw   + axy * byz   + axz * b     + ayw * bxyzw - ayz * bxy   + azw * bxw   + axyzw * byw   + a * bxz;
-        float exw =   axw * b     + axy * byw   + axz * bzw   - ayw * bxy   - ayz * bxyzw - azw * bxz   - axyzw * byz   + a * bxw;
-        float eyz =  -axw * bxyzw - axy * bxz   + axz * bxy   - ayw * bzw   + ayz * b     + azw * byw   - axyzw * bxw   + a * byz;
-        float eyw =   axw * bxy   - axy * bxw   + axz * bxyzw + ayw * b     + ayz * bzw   - azw * byz   + axyzw * bxz   + a * byw;
-        float ezw =   axw * bxz   - axy * bxyzw - axz * bxw   + ayw * byz   - ayz * byw   + azw * b     - axyzw * bxy   + a * bzw;
-        float exyzw = axw * byz   + axy * bzw   - axz * byw   - ayw * bxz   + ayz * bxw   + azw * bxy   + axyzw * b     + a * bxyzw;
-
-        return new Rotor4(e, exy, exz, eyz, exw, eyw, ezw, exyzw);
-    }
-
-    // Rotor4-Rotor4 Product - Local Axis
-    public static Rotor4 operator *(Rotor4 p, Rotor4 q)
-    {
         float a = p.a;
         float axy = p.bxy;
         float axz = -p.bxz;
@@ -108,16 +75,49 @@ public class Rotor4
         float bzw = q.bzw;
         float bxyzw = q.bxyzw;
 
-        float e =    -axw * bxw   - axy * bxy   - axz * bxz   - ayw * byw   - ayz * byz   - azw * bzw   + axyzw * bxyzw + a * b;
-        float exy =  -axw * byw   + axy * b     - axz * byz   + ayw * bxw   + ayz * bxz   - azw * bxyzw - bxyzw * bzw   + a * bxy;
-        float exz =  -axw * bzw   + axy * byz   + axz * b     + ayw * bxyzw - ayz * bxy   + azw * bxw   + axyzw * byw   + a * bxz;
-        float exw =   axw * b     + axy * byw   + axz * bzw   - ayw * bxy   - ayz * bxyzw - azw * bxz   - axyzw * byz   + a * bxw;
-        float eyz =  -axw * bxyzw - axy * bxz   + axz * bxy   - ayw * bzw   + ayz * b     + azw * byw   - axyzw * bxw   + a * byz;
-        float eyw =   axw * bxy   - axy * bxw   + axz * bxyzw + ayw * b     + ayz * bzw   - azw * byz   + axyzw * bxz   + a * byw;
-        float ezw =   axw * bxz   - axy * bxyzw - axz * bxw   + ayw * byz   - ayz * byw   + azw * b     - axyzw * bxy   + a * bzw;
-        float exyzw = axw * byz   + axy * bzw   - axz * byw   - ayw * bxz   + ayz * bxw   + azw * bxy   + axyzw * b     + a * bxyzw;
+        float e = -axw * bxw - axy * bxy - axz * bxz - ayw * byw - ayz * byz - azw * bzw + axyzw * bxyzw + a * b;
+        float exy = -axw * byw + axy * b - axz * byz + ayw * bxw + ayz * bxz - azw * bxyzw - axyzw * bzw + a * bxy;
+        float exz = -axw * bzw + axy * byz + axz * b + ayw * bxyzw - ayz * bxy + azw * bxw + axyzw * byw + a * bxz;
+        float exw = axw * b + axy * byw + axz * bzw - ayw * bxy - ayz * bxyzw - azw * bxz - axyzw * byz + a * bxw;
+        float eyz = -axw * bxyzw - axy * bxz + axz * bxy - ayw * bzw + ayz * b + azw * byw - axyzw * bxw + a * byz;
+        float eyw = axw * bxy - axy * bxw + axz * bxyzw + ayw * b + ayz * bzw - azw * byz + axyzw * bxz + a * byw;
+        float ezw = axw * bxz - axy * bxyzw - axz * bxw + ayw * byz - ayz * byw + azw * b - axyzw * bxy + a * bzw;
+        float exyzw = axw * byz + axy * bzw - axz * byw - ayw * bxz + ayz * bxw + azw * bxy + axyzw * b + a * bxyzw;
 
         return new Rotor4(e, exy, -exz, eyz, -exw, -eyw, -ezw, exyzw);
+    }
+
+    // Rotor4-Rotor4 Product - Local Axis
+    public static Rotor4 operator *(Rotor4 p, Rotor4 q)
+    {
+        float a = p.a;
+        float axy = p.bxy;
+        float axz = p.bxz;
+        float axw = p.bxw;
+        float ayz = p.byz;
+        float ayw = p.byw;
+        float azw = p.bzw;
+        float axyzw = p.bxyzw;
+
+        float b = q.a;
+        float bxy = q.bxy;
+        float bxz = q.bxz;
+        float bxw = q.bxw;
+        float byz = q.byz;
+        float byw = q.byw;
+        float bzw = q.bzw;
+        float bxyzw = q.bxyzw;
+
+        float e = -axw * bxw - axy * bxy - axz * bxz - ayw * byw - ayz * byz - azw * bzw + axyzw * bxyzw + a * b;
+        float exy = -axw * byw + axy * b - axz * byz + ayw * bxw + ayz * bxz - azw * bxyzw - axyzw * bzw + a * bxy;
+        float exz = -axw * bzw + axy * byz + axz * b + ayw * bxyzw - ayz * bxy + azw * bxw + axyzw * byw + a * bxz;
+        float exw = axw * b + axy * byw + axz * bzw - ayw * bxy - ayz * bxyzw - azw * bxz - axyzw * byz + a * bxw;
+        float eyz = -axw * bxyzw - axy * bxz + axz * bxy - ayw * bzw + ayz * b + azw * byw - axyzw * bxw + a * byz;
+        float eyw = axw * bxy - axy * bxw + axz * bxyzw + ayw * b + ayz * bzw - azw * byz + axyzw * bxz + a * byw;
+        float ezw = axw * bxz - axy * bxyzw - axz * bxw + ayw * byz - ayz * byw + azw * b - axyzw * bxy + a * bzw;
+        float exyzw = axw * byz + axy * bzw - axz * byw - ayw * bxz + ayz * bxw + azw * bxy + axyzw * b + a * bxyzw;
+
+        return new Rotor4(e, exy, exz, eyz, exw, eyw, ezw, exyzw);
     }
 
     // Rotate a Vector with a Rotor
@@ -238,7 +238,7 @@ public class Rotor4
     // Conjugate
     public Rotor4 Reverse()
     {
-        return new Rotor4(a, -bxy, -bxz, -byz, -bxw, -byw, -bzw, -bxyzw);
+        return new Rotor4(a, -bxy, -bxz, -byz, -bxw, -byw, -bzw, bxyzw);
     }
 
     private float sq(float x)
