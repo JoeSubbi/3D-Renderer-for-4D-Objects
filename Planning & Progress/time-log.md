@@ -931,3 +931,45 @@
    - explain choice of 4D primitives
    - explanation of components of project
  - *1.5 hours* Begin presentation script
+
+### 18 Mar 2022
+
+ - *2 hours* writing readme.md and manual.md + improvement to Rotor python module
+ - *2 hours* common approaches to 3D manipulation
+
+### 19 Mar 2022
+
+ - *3.5 hours* discuss rockin' mouse, virtual sphere and begin discussing arc ball
+
+### 20 Mar 2022
+
+ - *3 hours* finish methods of rotation and therefore finish backgrounds chapter
+ - *2 hours* write up preliminary experiments
+ - *1 hours* begin intro to rotation mechanics
+ - *4 hours* trim down and tidy background chapter
+
+## Week 23
+
+### 21 Mar 2022
+
+ - *1.5 hours* tidy introduction chapter
+ - *1.5 hours* tidy requirements chapter
+ - *3 hours* write up tasks and parameters section
+ - *0.5 hour* figures for experiment tasks
+ - *2.5 hours* explain swipe rotation implementation
+ - *3 hours* explain grab ball rotation implementation
+
+### 22 Mar 2022
+
+ - *3 hours* further experiment with grab ball
+   - test implementation with interactable grab ball
+   - test SDF grab ball
+ - *0.5 hours* grab ball figures
+ - *1 hour* finish grab ball section, finished implementation chapter
+ - *2.5 hours* tidy background chapter
+
+### 23 Mar 2022
+
+ - *2 hours* write up skeleton for evaluation
+ - *0.5 hours* reword some stuff in introduction
+ - *2.5 hours* write up limitations section
