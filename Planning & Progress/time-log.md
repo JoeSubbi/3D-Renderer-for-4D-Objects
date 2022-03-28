@@ -973,3 +973,37 @@
  - *2 hours* write up skeleton for evaluation
  - *0.5 hours* reword some stuff in introduction
  - *2.5 hours* write up limitations section
+
+### 24 Mar 2022
+
+ - *0.5 hours* Weekly meeting
+ - *4 hours* record and edit presentation animations 
+ - *1 hour* add presentation to LFS
+ - *2 hours* working on presentation script
+
+### 25 Mar 2022
+
+ - *2 hours* Add and improving wording of presentation
+ - *0.5 hours* Improve hyper links and figures in dissertation
+ - *3 hours* Discuss shape matching results and jaccard index
+
+### 26 Mar 2022
+
+ - *1 hour* improvements to background chapter
+ - *2 hours* discuss representations effectiveness for rotation match
+ - *3.5 hours* finish discussing rotation match results
+
+### 27 Mar 2022
+
+ - *2 hours* polish results section and arrange figures
+ - *3.5 hours* finish pose matching results section
+ - *1 hour* 4D to 3D abstraction representation, qualitative data
+ - *2 hours* complete conclusion
+ - *3 hours* improve grammar throughout
+ - *2.5 hours* proof read implementation chapter
+
+## Week 24
+
+### 28 Mar 2022
+
+ - *3 hours* proof read and tidy evaluation and conclusion chapters
