@@ -1007,3 +1007,13 @@
 ### 28 Mar 2022
 
  - *3 hours* proof read and tidy evaluation and conclusion chapters
+ - *3.5 hours* finish dissertation
+   - finish analysis and discussion
+   - finish abstract
+ - *2 hours* finish slides for presentation
+   - still need to write notes and record
+
+### 29 Mar 2022
+
+ - *0.5 hours* weekly meeting
+ - *3 hours* make suggested improvements

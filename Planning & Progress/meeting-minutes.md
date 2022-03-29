@@ -22,6 +22,7 @@
   - [10/03/2022](#10032022)
   - [17/03/2022](#17032022)
   - [24/03/2022](#24032022)
+  - [29/03/2022](#29032022)
 
 # Semester 1
 ## 07/10/2021
@@ -273,4 +274,27 @@ readme.md
 
 ## 24/03/2022
 
+-
 
+## 29/03/2022
+
+conclusion:
+ - could discuss improvements for rendering engine  
+ - could discuss possibility for system to assist with good rotations rather than x and y key presses
+ - generalisability to higher dimensions
+
+need ethics forms
+
+evaluation aims:
+ - "more effective: measure through accuracy confidence and time"
+
+pose match
+ - graphs 
+   - capped time limit - max time for task
+ - min angle
+   - assume radians, remove subscript
+   - brackets around arccos
+
+Title: To 3D instead of to the 3d
+
+Wednesday 6th 12.30 - return book on topology

@@ -215,7 +215,10 @@ Week 4 & Week 5 & Week 6
  - [x] Further develop data analysis tools
 
 Week 7  
- - [ ] Evaluation of experiments
+ - [x] Evaluation of experiments
 
 Week 8 & Week 9 & Week 10  
- - [ ] Write up draft dissertation
+ - [x] Write up draft dissertation
+
+Week 11 & Week 12
+ - [x] Finish dissertation

@@ -12,7 +12,7 @@ and you can book a time slot with me here https://calendly.com/joe-subbiani/4d-s
 
 # Checklist
 
-[Calander](https://calendly.com/joe-subbiani/4d-shapes-experiment?month=2022-01)
+[Calender](https://calendly.com/joe-subbiani/4d-shapes-experiment?month=2022-01)
 
  - [ ] Provide [Link to Google Form](https://forms.gle/MTmAE4m4N8t6KnAV7)
  - [ ] Fill out Google Form Before Test
