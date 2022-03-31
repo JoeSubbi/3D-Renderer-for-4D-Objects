@@ -1017,3 +1017,14 @@
 
  - *0.5 hours* weekly meeting
  - *3 hours* make suggested improvements
+ - *2 hour* finish script for presentation
+
+### 30 Mar 2022
+
+ - *1.5 hours* record presentation
+ - *3 hours* editing presentation
+
+### 31 Mar 2022
+
+ - *3 hours* editing presentation - finished
+ - *0.5 hours* making final improvements to the dissertation
