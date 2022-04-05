@@ -1,5 +1,7 @@
 # 3D-Renderer-for-4D-Objects
 
+For the final compiled project with more extensive data analysis and the dissertation check out [https://github.com/JoeSubbi/Investigation-into-4D-Shapes](https://github.com/JoeSubbi/Investigation-into-4D-Shapes)
+
 ## About the project
 
 This is a research project into finding effective ways of representing and teaching others about 4 Dimensional geometry.
